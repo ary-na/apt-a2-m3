@@ -1,4 +1,4 @@
-#include "LinkedList.h"
+#include "../include/LinkedList.h"
 
 LinkedList::LinkedList() {
    head = nullptr;
