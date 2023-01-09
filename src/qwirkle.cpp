@@ -1,11 +1,14 @@
+#include "../include/Controller.h"
 #include <iostream>
-#include "../include/LinkedList.h"
+#include <memory>
 
 int main(void) {
-   LinkedList* list = new LinkedList();
-   delete list;
 
-   std::cout << "TODO: Implement Qwirkle!" << std::endl;
+    std::unique_ptr<Controller> controller(new Controller);
+    // controller->launchGame();
 
-   return EXIT_SUCCESS;
+    // Skip launchGame() to newGame() while menu unfinished
+    controller->newGame();
+
+    return EXIT_SUCCESS;
 }

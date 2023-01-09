@@ -1,16 +1,18 @@
-#ifndef ASSIGN2_NODE_H
-#define ASSIGN2_NODE_H
+#ifndef NODE_H
+#define NODE_H
 
 #include "Tile.h"
 
 class Node {
-public:
+    public:
+        Node(Tile* tile);
+        Node(const Node& other);
+        ~Node();
 
-   Node(Tile* tile, Node* next);
-   Node(Node& other);
+        Tile* tile;
+        Node* next;
 
-   Tile*    tile;
-   Node*    next;
+    private:
 };
 
-#endif // ASSIGN2_NODE_H
+#endif // NODE_H
