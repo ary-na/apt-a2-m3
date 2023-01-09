@@ -11,19 +11,19 @@ Board::Board() {
     std::vector<Tile*> row(this->boardCols, nullptr);
 
     // Make 2D vector
-    boardVector = std::vector<std::vector<Tile*> >(this->boardRows, row);
+    this->boardVector = std::vector<std::vector<Tile*> >(this->boardRows, row);
 }
 
 Board::~Board() {
 
     // Traverse boardVector
-    for (int row = 0; row < boardVector.size(); row++) {
-        for (int col = 0; col < boardVector[row].size(); col++)  {
+    for (int row = 0; row < this->boardVector.size(); row++) {
+        for (int col = 0; col < this->boardVector[row].size(); col++)  {
 
             // Delete tile if there is one
-            if (boardVector[row][col] != nullptr) {
-                delete boardVector[row][col];
-                boardVector[row][col] = nullptr;
+            if (this->boardVector[row][col] != nullptr) {
+                delete this->boardVector[row][col];
+                this->boardVector[row][col] = nullptr;
             }
         }
     }
@@ -39,8 +39,8 @@ void Board::addTileAtPos(Tile* tile, char row, int col) {
         (col < this->boardCols && col >= 0)) {
 
         // Add Tile if there isn't one at given position
-        if (boardVector[row][col] == nullptr) {
-            boardVector[row][col] = tile;
+        if (this->boardVector[row][col] == nullptr) {
+            this->boardVector[row][col] = tile;
         }
     }
 }
@@ -57,7 +57,7 @@ Tile* Board::getTileAtPos(char row, int col) const {
 
     // Get the tile at the given row and col
     } else {
-        Tile* returnTile = boardVector[row][col];
+        Tile* returnTile = this->boardVector[row][col];
         return returnTile;
     }
 }
@@ -66,7 +66,7 @@ void Board::printBoard() const {
 
     // Print col header 
     int colHeader = 0;
-    for (int col = 0; col <= boardVector.size(); col++) {
+    for (int col = 0; col <= this->boardVector.size(); col++) {
         if (col == 0) {
             std::cout << "   ";
         } else {
@@ -80,24 +80,24 @@ void Board::printBoard() const {
     std::cout << std::endl;
 
     // Print col header underline 
-    for (int col = 0; col <= boardVector.size(); col++) {
+    for (int col = 0; col <= this->boardVector.size(); col++) {
         std::cout << "---";
     }
     std::cout << std::endl;
 
     // Print row header
     char rowHeader = 'A';
-    for (int row = 0; row < boardVector.size(); row++) {
+    for (int row = 0; row < this->boardVector.size(); row++) {
         std::cout << rowHeader << " |";
         ++rowHeader;
 
         // Print tiles in row
-        for (int col = 0; col < boardVector[row].size(); col++)  {   
-            if (boardVector[row][col] == nullptr) {
+        for (int col = 0; col < this->boardVector[row].size(); col++)  {   
+            if (this->boardVector[row][col] == nullptr) {
                 std::cout << "  ";
             } else {
-                std::cout << boardVector[row][col]->colour
-                          << boardVector[row][col]->shape;
+                std::cout << this->boardVector[row][col]->colour
+                          << this->boardVector[row][col]->shape;
             } 
             std::cout << "|";
         }
