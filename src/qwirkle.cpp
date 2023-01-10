@@ -5,10 +5,7 @@
 int main(void) {
 
     std::unique_ptr<Controller> controller(new Controller);
-    // controller->launchGame();
-
-    // Skip launchGame() to newGame() while menu unfinished
-    controller->newGame();
+    controller->launchGame();
 
     return EXIT_SUCCESS;
 }

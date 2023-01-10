@@ -22,39 +22,41 @@ void Controller::launchGame() {
     std::cout << "------------------" << std::endl;
 
     // Then the program should continue to the main menu
-
     mainMenu();
 }
 
 void Controller::mainMenu() {
 
-    // [ARIAN] TODO: Implement the main menu 
+    bool exit = false;
 
-    std::cout << "Menu" << std::endl;
-    std::cout << "----" << std::endl;
-    std::cout << std::endl;
-    std::cout << "1. New game" << std::endl;
-    std::cout << "2. Load game" << std::endl;
-    std::cout << "3. Credits (show student information)" << std::endl;
-    std::cout << "4. Quit" << std::endl;
-    
-    // The user selects an option by typing a number, and pressing enter
+    do {
+        std::cout << "Menu" << std::endl;
+        std::cout << "----" << std::endl;
+        std::cout << std::endl;
+        std::cout << "1. New game" << std::endl;
+        std::cout << "2. Load game" << std::endl;
+        std::cout << "3. Credits (show student information)" << std::endl;
+        std::cout << "4. Quit" << std::endl;
 
-    std::string menuInput = "";
-    std::cout << "> ", getline(std::cin, menuInput);
-    std::cout << std::endl;
+        // The user selects an option by typing a number, and pressing enter
+        std::string menuInput;
+        std::cout << "> ", getline(std::cin, menuInput);
+        std::cout << std::endl;
 
-    // [ARIAN] TODO: Check for invalid input
-
-    std::cout << "Invalid input!" << std::endl;
-    std::cout << std::endl;
-
-    // [ARIAN] TODO: if valid, select function
-
-    newGame();
-    loadGame();
-    credits();
-    exitGame();
+        if (menuInput == "1")
+            newGame();
+        else if (menuInput == "2")
+            loadGame();
+        else if (menuInput == "3")
+            credits();
+        else if (menuInput == "4") {
+            exit = true;
+            exitGame();
+        } else {
+            std::cerr << "Select a valid menu option!" << std::endl;
+            std::cout << std::endl;
+        }
+    } while (!exit);
 }
 
 void Controller::newGame() {
@@ -66,7 +68,7 @@ void Controller::newGame() {
 
     // Ask for the player names
 
-    std::cout << "Enter a name for player 1 "  
+    std::cout << "Enter a name for player 1 "
               << "(uppercase characters only)" << std::endl;
 
     bool awaitingInput = true;
@@ -93,9 +95,9 @@ void Controller::newGame() {
         }
     }
 
-    std::cout << "Enter a name for player 2 " 
+    std::cout << "Enter a name for player 2 "
               << "(uppercase characters only)" << std::endl;
-    
+
     awaitingInput = true;
     std::string name2Input = "";
 
@@ -121,9 +123,9 @@ void Controller::newGame() {
     }
 
     // Create a new game of Qwirkle
-    
-    Player* player1 = new Player(name1Input);
-    Player* player2 = new Player(name2Input);
+
+    Player *player1 = new Player(name1Input);
+    Player *player2 = new Player(name2Input);
     this->game = new Game(player1, player2);
 
     // Proceed with normal gameplay
@@ -164,11 +166,11 @@ void Controller::loadGame() {
 
     // If the filename passes both checks, the program should print a message, 
     // then load the game as described in Section 2.3.12 
-    
+
     std::cout << "Qwirkle game successfully loaded" << std::endl;
 
     // and continue with normal gameplay as described in Section 2.3.
-    
+
     baseGameplay();
 }
 
@@ -207,11 +209,6 @@ void Controller::credits() {
 void Controller::exitGame() {
     std::cout << "Goodbye" << std::endl;
     std::cout << std::endl;
-
-    // [ARIAN] TODO: Don't use exit(0), ensure program exits normally and
-    // safely (e.g. by ending menu loop) so all destructors called
-
-    exit(0);
 }
 
 void Controller::baseGameplay() {
@@ -228,7 +225,7 @@ void Controller::takeTurn() {
     // The name of the current player
 
     std::cout << game->getCurrentPlayer()->getName()
-              << ", it's your turn" << std::endl;         
+              << ", it's your turn" << std::endl;
     std::cout << std::endl;
 
     // The scores of both players
@@ -262,7 +259,7 @@ void Controller::takeTurn() {
         std::cout << std::endl;
 
         // [ARIAN] TODO: Check that the command is correctly formatted
-        
+
         // int command  = validate.command(commandInput);
 
         // command return 1 - place <colour><shape> at <row><col>
@@ -280,21 +277,21 @@ void Controller::takeTurn() {
         } else if (command == 1) {
 
             // Extract Tile and postition from input 
- 
+
             Colour colourInput = commandInput[6];
             Shape shapeInput = commandInput[7] - '0';
             char rowInput = commandInput[12];
             int colInput = commandInput[13] - '0';
 
             if (commandInput.length() > 14) {
-                std::string colStr = std::to_string(commandInput[13]) + 
+                std::string colStr = std::to_string(commandInput[13]) +
                                      std::to_string(commandInput[14]);
                 colInput = std::stoi(colStr);
             }
 
-            Tile* tileInput = new Tile(colourInput, shapeInput);
+            Tile *tileInput = new Tile(colourInput, shapeInput);
 
-            bool tilePlaced = game->placeTile(tileInput, rowInput, colInput); 
+            bool tilePlaced = game->placeTile(tileInput, rowInput, colInput);
             // tilePlaced return true - If tile successfully placed
             // tilePlaced return false - If illegal move
 
@@ -312,9 +309,9 @@ void Controller::takeTurn() {
 
             Colour colourInput = commandInput[8];
             Shape shapeInput = commandInput[9] - '0';
-            Tile* tileInput = new Tile(colourInput, shapeInput);
+            Tile *tileInput = new Tile(colourInput, shapeInput);
 
-            bool tileReplaced = game->replaceTile(tileInput); 
+            bool tileReplaced = game->replaceTile(tileInput);
             // tileReplaced return true - If tile successfully replaced
             // tileReplaced return false - If illegal move
 
@@ -325,7 +322,7 @@ void Controller::takeTurn() {
             } else {
                 awaitingInput = false;
             }
- 
+
         } else if (command == 3) {
             saveGame();
 
@@ -367,7 +364,7 @@ void Controller::endGame() {
     std::cout << "Score for "
               << game->getPlayer1()->getName() << ": "
               << game->getPlayer1()->getScore() << std::endl;
-    
+
     std::cout << "Score for "
               << game->getPlayer2()->getName() << ": "
               << game->getPlayer2()->getScore() << std::endl;
@@ -376,7 +373,7 @@ void Controller::endGame() {
 
     // Display the name of the winning player
 
-    std::cout << "Player " << game->getHighestScorePlayer() 
+    std::cout << "Player " << game->getHighestScorePlayer()
               << " won!" << std::endl;
 
     // Then quit, according to Section 2.2.4
