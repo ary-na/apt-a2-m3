@@ -1,12 +1,18 @@
 #ifndef VALIDATOR_H
 #define VALIDATOR_H
 
-class Validator {
-    public:
-        Validator();
-        ~Validator();
+#include <string>
 
-    private:
+class Validator {
+public:
+    Validator();
+
+    ~Validator();
+
+    // Validate username input (Players should only consist of letters (no numbers or symbols))
+    bool isNameValid(const std::string& input);
+
+private:
 
 };
 

@@ -72,20 +72,17 @@ void Controller::newGame() {
               << "(uppercase characters only)" << std::endl;
 
     bool awaitingInput = true;
-    std::string name1Input = "";
+    std::string name1Input;
 
     while (awaitingInput) {
         std::cout << "> ", getline(std::cin, name1Input);
         std::cout << std::endl;
 
-        // [ARIAN] TODO: Check that player name is valid
-        // - Players should only consist of letters (no numbers or symbols)
+        // Players should only consist of letters (no numbers or symbols)
 
-        // bool nameValid = validate.name(name1Input);
         // nameValid return true - If name is valid
         // nameValid return false - If name is inValid
-
-        bool nameValid = true;
+        bool nameValid = validator->isNameValid(name1Input);
 
         if (!nameValid) {
             std::cout << "Invalid input!" << std::endl;
@@ -99,20 +96,17 @@ void Controller::newGame() {
               << "(uppercase characters only)" << std::endl;
 
     awaitingInput = true;
-    std::string name2Input = "";
+    std::string name2Input;
 
     while (awaitingInput) {
         std::cout << "> ", getline(std::cin, name2Input);
         std::cout << std::endl;
 
-        // [ARIAN] TODO: Check that player name is valid
-        // - Players should only consist of letters (no numbers or symbols)
+        // Players should only consist of letters (no numbers or symbols)
 
-        // bool nameValid = validate.name(name1Input);
         // nameValid return true - If name is valid
         // nameValid return false - If name is inValid
-
-        bool nameValid = true;
+        bool nameValid = validator->isNameValid(name2Input);
 
         if (!nameValid) {
             std::cout << "Invalid input!" << std::endl;
@@ -197,9 +191,9 @@ void Controller::credits() {
     std::cout << std::endl;
 
     // [EVERYONE] TODO: Student 4 information
-    std::cout << "Name: " << std::endl;
-    std::cout << "Student ID: " << std::endl;
-    std::cout << "Email: @student.rmit.edu.au" << std::endl;
+    std::cout << "Name: Arian Najafi Yamchelo" << std::endl;
+    std::cout << "Student ID: S3910902" << std::endl;
+    std::cout << "Email: S3910902@student.rmit.edu.au" << std::endl;
     std::cout << std::endl;
 
     // After printing the student details, 
