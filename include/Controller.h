@@ -30,7 +30,7 @@ class Controller {
 
         // ** 2.2.4 Quit **
         // ** 2.3.8 Function: Quit **
-        void exitGame(); 
+        static void exitGame();
 
         // ** 2.3 Base Gameplay **
         void baseGameplay(); 
