@@ -284,8 +284,8 @@ void Controller::takeTurn() {
             int colInput = commandInput[13] - '0';
 
             if (commandInput.length() > 14) {
-                std::string colStr = std::to_string(commandInput[13]) +
-                                     std::to_string(commandInput[14]);
+                std::string colStr = std::to_string(commandInput[13] - '0') +
+                                     std::to_string(commandInput[14] - '0');
                 colInput = std::stoi(colStr);
             }
 
