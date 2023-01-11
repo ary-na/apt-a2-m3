@@ -104,3 +104,7 @@ void Board::printBoard() const {
         std::cout << std::endl;
     }
 }
+
+const std::vector<std::vector<Tile*> > &Board::getBoardVector() const {
+    return boardVector;
+}

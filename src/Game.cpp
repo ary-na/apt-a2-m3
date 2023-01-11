@@ -3,8 +3,8 @@
 #include <memory>
 #include <iostream>
 
-Game::Game(Player* player1, Player* player2) {
-    
+Game::Game(Player *player1, Player *player2) {
+
     // Create the ordering for the tile bag
     this->tileBag = new LinkedList();
     fillTileBag(this->tileBag);
@@ -36,20 +36,20 @@ Game::~Game() {
     this->tileBag = nullptr;
 }
 
-Player* Game::getCurrentPlayer() const {
+Player *Game::getCurrentPlayer() const {
     return this->currentPlayer;
 }
 
-Player* Game::getPlayer1() const {
+Player *Game::getPlayer1() const {
     return this->player1;
 }
 
-Player* Game::getPlayer2() const {
+Player *Game::getPlayer2() const {
     return this->player2;
 }
 
-Board* Game::getBoard() const {
-    return this->board;    
+Board *Game::getBoard() const {
+    return this->board;
 }
 
 std::string Game::getHighestScorePlayer() const {
@@ -64,11 +64,11 @@ std::string Game::getHighestScorePlayer() const {
     return winner;
 }
 
-void Game::fillHand(LinkedList* hand) {
-    while ((hand->getLength() < 6) && (this->tileBag->getLength() > 0)) { 
+void Game::fillHand(LinkedList *hand) {
+    while ((hand->getLength() < 6) && (this->tileBag->getLength() > 0)) {
 
         // When a tile is drawn from the bag, it's taken from the front
-        Tile* tileDrawn = this->tileBag->getFront();
+        Tile *tileDrawn = this->tileBag->getFront();
 
         // When adding a tile, it's always added at the end 
         hand->addEnd(new Tile(*tileDrawn));
@@ -85,11 +85,11 @@ void Game::nextPlayerTurn() {
     }
 }
 
-void Game::fillTileBag(LinkedList* tileBag) {
+void Game::fillTileBag(LinkedList *tileBag) {
 
     // Add shapes and colours to array for iteration
-    Colour colours[] = { RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE };
-    Shape shapes[] = { CIRCLE, STAR_4, DIAMOND, SQUARE, STAR_6, CLOVER };
+    Colour colours[] = {RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE};
+    Shape shapes[] = {CIRCLE, STAR_4, DIAMOND, SQUARE, STAR_6, CLOVER};
 
     int coloursLength = sizeof(colours) / sizeof(Colour);
     int shapesLength = sizeof(shapes) / sizeof(Shape);
@@ -103,7 +103,7 @@ void Game::fillTileBag(LinkedList* tileBag) {
     }
 }
 
-void Game::shuffleTileBag(LinkedList* tileBag) {
+void Game::shuffleTileBag(LinkedList *tileBag) {
 
     // Check if there are tiles in the tileBag
     if (tileBag->getLength() > 0) {
@@ -114,11 +114,11 @@ void Game::shuffleTileBag(LinkedList* tileBag) {
 
         // Shuffle tiles and put in temporary tile bag
         for (int i = 0; i < totalTiles; i++) {
-            
+
             // Generate a random number between min and max
             int min = 1;
             int max = tileBag->getLength();
-            
+
             // FOR TESTING: Use default_random_engine below
             // instead of random_device to give predictable value
             // std::default_random_engine engine(2);
@@ -128,8 +128,8 @@ void Game::shuffleTileBag(LinkedList* tileBag) {
             int randomVal = uniform_dist(engine);
 
             // Get a tile from tileBag at random pos
-            Tile* randomTile = tileBag->getAtPos(randomVal);
-            
+            Tile *randomTile = tileBag->getAtPos(randomVal);
+
             // Add a deep copy to the tempTileBag
             tempTileBag->addEnd(new Tile(*randomTile));
 
@@ -145,36 +145,57 @@ void Game::shuffleTileBag(LinkedList* tileBag) {
 
 bool Game::isComplete() const {
     bool isComplete = false;
-    if (this->tileBag->getLength() == 0 && 
-       (this->player1->getHand()->getLength() == 0 || 
-        this->player2->getHand()->getLength() == 0)) {
+    if (this->tileBag->getLength() == 0 &&
+        (this->player1->getHand()->getLength() == 0 ||
+         this->player2->getHand()->getLength() == 0)) {
         isComplete = true;
     }
     return isComplete;
 }
 
-bool Game::isReplaceLegal(Tile* tile) const {
+bool Game::isReplaceLegal(Tile *tile) const {
     bool isLegal = this->currentPlayer->getHand()->search(tile);
     return isLegal;
 }
 
 // [ARIAN] TODO: Check place is legal according to the rules:
 // https://www.ultraboardgames.com/qwirkle/game-rules.php
-// (1) Tiles must share one colour or shape attribute 
+// (1) Tiles must share one colour or shape attribute
 // (2) Tiles must be placed in the same line
 // (3) A line can never be longer than six tiles
 // (4) There cannot be duplicate tiles in a line
 // (5) You cannot play two tiles that are exactly the same
 // (6) The tile must be in the current player's hand
 
-bool Game::isPlaceLegal(Tile* tile, char row, int col) const {
+bool Game::isPlaceLegal(Tile *tile, char row, int col) const {
+
     bool isLegal = true;
+
+
+    // The tile must be in the current player's hand
+    if (!currentPlayer->getHand()->search(tile)) {
+        isLegal = false;
+    }
+    // Tile cannot be replaced after it is placed on the board
+    else if (board->getTileAtPos(row, col) != nullptr) {
+        isLegal = false;
+    }
+    else if(!board->getBoardVector().empty() && board->getTileAtPos(row, col) == nullptr){
+        isLegal = false;
+    }
+
+//    // First move
+//    if (board->getBoardVector().empty()) {
+//        isLegal = true;
+//        return isLegal;
+//    }
+
     return isLegal;
 }
 
-bool Game::replaceTile(Tile* tile) {
+bool Game::replaceTile(Tile *tile) {
     bool isLegal = isReplaceLegal(tile);
-    if (isLegal) { 
+    if (isLegal) {
 
         // Remove the given tile from the hand and place it in the tileBag
         this->currentPlayer->getHand()->deleteByNode(tile);
@@ -189,9 +210,9 @@ bool Game::replaceTile(Tile* tile) {
     return isLegal;
 }
 
-bool Game::placeTile(Tile* tile, char row, int col) {
+bool Game::placeTile(Tile *tile, char row, int col) {
     bool isLegal = isPlaceLegal(tile, row, col);
-    if (isLegal) { 
+    if (isLegal) {
 
         // Place the tile onto the board
         this->board->addTileAtPos(tile, row, col);
@@ -209,6 +230,6 @@ bool Game::placeTile(Tile* tile, char row, int col) {
 
         // Continue with the other player’s turn
         nextPlayerTurn();
-    } 
+    }
     return isLegal;
 }
