@@ -27,10 +27,8 @@ class Board {
     private:
 
         // The board is a fixed size of 26 x 26
-        // NOTE: This should probably be #define or const - 
-        // compiler with Makefile complains if const
-        int boardRows;
-        int boardCols;
+        const static int boardRows = 26;
+        const static int boardCols = 26;
 
         // A 2D vector of tile pointers
         std::vector<std::vector<Tile*> > boardVector;

@@ -3,10 +3,7 @@
 #include <exception>
 
 Board::Board() {
-    // The board is a fixed size of 26 x 26
-    this->boardRows = 26;
-    this->boardCols = 26;
-
+    
     // Make 1D vector 
     std::vector<Tile*> row(this->boardCols, nullptr);
 
