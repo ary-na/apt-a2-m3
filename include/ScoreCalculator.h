@@ -2,6 +2,7 @@
 #define SCORECALCULATOR_H
 
 #include <iostream>
+#include "Board.h"
 
 class ScoreCalculator {
     public:
@@ -13,7 +14,12 @@ class ScoreCalculator {
         // to be used if a Qwirkle is scored
         void printQwirkle() const; 
 
+        int calculateScore(Board* board, char row, int col);
+        
+
     private:
+        int getRowScore(Board* board, char row, int col);
+        int getColScore(Board* board, char row, int col);
 
 };
 

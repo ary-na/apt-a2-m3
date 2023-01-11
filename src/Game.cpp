@@ -201,6 +201,7 @@ bool Game::placeTile(Tile* tile, char row, int col) {
 
         // Update the player’s score
         int score = 0;
+        score = scoreCalculator->calculateScore(board, row, col);
         this->currentPlayer->addScore(score);
 
         // Draw a replacement tile from the tile bag and add it
