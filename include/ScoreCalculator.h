@@ -4,6 +4,12 @@
 #include <iostream>
 #include "Board.h"
 
+// Define current constants, these ideally should be dynamic from the board
+#define MIN_ROW 'A'
+#define MAX_ROW 'Z'
+#define MIN_COL 0
+#define MAX_COL 25
+
 class ScoreCalculator {
     public:
         ScoreCalculator();
@@ -18,8 +24,16 @@ class ScoreCalculator {
         
 
     private:
+
         int getRowScore(Board* board, char row, int col);
         int getColScore(Board* board, char row, int col);
+
+        int getRowStart(Board* board, char row, int col);
+        int getRowEnd(Board* board, char row, int col);
+        int getColStart(Board* board, char row, int col);
+        int getColEnd(Board* board, char row, int col);
+
+        int checkQwirklePoints(int score);
 
 };
 
