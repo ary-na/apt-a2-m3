@@ -42,7 +42,6 @@ void Controller::mainMenu() {
         // The user selects an option by typing a number, and pressing enter
         std::string menuInput;
         std::cout << "> ", getline(std::cin, menuInput);
-        std::cout << std::endl;
 
         if (menuInput == "1")
             newGame();
@@ -64,6 +63,7 @@ void Controller::newGame() {
 
     // Print a message for starting a new game
 
+    std::cout << std::endl;
     std::cout << "Starting a new game" << std::endl;
     std::cout << std::endl;
 
@@ -141,6 +141,7 @@ void Controller::loadGame() {
 
     // [JACOB] TODO
 
+    std::cout << std::endl; 
     std::cout << "Load game" << std::endl;
     std::cout << "---------" << std::endl;
     std::cout << std::endl;
@@ -176,6 +177,7 @@ void Controller::loadGame() {
 }
 
 void Controller::credits() {
+    std::cout << std::endl;
     std::cout << "Credits" << std::endl;
     std::cout << "-------" << std::endl;
     std::cout << std::endl;
@@ -208,6 +210,7 @@ void Controller::credits() {
 }
 
 void Controller::exitGame() {
+    std::cout << std::endl;
     std::cout << "Goodbye" << std::endl;
     std::cout << std::endl;
 }
@@ -342,7 +345,8 @@ void Controller::saveGame() {
 
     // Then the program should display a message 
     // and continue with the gameplay 
-
+    
+    std::cout << std::endl;
     std::cout << "Game successfully saved" << std::endl;
     std::cout << std::endl;
 
