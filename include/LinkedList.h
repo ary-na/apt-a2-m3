@@ -55,7 +55,6 @@ class LinkedList {
 
     private:
         Node* head;
-        int length;
 };
 
 #endif // LINKEDLIST_H
