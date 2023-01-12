@@ -17,9 +17,10 @@ Controller::~Controller() {
 void Controller::launchGame() {
 
     // On launch, the program should display a welcome message
-
+    std::cout << std::endl;
     std::cout << "Welcome to Qwirkle" << std::endl;
     std::cout << "------------------" << std::endl;
+    std::cout << std::endl;
 
     // Then the program should continue to the main menu
     mainMenu();
