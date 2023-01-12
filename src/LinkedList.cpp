@@ -4,6 +4,7 @@
 
 LinkedList::LinkedList() {
     this->head = nullptr;
+    this->length = 0;
 }
 
 LinkedList::LinkedList(const LinkedList& other) {
@@ -71,15 +72,7 @@ Tile* LinkedList::getAtPos(int pos) const {
 }
 
 int LinkedList::getLength() const {
-    int count = 0;
-    Node* current = this->head;
-
-    // Traverse and count each Node
-    while (current != nullptr) {
-        ++count;
-        current = current->next;
-    }
-    return count;
+    return this->length;
 }
 
 bool LinkedList::search(Tile* tile) const {
@@ -110,8 +103,10 @@ void LinkedList::addEnd(Tile* tile) {
         while (current->next != nullptr) {
             current = current->next;
         }
-        current->next = temp;
+        current->next = temp; 
     }
+
+    this->length = this->length + 1;
 }
 
 void LinkedList::addFront(Tile* tile) {
@@ -126,6 +121,8 @@ void LinkedList::addFront(Tile* tile) {
         temp->next = this->head;
         this->head = temp;
     }
+
+    this->length = this->length + 1;
 }
 
 void LinkedList::deleteAtPos(int pos) {
@@ -150,6 +147,8 @@ void LinkedList::deleteAtPos(int pos) {
         }
         previous->next = temp->next;
         delete temp;
+
+        this->length = this->length - 1;
     }
 }
 
@@ -160,7 +159,8 @@ void LinkedList::deleteFront() {
         Node* temp = this->head;
         this->head = this->head->next;
         delete temp;
-    } 
+        this->length = this->length - 1;
+    }
 }
 
 void LinkedList::deleteEnd() {
@@ -183,6 +183,7 @@ void LinkedList::deleteEnd() {
             previous->next = nullptr;
             delete temp;
         }
+        this->length = this->length - 1;
     }
 }
 
@@ -206,6 +207,7 @@ void LinkedList::deleteByNode(Tile* tile) {
                 previous->next = current->next;
                 delete temp;
                 result = true;
+                this->length = this->length - 1;
             }
             current = current->next;
             previous = previous->next;
