@@ -154,7 +154,11 @@ bool Game::isComplete() const {
 }
 
 bool Game::isReplaceLegal(Tile* tile) const {
-    bool isLegal = this->currentPlayer->getHand()->search(tile);
+    bool isLegal = false;
+    if (this->currentPlayer->getHand()->search(tile) &&
+        this->tileBag->getLength() > 0) {
+            isLegal = true;
+    }
     return isLegal;
 }
 
