@@ -1,4 +1,5 @@
 #include "../include/Game.h"
+#include "../include/Validator.h"
 #include <random>
 #include <memory>
 #include <iostream>
@@ -160,36 +161,44 @@ bool Game::isReplaceLegal(Tile *tile) const {
 
 // [ARIAN] TODO: Check place is legal according to the rules:
 // https://www.ultraboardgames.com/qwirkle/game-rules.php
-// (1) Tiles must share one colour or shape attribute
-// (2) Tiles must be placed in the same line
-// (3) A line can never be longer than six tiles
-// (4) There cannot be duplicate tiles in a line
-// (5) You cannot play two tiles that are exactly the same
-// (6) The tile must be in the current player's hand
+// (1) Tiles must share one colour or shape attribute - Done
+// (2) Tiles must be placed in the same line - Done
+// (3) A line can never be longer than six tiles - Done
+// (4) There cannot be duplicate tiles in a line - Done
+// (5) You cannot play two tiles that are exactly the same - Done
+// (6) The tile must be in the current player's hand - Done
 
 bool Game::isPlaceLegal(Tile *tile, char row, int col) const {
 
     bool isLegal = true;
 
+    Validator *validator = new Validator(this->getBoard());
+    LinkedList *rows = validator->getRowTiles(row, col);
+    LinkedList *cols = validator->getColumnTiles(row, col);
 
     // The tile must be in the current player's hand
-    if (!currentPlayer->getHand()->search(tile)) {
+    if (!currentPlayer->getHand()->search(tile))
         isLegal = false;
-    }
     // Tile cannot be replaced after it is placed on the board
-    else if (board->getTileAtPos(row, col) != nullptr) {
+    else if (board->getTileAtPos(row, col) != nullptr)
         isLegal = false;
-    }
-    else if(!board->getBoardVector().empty() && board->getTileAtPos(row, col) == nullptr){
+    // Tiles must be placed in the same line
+    else if (!validator->isBoardEmpty() && rows->getLength() == 0 && cols->getLength() == 0)
         isLegal = false;
-    }
+    // A line can never be longer than six tiles
+    else if (rows->getLength() >= Validator::MAX_NUM_TILES || cols->getLength() >= Validator::MAX_NUM_TILES)
+        isLegal = false;
+    // Tiles must share one colour or shape attribute
+    else if (!(validator->isTileColourMatch(rows, tile) || validator->isTileShapeMatch(rows, tile)) && rows->getLength() > 0)
+        isLegal = false;
+    // Tiles must share one colour or shape attribute
+    else if (!(validator->isTileColourMatch(cols, tile) || validator->isTileShapeMatch(cols, tile)) && cols->getLength() > 0)
+        isLegal = false;
+    // There cannot be duplicate tiles in a line
+    else if (rows->search(tile) || cols->search(tile))
+        isLegal = false;
 
-//    // First move
-//    if (board->getBoardVector().empty()) {
-//        isLegal = true;
-//        return isLegal;
-//    }
-
+    delete validator;
     return isLegal;
 }
 
