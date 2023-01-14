@@ -155,14 +155,36 @@ void Controller::loadGame() {
     // the saved game file, and presses enter
 
     std::string fileInput = "";
-    //std::cout << "> ", getline(std::cin, fileInput);
+    std::cout << "> ", getline(std::cin, fileInput);
     std::cout << std::endl;
+    fileInput = "savedGames/" + fileInput + ".txt";
 
     std::fstream infile;
-    infile.open("Save1.txt");
-    if(infile.is_open()){
-        std::cout << "Hello" << std::endl;
+    infile.open(fileInput);
 
+    // Check if file exist 
+    if(!infile.is_open()) {
+        std::cout << "File does not exist" << std::endl;
+        mainMenu();
+
+    }
+
+   
+    
+    // After the filename is provided, the program must then:
+
+    // - Check that the file exists.
+
+
+    // - Check that the format of the file is correct. 
+    // The format for saved games is described in Section 2.3.7.
+
+    // If the filename passes both checks, the program should print a message, 
+    // then load the game as described in Section 2.3.12 
+    //Absorb File 
+   
+        
+    if(infile.is_open()){
 
         std::string line;
         while (getline(infile,line))
@@ -172,17 +194,8 @@ void Controller::loadGame() {
         
         infile.close();
 
-    }
-
-    // After the filename is provided, the program must then:
-
-    // - Check that the file exists.
-
-    // - Check that the format of the file is correct. 
-    // The format for saved games is described in Section 2.3.7.
-
-    // If the filename passes both checks, the program should print a message, 
-    // then load the game as described in Section 2.3.12 
+    } 
+  
 
     std::cout << "Qwirkle game successfully loaded" << std::endl;
 
