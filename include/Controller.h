@@ -5,6 +5,7 @@
 #include "Game.h"
 #include "Validator.h"
 #include <iostream>
+#include <fstream>
 #include <string>
 
 class Controller {

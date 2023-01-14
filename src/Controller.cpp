@@ -139,8 +139,7 @@ void Controller::newGame() {
 
 void Controller::loadGame() {
 
-    // [JACOB] TODO Test Push
-    std::cout << "Load game" << std::endl;
+    // [JACOB] TODO
     std::cout << std::endl; 
     std::cout << "Load game" << std::endl;
     std::cout << "---------" << std::endl;
@@ -156,8 +155,24 @@ void Controller::loadGame() {
     // the saved game file, and presses enter
 
     std::string fileInput = "";
-    std::cout << "> ", getline(std::cin, fileInput);
+    //std::cout << "> ", getline(std::cin, fileInput);
     std::cout << std::endl;
+
+    std::fstream infile;
+    infile.open("Save1.txt");
+    if(infile.is_open()){
+        std::cout << "Hello" << std::endl;
+
+
+        std::string line;
+        while (getline(infile,line))
+        {
+            std::cout << line <<std::endl;
+        }
+        
+        infile.close();
+
+    }
 
     // After the filename is provided, the program must then:
 
