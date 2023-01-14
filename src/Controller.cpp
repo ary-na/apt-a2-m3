@@ -140,7 +140,7 @@ void Controller::newGame() {
 void Controller::loadGame() {
 
     // [JACOB] TODO Test Push
-
+    std::cout << "Load game" << std::endl;
     std::cout << std::endl; 
     std::cout << "Load game" << std::endl;
     std::cout << "---------" << std::endl;
