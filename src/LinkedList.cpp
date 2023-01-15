@@ -1,6 +1,4 @@
 #include "../include/LinkedList.h"
-#include <iostream>
-#include <exception>
 
 LinkedList::LinkedList() {
     this->head = nullptr;

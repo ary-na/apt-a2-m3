@@ -2,6 +2,7 @@
 #define NODE_H
 
 #include "Tile.h"
+#include <iostream>
 
 class Node {
     public:
