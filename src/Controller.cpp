@@ -183,25 +183,100 @@ void Controller::loadGame() {
     // then load the game as described in Section 2.3.12 
     //Absorb File 
    
-        
+    std::string player1Name, player2Name;
+    int player1Score, player2Score;   
+    LinkedList* player1Hand = new LinkedList();
+    LinkedList* player2Hand = new LinkedList();
+
     if(infile.is_open()){
 
+
+
+        int x = 1;
         std::string line;
         while (getline(infile,line))
         {
-            std::cout << line <<std::endl;
+            // Player 1 Name
+            if (x == 1) {
+                player1Name = line;
+
+            //Player 1 Score
+            }else if(x == 2) {
+                player1Score = std::stoi(line);
+
+            }
+            // Player 1 Hand
+            else if (x == 3) {
+                std::stringstream s_stream(line);
+                while(s_stream.good()) {
+                    std::string substr;
+                    getline(s_stream, substr, ','); //get first string delimited by comma
+                    std::string num(1 , substr[1]);
+                    player1Hand->addEnd(new Tile(substr[0], std::stoi(num)));
+                }
+
+            // Player 2 Name
+            }else if (x == 4) {
+                player2Name = line;
+
+            // Player 2 Score
+            } else if (x == 5) {
+                player2Score = std::stoi(line);
+            }
+            // Player 2 Hand
+            else if (x == 6) {
+                std::stringstream s_stream(line);
+                while(s_stream.good()) {
+                    std::string substr;
+                    getline(s_stream, substr, ','); //get first string delimited by comma
+                    std::string num(1 , substr[1]);
+                    player2Hand->addEnd(new Tile(substr[0], std::stoi(num)));
+                }
+            }
+
+
+
+            ++x;            
         }
         
         infile.close();
 
     } 
-  
+
+    // Creating the new game
+    Player *player1 = new Player(player1Name);
+    Player *player2 = new Player(player2Name);
+    this->game = new Game(player1, player2);
+
+    // Updating the game
+    this->game->getPlayer1()->addScore(player1Score);
+    this->game->getPlayer2()->addScore(player2Score);
+
+    this->game->getPlayer1()->setHand(player1Hand);
+    this->game->getPlayer2()->setHand(player2Hand);
+
+    std::cout << this->game->getPlayer1()->getName() << std::endl;
+    std::cout << this->game->getPlayer2()->getName() << std::endl;
+
+    std::cout << this->game->getPlayer1()->getScore() << std::endl;
+    std::cout << this->game->getPlayer2()->getScore() << std::endl;
+
+    std::cout << player1Hand << std::endl;
+    this->game->getPlayer1()->getHand()->printList();
+    this->game->getPlayer2()->getHand()->printList();
+    
+
+    // Delete
+    player1 = nullptr;
+    player2 = nullptr;
+    player1Hand = nullptr;
+    player2Hand = nullptr;
 
     std::cout << "Qwirkle game successfully loaded" << std::endl;
 
     // and continue with normal gameplay as described in Section 2.3.
 
-    baseGameplay();
+    //baseGameplay();
 }
 
 void Controller::credits() {
