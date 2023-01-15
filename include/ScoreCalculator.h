@@ -4,11 +4,9 @@
 #include <iostream>
 #include "Board.h"
 
-// Define current constants, these ideally should be dynamic from the board
+// Maximum sizes are dynamic, this assumes that the smallest co-ordinate will be A0
 #define MIN_ROW 'A'
-#define MAX_ROW 'Z'
 #define MIN_COL 0
-#define MAX_COL 25
 
 class ScoreCalculator {
     public:

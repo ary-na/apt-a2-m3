@@ -9,7 +9,6 @@ ScoreCalculator::~ScoreCalculator()
 }
 
 // TODO ALEX B
-// Fix up max / min. Should come from the board
 // Comments need cleaning
 // Code needs reviewing
 // Assumes only valid tiles are added, for example possible to score 7
@@ -99,12 +98,16 @@ int ScoreCalculator::getRowStart(Board *board, char row, int col)
 
 int ScoreCalculator::getRowEnd(Board *board, char row, int col)
 {
+    // Get the number of columns on the board
+    // Add 65 to the number to start at A (Ascii A is 65)
+    char boardCols = (board->getBoardCols() + 65);
+    
     int rowEndCol = col;
     // Try / Catch in case of out of range exception for board
     try
     {
         // Count forward from the tile to find which location is not occupied by a tile
-        while (rowEndCol <= MAX_COL && board->getTileAtPos(row, rowEndCol) != nullptr)
+        while (rowEndCol <= boardCols && board->getTileAtPos(row, rowEndCol) != nullptr)
         {
             rowEndCol++;
         }
@@ -139,12 +142,15 @@ int ScoreCalculator::getColStart(Board *board, char row, int col)
 
 int ScoreCalculator::getColEnd(Board *board, char row, int col)
 {
+    // Get the number of rows on the board
+    int boardRows = board->getBoardRows();
+    
     int colEndRow = row;
     // Try / Catch in case of out of range exception for board
     try
     {
         // Count down from the tile to find which location is not occupied by a tile
-        while (colEndRow <= MAX_ROW && board->getTileAtPos(colEndRow, col) != nullptr)
+        while (colEndRow <= boardRows && board->getTileAtPos(colEndRow, col) != nullptr)
         {
             colEndRow++;
         }
