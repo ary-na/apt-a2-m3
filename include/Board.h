@@ -24,6 +24,12 @@ class Board {
         // returns a tile pointer in that position on the boardVector
         Tile* getTileAtPos(char row, int col) const;
 
+        // Returns the boardRows 
+        int getBoardRows() const;
+
+        // Returns the boardCols
+        int getBoardCols() const;
+
     private:
 
         // The board is a fixed size of 26 x 26
