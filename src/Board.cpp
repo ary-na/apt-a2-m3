@@ -1,6 +1,4 @@
 #include "../include/Board.h"
-#include <iostream>
-#include <exception>
 
 Board::Board() {
     

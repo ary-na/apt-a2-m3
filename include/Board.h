@@ -1,8 +1,10 @@
 #ifndef BOARD_H
 #define BOARD_H
 
-#include <vector> 
 #include "Tile.h"
+#include <vector> 
+#include <iostream>
+#include <exception>
 
 class Board {                                   
     public:

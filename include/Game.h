@@ -5,7 +5,11 @@
 #include "Player.h"
 #include "Board.h"
 #include "ScoreCalculator.h"
+
 #include <string>
+#include <iostream> 
+#include <memory>
+#include <random>
 
 class Game {
     public:
@@ -66,8 +70,8 @@ class Game {
         Player* player2;
         Player* currentPlayer;
 
-        // For calculating the current player's during 
-        // placeTile() and if isPlaceLegal() is true
+        // Calculates the current player's score during
+        // placeTile(), providing isPlaceLegal() is true
         ScoreCalculator* scoreCalculator;
 
         // Takes the tileBag pointer and fills it with 72 tiles,
