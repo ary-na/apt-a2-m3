@@ -5,7 +5,9 @@
 #include "Game.h"
 #include "Validator.h"
 #include <iostream>
+#include <fstream>
 #include <string>
+#include <sstream>
 
 class Controller {
     public:
@@ -47,6 +49,8 @@ class Controller {
 
         // For validating user input 
         Validator* validator;
+
+        std::string trim(const std::string & source);
 };
 
 #endif // CONTROLLER_H

@@ -1,5 +1,4 @@
 #include "../include/Node.h"
-#include <iostream>
 
 Node::Node(Tile* tile) {
     this->tile = tile;

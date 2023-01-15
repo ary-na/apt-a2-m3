@@ -1,12 +1,8 @@
 #include "../include/Board.h"
-#include <iostream>
-#include <exception>
 
-Board::Board() {
-    // The board is a fixed size of 26 x 26
-    this->boardRows = 26;
-    this->boardCols = 26;
-
+Board::Board()
+{
+    
     // Make 1D vector 
     std::vector<Tile*> row(this->boardCols, nullptr);
 
@@ -17,8 +13,8 @@ Board::Board() {
 Board::~Board() {
 
     // Traverse boardVector
-    for (int row = 0; row < this->boardVector.size(); row++) {
-        for (int col = 0; col < this->boardVector[row].size(); col++)  {
+    for (int row = 0; row < this->boardRows; row++) {
+        for (int col = 0; col < this->boardCols; col++)  {
 
             // Delete tile if there is one
             if (this->boardVector[row][col] != nullptr) {
@@ -53,6 +49,8 @@ Tile* Board::getTileAtPos(char row, int col) const {
     // If the given row and col is out of bounds
     if (row >= this->boardRows || row < 0 || 
         col >= this->boardCols || col < 0) {
+        
+        // TODO: Need to catch exception
         throw std::out_of_range("Board getTileAtPos() - Out of bounds");
 
     // Get the tile at the given row and col
@@ -66,7 +64,7 @@ void Board::printBoard() const {
 
     // Print col header 
     int colHeader = 0;
-    for (int col = 0; col <= this->boardVector.size(); col++) {
+    for (int col = 0; col <= this->boardCols; col++) {
         if (col == 0) {
             std::cout << "   ";
         } else {
@@ -80,19 +78,19 @@ void Board::printBoard() const {
     std::cout << std::endl;
 
     // Print col header underline 
-    for (int col = 0; col <= this->boardVector.size(); col++) {
+    for (int col = 0; col <= this->boardCols; col++) {
         std::cout << "---";
     }
     std::cout << std::endl;
 
     // Print row header
     char rowHeader = 'A';
-    for (int row = 0; row < this->boardVector.size(); row++) {
+    for (int row = 0; row < this->boardRows; row++) {
         std::cout << rowHeader << " |";
         ++rowHeader;
 
         // Print tiles in row
-        for (int col = 0; col < this->boardVector[row].size(); col++)  {   
+        for (int col = 0; col < this->boardRows; col++)  {   
             if (this->boardVector[row][col] == nullptr) {
                 std::cout << "  ";
             } else {
@@ -105,6 +103,10 @@ void Board::printBoard() const {
     }
 }
 
-const std::vector<std::vector<Tile*> > &Board::getBoardVector() const {
-    return boardVector;
+int Board::getBoardRows() const {
+    return this->boardRows;
+}
+
+int Board::getBoardCols() const {
+    return this->boardCols;
 }

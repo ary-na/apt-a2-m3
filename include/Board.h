@@ -1,42 +1,45 @@
 #ifndef BOARD_H
 #define BOARD_H
 
-#include <vector>
 #include "Tile.h"
+#include <vector> 
+#include <iostream>
+#include <exception>
 
-class Board {
-public:
+class Board {                                   
+    public:
 
-    // Constructor for when a new game is created,
-    // the board starts with no tiles placed
-    Board();
+        // Constructor for when a new game is created,
+        // the board starts with no tiles placed
+        Board(); 
 
-    ~Board();
+        ~Board();
 
-    // Prints the entire boardVector with tiles
-    void printBoard() const;
+        // Prints the entire boardVector with tiles
+        void printBoard() const;
 
-    // Takes a tile pointer and adds it at a given
-    // row (between A-Z) and col (between 0-25) position
-    void addTileAtPos(Tile *tile, char row, int col);
+        // Takes a tile pointer and adds it at a given 
+        // row (between A-Z) and col (between 0-25) position
+        void addTileAtPos(Tile* tile, char row, int col);
 
-    // Takes a row (between A-Z) and col (between 0-25) and
-    // returns a tile pointer in that position on the boardVector
-    Tile *getTileAtPos(char row, int col) const;
+        // Takes a row (between A-Z) and col (between 0-25) and 
+        // returns a tile pointer in that position on the boardVector
+        Tile* getTileAtPos(char row, int col) const;
 
-    // Getter for boardVector
-    const std::vector<std::vector<Tile *> > &getBoardVector() const;
+        // Returns the boardRows 
+        int getBoardRows() const;
 
-private:
+        // Returns the boardCols
+        int getBoardCols() const;
 
-    // The board is a fixed size of 26 x 26
-    // NOTE: This should probably be #define or const -
-    // compiler with Makefile complains if const
-    int boardRows;
-    int boardCols;
+    private:
 
-    // A 2D vector of tile pointers
-    std::vector<std::vector<Tile *> > boardVector;
+        // The board is a fixed size of 26 x 26
+        const static int boardRows = 26;
+        const static int boardCols = 26;
+
+        // A 2D vector of tile pointers
+        std::vector<std::vector<Tile*> > boardVector;
 };
 
 #endif // BOARD_H

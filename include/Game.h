@@ -5,7 +5,11 @@
 #include "Player.h"
 #include "Board.h"
 #include "ScoreCalculator.h"
+
 #include <string>
+#include <iostream> 
+#include <memory>
+#include <random>
 
 class Game {
     public:
@@ -18,6 +22,9 @@ class Game {
         
         // Returns the currentPlayer pointer 
         Player* getCurrentPlayer() const;
+
+        // Set Current Player 
+        void setCurrentPlayer(Player* player);
 
         // Returns the player1 pointer  
         Player* getPlayer1() const;
@@ -53,6 +60,11 @@ class Game {
         // replaced from the current player's hand, otherwise false:
         // a tile can only be replaced if isReplaceLegal() is true
         bool replaceTile(Tile* tile); 
+        
+        // Used when loading game from file.
+        void setTileBag (LinkedList* tileBag);
+
+        LinkedList* GetTileBag();
 
     private:
 
@@ -66,8 +78,8 @@ class Game {
         Player* player2;
         Player* currentPlayer;
 
-        // For calculating the current player's during 
-        // placeTile() and if isPlaceLegal() is true
+        // Calculates the current player's score during
+        // placeTile(), providing isPlaceLegal() is true
         ScoreCalculator* scoreCalculator;
 
         // Takes the tileBag pointer and fills it with 72 tiles,
