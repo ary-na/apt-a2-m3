@@ -183,8 +183,9 @@ void Controller::loadGame() {
     // then load the game as described in Section 2.3.12 
     //Absorb File 
    
-    std::string player1Name, player2Name;
-    int player1Score, player2Score;   
+    Player* player1;
+    Player* player2;  
+    int boardRows, boardCols;
     LinkedList* player1Hand = new LinkedList();
     LinkedList* player2Hand = new LinkedList();
 
@@ -198,11 +199,13 @@ void Controller::loadGame() {
         {
             // Player 1 Name
             if (x == 1) {
-                player1Name = line;
+                player1 = new Player(line);
 
             //Player 1 Score
             }else if(x == 2) {
-                player1Score = std::stoi(line);
+                std::cout << player1->getScore() << std::endl;
+                player1->addScore(std::stoi(line));
+                std::cout << player1->getScore() << std::endl;
 
             }
             // Player 1 Hand
@@ -217,11 +220,11 @@ void Controller::loadGame() {
 
             // Player 2 Name
             }else if (x == 4) {
-                player2Name = line;
+                player2 = new Player(line);
 
             // Player 2 Score
             } else if (x == 5) {
-                player2Score = std::stoi(line);
+               player2->addScore(std::stoi(line));
             }
             // Player 2 Hand
             else if (x == 6) {
@@ -234,6 +237,83 @@ void Controller::loadGame() {
                 }
             }
 
+            // Board Size 
+            else if (x == 7) {
+
+                // We are currently not absorbing the board size dynamically due to assignment spec. 
+                // Reading in for enhencments. 
+                std::stringstream s_stream(line);
+
+                bool rowComplete = false;
+                while(s_stream.good()) {
+                    std::string substr;
+                    getline(s_stream, substr, ','); //get first string delimited by comma
+
+                    if(!rowComplete) {
+                        boardRows =  std::stoi(substr);
+                        rowComplete = true;
+
+                    } else {
+                        boardCols = std::stoi(substr);
+                    }
+                 
+                }
+
+                // All details to create the board are present,
+                // Create the board now as we will need an initialised 
+                // board when we load the state on the next line
+                this->game = new Game(player1, player2);
+
+                    std::cout << this->game->getPlayer1()->getScore() << std::endl;
+    std::cout << this->game->getPlayer2()->getScore() << std::endl;
+
+                player1 = nullptr;
+                player2 = nullptr;
+
+            // Board state
+            } else if (x == 8) {
+                std::stringstream s_stream(line);
+                while(s_stream.good()) {
+                    std::string substr;
+                    getline(s_stream, substr, ','); //get first string delimited by comma   
+                    substr = trim(substr);
+                   /* std::cout << substr << std::endl;
+                    std::cout << substr[0] << std::endl;
+                    
+                    std::cout << std::stoi(num) << std::endl;
+                    std::cout << substr[3] << std::endl;
+                    std::cout << stoi(substr.substr(substr.find('@') + 2, substr.length())) << std::endl;*/
+                    std::string num(1 , substr[1]);
+                    this->game->placeTile(new Tile(substr[0],std::stoi(num)), substr[3], 
+                                stoi(substr.substr(substr.find('@') + 2, substr.length())));
+
+
+                    //std::string col(1 , substr);
+                    
+                }
+
+            // Tile Bag
+            }  else if (x == 9) {
+                
+                LinkedList* tileBag = new LinkedList();
+                std::stringstream s_stream(line);
+                while(s_stream.good()) {
+                    std::string substr;
+                    getline(s_stream, substr, ','); //get first string delimited by comma
+                    std::string num(1 , substr[1]);
+                    tileBag->addEnd(new Tile(substr[0], std::stoi(num)));
+                }
+
+                this->game->setTileBag(tileBag);
+                tileBag = nullptr;
+
+            // Current Player
+            } else if (x == 10) {
+                this->game->getPlayer1()->getName().compare(line) ? this->game->setCurrentPlayer(this->game->getPlayer1()) :
+                            this->game->setCurrentPlayer(this->game->getPlayer2());
+                
+            }
+
 
 
             ++x;            
@@ -244,31 +324,34 @@ void Controller::loadGame() {
     } 
 
     // Creating the new game
-    Player *player1 = new Player(player1Name);
-    Player *player2 = new Player(player2Name);
-    this->game = new Game(player1, player2);
 
-    // Updating the game
+    
+
+    /* Updating the game
     this->game->getPlayer1()->addScore(player1Score);
     this->game->getPlayer2()->addScore(player2Score);
 
     this->game->getPlayer1()->setHand(player1Hand);
     this->game->getPlayer2()->setHand(player2Hand);
+*/
+    //std::cout << this->game->getPlayer1()->getName() << std::endl;
+    //std::cout << this->game->getPlayer2()->getName() << std::endl;
 
-    std::cout << this->game->getPlayer1()->getName() << std::endl;
-    std::cout << this->game->getPlayer2()->getName() << std::endl;
+    
+    //std::cout << this->game->getBoard()->getBoardRows() << std::endl;
+    //std::cout << this->game->getBoard()->getBoardCols() << std::endl;
 
     std::cout << this->game->getPlayer1()->getScore() << std::endl;
     std::cout << this->game->getPlayer2()->getScore() << std::endl;
 
-    std::cout << player1Hand << std::endl;
-    this->game->getPlayer1()->getHand()->printList();
-    this->game->getPlayer2()->getHand()->printList();
-    
+   // this->game->getPlayer1()->getHand()->printList();
+   // this->game->getPlayer2()->getHand()->printList();
+   // this->game->GetTileBag()->printList();
+
+   // std::cout << this->game->getCurrentPlayer()->getName() << std::endl;
 
     // Delete
-    player1 = nullptr;
-    player2 = nullptr;
+
     player1Hand = nullptr;
     player2Hand = nullptr;
 
@@ -487,4 +570,12 @@ void Controller::endGame() {
     // Then quit, according to Section 2.2.4
 
     exitGame();
+}
+
+// Misc Functions
+std::string Controller::trim(const std::string & source) {
+    std::string s(source);
+    s.erase(0,s.find_first_not_of(" \n\r\t"));
+    s.erase(s.find_last_not_of(" \n\r\t")+1);
+    return s;
 }

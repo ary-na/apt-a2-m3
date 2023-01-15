@@ -49,6 +49,8 @@ class Controller {
 
         // For validating user input 
         Validator* validator;
+
+        std::string trim(const std::string & source);
 };
 
 #endif // CONTROLLER_H

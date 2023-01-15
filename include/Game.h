@@ -19,6 +19,9 @@ class Game {
         // Returns the currentPlayer pointer 
         Player* getCurrentPlayer() const;
 
+        // Set Current Player 
+        void setCurrentPlayer(Player* player);
+
         // Returns the player1 pointer  
         Player* getPlayer1() const;
 
@@ -53,6 +56,11 @@ class Game {
         // replaced from the current player's hand, otherwise false:
         // a tile can only be replaced if isReplaceLegal() is true
         bool replaceTile(Tile* tile); 
+        
+        // Used when loading game from file.
+        void setTileBag (LinkedList* tileBag);
+
+        LinkedList* GetTileBag();
 
     private:
 

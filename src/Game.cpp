@@ -40,6 +40,10 @@ Player* Game::getCurrentPlayer() const {
     return this->currentPlayer;
 }
 
+void Game::setCurrentPlayer(Player* player) {
+    this->currentPlayer = player;
+}
+
 Player* Game::getPlayer1() const {
     return this->player1;
 }
@@ -141,6 +145,15 @@ void Game::shuffleTileBag(LinkedList* tileBag) {
             tileBag->addEnd(new Tile(*tempTileBag->getAtPos(i)));
         }
     }
+}
+
+void Game::setTileBag (LinkedList* tileBag) {
+    this->tileBag = tileBag;
+}
+
+// Delete, just for testing. 
+LinkedList* Game::GetTileBag(){
+    return this->tileBag;
 }
 
 bool Game::isComplete() const {

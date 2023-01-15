@@ -2,7 +2,8 @@
 #include <iostream>
 #include <exception>
 
-Board::Board() {
+Board::Board()
+{
     
     // Make 1D vector 
     std::vector<Tile*> row(this->boardCols, nullptr);

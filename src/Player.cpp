@@ -32,7 +32,6 @@ LinkedList* Player::getHand() const {
 
 void Player::setHand(LinkedList* hand) {
     this->hand = hand;
-    std::cout << this->hand << std::endl;
 }
 
 void Player::addScore(int score) {
