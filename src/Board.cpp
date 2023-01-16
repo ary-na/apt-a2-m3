@@ -135,7 +135,7 @@ bool Board::isEmpty() const {
     return isEmpty;
 }
 
-int Board::getNumOfTitle() const {
+int Board::getNumOfTiles() const {
     return this->numOfTiles;
 }
 

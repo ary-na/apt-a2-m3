@@ -39,7 +39,7 @@ class Board {
         bool isEmpty() const;
 
         // Returns the number of tiles on the board vector 
-        int getNumOfTitle() const;
+        int getNumOfTiles() const;
 
     private:
 
