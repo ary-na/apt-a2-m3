@@ -264,11 +264,8 @@ bool Game::placeTile(Tile* tile, char row, int col) {
         this->board->addTileAtPos(tile, row, col);
         this->currentPlayer->getHand()->deleteByNode(tile);
 
-        // [ALEX] TODO: Calculate the score and assign to score variable
-
         // Update the player’s score
-        int score = 0;
-        score = scoreCalculator->calculateScore(this->board, row, col);
+        int score = scoreCalculator->calculateScore(this->board, row, col);
         this->currentPlayer->addScore(score);
 
         // Draw a replacement tile from the tile bag and add it
