@@ -8,22 +8,33 @@ Board::Board() {
     // Make 2D vector
     this->boardVector = std::vector<std::vector<Tile*> >(this->boardRows, row);
 
-    numOfTiles = 0;
+    // Board starts with no tiles on it
+    this->numOfTiles = 0;
 
     // Don't need to set board size, it is 
     // fixed 26 x 26 for base gameplay 
 }
 
 Board::~Board() {
+    
+    // Check if there are any tiles to delete
+    if (this->numOfTiles > 0) {
+        int tilesDeleted = 0;
 
-    // Traverse boardVector
-    for (int row = 0; row < this->boardRows; row++) {
-        for (int col = 0; col < this->boardCols; col++)  {
+        // Stop traversing when no more tiles to delete
+        while (tilesDeleted != this->numOfTiles) {
 
-            // Delete tile if there is one
-            if (this->boardVector[row][col] != nullptr) {
-                delete this->boardVector[row][col];
-                this->boardVector[row][col] = nullptr;
+            // Traverse boardVector
+            for (int row = 0; row < this->boardRows; row++) {
+                for (int col = 0; col < this->boardCols; col++)  {
+
+                    // Delete tile if there is one
+                    if (this->boardVector[row][col] != nullptr) {
+                        delete this->boardVector[row][col];
+                        this->boardVector[row][col] = nullptr;
+                        ++tilesDeleted;
+                    }
+                }   
             }
         }
     }
