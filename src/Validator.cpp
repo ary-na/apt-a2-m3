@@ -157,3 +157,24 @@ bool Validator::isTileExistAtLocation(char row, int col) {
     } catch (const std::out_of_range &E) {}
     return exists;
 }
+
+bool Validator::isSavedFileExist(std::string fileName) {
+    std::string path = "savedGames/" + fileName + ".txt";
+
+    std::fstream infile;
+    infile.open(path);
+
+    // Check if file exist 
+    if(!infile.is_open()) {
+        return false;
+
+    }
+    
+    infile.close();
+    return true;
+}
+
+
+bool Validator::isPlayerNameValid (std::string playerName) {
+    return playerName.length()== 0 ? false : std::regex_match(playerName, std::regex("^[A-Za-z]+$"));
+}

@@ -4,8 +4,8 @@
 #include "LinkedList.h"
 #include "Game.h"
 #include "Validator.h"
+#include "FileHandler.h"
 #include <iostream>
-#include <fstream>
 #include <string>
 #include <sstream>
 
@@ -50,7 +50,10 @@ class Controller {
         // For validating user input 
         Validator* validator;
 
-        std::string trim(const std::string & source);
+        FileHandler* fileHandler;
+
+        // Absorb the load game file 
+        bool absorbLoadGameFile(std::string fileName);
 };
 
 #endif // CONTROLLER_H

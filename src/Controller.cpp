@@ -3,6 +3,7 @@
 Controller::Controller() {
     this->game = nullptr;
     this->validator = new Validator();
+    this->fileHandler = new FileHandler();
 }
 
 Controller::~Controller() {
@@ -79,11 +80,14 @@ void Controller::newGame() {
         std::cout << "> ", getline(std::cin, name1Input);
         std::cout << std::endl;
 
-        // Players should only consist of letters (no numbers or symbols)
+        // [ARIAN] TODO: Check that player name is valid
+        // - Players should only consist of letters (no numbers or symbols)
 
+        // bool nameValid = validate.name(name1Input);
         // nameValid return true - If name is valid
         // nameValid return false - If name is inValid
-        bool nameValid = validator->isNameValid(name1Input);
+
+        bool nameValid = true;
 
         if (!nameValid) {
             std::cout << "Invalid input!" << std::endl;
@@ -103,12 +107,14 @@ void Controller::newGame() {
         std::cout << "> ", getline(std::cin, name2Input);
         std::cout << std::endl;
 
-        // Players should only consist of letters (no numbers or symbols)
+        // [ARIAN] TODO: Check that player name is valid
+        // - Players should only consist of letters (no numbers or symbols)
 
+        // bool nameValid = validate.name(name1Input);
         // nameValid return true - If name is valid
         // nameValid return false - If name is inValid
 
-        bool nameValid = validator->isNameValid(name2Input);
+        bool nameValid = true;
 
         if (!nameValid) {
             std::cout << "Invalid input!" << std::endl;
@@ -149,212 +155,9 @@ void Controller::loadGame() {
     // The user enters the relative path to 
     // the saved game file, and presses enter
 
-    std::string fileInput = "";
-    std::cout << "> ", getline(std::cin, fileInput);
-    std::cout << std::endl;
-    fileInput = "savedGames/" + fileInput + ".txt";
-
-    std::fstream infile;
-    infile.open(fileInput);
-
-    // Check if file exist 
-    if(!infile.is_open()) {
-        std::cout << "File does not exist" << std::endl;
-        mainMenu();
-
-    }
-
-   
-    
-    // After the filename is provided, the program must then:
-
-    // - Check that the file exists.
-
-
-    // - Check that the format of the file is correct. 
-    // The format for saved games is described in Section 2.3.7.
-
-    // If the filename passes both checks, the program should print a message, 
-    // then load the game as described in Section 2.3.12 
-    //Absorb File 
-   
-    Player* player1;
-    Player* player2;  
-    int boardRows, boardCols;
-    LinkedList* player1Hand = new LinkedList();
-    LinkedList* player2Hand = new LinkedList();
-
-    if(infile.is_open()){
-
-
-
-        int x = 1;
-        std::string line;
-        while (getline(infile,line))
-        {
-            // Player 1 Name
-            if (x == 1) {
-                player1 = new Player(line);
-
-            //Player 1 Score
-            }else if(x == 2) {
-                std::cout << player1->getScore() << std::endl;
-                player1->addScore(std::stoi(line));
-                std::cout << player1->getScore() << std::endl;
-
-            }
-            // Player 1 Hand
-            else if (x == 3) {
-                std::stringstream s_stream(line);
-                while(s_stream.good()) {
-                    std::string substr;
-                    getline(s_stream, substr, ','); //get first string delimited by comma
-                    std::string num(1 , substr[1]);
-                    player1Hand->addEnd(new Tile(substr[0], std::stoi(num)));
-                }
-
-            // Player 2 Name
-            }else if (x == 4) {
-                player2 = new Player(line);
-
-            // Player 2 Score
-            } else if (x == 5) {
-               player2->addScore(std::stoi(line));
-            }
-            // Player 2 Hand
-            else if (x == 6) {
-                std::stringstream s_stream(line);
-                while(s_stream.good()) {
-                    std::string substr;
-                    getline(s_stream, substr, ','); //get first string delimited by comma
-                    std::string num(1 , substr[1]);
-                    player2Hand->addEnd(new Tile(substr[0], std::stoi(num)));
-                }
-            }
-
-            // Board Size 
-            else if (x == 7) {
-
-                // We are currently not absorbing the board size dynamically due to assignment spec. 
-                // Reading in for enhencments. 
-                std::stringstream s_stream(line);
-
-                bool rowComplete = false;
-                while(s_stream.good()) {
-                    std::string substr;
-                    getline(s_stream, substr, ','); //get first string delimited by comma
-
-                    if(!rowComplete) {
-                        boardRows =  std::stoi(substr);
-                        rowComplete = true;
-
-                    } else {
-                        boardCols = std::stoi(substr);
-                    }
-                 
-                }
-
-                // All details to create the board are present,
-                // Create the board now as we will need an initialised 
-                // board when we load the state on the next line
-                this->game = new Game(player1, player2);
-
-                    std::cout << this->game->getPlayer1()->getScore() << std::endl;
-    std::cout << this->game->getPlayer2()->getScore() << std::endl;
-
-                player1 = nullptr;
-                player2 = nullptr;
-
-            // Board state
-            } else if (x == 8) {
-                std::stringstream s_stream(line);
-                while(s_stream.good()) {
-                    std::string substr;
-                    getline(s_stream, substr, ','); //get first string delimited by comma   
-                    substr = trim(substr);
-                   /* std::cout << substr << std::endl;
-                    std::cout << substr[0] << std::endl;
-                    
-                    std::cout << std::stoi(num) << std::endl;
-                    std::cout << substr[3] << std::endl;
-                    std::cout << stoi(substr.substr(substr.find('@') + 2, substr.length())) << std::endl;*/
-                    std::string num(1 , substr[1]);
-                    this->game->placeTile(new Tile(substr[0],std::stoi(num)), substr[3], 
-                                stoi(substr.substr(substr.find('@') + 2, substr.length())));
-
-
-                    //std::string col(1 , substr);
-                    
-                }
-
-            // Tile Bag
-            }  else if (x == 9) {
-                
-                LinkedList* tileBag = new LinkedList();
-                std::stringstream s_stream(line);
-                while(s_stream.good()) {
-                    std::string substr;
-                    getline(s_stream, substr, ','); //get first string delimited by comma
-                    std::string num(1 , substr[1]);
-                    tileBag->addEnd(new Tile(substr[0], std::stoi(num)));
-                }
-
-                this->game->setTileBag(tileBag);
-                tileBag = nullptr;
-
-            // Current Player
-            } else if (x == 10) {
-                this->game->getPlayer1()->getName().compare(line) ? this->game->setCurrentPlayer(this->game->getPlayer1()) :
-                            this->game->setCurrentPlayer(this->game->getPlayer2());
-                
-            }
-
-
-
-            ++x;            
-        }
-        
-        infile.close();
-
-    } 
-
-    // Creating the new game
-
-    
-
-    /* Updating the game
-    this->game->getPlayer1()->addScore(player1Score);
-    this->game->getPlayer2()->addScore(player2Score);
-
-    this->game->getPlayer1()->setHand(player1Hand);
-    this->game->getPlayer2()->setHand(player2Hand);
-*/
-    //std::cout << this->game->getPlayer1()->getName() << std::endl;
-    //std::cout << this->game->getPlayer2()->getName() << std::endl;
-
-    
-    //std::cout << this->game->getBoard()->getBoardRows() << std::endl;
-    //std::cout << this->game->getBoard()->getBoardCols() << std::endl;
-
-    std::cout << this->game->getPlayer1()->getScore() << std::endl;
-    std::cout << this->game->getPlayer2()->getScore() << std::endl;
-
-   // this->game->getPlayer1()->getHand()->printList();
-   // this->game->getPlayer2()->getHand()->printList();
-   // this->game->GetTileBag()->printList();
-
-   // std::cout << this->game->getCurrentPlayer()->getName() << std::endl;
-
-    // Delete
-
-    player1Hand = nullptr;
-    player2Hand = nullptr;
-
-    std::cout << "Qwirkle game successfully loaded" << std::endl;
-
-    // and continue with normal gameplay as described in Section 2.3.
-
-    //baseGameplay();
+    std::string fileName = "";
+    std::cout << "> ", getline(std::cin, fileName);
+    std::cout << std::endl;    
 }
 
 void Controller::credits() {
@@ -368,19 +171,22 @@ void Controller::credits() {
     std::cout << "Email: s3749114@student.rmit.edu.au" << std::endl;
     std::cout << std::endl;
 
+    // [EVERYONE] TODO: Student 2 information
     std::cout << "Name: Jacob Depares" << std::endl;
-    std::cout << "Student ID: s3851480" << std::endl;
-    std::cout << "Email: s3851480@student.rmit.edu.au" << std::endl;
+    std::cout << "Student ID: S3851480" << std::endl;
+    std::cout << "Email: S3851480@student.rmit.edu.au" << std::endl;
     std::cout << std::endl;
 
-    std::cout << "Name: Alexander Barron" << std::endl;
-    std::cout << "Student ID: s3831619" << std::endl;
-    std::cout << "Email: s3831619@student.rmit.edu.au" << std::endl;
+    // [EVERYONE] TODO: Student 3 information
+    std::cout << "Name: " << std::endl;
+    std::cout << "Student ID: " << std::endl;
+    std::cout << "Email: @student.rmit.edu.au" << std::endl;
     std::cout << std::endl;
 
-    std::cout << "Name: Arian Najafi Yamchelo" << std::endl;
-    std::cout << "Student ID: S3910902" << std::endl;
-    std::cout << "Email: S3910902@student.rmit.edu.au" << std::endl;
+    // [EVERYONE] TODO: Student 4 information
+    std::cout << "Name: " << std::endl;
+    std::cout << "Student ID: " << std::endl;
+    std::cout << "Email: @student.rmit.edu.au" << std::endl;
     std::cout << std::endl;
 
     // After printing the student details, 
@@ -394,10 +200,10 @@ void Controller::exitGame() {
 }
 
 void Controller::baseGameplay() {
-    bool gameComplete = this->game->isComplete();
+    bool gameComplete = game->isComplete();
     while (!gameComplete) {
         takeTurn();
-        gameComplete = this->game->isComplete();
+        gameComplete = game->isComplete();
     }
     endGame();
 }
@@ -406,28 +212,28 @@ void Controller::takeTurn() {
 
     // The name of the current player
 
-    std::cout << this->game->getCurrentPlayer()->getName()
+    std::cout << game->getCurrentPlayer()->getName()
               << ", it's your turn" << std::endl;
     std::cout << std::endl;
 
     // The scores of both players
 
-    std::cout << "Score for " << this->game->getPlayer1()->getName() << ": "
-              << this->game->getPlayer1()->getScore() << std::endl;
+    std::cout << "Score for " << game->getPlayer1()->getName() << ": "
+              << game->getPlayer1()->getScore() << std::endl;
 
-    std::cout << "Score for " << this->game->getPlayer2()->getName() << ": "
-              << this->game->getPlayer2()->getScore() << std::endl;
+    std::cout << "Score for " << game->getPlayer2()->getName() << ": "
+              << game->getPlayer2()->getScore() << std::endl;
     std::cout << std::endl;
 
     // The state of the board
 
-    this->game->getBoard()->printBoard();
+    game->getBoard()->printBoard();
     std::cout << std::endl;
 
     // The tiles in the current player’s hand
 
     std::cout << "Your hand is" << std::endl;
-    this->game->getCurrentPlayer()->getHand()->printList();
+    game->getCurrentPlayer()->getHand()->printList();
     std::cout << std::endl;
 
     // The user prompt
@@ -473,7 +279,7 @@ void Controller::takeTurn() {
 
             Tile *tileInput = new Tile(colourInput, shapeInput);
 
-            bool tilePlaced = this->game->placeTile(tileInput, rowInput, colInput);
+            bool tilePlaced = game->placeTile(tileInput, rowInput, colInput);
             // tilePlaced return true - If tile successfully placed
             // tilePlaced return false - If illegal move
 
@@ -493,7 +299,7 @@ void Controller::takeTurn() {
             Shape shapeInput = commandInput[9] - '0';
             Tile *tileInput = new Tile(colourInput, shapeInput);
 
-            bool tileReplaced = this->game->replaceTile(tileInput);
+            bool tileReplaced = game->replaceTile(tileInput);
             // tileReplaced return true - If tile successfully replaced
             // tileReplaced return false - If illegal move
 
@@ -545,29 +351,21 @@ void Controller::endGame() {
     // Display the scores
 
     std::cout << "Score for "
-              << this->game->getPlayer1()->getName() << ": "
-              << this->game->getPlayer1()->getScore() << std::endl;
+              << game->getPlayer1()->getName() << ": "
+              << game->getPlayer1()->getScore() << std::endl;
 
     std::cout << "Score for "
-              << this->game->getPlayer2()->getName() << ": "
-              << this->game->getPlayer2()->getScore() << std::endl;
+              << game->getPlayer2()->getName() << ": "
+              << game->getPlayer2()->getScore() << std::endl;
 
     std::cout << std::endl;
 
     // Display the name of the winning player
 
-    std::cout << "Player " << this->game->getHighestScorePlayer()
+    std::cout << "Player " << game->getHighestScorePlayer()
               << " won!" << std::endl;
 
     // Then quit, according to Section 2.2.4
 
     exitGame();
-}
-
-// Misc Functions
-std::string Controller::trim(const std::string & source) {
-    std::string s(source);
-    s.erase(0,s.find_first_not_of(" \n\r\t"));
-    s.erase(s.find_last_not_of(" \n\r\t")+1);
-    return s;
 }

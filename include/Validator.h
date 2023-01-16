@@ -4,6 +4,8 @@
 #include <string>
 #include "Board.h"
 #include "LinkedList.h"
+#include <iostream>
+#include <fstream>
 
 class Validator {
 public:
@@ -41,6 +43,11 @@ public:
 
     // Check if a tile already exists on the board
     bool isTileExistAtLocation(char row, int col);
+
+    // Check if saved file exist
+    bool isSavedFileExist(std::string fileName);
+
+    bool isPlayerNameValid (std::string playerName);
 
 private:
     Board *board;
