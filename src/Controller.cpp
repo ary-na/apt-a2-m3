@@ -377,7 +377,6 @@ void Controller::credits() {
     std::cout << "Email: s3831619@student.rmit.edu.au" << std::endl;
     std::cout << std::endl;
 
-    // [EVERYONE] TODO: Student 4 information
     std::cout << "Name: Arian Najafi Yamchelo" << std::endl;
     std::cout << "Student ID: S3910902" << std::endl;
     std::cout << "Email: S3910902@student.rmit.edu.au" << std::endl;
