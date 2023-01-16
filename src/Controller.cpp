@@ -171,22 +171,19 @@ void Controller::credits() {
     std::cout << "Email: s3749114@student.rmit.edu.au" << std::endl;
     std::cout << std::endl;
 
-    // [EVERYONE] TODO: Student 2 information
     std::cout << "Name: Jacob Depares" << std::endl;
     std::cout << "Student ID: S3851480" << std::endl;
     std::cout << "Email: S3851480@student.rmit.edu.au" << std::endl;
     std::cout << std::endl;
 
-    // [EVERYONE] TODO: Student 3 information
-    std::cout << "Name: " << std::endl;
-    std::cout << "Student ID: " << std::endl;
-    std::cout << "Email: @student.rmit.edu.au" << std::endl;
+    std::cout << "Name: Alexander Barron" << std::endl;
+    std::cout << "Student ID: s3831619" << std::endl;
+    std::cout << "Email: s3831619@student.rmit.edu.au" << std::endl;
     std::cout << std::endl;
 
-    // [EVERYONE] TODO: Student 4 information
-    std::cout << "Name: " << std::endl;
-    std::cout << "Student ID: " << std::endl;
-    std::cout << "Email: @student.rmit.edu.au" << std::endl;
+    std::cout << "Name: Arian Najafi Yamchelo" << std::endl;
+    std::cout << "Student ID: S3910902" << std::endl;
+    std::cout << "Email: S3910902@student.rmit.edu.au" << std::endl;
     std::cout << std::endl;
 
     // After printing the student details, 
