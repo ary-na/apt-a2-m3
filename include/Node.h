@@ -12,7 +12,8 @@ class Node {
 
         Tile* tile;
         Node* next;
-
+        Node* prev;
+        
     private:
 };
 
