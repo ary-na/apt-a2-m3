@@ -138,7 +138,3 @@ bool Board::isEmpty() const {
 int Board::getNumOfTiles() const {
     return this->numOfTiles;
 }
-
-const std::vector<std::vector<Tile *> > &Board::getBoardVector() const {
-    return this->boardVector;
-}
