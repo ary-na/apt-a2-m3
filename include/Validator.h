@@ -16,6 +16,10 @@ public:
     ~Validator();
 
     const static int MAX_NUM_TILES = 6;
+    const static int MIN_START_COL = 0;
+    const static int MAX_START_COL = 25;
+    const static int MIN_START_ROW = 'A';
+    const static int MAX_START_ROW = 'Z';
 
     // Validate username input (Players should only consist of letters (no numbers or symbols))
     static bool isNameValid(const std::string &input);
@@ -34,6 +38,9 @@ public:
 
     // Check matching of tiles based on the colours and shapes
     bool isTileShapeMatch(const LinkedList* line, Tile *tile);
+
+    // Check if a tile already exists on the board
+    bool isTileExistAtLocation(char row, int col);
 
 private:
     Board *board;

@@ -1,8 +1,6 @@
 #include "../include/Validator.h"
 #include <regex>
 
-// TODO: Fix out of range exception for board boundaries
-
 Validator::Validator() : board() {
     this->tileRow = new LinkedList();
     this->tileColumn = new LinkedList();
@@ -26,39 +24,48 @@ bool Validator::isNameValid(const std::string &input) {
 
 LinkedList *Validator::getRowTiles(char row, int col) {
 
-    // Add tiles up to down
+    // Tiles up to down
     char rowStartUp = row + 1;
-    while (board->getTileAtPos(rowStartUp, col) != nullptr) {
-        this->tileRow->addEnd(board->getTileAtPos(rowStartUp, col));
-        rowStartUp++;
-    }
 
-    // Add tiles down to up
+    // Tiles down to up
     char rowStartDown = row - 1;
-    while (board->getTileAtPos(rowStartDown, col) != nullptr) {
-        this->tileRow->addEnd(board->getTileAtPos(rowStartDown, col));
-        rowStartDown--;
-    }
+
+    try {
+        // Add tiles to linked list row while tile row + 1 does not equal to nullptr
+        while (rowStartUp <= MAX_START_ROW && board->getTileAtPos(rowStartUp, col) != nullptr) {
+            this->tileRow->addEnd(board->getTileAtPos(rowStartUp, col));
+            rowStartUp++;
+        }
+        // Add tiles to linked list row while tile row - 1 does not equal to nullptr
+        while (rowStartDown >= MIN_START_ROW && board->getTileAtPos(rowStartDown, col) != nullptr) {
+            this->tileRow->addEnd(board->getTileAtPos(rowStartDown, col));
+            rowStartDown--;
+        }
+    } catch (const std::out_of_range &E) {}
 
     return this->tileRow;
 }
 
 LinkedList *Validator::getColumnTiles(char row, int col) {
 
-    // Add tiles left to right
+    // Tiles left to right
     int columnStartLeft = col + 1;
-    while (board->getTileAtPos(row, columnStartLeft) != nullptr) {
-        this->tileColumn->addEnd(board->getTileAtPos(row, columnStartLeft));
-        columnStartLeft++;
-    }
 
-    // Add tiles right to left
+    // Tiles right to left
     int columnStartRight = col - 1;
-    while (board->getTileAtPos(row, columnStartRight) != nullptr) {
-        this->tileColumn->addEnd(board->getTileAtPos(row, columnStartRight));
-        columnStartRight--;
-    }
 
+    try {
+        // Add tiles to linked list col while tile column + 1 does not equal to nullptr
+        while (columnStartLeft <= MAX_START_COL && board->getTileAtPos(row, columnStartLeft) != nullptr) {
+            this->tileColumn->addEnd(board->getTileAtPos(row, columnStartLeft));
+            columnStartLeft++;
+        }
+        // Add tiles to linked list col while tile column - 1 does not equal to nullptr
+        while (columnStartRight >= MIN_START_COL && board->getTileAtPos(row, columnStartRight) != nullptr) {
+            this->tileColumn->addEnd(board->getTileAtPos(row, columnStartRight));
+            columnStartRight--;
+        }
+    } catch (const std::out_of_range &E) {}
     return this->tileColumn;
 }
 
@@ -102,4 +109,14 @@ bool Validator::isTileShapeMatch(const LinkedList *line, Tile *tile) {
             match = false;
 
     return match;
+}
+
+bool Validator::isTileExistAtLocation(char row, int col) {
+    bool exists = true;
+
+    try {
+        // Tile already exists at the location
+        exists = board->getTileAtPos(row, col) != nullptr;
+    } catch (const std::out_of_range &E) {}
+    return exists;
 }
