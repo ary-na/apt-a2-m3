@@ -24,7 +24,7 @@ public:
     const static int MAX_START_ROW = 'Z';
 
     // Validate username input (Players should only consist of letters (no numbers or symbols))
-    static bool isNameValid(const std::string &input);
+    bool isNameValid(const std::string &input);
 
     // Return a list of tiles added to the row
     LinkedList *getRowTiles(char row, int col);
