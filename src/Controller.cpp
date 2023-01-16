@@ -197,10 +197,10 @@ void Controller::exitGame() {
 }
 
 void Controller::baseGameplay() {
-    bool gameComplete = game->isComplete();
+    bool gameComplete = this->game->isComplete();
     while (!gameComplete) {
         takeTurn();
-        gameComplete = game->isComplete();
+        gameComplete = this->game->isComplete();
     }
     endGame();
 }
@@ -209,28 +209,28 @@ void Controller::takeTurn() {
 
     // The name of the current player
 
-    std::cout << game->getCurrentPlayer()->getName()
+    std::cout << this->game->getCurrentPlayer()->getName()
               << ", it's your turn" << std::endl;
     std::cout << std::endl;
 
     // The scores of both players
 
-    std::cout << "Score for " << game->getPlayer1()->getName() << ": "
-              << game->getPlayer1()->getScore() << std::endl;
+    std::cout << "Score for " << this->game->getPlayer1()->getName() << ": "
+              << this->game->getPlayer1()->getScore() << std::endl;
 
-    std::cout << "Score for " << game->getPlayer2()->getName() << ": "
-              << game->getPlayer2()->getScore() << std::endl;
+    std::cout << "Score for " << this->game->getPlayer2()->getName() << ": "
+              << this->game->getPlayer2()->getScore() << std::endl;
     std::cout << std::endl;
 
     // The state of the board
 
-    game->getBoard()->printBoard();
+    this->game->getBoard()->printBoard();
     std::cout << std::endl;
 
     // The tiles in the current player’s hand
 
     std::cout << "Your hand is" << std::endl;
-    game->getCurrentPlayer()->getHand()->printList();
+    this->game->getCurrentPlayer()->getHand()->printList();
     std::cout << std::endl;
 
     // The user prompt
@@ -276,7 +276,7 @@ void Controller::takeTurn() {
 
             Tile *tileInput = new Tile(colourInput, shapeInput);
 
-            bool tilePlaced = game->placeTile(tileInput, rowInput, colInput);
+            bool tilePlaced = this->game->placeTile(tileInput, rowInput, colInput);
             // tilePlaced return true - If tile successfully placed
             // tilePlaced return false - If illegal move
 
@@ -296,7 +296,7 @@ void Controller::takeTurn() {
             Shape shapeInput = commandInput[9] - '0';
             Tile *tileInput = new Tile(colourInput, shapeInput);
 
-            bool tileReplaced = game->replaceTile(tileInput);
+            bool tileReplaced = this->game->replaceTile(tileInput);
             // tileReplaced return true - If tile successfully replaced
             // tileReplaced return false - If illegal move
 
@@ -348,18 +348,18 @@ void Controller::endGame() {
     // Display the scores
 
     std::cout << "Score for "
-              << game->getPlayer1()->getName() << ": "
-              << game->getPlayer1()->getScore() << std::endl;
+              << this->game->getPlayer1()->getName() << ": "
+              << this->game->getPlayer1()->getScore() << std::endl;
 
     std::cout << "Score for "
-              << game->getPlayer2()->getName() << ": "
-              << game->getPlayer2()->getScore() << std::endl;
+              << this->game->getPlayer2()->getName() << ": "
+              << this->game->getPlayer2()->getScore() << std::endl;
 
     std::cout << std::endl;
 
     // Display the name of the winning player
 
-    std::cout << "Player " << game->getHighestScorePlayer()
+    std::cout << "Player " << this->game->getHighestScorePlayer()
               << " won!" << std::endl;
 
     // Then quit, according to Section 2.2.4
