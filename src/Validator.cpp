@@ -19,10 +19,21 @@ Validator::~Validator() {
 }
 
 bool Validator::isNameValid(const std::string &input) {
+
+    // @author - Arian Najafi Yamchelo
+    // This function should be called with a string parameter.
+    // It will return a boolean value depending on the string input.
+    // This is a public function and can be called from the controller to validate username input.
+
     return std::regex_match(input, std::regex("[A-Z]+"));
 }
 
 LinkedList *Validator::getRowTiles(char row, int col) {
+
+    // @author - Arian Najafi Yamchelo
+    // This function should be called with tile coordinates.
+    // It will return a linked list of tiles placed on a row.
+    // This is a public function and can be called by the game to validate the legal tile placement of rows.
 
     // Tiles up to down
     char rowStartUp = row + 1;
@@ -48,6 +59,11 @@ LinkedList *Validator::getRowTiles(char row, int col) {
 
 LinkedList *Validator::getColumnTiles(char row, int col) {
 
+    // @author - Arian Najafi Yamchelo
+    // This function should be called with tile coordinates.
+    // It will return a linked list of tiles placed on a column.
+    // This is a public function and can be called by the game to validate the legal tile placement of columns.
+
     // Tiles left to right
     int columnStartLeft = col + 1;
 
@@ -71,6 +87,11 @@ LinkedList *Validator::getColumnTiles(char row, int col) {
 
 bool Validator::isBoardEmpty() {
 
+    // @author - Arian Najafi Yamchelo
+    // This function does not take any parameters.
+    // It will return a boolean value depending on whether the board is empty or not.
+    // This is a public function and can be called by the game to check if the board is empty.
+
     bool empty = true;
 
     // Traverse boardVector
@@ -87,6 +108,11 @@ bool Validator::isBoardEmpty() {
 
 bool Validator::isTileColourMatch(const LinkedList *line, Tile *tile) {
 
+    // @author - Arian Najafi Yamchelo
+    // This function should be called with a linked list of rows or columns and a played tile.
+    // It will return a boolean value depending on whether the colour of the tile played matches the tile next to it.
+    // This is a public function and can be called by the game to check if the colour of the tile played matches the tile next to it.
+
     bool match = true;
 
     // Traverse linked list
@@ -100,6 +126,11 @@ bool Validator::isTileColourMatch(const LinkedList *line, Tile *tile) {
 
 bool Validator::isTileShapeMatch(const LinkedList *line, Tile *tile) {
 
+    // @author - Arian Najafi Yamchelo
+    // This function should be called with a linked list of rows or columns and a played tile.
+    // It will return a boolean value depending on whether the shape of the tile played matches the tile next to it.
+    // This is a public function and can be called by the game to check if the shape of the tile played matches the tile next to it.
+
     bool match = true;
 
     // Traverse linked list
@@ -112,6 +143,12 @@ bool Validator::isTileShapeMatch(const LinkedList *line, Tile *tile) {
 }
 
 bool Validator::isTileExistAtLocation(char row, int col) {
+
+    // @author - Arian Najafi Yamchelo
+    // This function should be called with tile coordinates.
+    // It will return a boolean value depending on whether a tile exists at the location.
+    // This is a public function and can be called by the game to validate if a tile exists at a location.
+
     bool exists = true;
 
     try {
