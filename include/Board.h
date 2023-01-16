@@ -26,6 +26,9 @@ class Board {
         // returns a tile pointer in that position on the boardVector
         Tile* getTileAtPos(char row, int col) const;
 
+        // Returns the boardVector
+        const std::vector<std::vector<Tile *> > &getBoardVector() const;
+
         // Returns the boardRows 
         int getBoardRows() const;
 

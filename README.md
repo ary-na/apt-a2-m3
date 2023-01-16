@@ -9,3 +9,11 @@ For more information visit [Academic Integrity at RMIT](https://www.rmit.edu.au/
 ## How to run
 
 ### References
+
+Software Testing Help. (n.d.). C++ regex Tutorial: Regular Expressions In C++ With Examples. [online] Available at: https://www.softwaretestinghelp.com/regex-in-cpp/.
+
+Stack Overflow. (n.d.). c - segmentation fault linked list. [online] Available at: https://stackoverflow.com/questions/21039913/segmentation-fault-linked-list [Accessed 13 Jan. 2023].
+
+Stack Overflow. (n.d.). char - How do I increment letters in c++? [online] Available at: https://stackoverflow.com/questions/8487255/how-do-i-increment-letters-in-c [Accessed 13 Jan. 2023].
+
+Stack Overflow. (n.d.). c++ - Checking whether a vector is empty. [online] Available at: https://stackoverflow.com/questions/3863282/checking-whether-a-vector-is-empty [Accessed 13 Jan. 2023].

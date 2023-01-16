@@ -110,3 +110,7 @@ int Board::getBoardRows() const {
 int Board::getBoardCols() const {
     return this->boardCols;
 }
+
+const std::vector<std::vector<Tile *> > &Board::getBoardVector() const {
+    return this->boardVector;
+}
