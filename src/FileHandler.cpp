@@ -31,40 +31,42 @@ bool FileHandler::absorbLoadGameFile(std::string fileName) {
     // Save the content to a vector allowing the game to be created cleanly.
     std::vector<std::string> fileContent;
     
-     if(infile.is_open()) {        
+    if(infile.is_open()) {        
         std::string line;
         while (getline(infile,line)) 
             fileContent.push_back(line);
     }
 
+    infile.close();
 
     Player* P1 = new Player(fileContent[0],std::stoi(fileContent[1]),playerHandFromFile(fileContent[2]));
     Player* P2 = new Player(fileContent[3],std::stoi(fileContent[4]),playerHandFromFile(fileContent[5]));
 
-    boardFromFile (fileContent[7]);
+    Game* game = new Game(P1, P2, new Board(), tileBagFromFile(fileContent[8]),currentPlayerFromName(P1, P2, fileContent[9]));
+    boardStateFromFile (game, fileContent[7]);
     
-    std::cout << P1->getName() << std::endl;  
-    std::cout << P1->getScore() << std::endl;  
-    P1->getHand()->printList();
+    // Need to return the game here. 
+    std::cout << game->getPlayer1()->getName() << std::endl;  
+    std::cout << game->getPlayer1()->getScore() << std::endl;  
+    game->getPlayer1()->getHand()->printList();
 
-    std::cout << P2->getName() << std::endl;  
-    std::cout << P2->getScore() << std::endl;  
-    P2->getHand()->printList();
+    std::cout << game->getPlayer2()->getName() << std::endl;  
+    std::cout << game->getPlayer2()->getScore() << std::endl;  
+    game->getPlayer2()->getHand()->printList();
+
+    game->GetTileBag()->printList();
+
+    std::cout << game->getCurrentPlayer()->getName() << std::endl;
     
-    infile.close();
+    
+    
+
+    delete P1;
+    delete P2;
+    P1 = nullptr;
+    P2 = nullptr;
+
     return true;
-}
-
-Board* FileHandler:: boardFromFile (std::string boardState) {
-    std::stringstream s_stream(boardState);
-        while(s_stream.good()) {
-            std::string substr;
-            getline(s_stream, substr, ',');
-            substr = trim(substr);
-
-            std::cout << substr << std::endl;
-
-        }
 }
 
 LinkedList* FileHandler::playerHandFromFile (std::string playerHandString){
@@ -77,6 +79,36 @@ LinkedList* FileHandler::playerHandFromFile (std::string playerHandString){
         playerHand->addEnd(new Tile(substr[0], std::stoi(num)));
     }
     return playerHand;
+}
+
+void FileHandler:: boardStateFromFile (Game* game, std::string boardState) {
+    std::stringstream s_stream(boardState);
+        while(s_stream.good()) {
+            std::string substr;
+            getline(s_stream, substr, ',');
+            substr = trim(substr);
+
+            std::string num(1 , substr[1]);
+            game->placeTile(new Tile(substr[0],std::stoi(num)), substr[3], 
+                    stoi(substr.substr(substr.find('@') + 2, substr.length())));
+
+        }
+}
+
+LinkedList* FileHandler::tileBagFromFile (std::string tileBagString){
+    LinkedList* tileBag = new LinkedList();
+    std::stringstream s_stream(tileBagString);
+    while(s_stream.good()) {
+        std::string substr;
+        getline(s_stream, substr, ','); //get first string delimited by comma
+        std::string num(1 , substr[1]);
+        tileBag->addEnd(new Tile(substr[0], std::stoi(num)));
+    }
+    return tileBag;
+}
+
+Player* FileHandler::currentPlayerFromName (Player* P1, Player* P2, std::string playerName){
+    return  P1->getName().compare(playerName) == 1 ? P1 : P2;
 }
 
 std::string FileHandler::trim(const std::string & source) {
