@@ -8,6 +8,8 @@ Board::Board() {
     // Make 2D vector
     this->boardVector = std::vector<std::vector<Tile*> >(this->boardRows, row);
 
+    numOfTiles = 0;
+
     // Don't need to set board size, it is 
     // fixed 26 x 26 for base gameplay 
 }
@@ -41,6 +43,7 @@ void Board::addTileAtPos(Tile* tile, char row, int col) {
             this->boardVector[row][col] = tile;
         }
     }
+    ++this->numOfTiles;
 }
 
 Tile* Board::getTileAtPos(char row, int col) const {
@@ -111,6 +114,18 @@ int Board::getBoardRows() const {
 
 int Board::getBoardCols() const {
     return this->boardCols;
+}
+
+bool Board::isEmpty() const {
+    bool isEmpty = true;
+    if (this->numOfTiles > 0) {
+        isEmpty = false;
+    }
+    return isEmpty;
+}
+
+int Board::getNumOfTitle() const {
+    return this->numOfTiles;
 }
 
 const std::vector<std::vector<Tile *> > &Board::getBoardVector() const {

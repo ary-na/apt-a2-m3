@@ -29,17 +29,27 @@ class Board {
         // Returns the boardVector
         const std::vector<std::vector<Tile *> > &getBoardVector() const;
 
-        // Returns the boardRows 
+        // Returns the number of boardRows 
         int getBoardRows() const;
 
-        // Returns the boardCols
+        // Returns the number of boardCols
         int getBoardCols() const;
+        
+        // Returns true if numOfTiles is < 1, otherwise false
+        bool isEmpty() const;
+
+        // Returns the number of tiles on the board vector 
+        int getNumOfTitle() const;
 
     private:
 
         // The board is a fixed size of 26 x 26
         const static int boardRows = 26;
         const static int boardCols = 26;
+
+        // Stores the number of tiles on the board,
+        // gets updated when addTileAtPos()
+        int numOfTiles;
 
         // A 2D vector of tile pointers
         std::vector<std::vector<Tile*> > boardVector;
