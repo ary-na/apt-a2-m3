@@ -159,7 +159,7 @@ bool Validator::isTileExistAtLocation(char row, int col) {
 }
 
 bool Validator::isSavedFileExist(std::string fileName) {
-    std::string path = "savedGames/" + fileName + ".txt";
+    std::string path = "savedGames/" + fileName + ".save";
 
     std::fstream infile;
     infile.open(path);
@@ -174,7 +174,3 @@ bool Validator::isSavedFileExist(std::string fileName) {
     return true;
 }
 
-
-bool Validator::isPlayerNameValid (std::string playerName) {
-    return playerName.length()== 0 ? false : std::regex_match(playerName, std::regex("^[A-Za-z]+$"));
-}
