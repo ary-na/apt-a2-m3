@@ -73,7 +73,7 @@ void Controller::newGame() {
               << "(uppercase characters only)" << std::endl;
 
     bool awaitingInput = true;
-    std::string name1Input;
+    std::string name1Input = "";
 
     while (awaitingInput) {
         std::cout << "> ", getline(std::cin, name1Input);
@@ -97,7 +97,7 @@ void Controller::newGame() {
               << "(uppercase characters only)" << std::endl;
 
     awaitingInput = true;
-    std::string name2Input;
+    std::string name2Input = "";
 
     while (awaitingInput) {
         std::cout << "> ", getline(std::cin, name2Input);
@@ -107,6 +107,7 @@ void Controller::newGame() {
 
         // nameValid return true - If name is valid
         // nameValid return false - If name is inValid
+
         bool nameValid = validator->isNameValid(name2Input);
 
         if (!nameValid) {
@@ -377,7 +378,6 @@ void Controller::credits() {
     std::cout << "Email: s3831619@student.rmit.edu.au" << std::endl;
     std::cout << std::endl;
 
-    // [EVERYONE] TODO: Student 4 information
     std::cout << "Name: Arian Najafi Yamchelo" << std::endl;
     std::cout << "Student ID: S3910902" << std::endl;
     std::cout << "Email: S3910902@student.rmit.edu.au" << std::endl;

@@ -8,7 +8,7 @@ Game::Game(Player* player1, Player* player2) {
     fillTileBag(this->tileBag);
     shuffleTileBag(this->tileBag);
 
-    // Set up the initial player hands
+    // Set up the initial players and their hands
     this->player1 = player1;
     this->player2 = player2;
     fillHand(player1->getHand());
@@ -19,6 +19,34 @@ Game::Game(Player* player1, Player* player2) {
     this->currentPlayer = player1;
     this->scoreCalculator = new ScoreCalculator();
 }
+
+Game::Game(Player* player1, Player* player2, Board* board, 
+           LinkedList* tileBag, Player* currentPlayer) {
+
+    // TODO: Check all tiles are there
+
+    // bool correctTiles = checkTiles();
+    bool correctTiles = true;
+
+    if (!correctTiles) {
+
+        // TODO: Catch exception
+        // TODO: Throw exception
+
+    } else {
+        // Load the tile bag
+        this->tileBag = tileBag;
+
+        // Load the players and their hands
+        this->player1 = player1;
+        this->player2 = player2;
+
+        // Load the board and current player
+        this->board = board;
+        this->currentPlayer = currentPlayer;
+        this->scoreCalculator = new ScoreCalculator();
+    }
+} 
 
 Game::~Game() {
     delete this->player1;
@@ -56,10 +84,16 @@ Board* Game::getBoard() const {
 
 std::string Game::getHighestScorePlayer() const {
     std::string winner = "";
+
+    // Check if player 1 has the highest score
     if (this->player1->getScore() > this->player2->getScore()) {
         winner = this->player1->getName();
+
+    // Check if player 2 has the highest score
     } else if (this->player1->getScore() < this->player2->getScore()) {
         winner = this->player2->getName();
+
+    // If both players have the same score
     } else {
         winner = this->player1->getName() + " and " + this->player2->getName();
     }
@@ -147,11 +181,6 @@ void Game::shuffleTileBag(LinkedList* tileBag) {
 
 void Game::setTileBag (LinkedList* tileBag) {
     this->tileBag = tileBag;
-}
-
-// Delete, just for testing. 
-LinkedList* Game::GetTileBag(){
-    return this->tileBag;
 }
 
 bool Game::isComplete() const {
@@ -250,4 +279,9 @@ bool Game::placeTile(Tile* tile, char row, int col) {
         nextPlayerTurn();
     } 
     return isLegal;
+}
+
+// Delete, just for testing. 
+LinkedList* Game::GetTileBag(){
+    return this->tileBag;
 }

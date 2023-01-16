@@ -1,13 +1,15 @@
 #include "../include/Board.h"
 
-Board::Board()
-{
+Board::Board() {
     
     // Make 1D vector 
     std::vector<Tile*> row(this->boardCols, nullptr);
 
     // Make 2D vector
     this->boardVector = std::vector<std::vector<Tile*> >(this->boardRows, row);
+
+    // Don't need to set board size, it is 
+    // fixed 26 x 26 for base gameplay 
 }
 
 Board::~Board() {
@@ -90,7 +92,7 @@ void Board::printBoard() const {
         ++rowHeader;
 
         // Print tiles in row
-        for (int col = 0; col < this->boardRows; col++)  {   
+        for (int col = 0; col < this->boardCols; col++)  {   
             if (this->boardVector[row][col] == nullptr) {
                 std::cout << "  ";
             } else {
