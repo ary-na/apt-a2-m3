@@ -17,7 +17,7 @@ class Game {
         // ** 2.3.10 Special operation: Starting a new game **
         // Constructor specifically starting a new game:
         // takes two player pointers and sets up a new game
-        Game(Player* player1, Player* player2); 
+        Game(Player* player1, Player* player2, bool testFlag); 
 
         // Constructor specifically loading a game:
         // takes pointers to two players, a tiles bag, board 
@@ -118,6 +118,9 @@ class Game {
         // (5) You cannot play two tiles that are exactly the same
         // (6) The tile must be in the current player's hand
         bool isPlaceLegal(Tile* tile, char row, int col) const;
+
+        // Testing flag to show in test mode
+        bool testFlag;
 };
 
 #endif // GAME_H

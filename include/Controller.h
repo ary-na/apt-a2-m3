@@ -15,7 +15,7 @@ class Controller {
         ~Controller();
 
         // ** 2.1 Launch **
-        void launchGame(); 
+        void launchGame(bool testFlag); 
 
         // ** 2.2 Main menu **
         void mainMenu(); 
@@ -54,6 +54,9 @@ class Controller {
 
         // Absorb the load game file 
         bool absorbLoadGameFile(std::string fileName);
+
+        // Enable test mode for the game - stop randomisation for tile bag
+        bool testFlag;
 };
 
 #endif // CONTROLLER_H
