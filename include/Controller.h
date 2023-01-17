@@ -11,7 +11,13 @@
 
 class Controller {
     public:
+
+        // Default constructor 
         Controller();
+
+        // TODO: Deep copy constructor
+
+        // Destructor
         ~Controller();
 
         // ** 2.1 Launch **
@@ -21,6 +27,7 @@ class Controller {
         void mainMenu(); 
 
         // ** 2.2.1 New game **
+        // ** 2.3.10 Special operation: Starting a new game **
         void newGame(); 
 
         // ** 2.2.2 Load game **

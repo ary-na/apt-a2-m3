@@ -9,10 +9,13 @@
 class Board {                                   
     public:
 
-        // Constructor for when a new game is created,
-        // the board starts with no tiles placed
+        // Default constructor:
+        // starts with an empty board
         Board(); 
 
+        // [CARELLE] TODO: Deep copy constructor
+
+        // Destructor 
         ~Board();
 
         // Prints the entire boardVector with tiles

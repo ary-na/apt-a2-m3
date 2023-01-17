@@ -7,8 +7,14 @@
 
 class LinkedList {
     public:
+
+        // Default constructor
         LinkedList();
+
+        // [CARELLE] TODO: Deep copy constructor 
         LinkedList(const LinkedList& other);
+
+        // Destructor
         ~LinkedList();
         
         // Delete every tile in the LinkedList

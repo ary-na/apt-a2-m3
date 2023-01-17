@@ -7,13 +7,18 @@
 
 class Player {
     public:
+
+        // Delete default constructor to 
+        // enforce parameterised constructor 
+        Player() = delete;
+
         // Constructor for adding a new player
         Player(std::string name);
 
         // Constructor for loading a player
         Player(std::string name, int score, LinkedList* hand);
 
-        // Copy constructor 
+        // Deep copy constructor 
         Player(const Player& other);
 
         // Destructor 

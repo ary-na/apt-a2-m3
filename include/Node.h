@@ -6,8 +6,18 @@
 
 class Node {
     public:
+        // Delete default constructor to 
+        // enforce parameterised constructor 
+        Node() = delete;
+
+        // Constructor for new nodes:
+        // takes a tile pointer 
         Node(Tile* tile);
+
+        // Deep copy constructor 
         Node(const Node& other);
+
+        // Destructor 
         ~Node();
 
         Tile* tile;

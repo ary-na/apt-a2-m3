@@ -24,7 +24,7 @@ Game::Game(Player *player1, Player *player2) {
 Game::Game(Player* player1, Player* player2, Board* board,
            LinkedList* tileBag, Player* currentPlayer) {
 
-    // TODO: Check all tiles are there
+    // [CARELLE] TODO: Check all tiles are there
 
     // bool correctTiles = checkTiles();
     bool correctTiles = true;
@@ -90,11 +90,11 @@ std::string Game::getHighestScorePlayer() const {
     if (this->player1->getScore() > this->player2->getScore()) {
         winner = this->player1->getName();
 
-        // Check if player 2 has the highest score
+    // Check if player 2 has the highest score
     } else if (this->player1->getScore() < this->player2->getScore()) {
         winner = this->player2->getName();
 
-        // If both players have the same score
+    // If both players have the same score
     } else {
         winner = this->player1->getName() + " and " + this->player2->getName();
     }

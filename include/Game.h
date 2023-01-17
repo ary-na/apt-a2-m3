@@ -14,16 +14,21 @@
 class Game {
     public:
 
-        // ** 2.3.10 Special operation: Starting a new game **
-        // Constructor specifically starting a new game:
+        // Delete default constructor to 
+        // enforce parameterised constructor 
+        Game() = delete;
+
+        // Constructor for starting a new game:
         // takes two player pointers and sets up a new game
         Game(Player* player1, Player* player2); 
 
-        // Constructor specifically loading a game:
+        // Constructor for loading a game:
         // takes pointers to two players, a tiles bag, board 
         // and current player and sets up the existing game
         Game(Player* player1, Player* player2, Board* board, 
              LinkedList* tileBag, Player* currentPlayer); 
+
+        // TODO: Deep copy constructor
 
         // Destructor
         ~Game();
