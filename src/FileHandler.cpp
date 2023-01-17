@@ -44,16 +44,14 @@ std::tuple<bool, Game*> FileHandler::absorbLoadGameFile(std::string fileName) {
     // Create players
     Player* P1 = new Player(fileContent[0],std::stoi(fileContent[1]),playerHandFromFile(fileContent[2]));
     Player* P2 = new Player(fileContent[3],std::stoi(fileContent[4]),playerHandFromFile(fileContent[5]));
-    
+
     // Create Game
     Game* game = new Game(P1, P2, new Board(), tileBagFromFile(fileContent[8]),currentPlayerFromName(P1, P2, fileContent[9]));
-
+ 
     // Update board state
     boardStateFromFile (game, fileContent[7]);
 
     // Clean up
-    delete P1;
-    delete P2;
     P1 = nullptr;
     P2 = nullptr;
 

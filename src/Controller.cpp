@@ -158,11 +158,10 @@ void Controller::loadGame() {
     std::cout << std::endl;  
 
     bool isLoadGameSuccess;
-    //std::tie(isLoadGameSuccess, this->game)  =  
-    this->fileHandler->loadGame(fileName);
-    isLoadGameSuccess ? baseGameplay(): mainMenu();
-
-     
+    Game* game;
+    std::tie(isLoadGameSuccess, this->game ) = this->fileHandler->loadGame(fileName);
+    baseGameplay();
+    // isLoadGameSuccess ? baseGameplay(): mainMenu();
 }
 
 void Controller::credits() {
@@ -209,9 +208,7 @@ void Controller::baseGameplay() {
 }
 
 void Controller::takeTurn() {
-
     // The name of the current player
-
     std::cout << this->game->getCurrentPlayer()->getName()
               << ", it's your turn" << std::endl;
     std::cout << std::endl;
