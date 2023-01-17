@@ -68,6 +68,9 @@ class Game {
         // replaced from the current player's hand, otherwise false:
         // a tile can only be replaced if isReplaceLegal() is true
         bool replaceTile(Tile* tile); 
+        
+        // Used when loading game from file.
+        void setTileBag (LinkedList* tileBag);
 
         // DELETE: FOR TESTING ONLY
         LinkedList* GetTileBag();

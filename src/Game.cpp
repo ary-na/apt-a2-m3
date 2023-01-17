@@ -21,8 +21,8 @@ Game::Game(Player *player1, Player *player2) {
     this->scoreCalculator = new ScoreCalculator();
 }
 
-Game::Game(Player *player1, Player *player2, Board *board,
-           LinkedList *tileBag, Player *currentPlayer) {
+Game::Game(Player* player1, Player* player2, Board* board,
+           LinkedList* tileBag, Player* currentPlayer) {
 
     // TODO: Check all tiles are there
 
