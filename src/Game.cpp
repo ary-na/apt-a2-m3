@@ -27,6 +27,9 @@ Game::Game(Player *player1, Player *player2, bool testFlag) {
 Game::Game(Player *player1, Player *player2, Board *board,
            LinkedList *tileBag, Player *currentPlayer) {
 
+    // AB - Set the test flag - set to false currently
+    this->testFlag = false;
+
     // TODO: Check all tiles are there
 
     // bool correctTiles = checkTiles();
