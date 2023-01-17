@@ -6,9 +6,6 @@
 
 class Node {
     public:
-        // Delete default constructor to 
-        // enforce parameterised constructor 
-        Node() = delete;
 
         // Constructor for new nodes:
         // takes a tile pointer 

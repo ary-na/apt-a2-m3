@@ -14,10 +14,6 @@
 class Game {
     public:
 
-        // Delete default constructor to 
-        // enforce parameterised constructor 
-        Game() = delete;
-
         // Constructor for starting a new game:
         // takes two player pointers and sets up a new game
         Game(Player* player1, Player* player2); 

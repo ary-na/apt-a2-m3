@@ -8,10 +8,6 @@ typedef int Shape;
 
 class Tile {
     public:
-     
-        // Delete default constructor to 
-        // enforce parameterised constructor 
-        Tile() = delete;
 
         // Constructor for making a tile: 
         // takes a colour and shape (see TileCodes.h)

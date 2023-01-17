@@ -8,10 +8,6 @@
 class Player {
     public:
 
-        // Delete default constructor to 
-        // enforce parameterised constructor 
-        Player() = delete;
-
         // Constructor for adding a new player
         Player(std::string name);
 
