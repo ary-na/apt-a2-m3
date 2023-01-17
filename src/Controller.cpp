@@ -160,8 +160,10 @@ void Controller::loadGame() {
 
     std::string fileName = "";
     std::cout << "> ", getline(std::cin, fileName);
-    this->fileHandler->loadGame(fileName);
-    std::cout << std::endl;    
+    std::cout << std::endl;  
+
+    this->game = this->fileHandler->loadGame(fileName);
+    baseGameplay();
 }
 
 void Controller::credits() {
@@ -208,11 +210,9 @@ void Controller::baseGameplay() {
 }
 
 void Controller::takeTurn() {
-
     // The name of the current player
-
-    std::cout << this->game->getCurrentPlayer()->getName()
-              << ", it's your turn" << std::endl;
+    std::cout << this->game->getCurrentPlayer()->getName()  << std::endl;
+    std::cout << this->game->getCurrentPlayer()->getName() +  ", it's your turn" << std::endl;
     std::cout << std::endl;
 
     // The scores of both players

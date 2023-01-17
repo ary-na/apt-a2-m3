@@ -9,28 +9,25 @@ FileHandler::~FileHandler() {
     this->validator = nullptr;
 }
 
-bool FileHandler::loadGame(std::string fileName) {
+Game* FileHandler::loadGame(std::string fileName) {
 
     // Validates the file exist
     if(!this->validator->isSavedFileExist(fileName)){
         errorMessage("File does not exist!");
-        return false;
-    } else {
-        absorbLoadGameFile(fileName);
+        return nullptr;
     }
     
-    return true;
+    return absorbLoadGameFile(fileName);
 }
 
-bool FileHandler::absorbLoadGameFile(std::string fileName) {
+Game* FileHandler::absorbLoadGameFile(std::string fileName) {
 
     std::string path = "savedGames/" + fileName + ".save";
     std::fstream infile;
     infile.open(path);
 
-    // Save the content to a vector allowing the game to be created cleanly.
+    // Save the content of the file to a vector allowing the game to be created cleanly.
     std::vector<std::string> fileContent;
-    
     if(infile.is_open()) {        
         std::string line;
         while (getline(infile,line)) 
@@ -39,34 +36,21 @@ bool FileHandler::absorbLoadGameFile(std::string fileName) {
 
     infile.close();
 
+    // Create players
     Player* P1 = new Player(fileContent[0],std::stoi(fileContent[1]),playerHandFromFile(fileContent[2]));
     Player* P2 = new Player(fileContent[3],std::stoi(fileContent[4]),playerHandFromFile(fileContent[5]));
 
+    // Create Game
     Game* game = new Game(P1, P2, new Board(), tileBagFromFile(fileContent[8]),currentPlayerFromName(P1, P2, fileContent[9]));
+ 
+    // Update board state
     boardStateFromFile (game, fileContent[7]);
-    
-    // Need to return the game here. 
-    std::cout << game->getPlayer1()->getName() << std::endl;  
-    std::cout << game->getPlayer1()->getScore() << std::endl;  
-    game->getPlayer1()->getHand()->printList();
 
-    std::cout << game->getPlayer2()->getName() << std::endl;  
-    std::cout << game->getPlayer2()->getScore() << std::endl;  
-    game->getPlayer2()->getHand()->printList();
-
-    game->GetTileBag()->printList();
-
-    std::cout << game->getCurrentPlayer()->getName() << std::endl;
-    
-    
-    
-
-    delete P1;
-    delete P2;
+    // Clean up
     P1 = nullptr;
     P2 = nullptr;
 
-    return true;
+    return game;
 }
 
 LinkedList* FileHandler::playerHandFromFile (std::string playerHandString){
@@ -89,7 +73,7 @@ void FileHandler:: boardStateFromFile (Game* game, std::string boardState) {
             substr = trim(substr);
 
             std::string num(1 , substr[1]);
-            game->placeTile(new Tile(substr[0],std::stoi(num)), substr[3], 
+            game->getBoard()->addTileAtPos(new Tile(substr[0],std::stoi(num)), substr[3], 
                     stoi(substr.substr(substr.find('@') + 2, substr.length())));
 
         }
