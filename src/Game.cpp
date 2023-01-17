@@ -180,10 +180,6 @@ void Game::shuffleTileBag(LinkedList *tileBag) {
     }
 }
 
-void Game::setTileBag(LinkedList *tileBag) {
-    this->tileBag = tileBag;
-}
-
 bool Game::isComplete() const {
     bool isComplete = false;
     if (this->tileBag->getLength() == 0 &&
@@ -280,6 +276,6 @@ bool Game::placeTile(Tile *tile, char row, int col) {
 }
 
 // Delete, just for testing. 
-LinkedList *Game::GetTileBag() {
+LinkedList* Game::GetTileBag() {
     return this->tileBag;
 }

@@ -17,7 +17,7 @@ class FileHandler {
         // Loads the saved game file, will return a bool indicating 
         // if the game was loaded correctly. Will also print any errors 
         // to the console in any of the save files.
-        bool loadGame(std::string fileName);
+        std::tuple<bool, Game*> loadGame(std::string fileName);
         
     private:
         // For validating user input 
@@ -26,7 +26,7 @@ class FileHandler {
         // Absorb the load game file 
         // Assuming a valid file name is being passed to the function. 
         // Only the name needs to be passed not the path or extension. 
-        bool absorbLoadGameFile(std::string fileName);
+        std::tuple<bool, Game*> absorbLoadGameFile(std::string fileName);
         
         // Returns Hand from file.
         // Assuming a comma separated string is being passed to the 

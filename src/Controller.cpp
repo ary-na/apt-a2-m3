@@ -155,8 +155,14 @@ void Controller::loadGame() {
 
     std::string fileName = "";
     std::cout << "> ", getline(std::cin, fileName);
+    std::cout << std::endl;  
+
+    bool isLoadGameSuccess;
+    //std::tie(isLoadGameSuccess, this->game)  =  
     this->fileHandler->loadGame(fileName);
-    std::cout << std::endl;    
+    isLoadGameSuccess ? baseGameplay(): mainMenu();
+
+     
 }
 
 void Controller::credits() {
