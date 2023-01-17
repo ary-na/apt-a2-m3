@@ -201,14 +201,6 @@ void LinkedList::deleteByNode(Tile* tile) {
         (tile->shape == this->head->tile->shape)) {
         deleteFront();
 
-    // AB - Testing Delete tail
-    // } else if ((tile->colour == this->tail->tile->colour) &&
-    //     (tile->shape == this->tail->tile->shape)) {
-    //         deleteEnd();
-
-    // Traverse LinkedList until matching 
-    // first tile is found and delete
-
     } else {
         bool result = false;
         Node* current = this->head->next;
@@ -221,6 +213,7 @@ void LinkedList::deleteByNode(Tile* tile) {
                     // Delete the head if given tile matches the tail
                     if (pos == this->length) {
                         deleteEnd();
+                        result = true;
 
                     // Otherwise
                     } else {
