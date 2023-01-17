@@ -157,11 +157,8 @@ void Controller::loadGame() {
     std::cout << "> ", getline(std::cin, fileName);
     std::cout << std::endl;  
 
-    bool isLoadGameSuccess;
-    Game* game;
-    std::tie(isLoadGameSuccess, this->game ) = this->fileHandler->loadGame(fileName);
+    this->game = this->fileHandler->loadGame(fileName);
     baseGameplay();
-    // isLoadGameSuccess ? baseGameplay(): mainMenu();
 }
 
 void Controller::credits() {
@@ -209,9 +206,8 @@ void Controller::baseGameplay() {
 
 void Controller::takeTurn() {
     // The name of the current player
-    std::cout << this->game->getCurrentPlayer()->getName() << std::endl;
-    std::cout << this->game->getCurrentPlayer()->getName()
-              << ", it's your turn" << std::endl;
+    std::cout << this->game->getCurrentPlayer()->getName()  << std::endl;
+    std::cout << this->game->getCurrentPlayer()->getName() +  ", it's your turn" << std::endl;
     std::cout << std::endl;
 
     // The scores of both players

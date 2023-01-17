@@ -9,23 +9,18 @@ FileHandler::~FileHandler() {
     this->validator = nullptr;
 }
 
-std::tuple<bool, Game*> FileHandler::loadGame(std::string fileName) {
+Game* FileHandler::loadGame(std::string fileName) {
 
     // Validates the file exist
     if(!this->validator->isSavedFileExist(fileName)){
         errorMessage("File does not exist!");
-        return std::make_tuple(false,nullptr);
+        return nullptr;
     }
-
-    bool isLoadGameSuccess;
-    Game* game;
-
-    std::tie(isLoadGameSuccess, game)  = absorbLoadGameFile(fileName);
     
-    return std::make_tuple(isLoadGameSuccess,game);
+    return absorbLoadGameFile(fileName);
 }
 
-std::tuple<bool, Game*> FileHandler::absorbLoadGameFile(std::string fileName) {
+Game* FileHandler::absorbLoadGameFile(std::string fileName) {
 
     std::string path = "savedGames/" + fileName + ".save";
     std::fstream infile;
@@ -55,7 +50,7 @@ std::tuple<bool, Game*> FileHandler::absorbLoadGameFile(std::string fileName) {
     P1 = nullptr;
     P2 = nullptr;
 
-    return std::make_tuple(true,game);
+    return game;
 }
 
 LinkedList* FileHandler::playerHandFromFile (std::string playerHandString){
