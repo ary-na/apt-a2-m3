@@ -172,7 +172,7 @@ void Game::shuffleTileBag(LinkedList *tileBag) {
             if(this->testFlag) {
                 std::default_random_engine engine(2);
                 randomVal = uniform_dist(engine);
-                std::cout << "Test Mode Enabled \n";
+                //std::cout << "Test Mode Enabled \n";
             } else {
                 std::random_device engine;
                 randomVal = uniform_dist(engine);
