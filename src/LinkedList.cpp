@@ -200,6 +200,9 @@ void LinkedList::deleteByNode(Tile* tile) {
     if ((tile->colour == this->head->tile->colour) &&
         (tile->shape == this->head->tile->shape)) {
         deleteFront();
+        } else if ((tile->colour == this->tail->tile->colour) &&
+        (tile->shape == this->tail->tile->shape)) {
+            deleteEnd();
 
     // Traverse LinkedList until matching 
     // first tile is found and delete
