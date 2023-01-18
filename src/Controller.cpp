@@ -331,7 +331,7 @@ void Controller::saveGame() {
 
     // TO DO: Need to ask for the save game name
 
-    this->fileHandler->saveGane("NewSaveGame");
+    this->fileHandler->saveGame("NewSaveGame");
 
     // The current player does not change, 
     // so that a player may save the game and then take a turn

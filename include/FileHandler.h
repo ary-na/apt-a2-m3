@@ -21,7 +21,7 @@ class FileHandler {
 
          Game* loadGame(std::string fileName);
 
-         bool saveGane(std::string fileName);
+         bool saveGame(std::string fileName);
         
     private:
         // For validating user input 
