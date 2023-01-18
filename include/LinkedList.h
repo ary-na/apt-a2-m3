@@ -11,7 +11,7 @@ class LinkedList {
         // Default constructor
         LinkedList();
 
-        // [CARELLE] TODO: Deep copy constructor 
+        // Deep copy constructor 
         LinkedList(const LinkedList& other);
 
         // Destructor

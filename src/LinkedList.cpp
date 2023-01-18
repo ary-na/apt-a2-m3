@@ -7,7 +7,17 @@ LinkedList::LinkedList() {
 }
 
 LinkedList::LinkedList(const LinkedList& other) {
-    // TODO
+
+    // Check if LinkedList is empty
+    if (other.head != nullptr) {
+        Node* current = other.head;
+
+        // Traverse other LinkedList and copy tiles     
+        while (current != nullptr) {
+            addEnd(new Tile(*current->tile));
+            current = current->next;
+        }
+    }
 }
 
 LinkedList::~LinkedList() {

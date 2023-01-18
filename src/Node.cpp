@@ -7,7 +7,7 @@ Node::Node(Tile* tile) {
 }
 
 Node::Node(const Node& other) {
-    this->tile = new Tile(*other.tile);
+    this->tile = other.tile;
     this->next = other.next;
     this->prev = other.prev;
 }

@@ -11,7 +11,7 @@ class Node {
         // takes a tile pointer 
         Node(Tile* tile);
 
-        // Deep copy constructor 
+        // Shallow copy constructor 
         Node(const Node& other);
 
         // Destructor 
