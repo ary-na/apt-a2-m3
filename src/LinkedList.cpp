@@ -92,7 +92,7 @@ bool LinkedList::search(Tile* tile) const {
     while (current != nullptr && result == false) {
         if ((tile->colour == current->tile->colour) &&
             (tile->shape == current->tile->shape)) {
-                result = true;
+            result = true;
         }
         current = current->next;
     }
@@ -216,24 +216,23 @@ void LinkedList::deleteByNode(Tile* tile) {
         Node* current = this->head->next;
         int pos = 2;
 
+        // Traverse LinkedList
         while (current != nullptr && result == false) {
             if ((tile->colour == current->tile->colour) &&
                 (tile->shape == current->tile->shape)) {
 
-                    // Delete the head if given tile matches the tail
-                    if (pos == this->length) {
-                        deleteEnd();
-                        result = true;
-
-                    // Otherwise
-                    } else {
-                        Node* temp = current;
-                        temp->prev->next = current->next;
-                        temp->next->prev = current->prev;
-                        delete temp;
-                        --this->length;
-                        result = true;
-                    }
+                // Delete the first matching tile
+                if (pos == this->length) {
+                    deleteEnd();
+                    result = true;
+                } else {
+                    Node* temp = current;
+                    temp->prev->next = current->next;
+                    temp->next->prev = current->prev;
+                    delete temp;
+                    --this->length;
+                    result = true;
+                }
             }
             current = current->next;
             ++pos;

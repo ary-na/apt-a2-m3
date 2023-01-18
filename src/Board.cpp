@@ -134,7 +134,7 @@ void Board::printBoard() const {
         ++rowHeader;
 
         // Print tiles in row
-        for (int col = 0; col < this->boardCols; col++)  {   
+        for (int col = 0; col < this->boardCols; col++) {   
             if (this->boardVector[row][col] == nullptr) {
                 std::cout << "  ";
             } else {
