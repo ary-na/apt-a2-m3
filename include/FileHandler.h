@@ -18,6 +18,8 @@ class FileHandler {
         // if the game was loaded correctly. Will also print any errors 
         // to the console in any of the save files.
          Game* loadGame(std::string fileName);
+
+         bool saveGane(std::string fileName);
         
     private:
         // For validating user input 

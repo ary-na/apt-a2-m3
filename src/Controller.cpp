@@ -329,6 +329,10 @@ void Controller::saveGame() {
     std::cout << "Game successfully saved" << std::endl;
     std::cout << std::endl;
 
+    // TO DO: Need to ask for the save game name
+
+    this->fileHandler->saveGane("NewSaveGame");
+
     // The current player does not change, 
     // so that a player may save the game and then take a turn
 
