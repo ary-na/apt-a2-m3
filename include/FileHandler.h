@@ -14,9 +14,11 @@ class FileHandler {
         FileHandler();
         ~FileHandler();
         
-        // Loads the saved game file, will return a bool indicating 
-        // if the game was loaded correctly. Will also print any errors 
-        // to the console in any of the save files.
+        // ** updates the current state of play based on a saved game file 
+        // ** INPUT: Required a valid save file name. The path and extension of the game file is not required. 
+        // ** OUTPUT: If the name of the file is valid, and the format of the file is valid, a Game* will be returned. 
+        // If not, a NullPtr will be returned and an error will be printed out. 
+
          Game* loadGame(std::string fileName);
 
          bool saveGane(std::string fileName);
