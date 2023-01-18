@@ -13,7 +13,8 @@ class Board {
         // starts with an empty board
         Board(); 
 
-        // [CARELLE] TODO: Deep copy constructor
+        // Deep copy constructor 
+        Board(const Board& other);
 
         // Destructor 
         ~Board();
@@ -28,9 +29,6 @@ class Board {
         // Takes a row (between A-Z) and col (between 0-25) and 
         // returns a tile pointer in that position on the boardVector
         Tile* getTileAtPos(char row, int col) const;
-
-        // Returns the boardVector
-        const std::vector<std::vector<Tile *> > &getBoardVector() const;
 
         // Returns the number of boardRows 
         int getBoardRows() const;
