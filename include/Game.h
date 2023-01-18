@@ -119,6 +119,11 @@ class Game {
         // (5) You cannot play two tiles that are exactly the same
         // (6) The tile must be in the current player's hand
         bool isPlaceLegal(Tile* tile, char row, int col) const;
+
+        bool arraysEqual(std::string array1[], std::string array2[]);
+
+        bool checkTiles(LinkedList* player1Hand, LinkedList* player2Hand, 
+                        Board* board, LinkedList* tileBag);
 };
 
 #endif // GAME_H
