@@ -46,8 +46,8 @@ void Controller::mainMenu() {
         // The user selects an option by 
         // typing a number and pressing enter
 
-        std::string menuInput;
-        std::cout << "> ", getline(std::cin, menuInput);
+        std::string menuInput = "";
+        inputPrompt(&menuInput);
 
         if (menuInput == "1") {
             newGame();
@@ -68,7 +68,6 @@ void Controller::newGame() {
 
     // Print a message for starting a new game
 
-    std::cout << std::endl;
     std::cout << "Starting a new game" << std::endl;
     std::cout << std::endl;
 
@@ -107,8 +106,7 @@ void Controller::playerNamePrompt(std::string* nameInput) {
     while (awaitingInput) {
 
         // Get player name input
-        std::cout << "> ", getline(std::cin, *nameInput);
-        std::cout << std::endl;
+        inputPrompt(nameInput);
 
         // Players should only have letters, no numbers or symbols
         bool nameValid = validator->isNameValid(*nameInput);
@@ -120,6 +118,11 @@ void Controller::playerNamePrompt(std::string* nameInput) {
             awaitingInput = false;
         }
     }
+}
+
+void Controller::inputPrompt(std::string* input) {
+    std::cout << "> ", getline(std::cin, *input);
+    std::cout << std::endl;
 }
 
 void Controller::loadGame() {
@@ -140,8 +143,7 @@ void Controller::loadGame() {
     // the saved game file, and presses enter
 
     std::string fileName = "";
-    std::cout << "> ", getline(std::cin, fileName);
-    std::cout << std::endl;
+    inputPrompt(&fileName);
 
     this->game = this->fileHandler->loadGame(fileName);
     baseGameplay();
@@ -152,18 +154,22 @@ void Controller::credits() {
     std::cout << "Credits" << std::endl;
     std::cout << "-------" << std::endl;
     std::cout << std::endl;
+
     std::cout << "Name: Carelle Mulawa-Richards" << std::endl;
     std::cout << "Student ID: s3749114" << std::endl;
     std::cout << "Email: s3749114@student.rmit.edu.au" << std::endl;
     std::cout << std::endl;
+
     std::cout << "Name: Jacob Depares" << std::endl;
     std::cout << "Student ID: S3851480" << std::endl;
     std::cout << "Email: S3851480@student.rmit.edu.au" << std::endl;
     std::cout << std::endl;
+
     std::cout << "Name: Alexander Barron" << std::endl;
     std::cout << "Student ID: s3831619" << std::endl;
     std::cout << "Email: s3831619@student.rmit.edu.au" << std::endl;
     std::cout << std::endl;
+
     std::cout << "Name: Arian Najafi Yamchelo" << std::endl;
     std::cout << "Student ID: S3910902" << std::endl;
     std::cout << "Email: S3910902@student.rmit.edu.au" << std::endl;
@@ -172,7 +178,6 @@ void Controller::credits() {
 
 void Controller::exitGame() {
     this->setExitMode(true);
-    std::cout << std::endl;
     std::cout << "Goodbye" << std::endl;
     std::cout << std::endl;
 }
@@ -222,8 +227,7 @@ void Controller::takeTurn() {
     while (awaitingInput) {
 
         std::string commandInput = "";
-        std::cout << "> ", getline(std::cin, commandInput);
-        std::cout << std::endl;
+        inputPrompt(&commandInput);
 
         int command = validator->isCommandValid(commandInput);
 
@@ -288,6 +292,7 @@ void Controller::takeTurn() {
         // If the command is ^D
         } else if (command == 4) {
             awaitingInput = false;
+            std::cout << std::endl;
             exitGame();
         }
     }

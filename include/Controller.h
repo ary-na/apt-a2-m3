@@ -70,7 +70,9 @@ private:
         void setExitMode(bool exitMode);
 
         // Absorb the load game file 
-        bool absorbLoadGameFile(std::string fileName);        
+        bool absorbLoadGameFile(std::string fileName);    
+
+        void inputPrompt(std::string* input);   
 };
 
 #endif // CONTROLLER_H
