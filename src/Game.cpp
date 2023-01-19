@@ -273,59 +273,59 @@ bool Game::placeTile(Tile *tile, char row, int col) {
     return isLegal;
 }
 
-bool Game::arraysEqual(std::string array1[], std::string array2[]) {  
-    bool isEqual = true;
+// bool Game::arraysEqual(std::string array1[], std::string array2[]) {  
+//     bool isEqual = true;
 
-    // Find length of arrays
-    int array1Length = sizeof(array1) / sizeof(std::string);
-    int array2Length = sizeof(array2) / sizeof(std::string);
+//     // // Find length of arrays
+//     // int array1Length = sizeof(array1) / sizeof(std::string);
+//     // int array2Length = sizeof(array2) / sizeof(std::string);
 
-    // If length isn't the same, they don't match
-    if (array1Length != array2Length) {
-        isEqual = false;
+//     // // If length isn't the same, they don't match
+//     // if (array1Length != array2Length) {
+//     //     isEqual = false;
 
-    // Sort arrays and compare each value    
-    } else {
-        std::sort(array1, array1 + array1Length);
-        std::sort(array2, array2 + array2Length);
-        int i = 0;
-        while (isEqual && i < array1Length) {
-            for (i; i < array1Length; i++) {
-                if (array1[i] != array2[i]) {
-                    isEqual = false;
-                }
-            }
-        }
-    }
-    return isEqual;
-}
+//     // // Sort arrays and compare each value    
+//     // } else {
+//     //     std::sort(array1, array1 + array1Length);
+//     //     std::sort(array2, array2 + array2Length);
+//     //     int i = 0;
+//     //     while (isEqual && i < array1Length) {
+//     //         for (i; i < array1Length; i++) {
+//     //             if (array1[i] != array2[i]) {
+//     //                 isEqual = false;
+//     //             }
+//     //         }
+//     //     }
+//     // }
+//     // return isEqual;
+// }
 
 // [CARELLE] TODO: Check tiles match
 
-bool Game::checkTiles(LinkedList* player1Hand, LinkedList* player2Hand, 
-                      Board* board, LinkedList* tileBag) {
+// bool Game::checkTiles(LinkedList* player1Hand, LinkedList* player2Hand, 
+//                       Board* board, LinkedList* tileBag) {
     
-    int maxTiles = 72;
-    int i = 0;
-    std::string tilesArray[maxTiles];
+//     int maxTiles = 72;
+//     int i = 0;
+//     std::string tilesArray[maxTiles];
 
-    for (int j = 1; j <= player1Hand->getLength(); j++) {
-        tilesArray[i] = std::to_string(player1Hand->getAtPos(j)->colour) +
-                        std::to_string(player1Hand->getAtPos(j)->shape);
-        i++;
-    }
+//     for (int j = 1; j <= player1Hand->getLength(); j++) {
+//         tilesArray[i] = std::to_string(player1Hand->getAtPos(j)->colour) +
+//                         std::to_string(player1Hand->getAtPos(j)->shape);
+//         i++;
+//     }
 
-    for (int j = 1; j <= player2Hand->getLength(); j++) {
-        tilesArray[i] = std::to_string(player2Hand->getAtPos(j)->colour) +
-                        std::to_string(player2Hand->getAtPos(j)->shape);
-        i++;
-    }
+//     for (int j = 1; j <= player2Hand->getLength(); j++) {
+//         tilesArray[i] = std::to_string(player2Hand->getAtPos(j)->colour) +
+//                         std::to_string(player2Hand->getAtPos(j)->shape);
+//         i++;
+//     }
 
-    for (int j = 1; j <= tileBag->getLength(); j++) {
-        tilesArray[i] = std::to_string(tileBag->getAtPos(j)->colour) +
-                        std::to_string(tileBag->getAtPos(j)->shape);
-        i++;
-    }
+//     for (int j = 1; j <= tileBag->getLength(); j++) {
+//         tilesArray[i] = std::to_string(tileBag->getAtPos(j)->colour) +
+//                         std::to_string(tileBag->getAtPos(j)->shape);
+//         i++;
+//     }
 
 
 
@@ -333,13 +333,13 @@ bool Game::checkTiles(LinkedList* player1Hand, LinkedList* player2Hand,
                 
     
 
-    bool correctTiles = true;
-    // bool correctTiles = arraysEqual(correctArray, arrayToCompare);
+//     bool correctTiles = true;
+//     // bool correctTiles = arraysEqual(correctArray, arrayToCompare);
 
 
 
-    return correctTiles;
-}
+//     return correctTiles;
+// }
      
 
 
