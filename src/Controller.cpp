@@ -197,7 +197,7 @@ void Controller::baseGameplay() {
         gameComplete = this->game->isComplete();
     }
 
-    if(!this->isExitMode())
+    if (!this->isExitMode())
         endGame();
 }
 
