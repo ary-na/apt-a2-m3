@@ -71,7 +71,7 @@ class Game {
         bool replaceTile(Tile* tile); 
         
         // Used when loading game from file.
-        void setTileBag (LinkedList* tileBag);
+        // void setTileBag (LinkedList* tileBag);
 
         // DELETE: FOR TESTING ONLY
         LinkedList* GetTileBag();

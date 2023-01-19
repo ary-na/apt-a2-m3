@@ -24,16 +24,16 @@ Game::Game(Player *player1, Player *player2) {
 Game::Game(Player* player1, Player* player2, Board* board,
            LinkedList* tileBag, Player* currentPlayer) {
 
-    // bool correctTiles = checkTiles(player1->getHand(), player2->getHand(), 
-    //                                board, tileBag);
-    bool correctTiles = true;
+    bool correctTiles = checkTiles(player1->getHand(), player2->getHand(), 
+                                   board, tileBag);
 
     if (!correctTiles) {
 
         // TODO: Catch exception
-        // TODO: Throw exception
+        throw std::out_of_range("Game Game() - Incorrect no. of tiles given");
 
     } else {
+
         // Load the tile bag
         this->tileBag = tileBag;
 
@@ -273,81 +273,99 @@ bool Game::placeTile(Tile *tile, char row, int col) {
     return isLegal;
 }
 
-// bool Game::arraysEqual(std::string array1[], std::string array2[]) {  
-//     bool isEqual = true;
-
-//     // // Find length of arrays
-//     // int array1Length = sizeof(array1) / sizeof(std::string);
-//     // int array2Length = sizeof(array2) / sizeof(std::string);
-
-//     // // If length isn't the same, they don't match
-//     // if (array1Length != array2Length) {
-//     //     isEqual = false;
-
-//     // // Sort arrays and compare each value    
-//     // } else {
-//     //     std::sort(array1, array1 + array1Length);
-//     //     std::sort(array2, array2 + array2Length);
-//     //     int i = 0;
-//     //     while (isEqual && i < array1Length) {
-//     //         for (i; i < array1Length; i++) {
-//     //             if (array1[i] != array2[i]) {
-//     //                 isEqual = false;
-//     //             }
-//     //         }
-//     //     }
-//     // }
-//     // return isEqual;
-// }
-
-// [CARELLE] TODO: Check tiles match
-
-// bool Game::checkTiles(LinkedList* player1Hand, LinkedList* player2Hand, 
-//                       Board* board, LinkedList* tileBag) {
+bool Game::checkTiles(LinkedList* player1Hand, LinkedList* player2Hand, 
+                      Board* board, LinkedList* tileBag) {
     
-//     int maxTiles = 72;
-//     int i = 0;
-//     std::string tilesArray[maxTiles];
-
-//     for (int j = 1; j <= player1Hand->getLength(); j++) {
-//         tilesArray[i] = std::to_string(player1Hand->getAtPos(j)->colour) +
-//                         std::to_string(player1Hand->getAtPos(j)->shape);
-//         i++;
-//     }
-
-//     for (int j = 1; j <= player2Hand->getLength(); j++) {
-//         tilesArray[i] = std::to_string(player2Hand->getAtPos(j)->colour) +
-//                         std::to_string(player2Hand->getAtPos(j)->shape);
-//         i++;
-//     }
-
-//     for (int j = 1; j <= tileBag->getLength(); j++) {
-//         tilesArray[i] = std::to_string(tileBag->getAtPos(j)->colour) +
-//                         std::to_string(tileBag->getAtPos(j)->shape);
-//         i++;
-//     }
-
-
-
-
-                
+    bool correctTiles = true;
     
+    int totalTiles = player1Hand->getLength() + player2Hand->getLength() + 
+                     board->getNumOfTiles() + tileBag->getLength();
+    
+    if (totalTiles != MAX_TILES_IN_GAME) {
+        correctTiles = false;
 
-//     bool correctTiles = true;
-//     // bool correctTiles = arraysEqual(correctArray, arrayToCompare);
+    } else {
 
+        std::string tilesArray[MAX_TILES_IN_GAME];
 
+        int i = 0;
 
-//     return correctTiles;
-// }
-     
+        for (int j = 1; j <= player1Hand->getLength(); j++) {
+            tilesArray[i] = player1Hand->getAtPos(j)->colour +
+                            std::to_string(player1Hand->getAtPos(j)->shape);
+            i++;
+        }
+        for (int j = 1; j <= player2Hand->getLength(); j++) {
+            tilesArray[i] = player2Hand->getAtPos(j)->colour +
+                            std::to_string(player2Hand->getAtPos(j)->shape);
+            i++;
+        }
+        for (int j = 1; j <= tileBag->getLength(); j++) {
+            tilesArray[i] = tileBag->getAtPos(j)->colour +
+                            std::to_string(tileBag->getAtPos(j)->shape);
+            i++;
+        }
 
+        int tilesAdded = 0;
+        while (tilesAdded != board->getNumOfTiles()) {
+            for (int row = 0; row < board->getBoardRows(); row++) {
+                for (int col = 0; col < board->getBoardCols(); col++) {               
+                    if (board->getBoardVector()[row][col] != nullptr) {
+                        tilesArray[i] = board->getBoardVector()[row][col]->colour +
+                                        std::to_string(board->getBoardVector()[row][col]->shape);
+                        i++;
+                        tilesAdded++;
+                    }
+                }
+            }
+        }
 
+        std::string expectedTilesArray[MAX_TILES_IN_GAME];
 
+        Colour colours[] = {RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE};
+        Shape shapes[] = {CIRCLE, STAR_4, DIAMOND, SQUARE, STAR_6, CLOVER};
 
+        int coloursLength = sizeof(colours) / sizeof(Colour);
+        int shapesLength = sizeof(shapes) / sizeof(Shape);
+        
+        int index = 0;
 
+        for (int i = 0; i < coloursLength; i++) {
+            for (int j = 0; j < shapesLength; j++) {
+                    expectedTilesArray[index] = colours[i] + 
+                                                std::to_string(shapes[j]);         
+                    index++;
+            }
+        }
+        for (int i = 0; i < coloursLength; i++) {
+            for (int j = 0; j < shapesLength; j++) {
+                    expectedTilesArray[index] = colours[i] +
+                                                std::to_string(shapes[j]);
+                    index++;
+            }
+        }
+        correctTiles = arraysEqual(expectedTilesArray, tilesArray);
+    }
+    return correctTiles;
+}
 
+bool Game::arraysEqual(std::string array1[], std::string array2[]) {  
+    std::sort(array1, array1 + MAX_TILES_IN_GAME);
+    std::sort(array2, array2 + MAX_TILES_IN_GAME);
 
+    bool isEqual = true;
+    int tilesChecked = 0;
+
+    while (isEqual && tilesChecked < MAX_TILES_IN_GAME) {
+        for (int i = 0; i < MAX_TILES_IN_GAME; i++) {
+            if (array1[i] != array2[i]) {
+                    isEqual = false;
+            }
+            tilesChecked++;
+        }
+    }
+    return isEqual;
+}
 
 // Delete, just for testing. 
 LinkedList* Game::GetTileBag() {

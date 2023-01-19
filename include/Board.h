@@ -42,6 +42,9 @@ class Board {
         // Returns the number of tiles on the board vector 
         int getNumOfTiles() const;
 
+        // Returns the 2D boardVector
+        std::vector<std::vector<Tile*> > getBoardVector() const;
+
     private:
 
         // The board is a fixed size of 26 x 26

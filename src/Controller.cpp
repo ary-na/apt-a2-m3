@@ -256,21 +256,17 @@ void Controller::takeTurn() {
 
         } else if (command == 1) {
 
-            // Extract tile from input 
+            // Extract tile and position from input 
 
             Colour colourInput = commandInput[6];
             Shape shapeInput = commandInput[7] - '0';
             Tile *tileInput = new Tile(colourInput, shapeInput);
-
-            // Extract position from input
-
             char rowInput = commandInput[12];
             int colInput;
 
             if (commandInput.length() > 14) {
-                std::string colStr = std::to_string(commandInput[13] - '0') +
-                                     std::to_string(commandInput[14] - '0');
-                colInput = std::stoi(colStr);
+                colInput = std::stoi(std::to_string(commandInput[13] - '0') + 
+                                     std::to_string(commandInput[14] - '0'));
             } else {
                 colInput = commandInput[13] - '0';
             }
@@ -343,23 +339,17 @@ void Controller::saveGame() {
 
 void Controller::endGame() {
 
-    // Display the end game message
+    // Display the end game message, scores and winner name
 
     std::cout << "Game over" << std::endl;
     std::cout << std::endl;
 
-    // Display the scores
-
-    std::cout << "Score for "
-              << this->game->getPlayer1()->getName() << ": "
+    std::cout << "Score for " << this->game->getPlayer1()->getName() << ": "
               << this->game->getPlayer1()->getScore() << std::endl;
 
-    std::cout << "Score for "
-              << this->game->getPlayer2()->getName() << ": "
+    std::cout << "Score for " << this->game->getPlayer2()->getName() << ": "
               << this->game->getPlayer2()->getScore() << std::endl;
     std::cout << std::endl;
-
-    // Display the name of the winning player
 
     std::cout << "Player " << this->game->getHighestScorePlayer()
               << " won!" << std::endl;

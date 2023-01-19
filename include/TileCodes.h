@@ -17,4 +17,6 @@
 #define STAR_6 5
 #define CLOVER 6
 
+#define MAX_TILES_IN_GAME 72
+
 #endif // TILECODES_H
