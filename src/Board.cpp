@@ -21,6 +21,7 @@ Board::Board(const Board& other) {
 
     this->numOfTiles = other.numOfTiles;
 
+    // Check if there are tiles on the board
     if (other.numOfTiles > 0) {
         int tilesAdded = 0;
 
