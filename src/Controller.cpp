@@ -12,6 +12,7 @@ Controller::~Controller() {
         this->game = nullptr;
     }
     delete this->validator;
+    delete this->fileHandler;
     this->validator = nullptr;
 }
 
