@@ -200,7 +200,7 @@ bool Game::isReplaceLegal(Tile *tile) const {
 bool Game::isPlaceLegal(Tile *tile, char row, int col) const {
 
     bool isLegal = true;
-    Moves *moves = new Moves(this->getBoard());
+    std::unique_ptr<Moves> moves(new Moves(this->getBoard()));
 
     // Row to validate
     LinkedList *validRow = moves->getRowTiles(row, col);
@@ -230,7 +230,6 @@ bool Game::isPlaceLegal(Tile *tile, char row, int col) const {
     else if (validRow->search(tile) || validCol->search(tile))
         isLegal = false;
 
-    delete moves;
     return isLegal;
 }
 

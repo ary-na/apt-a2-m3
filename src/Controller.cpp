@@ -4,6 +4,7 @@ Controller::Controller() {
     this->game = nullptr;
     this->validator = new Validator();
     this->fileHandler = new FileHandler();
+    this->exitMode = false;
 }
 
 Controller::~Controller() {
@@ -32,8 +33,6 @@ void Controller::launchGame() {
 
 void Controller::mainMenu() {
 
-    bool exit = false;
-
     do {
         std::cout << "Menu" << std::endl;
         std::cout << "----" << std::endl;
@@ -47,20 +46,20 @@ void Controller::mainMenu() {
         std::string menuInput;
         std::cout << "> ", getline(std::cin, menuInput);
 
-        if (menuInput == "1") 
+        if (menuInput == "1")
             newGame();
         else if (menuInput == "2")
             loadGame();
         else if (menuInput == "3")
             credits();
         else if (menuInput == "4") {
-            exit = true;
             exitGame();
         } else {
             std::cerr << "Select a valid menu option!" << std::endl;
             std::cout << std::endl;
         }
-    } while (!exit);
+
+    } while (!this->isExitMode());
 }
 
 void Controller::newGame() {
@@ -140,7 +139,7 @@ void Controller::newGame() {
 void Controller::loadGame() {
 
     // [JACOB] TODO
-    std::cout << std::endl; 
+    std::cout << std::endl;
     std::cout << "Load game" << std::endl;
     std::cout << "---------" << std::endl;
     std::cout << std::endl;
@@ -156,7 +155,7 @@ void Controller::loadGame() {
 
     std::string fileName = "";
     std::cout << "> ", getline(std::cin, fileName);
-    std::cout << std::endl;  
+    std::cout << std::endl;
 
     this->game = this->fileHandler->loadGame(fileName);
     baseGameplay();
@@ -186,6 +185,7 @@ void Controller::credits() {
 }
 
 void Controller::exitGame() {
+    this->setExitMode(true);
     std::cout << std::endl;
     std::cout << "Goodbye" << std::endl;
     std::cout << std::endl;
@@ -193,19 +193,21 @@ void Controller::exitGame() {
 
 void Controller::baseGameplay() {
     bool gameComplete = this->game->isComplete();
-    while (!gameComplete) {
+    while (!gameComplete && !this->isExitMode()) {
         takeTurn();
         gameComplete = this->game->isComplete();
     }
-    endGame();
+
+    if (!this->isExitMode())
+        endGame();
 }
 
 void Controller::takeTurn() {
-    
+
     // The name of the current player
 
     std::cout << this->game->getCurrentPlayer()->getName()
-              <<  ", it's your turn" << std::endl;
+              << ", it's your turn" << std::endl;
     std::cout << std::endl;
 
     // The scores of both players
@@ -214,9 +216,9 @@ void Controller::takeTurn() {
               << this->game->getPlayer1()->getScore() << std::endl;
 
     std::cout << "Score for " << this->game->getPlayer2()->getName() << ": "
-              << this->game->getPlayer2()->getScore() << std::endl; 
+              << this->game->getPlayer2()->getScore() << std::endl;
     std::cout << std::endl;
-    
+
     // The state of the board
 
     this->game->getBoard()->printBoard();
@@ -238,23 +240,16 @@ void Controller::takeTurn() {
         std::cout << "> ", getline(std::cin, commandInput);
         std::cout << std::endl;
 
-        // [ARIAN] TODO: Check that the command is correctly formatted
+        int command = validator->isCommandValid(commandInput);
 
-        // int command  = validate.command(commandInput);
-
-        // command return 1 - place <colour><shape> at <row><col>
-        // command return 2 - replace <colour><shape>
-        // command return 3 - save <filename>
-        // command return 4 - ^D
         // command return -1 - Invalid
-
-        int command = 1;
-
         if (command == -1) {
             std::cout << "Invalid input!" << std::endl;
             std::cout << std::endl;
 
-        } else if (command == 1) {
+        }
+        // command return 1 - place <colour><shape> at <row><col>
+        else if (command == 1) {
 
             // Extract tile and position from input 
 
@@ -272,7 +267,7 @@ void Controller::takeTurn() {
             }
 
             // Try to place the tile
-            
+
             bool tilePlaced = this->game->placeTile(tileInput, rowInput, colInput);
 
             if (!tilePlaced) {
@@ -283,7 +278,9 @@ void Controller::takeTurn() {
                 awaitingInput = false;
             }
 
-        } else if (command == 2) {
+        }
+        // command return 2 - replace <colour><shape>
+        else if (command == 2) {
 
             // Extract tile from input
 
@@ -294,7 +291,7 @@ void Controller::takeTurn() {
             // Try to replace the tile
 
             bool tileReplaced = this->game->replaceTile(tileInput);
-            
+
             if (!tileReplaced) {
                 std::cout << "Illegal move!" << std::endl;
                 std::cout << std::endl;
@@ -303,10 +300,15 @@ void Controller::takeTurn() {
                 awaitingInput = false;
             }
 
-        } else if (command == 3) {
+        }
+        // command return 3 - save <filename>
+        else if (command == 3) {
             saveGame();
 
-        } else if (command == 4) {
+        }
+        // command return 4 - ^D
+        else if (command == 4) {
+            awaitingInput = false;
             exitGame();
         }
     }
@@ -321,7 +323,7 @@ void Controller::saveGame() {
 
     // Then the program should display a message 
     // and continue with the gameplay 
-    
+
     std::cout << std::endl;
     std::cout << "Game successfully saved" << std::endl;
     std::cout << std::endl;
@@ -355,6 +357,13 @@ void Controller::endGame() {
               << " won!" << std::endl;
 
     // Then quit, according to Section 2.2.4
-
     exitGame();
+}
+
+bool Controller::isExitMode() const {
+    return exitMode;
+}
+
+void Controller::setExitMode(bool exitMode) {
+    Controller::exitMode = exitMode;
 }
