@@ -22,6 +22,8 @@ public:
 
     // bool isPlayerNameValid (std::string playerName);
 
+    // Check if command input is valid
+    int isCommandValid(const std::string &command);
 };
 
 #endif // VALIDATOR_H
