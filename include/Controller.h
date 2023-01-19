@@ -24,7 +24,7 @@ class Controller {
         void launchGame(); 
 
         // ** 2.2 Main menu **
-        void mainMenu(); 
+        void mainMenu();
 
         // ** 2.2.1 New game **
         // ** 2.3.10 Special operation: Starting a new game **
@@ -39,10 +39,10 @@ class Controller {
 
         // ** 2.2.4 Quit **
         // ** 2.3.8 Function: Quit **
-        static void exitGame();
+        void exitGame();
 
         // ** 2.3 Base Gameplay **
-        void baseGameplay(); 
+        void baseGameplay();
         void takeTurn();
 
         // ** 2.3.11 Special operation: ending a game **
