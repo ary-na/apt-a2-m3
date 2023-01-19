@@ -32,8 +32,6 @@ void Controller::launchGame() {
 
 void Controller::mainMenu() {
 
-    bool exit = false;
-
     do {
         std::cout << "Menu" << std::endl;
         std::cout << "----" << std::endl;
@@ -54,14 +52,13 @@ void Controller::mainMenu() {
         else if (menuInput == "3")
             credits();
         else if (menuInput == "4") {
-            exit = true;
             exitGame();
         } else {
             std::cerr << "Select a valid menu option!" << std::endl;
             std::cout << std::endl;
         }
 
-    } while (!exit && !this->isExitMode());
+    } while (!this->isExitMode());
 }
 
 void Controller::newGame() {
@@ -187,6 +184,7 @@ void Controller::credits() {
 }
 
 void Controller::exitGame() {
+    this->setExitMode(true);
     std::cout << std::endl;
     std::cout << "Goodbye" << std::endl;
     std::cout << std::endl;
@@ -199,7 +197,8 @@ void Controller::baseGameplay() {
         gameComplete = this->game->isComplete();
     }
 
-    endGame();
+    if(!this->isExitMode())
+        endGame();
 }
 
 void Controller::takeTurn() {
@@ -312,7 +311,6 @@ void Controller::takeTurn() {
         }
         // command return 4 - ^D
         else if (command == 4) {
-            this->setExitMode(true);
             awaitingInput = false;
             exitGame();
         }

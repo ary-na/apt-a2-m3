@@ -51,9 +51,11 @@ class Controller {
         // ** 2.3.7 Function: Saving the Game **
         void saveGame();
 
-    bool isExitMode() const;
+        // ExitMode getter
+        bool isExitMode() const;
 
-    void setExitMode(bool exitMode);
+        // ExitMode setter
+        void setExitMode(bool exitMode);
 
 private:
         Game* game;
