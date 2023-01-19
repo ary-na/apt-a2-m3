@@ -124,15 +124,12 @@ void Game::nextPlayerTurn() {
 void Game::fillTileBag(LinkedList *tileBag) {
 
     // Add shapes and colours to array for iteration
-    Colour colours[] = {RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE};
-    Shape shapes[] = {CIRCLE, STAR_4, DIAMOND, SQUARE, STAR_6, CLOVER};
-
-    int coloursLength = sizeof(colours) / sizeof(Colour);
-    int shapesLength = sizeof(shapes) / sizeof(Shape);
+    Colour COLOURS_ARRAY;
+    Shape SHAPES_ARRAY;
 
     // Add 2 of each colour and shape combination to the tileBag
-    for (int i = 0; i < coloursLength; i++) {
-        for (int j = 0; j < shapesLength; j++) {
+    for (int i = 0; i < NO_OF_COLOURS; i++) {
+        for (int j = 0; j < NO_OF_SHAPES; j++) {
             tileBag->addEnd(new Tile(colours[i], shapes[j]));
             tileBag->addEnd(new Tile(colours[i], shapes[j]));
         }
@@ -274,87 +271,101 @@ bool Game::placeTile(Tile *tile, char row, int col) {
 
 bool Game::checkTiles(LinkedList* player1Hand, LinkedList* player2Hand, 
                       Board* board, LinkedList* tileBag) {
-    
+                        
     bool correctTiles = true;
-    
     int totalTiles = player1Hand->getLength() + player2Hand->getLength() + 
                      board->getNumOfTiles() + tileBag->getLength();
     
+    // Check if there are the right number of tiles
     if (totalTiles != MAX_TILES_IN_GAME) {
         correctTiles = false;
 
+    // Check for 2 of each type of tile
     } else {
+        int val = 0;
+        int* i = &val;
 
+        // Add all tiles to a single array
         std::string tilesArray[MAX_TILES_IN_GAME];
+        fillTilesArray(tilesArray, i, player1Hand);
+        fillTilesArray(tilesArray, i, player2Hand);
+        fillTilesArray(tilesArray, i, tileBag);
+        fillTilesArray(tilesArray, i, board);
 
-        int i = 0;
-
-        for (int j = 1; j <= player1Hand->getLength(); j++) {
-            tilesArray[i] = player1Hand->getAtPos(j)->colour +
-                            std::to_string(player1Hand->getAtPos(j)->shape);
-            i++;
-        }
-        for (int j = 1; j <= player2Hand->getLength(); j++) {
-            tilesArray[i] = player2Hand->getAtPos(j)->colour +
-                            std::to_string(player2Hand->getAtPos(j)->shape);
-            i++;
-        }
-        for (int j = 1; j <= tileBag->getLength(); j++) {
-            tilesArray[i] = tileBag->getAtPos(j)->colour +
-                            std::to_string(tileBag->getAtPos(j)->shape);
-            i++;
-        }
-
-        int tilesAdded = 0;
-        while (tilesAdded != board->getNumOfTiles()) {
-            for (int row = 0; row < board->getBoardRows(); row++) {
-                for (int col = 0; col < board->getBoardCols(); col++) {               
-                    if (board->getBoardVector()[row][col] != nullptr) {
-                        tilesArray[i] = board->getBoardVector()[row][col]->colour +
-                                        std::to_string(board->getBoardVector()[row][col]->shape);
-                        i++;
-                        tilesAdded++;
-                    }
-                }
-            }
-        }
-
+        // Make array with all expected tiles
         std::string expectedTilesArray[MAX_TILES_IN_GAME];
+        fillExpectedTilesArray(expectedTilesArray);
 
-        Colour colours[] = {RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE};
-        Shape shapes[] = {CIRCLE, STAR_4, DIAMOND, SQUARE, STAR_6, CLOVER};
-
-        int coloursLength = sizeof(colours) / sizeof(Colour);
-        int shapesLength = sizeof(shapes) / sizeof(Shape);
-        
-        int index = 0;
-
-        for (int i = 0; i < coloursLength; i++) {
-            for (int j = 0; j < shapesLength; j++) {
-                    expectedTilesArray[index] = colours[i] + 
-                                                std::to_string(shapes[j]);         
-                    index++;
-            }
-        }
-        for (int i = 0; i < coloursLength; i++) {
-            for (int j = 0; j < shapesLength; j++) {
-                    expectedTilesArray[index] = colours[i] +
-                                                std::to_string(shapes[j]);
-                    index++;
-            }
-        }
+        // Compare the two arrays
         correctTiles = arraysEqual(expectedTilesArray, tilesArray);
     }
     return correctTiles;
 }
 
+void Game::fillTilesArray(std::string tilesArray[], int* i, Board* tileSource) {
+    int tilesAdded = 0;
+
+    // Stop traversing when no more tiles to add
+    while (tilesAdded != board->getNumOfTiles()) {
+
+        // Traverse boardVector
+        for (int row = 0; row < board->getBoardRows(); row++) {
+            for (int col = 0; col < board->getBoardCols(); col++) {  
+
+                // Add the tile if there is one             
+                if (board->getBoardVector()[row][col] != nullptr) {
+                    Tile* current = board->getBoardVector()[row][col];
+                    tilesArray[*i] = current->colour + 
+                                     std::to_string(current->shape);
+                    (*i)++;
+                    tilesAdded++;
+                }
+            }
+        }
+    }
+}
+
+void Game::fillTilesArray(std::string tilesArray[], int* i, 
+                          LinkedList* tileSource) {
+
+    // Traverse tileSource and add every tile to array                    
+    for (int j = 1; j <= tileSource->getLength(); j++) {
+        tilesArray[*i] = tileSource->getAtPos(j)->colour +
+                         std::to_string(tileSource->getAtPos(j)->shape);
+        (*i)++;
+    }
+}
+
+void Game::fillExpectedTilesArray(std::string expectedTilesArray[]) { 
+
+    // Add shapes and colours to array for iteration
+    Colour COLOURS_ARRAY;
+    Shape SHAPES_ARRAY;
+    
+    // Index for expectedTilesArray
+    int i = 0;
+
+    // Add 2 of each colour and shape combination to the expectedTilesArray
+    for (int j = 0; j < NO_OF_COLOURS; j++) {
+        for (int k = 0; k < NO_OF_SHAPES; k++) {
+            expectedTilesArray[i] = colours[j] + std::to_string(shapes[k]);
+            i++;
+            expectedTilesArray[i] = colours[j] + std::to_string(shapes[k]);        
+            i++;
+        }
+    }
+}
+
 bool Game::arraysEqual(std::string array1[], std::string array2[]) {  
+
+    // Make sure both array aee in same order
     std::sort(array1, array1 + MAX_TILES_IN_GAME);
     std::sort(array2, array2 + MAX_TILES_IN_GAME);
 
     bool isEqual = true;
     int tilesChecked = 0;
 
+    // Linearly compare elements of both arrays
     while (isEqual && tilesChecked < MAX_TILES_IN_GAME) {
         for (int i = 0; i < MAX_TILES_IN_GAME; i++) {
             if (array1[i] != array2[i]) {
@@ -367,6 +378,6 @@ bool Game::arraysEqual(std::string array1[], std::string array2[]) {
 }
 
 // Delete, just for testing. 
-LinkedList* Game::GetTileBag() {
-    return this->tileBag;
-}
+// LinkedList* Game::GetTileBag() {
+//     return this->tileBag;
+// }
