@@ -49,13 +49,19 @@ class Controller {
         void endGame(); 
 
         // ** 2.3.7 Function: Saving the Game **
-        void saveGame(); 
-        
-    private:
+        void saveGame();
+
+    bool isExitMode() const;
+
+    void setExitMode(bool exitMode);
+
+private:
         Game* game;
 
         // For validating user input 
         Validator* validator;
+
+        bool exitMode;
 
         FileHandler* fileHandler;
 

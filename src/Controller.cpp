@@ -4,6 +4,7 @@ Controller::Controller() {
     this->game = nullptr;
     this->validator = new Validator();
     this->fileHandler = new FileHandler();
+    this->exitMode = false;
 }
 
 Controller::~Controller() {
@@ -60,7 +61,7 @@ void Controller::mainMenu() {
             std::cout << std::endl;
         }
 
-    } while (!exit);
+    } while (!exit && !this->isExitMode());
 }
 
 void Controller::newGame() {
@@ -193,7 +194,7 @@ void Controller::exitGame() {
 
 void Controller::baseGameplay() {
     bool gameComplete = this->game->isComplete();
-    while (!gameComplete) {
+    while (!gameComplete && !this->isExitMode()) {
         takeTurn();
         gameComplete = this->game->isComplete();
     }
@@ -241,17 +242,14 @@ void Controller::takeTurn() {
 
         int command = validator->isCommandValid(commandInput);
 
-        // command return 1 - place <colour><shape> at <row><col>
-        // command return 2 - replace <colour><shape>
-        // command return 3 - save <filename>
-        // command return 4 - ^D
         // command return -1 - Invalid
-
         if (command == -1) {
             std::cout << "Invalid input!" << std::endl;
             std::cout << std::endl;
 
-        } else if (command == 1) {
+        }
+        // command return 1 - place <colour><shape> at <row><col>
+        else if (command == 1) {
 
             // Extract tile from input 
 
@@ -284,7 +282,9 @@ void Controller::takeTurn() {
                 awaitingInput = false;
             }
 
-        } else if (command == 2) {
+        }
+        // command return 2 - replace <colour><shape>
+        else if (command == 2) {
 
             // Extract tile from input
 
@@ -304,10 +304,16 @@ void Controller::takeTurn() {
                 awaitingInput = false;
             }
 
-        } else if (command == 3) {
+        }
+        // command return 3 - save <filename>
+        else if (command == 3) {
             saveGame();
 
-        } else if (command == 4) {
+        }
+        // command return 4 - ^D
+        else if (command == 4) {
+            this->setExitMode(true);
+            awaitingInput = false;
             exitGame();
         }
     }
@@ -359,4 +365,12 @@ void Controller::endGame() {
 
     // Then quit, according to Section 2.2.4
     exitGame();
+}
+
+bool Controller::isExitMode() const {
+    return exitMode;
+}
+
+void Controller::setExitMode(bool exitMode) {
+    Controller::exitMode = exitMode;
 }
