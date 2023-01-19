@@ -2,9 +2,9 @@
 #define LINKEDLIST_H
 
 #include "Node.h"
+
 #include <iostream>
 #include <exception>
-
 
 class LinkedList {
     public:

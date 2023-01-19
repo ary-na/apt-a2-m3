@@ -2,6 +2,7 @@
 #define SCORECALCULATOR_H
 
 #include <iostream>
+
 #include "Board.h"
 
 // Maximum sizes are dynamic, this assumes that the smallest co-ordinate will be A0

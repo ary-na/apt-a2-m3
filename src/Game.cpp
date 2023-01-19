@@ -282,15 +282,16 @@ bool Game::checkTiles(LinkedList* player1Hand, LinkedList* player2Hand,
 
     // Check for 2 of each type of tile
     } else {
-        int val = 0;
-        int* i = &val;
 
+        // Track array index
+        int i = 0;
+  
         // Add all tiles to a single array
         std::string tilesArray[MAX_TILES_IN_GAME];
-        fillTilesArray(tilesArray, i, player1Hand);
-        fillTilesArray(tilesArray, i, player2Hand);
-        fillTilesArray(tilesArray, i, tileBag);
-        fillTilesArray(tilesArray, i, board);
+        fillTilesArray(tilesArray, &i, player1Hand);
+        fillTilesArray(tilesArray, &i, player2Hand);
+        fillTilesArray(tilesArray, &i, tileBag);
+        fillTilesArray(tilesArray, &i, board);
 
         // Make array with all expected tiles
         std::string expectedTilesArray[MAX_TILES_IN_GAME];
@@ -342,7 +343,7 @@ void Game::fillExpectedTilesArray(std::string expectedTilesArray[]) {
     Colour COLOURS_ARRAY;
     Shape SHAPES_ARRAY;
     
-    // Index for expectedTilesArray
+    // Track array index
     int i = 0;
 
     // Add 2 of each colour and shape combination to the expectedTilesArray

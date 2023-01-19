@@ -35,9 +35,9 @@ LinkedList* Player::getHand() const {
     return this->hand;
 }
 
-void Player::setHand(LinkedList* hand) {
-    this->hand = hand;
-}
+// void Player::setHand(LinkedList* hand) {
+//     this->hand = hand;
+// }
 
 void Player::addScore(int score) {
     this->score = this->score + score;

@@ -5,6 +5,7 @@
 #include "Game.h"
 #include "Validator.h"
 #include "FileHandler.h"
+
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -23,12 +24,23 @@ class Controller {
         // ** 2.1 Launch **
         void launchGame(); 
 
+private:
+        Game* game;
+        Validator* validator;
+        FileHandler* fileHandler;
+        bool exitMode;
+
         // ** 2.2 Main menu **
         void mainMenu();
 
         // ** 2.2.1 New game **
         // ** 2.3.10 Special operation: Starting a new game **
         void newGame(); 
+
+        // Helper function for newGame():
+        // Takes a string pointer for a player 
+        // name and assigns user input to it
+        void playerNamePrompt(std::string* nameInput);
 
         // ** 2.2.2 Load game **
         // ** 2.3.12 Special operation: loading a game **
@@ -57,18 +69,8 @@ class Controller {
         // ExitMode setter
         void setExitMode(bool exitMode);
 
-private:
-        Game* game;
-
-        // For validating user input 
-        Validator* validator;
-
-        bool exitMode;
-
-        FileHandler* fileHandler;
-
         // Absorb the load game file 
-        bool absorbLoadGameFile(std::string fileName);
+        bool absorbLoadGameFile(std::string fileName);        
 };
 
 #endif // CONTROLLER_H

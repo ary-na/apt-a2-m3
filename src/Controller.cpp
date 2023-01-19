@@ -26,7 +26,7 @@ void Controller::launchGame() {
     std::cout << "------------------" << std::endl;
     std::cout << std::endl;
 
-    // Then the program should continue to the main menu
+    // Then continue to the main menu
 
     mainMenu();
 }
@@ -37,28 +37,30 @@ void Controller::mainMenu() {
         std::cout << "Menu" << std::endl;
         std::cout << "----" << std::endl;
         std::cout << std::endl;
+
         std::cout << "1. New game" << std::endl;
         std::cout << "2. Load game" << std::endl;
         std::cout << "3. Credits (show student information)" << std::endl;
         std::cout << "4. Quit" << std::endl;
 
-        // The user selects an option by typing a number, and pressing enter
+        // The user selects an option by 
+        // typing a number and pressing enter
+
         std::string menuInput;
         std::cout << "> ", getline(std::cin, menuInput);
 
-        if (menuInput == "1")
+        if (menuInput == "1") {
             newGame();
-        else if (menuInput == "2")
+        } else if (menuInput == "2") {
             loadGame();
-        else if (menuInput == "3")
+        } else if (menuInput == "3") {
             credits();
-        else if (menuInput == "4") {
+        } else if (menuInput == "4") {
             exitGame();
         } else {
             std::cerr << "Select a valid menu option!" << std::endl;
             std::cout << std::endl;
         }
-
     } while (!this->isExitMode());
 }
 
@@ -75,52 +77,16 @@ void Controller::newGame() {
     std::cout << "Enter a name for player 1 "
               << "(uppercase characters only)" << std::endl;
 
-    bool awaitingInput = true;
     std::string name1Input = "";
-
-    while (awaitingInput) {
-        std::cout << "> ", getline(std::cin, name1Input);
-        std::cout << std::endl;
-
-        // Players should only consist of letters (no numbers or symbols)
-
-        // nameValid return true - If name is valid
-        // nameValid return false - If name is inValid
-        bool nameValid = validator->isNameValid(name1Input);
-
-        if (!nameValid) {
-            std::cout << "Invalid input!" << std::endl;
-            std::cout << std::endl;
-        } else {
-            awaitingInput = false;
-        }
-    }
+    playerNamePrompt(&name1Input);
 
     // Ask for player 2 name
 
     std::cout << "Enter a name for player 2 "
               << "(uppercase characters only)" << std::endl;
 
-    awaitingInput = true;
     std::string name2Input = "";
-
-    while (awaitingInput) {
-        std::cout << "> ", getline(std::cin, name2Input);
-        std::cout << std::endl;
-
-        // Players should only consist of letters (no numbers or symbols)
-
-        // nameValid return true - If name is valid
-        // nameValid return false - If name is inValid
-        bool nameValid = validator->isNameValid(name2Input);
-
-        if (!nameValid) {
-            std::cout << "Invalid input!" << std::endl;
-            std::cout << std::endl;
-        } else {
-            awaitingInput = false;
-        }
-    }
+    playerNamePrompt(&name2Input);
 
     // Create a new game of Qwirkle
 
@@ -134,6 +100,26 @@ void Controller::newGame() {
     std::cout << std::endl;
 
     baseGameplay();
+}
+
+void Controller::playerNamePrompt(std::string* nameInput) {
+    bool awaitingInput = true;
+    while (awaitingInput) {
+
+        // Get player name input
+        std::cout << "> ", getline(std::cin, *nameInput);
+        std::cout << std::endl;
+
+        // Players should only have letters, no numbers or symbols
+        bool nameValid = validator->isNameValid(*nameInput);
+
+        if (!nameValid) {
+            std::cerr << "Invalid input!" << std::endl;
+            std::cout << std::endl;
+        } else {
+            awaitingInput = false;
+        }
+    }
 }
 
 void Controller::loadGame() {
@@ -197,7 +183,6 @@ void Controller::baseGameplay() {
         takeTurn();
         gameComplete = this->game->isComplete();
     }
-
     if (!this->isExitMode())
         endGame();
 }
@@ -242,20 +227,20 @@ void Controller::takeTurn() {
 
         int command = validator->isCommandValid(commandInput);
 
-        // command return -1 - Invalid
+        // If the command is invalid
         if (command == -1) {
             std::cout << "Invalid input!" << std::endl;
             std::cout << std::endl;
 
-        }
-        // command return 1 - place <colour><shape> at <row><col>
-        else if (command == 1) {
+        // If the command is place <colour><shape> at <row><col>
+        } else if (command == 1) {
 
-            // Extract tile and position from input 
-
+            // Extract tile and from input 
             Colour colourInput = commandInput[6];
             Shape shapeInput = commandInput[7] - '0';
             Tile *tileInput = new Tile(colourInput, shapeInput);
+
+            // Extract position from input
             char rowInput = commandInput[12];
             int colInput;
 
@@ -267,31 +252,27 @@ void Controller::takeTurn() {
             }
 
             // Try to place the tile
-
             bool tilePlaced = this->game->placeTile(tileInput, rowInput, colInput);
 
             if (!tilePlaced) {
                 std::cout << "Illegal move!" << std::endl;
                 std::cout << std::endl;
-                delete tileInput;
+                delete tileInput;  
             } else {
                 awaitingInput = false;
             }
 
-        }
-        // command return 2 - replace <colour><shape>
-        else if (command == 2) {
+        // If the command is replace <colour><shape>
+        } else if (command == 2) {
 
             // Extract tile from input
-
             Colour colourInput = commandInput[8];
             Shape shapeInput = commandInput[9] - '0';
             Tile *tileInput = new Tile(colourInput, shapeInput);
 
             // Try to replace the tile
-
             bool tileReplaced = this->game->replaceTile(tileInput);
-
+            
             if (!tileReplaced) {
                 std::cout << "Illegal move!" << std::endl;
                 std::cout << std::endl;
@@ -300,14 +281,12 @@ void Controller::takeTurn() {
                 awaitingInput = false;
             }
 
-        }
-        // command return 3 - save <filename>
-        else if (command == 3) {
+        // If the command is save <filename>
+        } else if (command == 3) {
             saveGame();
 
-        }
-        // command return 4 - ^D
-        else if (command == 4) {
+        // If the command is ^D
+        } else if (command == 4) {
             awaitingInput = false;
             exitGame();
         }
@@ -357,6 +336,7 @@ void Controller::endGame() {
               << " won!" << std::endl;
 
     // Then quit, according to Section 2.2.4
+    
     exitGame();
 }
 

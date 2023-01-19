@@ -2,6 +2,7 @@
 #define BOARD_H
 
 #include "Tile.h"
+
 #include <vector> 
 #include <iostream>
 #include <exception>
