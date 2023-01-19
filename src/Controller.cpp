@@ -20,14 +20,12 @@ Controller::~Controller() {
 void Controller::launchGame() {
 
     // The program should display a welcome message
-
     std::cout << std::endl;
     std::cout << "Welcome to Qwirkle" << std::endl;
     std::cout << "------------------" << std::endl;
     std::cout << std::endl;
 
     // Then continue to the main menu
-
     mainMenu();
 }
 
@@ -45,7 +43,6 @@ void Controller::mainMenu() {
 
         // The user selects an option by 
         // typing a number and pressing enter
-
         std::string menuInput = "";
         inputPrompt(&menuInput);
 
@@ -67,12 +64,10 @@ void Controller::mainMenu() {
 void Controller::newGame() {
 
     // Print a message for starting a new game
-
     std::cout << "Starting a new game" << std::endl;
     std::cout << std::endl;
 
     // Ask for player 1 name
-
     std::cout << "Enter a name for player 1 "
               << "(uppercase characters only)" << std::endl;
 
@@ -80,7 +75,6 @@ void Controller::newGame() {
     playerNamePrompt(&name1Input);
 
     // Ask for player 2 name
-
     std::cout << "Enter a name for player 2 "
               << "(uppercase characters only)" << std::endl;
 
@@ -88,16 +82,13 @@ void Controller::newGame() {
     playerNamePrompt(&name2Input);
 
     // Create a new game of Qwirkle
-
     Player *player1 = new Player(name1Input);
     Player *player2 = new Player(name2Input);
     this->game = new Game(player1, player2);
 
     // Proceed with normal gameplay
-
     std::cout << "Let's play!" << std::endl;
     std::cout << std::endl;
-
     baseGameplay();
 }
 
@@ -195,33 +186,27 @@ void Controller::baseGameplay() {
 void Controller::takeTurn() {
 
     // The name of the current player
-
     std::cout << this->game->getCurrentPlayer()->getName()
               << ", it's your turn" << std::endl;
     std::cout << std::endl;
 
     // The scores of both players
-
     std::cout << "Score for " << this->game->getPlayer1()->getName() << ": "
               << this->game->getPlayer1()->getScore() << std::endl;
-
     std::cout << "Score for " << this->game->getPlayer2()->getName() << ": "
               << this->game->getPlayer2()->getScore() << std::endl;
     std::cout << std::endl;
 
     // The state of the board
-
     this->game->getBoard()->printBoard();
     std::cout << std::endl;
 
     // The tiles in the current player’s hand
-
     std::cout << "Your hand is" << std::endl;
     this->game->getCurrentPlayer()->getHand()->printList();
     std::cout << std::endl;
 
     // The user prompt
-
     turnPrompt();
 }
 
@@ -241,52 +226,11 @@ void Controller::turnPrompt() {
 
         // If command is place <colour><shape> at <row><col>
         } else if (command == 1) {
-
-            // Extract tile and from input 
-            Colour colourInput = commandInput[6];
-            Shape shapeInput = commandInput[7] - '0';
-            Tile *tileInput = new Tile(colourInput, shapeInput);
-
-            // Extract position from input
-            char rowInput = commandInput[12];
-            int colInput;
-
-            if (commandInput.length() > 14) {
-                colInput = std::stoi(std::to_string(commandInput[13] - '0') + 
-                                     std::to_string(commandInput[14] - '0'));
-            } else {
-                colInput = commandInput[13] - '0';
-            }
-
-            // Try to place the tile
-            bool tilePlaced = this->game->placeTile(tileInput, rowInput, colInput);
-
-            if (!tilePlaced) {
-                std::cerr << "Illegal move!" << std::endl;
-                std::cout << std::endl;
-                delete tileInput;  
-            } else {
-                awaitingInput = false;
-            }
+            placeTile(commandInput, &awaitingInput);
 
         // If command is replace <colour><shape>
         } else if (command == 2) {
-
-            // Extract tile from input
-            Colour colourInput = commandInput[8];
-            Shape shapeInput = commandInput[9] - '0';
-            Tile *tileInput = new Tile(colourInput, shapeInput);
-
-            // Try to replace the tile
-            bool tileReplaced = this->game->replaceTile(tileInput);
-            
-            if (!tileReplaced) {
-                std::cout << "Illegal move!" << std::endl;
-                std::cout << std::endl;
-                delete tileInput;
-            } else {
-                awaitingInput = false;
-            }
+            replaceTile(commandInput, &awaitingInput);
 
         // If command is save <filename>
         } else if (command == 3) {
@@ -298,6 +242,55 @@ void Controller::turnPrompt() {
             std::cout << std::endl;
             exitGame();
         }
+    }
+}
+
+void Controller::placeTile(std::string commandInput, bool* inputStatus) {
+
+    // Extract tile and from input 
+    Colour colourInput = commandInput[6];
+    Shape shapeInput = commandInput[7] - '0';
+    Tile *tileInput = new Tile(colourInput, shapeInput);
+
+    // Extract position from input
+    char rowInput = commandInput[12];
+    int colInput;
+
+    if (commandInput.length() > 14) {
+        colInput = std::stoi(std::to_string(commandInput[13] - '0') + 
+                   std::to_string(commandInput[14] - '0'));
+    } else {
+        colInput = commandInput[13] - '0';
+    }
+
+    // Try to place the tile
+    bool tilePlaced = this->game->placeTile(tileInput, rowInput, colInput);
+
+    if (!tilePlaced) {
+        std::cerr << "Illegal move!" << std::endl;
+        std::cout << std::endl;
+        delete tileInput;  
+    } else {
+        *inputStatus = false;
+    }
+}
+
+void Controller::replaceTile(std::string commandInput, bool* inputStatus) {
+
+    // Extract tile from input
+    Colour colourInput = commandInput[8];
+    Shape shapeInput = commandInput[9] - '0';
+    Tile *tileInput = new Tile(colourInput, shapeInput);
+
+    // Try to replace the tile
+    bool tileReplaced = this->game->replaceTile(tileInput);
+            
+    if (!tileReplaced) {
+        std::cerr << "Illegal move!" << std::endl;
+        std::cout << std::endl;
+        delete tileInput;
+    } else {
+        *inputStatus = false;
     }
 }
 
@@ -328,11 +321,11 @@ void Controller::saveGame() {
 
 void Controller::endGame() {
 
-    // Display the end game message, scores and winner name
-
+    // Display the end game message
     std::cout << "Game over" << std::endl;
     std::cout << std::endl;
 
+    // Display the scores
     std::cout << "Score for " << this->game->getPlayer1()->getName() << ": "
               << this->game->getPlayer1()->getScore() << std::endl;
 
@@ -340,11 +333,11 @@ void Controller::endGame() {
               << this->game->getPlayer2()->getScore() << std::endl;
     std::cout << std::endl;
 
+    // Display the winner name
     std::cout << "Player " << this->game->getHighestScorePlayer()
               << " won!" << std::endl;
 
     // Quit according to Section 2.2.4
-    
     exitGame();
 }
 

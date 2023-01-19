@@ -56,7 +56,21 @@ private:
         // ** 2.3 Base Gameplay **
         void baseGameplay();
         void takeTurn();
+
+        // Helper function for takeTurn():
+        // asks the user to enter a command, 
+        // validates it and then processes it 
         void turnPrompt();
+
+        // Helper function for turnPromt():
+        // takes the user command and tries to place a tile,
+        // the inputStatus pointer is set depending if successful
+        void placeTile(std::string commandInput, bool* inputStatus);
+
+        // Helper function for turnPromt():
+        // takes the user command and tries to replace a tile,
+        // the inputStatus pointer is set depending if successful
+        void replaceTile(std::string commandInput, bool* inputStatus);
 
         // ** 2.3.11 Special operation: ending a game **
         void endGame(); 
@@ -73,6 +87,8 @@ private:
         // Absorb the load game file 
         bool absorbLoadGameFile(std::string fileName);    
 
+        // Promts the user to enter an input and
+        // assigns it to the given string pointer
         void inputPrompt(std::string* input);   
 };
 
