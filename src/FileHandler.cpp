@@ -20,7 +20,7 @@ Game* FileHandler::loadGame(std::string fileName) {
     return absorbLoadGameFile(fileName);
 }
 
-bool saveGame(std::string fileName) {
+bool FileHandler::saveGame(std::string fileName) {
 
     return true;
 }
