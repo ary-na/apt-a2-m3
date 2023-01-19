@@ -20,6 +20,11 @@ Game* FileHandler::loadGame(std::string fileName) {
     return absorbLoadGameFile(fileName);
 }
 
+bool saveGame(std::string fileName) {
+
+    return true;
+}
+
 Game* FileHandler::absorbLoadGameFile(std::string fileName) {
 
     std::string path = "savedGames/" + fileName + ".save";

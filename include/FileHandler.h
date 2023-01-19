@@ -14,40 +14,49 @@ class FileHandler {
         FileHandler();
         ~FileHandler();
         
-        // Loads the saved game file, will return a bool indicating 
-        // if the game was loaded correctly. Will also print any errors 
-        // to the console in any of the save files.
+        // ** updates the current state of play based on a saved game file 
+        // ** INPUT: Required a valid save file name. The path and extension of the game file is not required. 
+        // ** OUTPUT: If the name of the file is valid, and the format of the file is valid, a Game* will be returned. 
+        // If not, a NullPtr will be returned and an error will be printed out. 
+
          Game* loadGame(std::string fileName);
+        // ** saves the current state of play to a “.save” file.
+        // ** INPUT: The name of the file. If the file already exists, this will be overwritten. The name cannot contain special characters or whitespace. 
+        // If it does the function will return false.
+        //** OUTPUT: if the file is successfully saved, true will be returned, else an error will be printed and false will be returned.  
+
+         bool saveGame(std::string fileName);
         
     private:
         // For validating user input 
         Validator* validator;
 
-        // Absorb the load game file 
-        // Assuming a valid file name is being passed to the function. 
-        // Only the name needs to be passed not the path or extension. 
+        // ** Absorbs the current game file and returns a Game* with the updated state of play.
+        // ** INPUT: A valid save file name without the path or extension. It is assumed the file name is correct 
+        // and the function is not accounting for incorrect file names. 
+        // ** OUTPUT: if the format of the file is valid, a Game* will be returned. If not, a NullPtr will be returned and an error will be printed out.   
+ 
          Game* absorbLoadGameFile(std::string fileName);
         
         // Returns Hand from file.
-        // Assuming a comma separated string is being passed to the 
-        // function with tile data being represented as colour then shape 
-        // Example “Y5,R5,O2”
+        // INPUT: A comma-separated string is being passed to the function with tile data being represented as colour than shape Example “Y5,R5,O2”.
+        // OUTPUT: A LinkedList* of tiles representing the current player’s hand. 
         LinkedList* playerHandFromFile (std::string playerHandString);
 
-        // Updates the game with the current state of play 
-        // Assuming a comma separated string is being passed to the function. 
-        // Format being the tile data, followed by an “@” symbol, then the boards position.
+        // ** Updates the current state of the board for the game based on the state of play.   
+        // ** INPUT: An initialised Game* & A comma-separated string with the format being the tile data, followed by an “@” symbol, then the board’s position. 
         // Example: “B4@B2, B6@B3, B5@B4”
         void boardStateFromFile (Game* game, std::string boardState);
         
-        // Returns Tile Bag from file.
-        // Assuming a comma separated string is being passed to the 
-        // function with tile data being represented as colour then shape 
-        // Example “Y5,R5,O2”
+        // Returns Hand from file.
+        // INPUT: A comma-separated string is being passed to the function with tile data being represented as colour than shape Example “Y5,R5,O2”.
+        // OUTPUT: A LinkedList* of tiles representing the current player’s hand. 
         LinkedList* tileBagFromFile (std::string playerHandString);   
 
-        // Returns the current player pointer from the name of the current player. 
-        // Expecting a valid player name
+        // ** Returns the current player
+        // ** INPUT: Valid current players and a player name
+        // ** OUTPUT: if an invalid player name is passed, the function will return a NullPtr and produce an error. 
+        // If a valid name is passed, the function will return a ptr to the player.
         Player* currentPlayerFromName (Player* P1, Player* P2, std::string playerName); 
 
         // Trim the start and end of a strign of whitespace
