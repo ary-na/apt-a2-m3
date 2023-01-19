@@ -59,8 +59,8 @@ class Game {
 
         // ** 2.3.5 Player action: place a tile **
         // Takes a tile pointer, row (between A-Z) and col (between 0-25), 
-        // and returns true if tile has been placed from the current player's 
-        // hand and their score has been updated, otherwise false:
+        // and returns true if tile has been placed from the current 
+        // player's hand and their score has been updated, otherwise false:
         // a tile can only be placed if isPlaceLegal() is true
         bool placeTile(Tile* tile, char row, int col); 
 
@@ -125,26 +125,22 @@ class Game {
         bool checkTiles(LinkedList* player1Hand, LinkedList* player2Hand, 
                         Board* board, LinkedList* tileBag);
 
-        // A helper function for checkTiles():
-        // Takes two arrays of type string and compares the 
-        // values, returns true if identical, otherwise false:
+        // Helper function for checkTiles(): takes two arrays of type string 
+        // and compares the values, returns true if identical, otherwise false
         bool arraysEqual(std::string array1[], std::string array2[]);
 
-        // A helper function for checkTiles():
-        // Takes an array of type string and fills it from 
-        // the given index with the tiles from a LinkedList
+        // Helper function for checkTiles(): takes an array of type string 
+        // and fills it from the given index with the tiles from a LinkedList
         void fillTilesArray(std::string tilesArray[], int* i,
                             LinkedList* tileSource);
                             
-        // A helper function for checkTiles():
-        // Takes an array of type string and fills it from
-        // the given index with the tiles from a Board
+        // Helper function for checkTiles(): takes an array of type string 
+        // and fills it from the given index with the tiles from a Board
         void fillTilesArray(std::string tilesArray[], int* i, 
                             Board* tileSource);
         
-        // A helper function for checkTiles():
-        // Takes and array of type string and fills it 
-        // with the correct number and combination of tiles
+        // Helper function for checkTiles(): takes and array of type string 
+        // and fills it with the correct number and combination of tiles
         void fillExpectedTilesArray(std::string expectedTilesArray[]);
 };
 

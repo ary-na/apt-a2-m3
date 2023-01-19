@@ -37,9 +37,8 @@ private:
         // ** 2.3.10 Special operation: Starting a new game **
         void newGame(); 
 
-        // Helper function for newGame():
-        // Takes a string pointer for a player 
-        // name and assigns user input to it
+        // Helper function for newGame(): takes a string pointer  
+        // for a player name and assigns user input to it
         void playerNamePrompt(std::string* nameInput);
 
         // ** 2.2.2 Load game **
@@ -57,19 +56,16 @@ private:
         void baseGameplay();
         void takeTurn();
 
-        // Helper function for takeTurn():
-        // asks the user to enter a command, 
-        // validates it and then processes it 
+        // Helper function for takeTurn(): asks the user to 
+        // enter a command, validates it and processes it 
         void turnPrompt();
 
-        // Helper function for turnPromt():
-        // takes the user command and tries to place a tile,
-        // the inputStatus pointer is set depending if successful
+        // Helper function for turnPromt(): takes the user command and tries to 
+        // place a tile, the inputStatus pointer is set depending if successful
         void placeTile(std::string commandInput, bool* inputStatus);
 
-        // Helper function for turnPromt():
-        // takes the user command and tries to replace a tile,
-        // the inputStatus pointer is set depending if successful
+        // Helper function for turnPromt(): takes the user command and tries to 
+        // replace a tile, the inputStatus pointer is set depending if successful
         void replaceTile(std::string commandInput, bool* inputStatus);
 
         // ** 2.3.11 Special operation: ending a game **
