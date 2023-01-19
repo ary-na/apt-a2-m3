@@ -56,6 +56,7 @@ private:
         // ** 2.3 Base Gameplay **
         void baseGameplay();
         void takeTurn();
+        void turnPrompt();
 
         // ** 2.3.11 Special operation: ending a game **
         void endGame(); 

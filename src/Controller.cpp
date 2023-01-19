@@ -222,21 +222,24 @@ void Controller::takeTurn() {
 
     // The user prompt
 
+    turnPrompt();
+}
+
+void Controller::turnPrompt() {
     bool awaitingInput = true;
-
     while (awaitingInput) {
-
+        
+        // Ask user to enter command
         std::string commandInput = "";
         inputPrompt(&commandInput);
-
         int command = validator->isCommandValid(commandInput);
 
-        // If the command is invalid
+        // If command is invalid
         if (command == -1) {
-            std::cout << "Invalid input!" << std::endl;
+            std::cerr << "Invalid input!" << std::endl;
             std::cout << std::endl;
 
-        // If the command is place <colour><shape> at <row><col>
+        // If command is place <colour><shape> at <row><col>
         } else if (command == 1) {
 
             // Extract tile and from input 
@@ -259,14 +262,14 @@ void Controller::takeTurn() {
             bool tilePlaced = this->game->placeTile(tileInput, rowInput, colInput);
 
             if (!tilePlaced) {
-                std::cout << "Illegal move!" << std::endl;
+                std::cerr << "Illegal move!" << std::endl;
                 std::cout << std::endl;
                 delete tileInput;  
             } else {
                 awaitingInput = false;
             }
 
-        // If the command is replace <colour><shape>
+        // If command is replace <colour><shape>
         } else if (command == 2) {
 
             // Extract tile from input
@@ -285,11 +288,11 @@ void Controller::takeTurn() {
                 awaitingInput = false;
             }
 
-        // If the command is save <filename>
+        // If command is save <filename>
         } else if (command == 3) {
             saveGame();
 
-        // If the command is ^D
+        // If command is ^D
         } else if (command == 4) {
             awaitingInput = false;
             std::cout << std::endl;
@@ -340,7 +343,7 @@ void Controller::endGame() {
     std::cout << "Player " << this->game->getHighestScorePlayer()
               << " won!" << std::endl;
 
-    // Then quit, according to Section 2.2.4
+    // Quit according to Section 2.2.4
     
     exitGame();
 }
