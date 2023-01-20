@@ -1,11 +1,13 @@
 #include "../include/Controller.h"
 #include <iostream>
-#include <memory>
 
 int main(void) {
 
-    std::unique_ptr<Controller> controller(new Controller);
+    Controller* controller = new Controller();
     controller->launchGame();
+
+    delete controller;
+    controller = nullptr;
 
     return EXIT_SUCCESS;
 }

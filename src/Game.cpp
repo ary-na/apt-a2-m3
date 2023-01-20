@@ -141,7 +141,7 @@ void Game::shuffleTileBag(LinkedList *tileBag) {
     // Check if there are tiles in the tileBag
     if (tileBag->getLength() > 0) {
 
-        std::unique_ptr<LinkedList> tempTileBag(new LinkedList);
+        LinkedList* tempTileBag = new LinkedList();
         int totalTiles = tileBag->getLength();
 
         // Shuffle tiles and put in temporary tile bag
@@ -172,6 +172,8 @@ void Game::shuffleTileBag(LinkedList *tileBag) {
         for (int i = 1; i <= totalTiles; i++) {
             tileBag->addEnd(new Tile(*tempTileBag->getAtPos(i)));
         }
+        delete tempTileBag;
+        tempTileBag = nullptr;
     }
 }
 
