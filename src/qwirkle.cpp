@@ -2,7 +2,6 @@
 #include <iostream>
 
 int main(void) {
-
     Controller* controller = new Controller();
     controller->launchGame();
 
