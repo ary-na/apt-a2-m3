@@ -33,7 +33,6 @@ Game::Game(Player* player1, Player* player2, Board* board,
     // TODO: Check all tiles are there
 
     // bool correctTiles = checkTiles();
-    bool correctTiles = true;
     bool correctTiles = checkTiles(player1->getHand(), player2->getHand(), 
                                    board, tileBag);
 

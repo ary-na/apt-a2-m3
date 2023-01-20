@@ -85,8 +85,7 @@ private:
 
         // Enable test mode for the game - stop randomisation for tile bag
         bool testFlag;
-        bool absorbLoadGameFile(std::string fileName);    
-
+        
         // Promts the user to enter an input and
         // assigns it to the given string pointer
         void inputPrompt(std::string* input);   
