@@ -215,7 +215,7 @@ bool Game::isPlaceLegal(Tile *tile, char row, int col) const {
     else if (!this->getBoard()->isEmpty() && validRow->getLength() == 0 && validCol->getLength() == 0)
         isLegal = false;
     // A line can never be longer than six tiles
-    else if (validRow->getLength() >= Moves::MAX_NUM_TILES_IN_A_LINE || validCol->getLength() >= Moves::MAX_NUM_TILES_IN_A_LINE)
+    else if (validRow->getLength() >= this->maxTilesInLine || validCol->getLength() >= this->maxTilesInLine)
         isLegal = false;
     // Tiles must share one colour or shape attribute
     else if (!(Moves::isTileColourMatch(validRow, tile) || Moves::isTileShapeMatch(validRow, tile)) && validRow->getLength() > 0)
@@ -277,7 +277,7 @@ bool Game::checkTiles(LinkedList* player1Hand, LinkedList* player2Hand,
                      board->getNumOfTiles() + tileBag->getLength();
     
     // Check if there are the right number of tiles
-    if (totalTiles != MAX_TILES_IN_GAME) {
+    if (totalTiles != this->maxTilesInGame) {
         correctTiles = false;
 
     // Check for 2 of each type of tile
@@ -287,14 +287,14 @@ bool Game::checkTiles(LinkedList* player1Hand, LinkedList* player2Hand,
         int i = 0;
   
         // Add all tiles to a single array
-        std::string tilesArray[MAX_TILES_IN_GAME];
+        std::string tilesArray[this->maxTilesInGame];
         fillTilesArray(tilesArray, &i, player1Hand);
         fillTilesArray(tilesArray, &i, player2Hand);
         fillTilesArray(tilesArray, &i, tileBag);
         fillTilesArray(tilesArray, &i, board);
 
         // Make array with all expected tiles
-        std::string expectedTilesArray[MAX_TILES_IN_GAME];
+        std::string expectedTilesArray[this->maxTilesInGame];
         fillExpectedTilesArray(expectedTilesArray);
 
         // Compare the two arrays
@@ -360,15 +360,15 @@ void Game::fillExpectedTilesArray(std::string expectedTilesArray[]) {
 bool Game::arraysEqual(std::string array1[], std::string array2[]) {  
 
     // Make sure both array aee in same order
-    std::sort(array1, array1 + MAX_TILES_IN_GAME);
-    std::sort(array2, array2 + MAX_TILES_IN_GAME);
+    std::sort(array1, array1 + this->maxTilesInGame);
+    std::sort(array2, array2 + this->maxTilesInGame);
 
     bool isEqual = true;
     int tilesChecked = 0;
 
     // Linearly compare elements of both arrays
-    while (isEqual && tilesChecked < MAX_TILES_IN_GAME) {
-        for (int i = 0; i < MAX_TILES_IN_GAME; i++) {
+    while (isEqual && tilesChecked < this->maxTilesInGame) {
+        for (int i = 0; i < this->maxTilesInGame; i++) {
             if (array1[i] != array2[i]) {
                     isEqual = false;
             }
@@ -377,6 +377,10 @@ bool Game::arraysEqual(std::string array1[], std::string array2[]) {
     }
     return isEqual;
 }
+
+// int Game::getMaxTilesInGame() {
+//     return this->maxTilesInGame;
+// }
 
 // Delete, just for testing. 
 // LinkedList* Game::GetTileBag() {

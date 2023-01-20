@@ -69,6 +69,8 @@ class Game {
         // replaced from the current player's hand, otherwise false:
         // a tile can only be replaced if isReplaceLegal() is true
         bool replaceTile(Tile* tile); 
+
+        // int getMaxTilesInGame();
         
         // Used when loading game from file.
         // void setTileBag (LinkedList* tileBag);
@@ -91,6 +93,9 @@ class Game {
         // Calculates the current player's score during
         // placeTile(), providing isPlaceLegal() is true
         ScoreCalculator* scoreCalculator;
+
+        const static int maxTilesInGame = 72;
+        const static int maxTilesInLine = 6;
 
         // Takes the tileBag pointer and fills it with 72 
         // tiles, in 6 colors and 6 shapes and 2 of each type

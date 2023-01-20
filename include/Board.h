@@ -63,9 +63,9 @@ class Board {
     
         const static int minRow = 0;
         const static int maxRow = 25;
-    
-        const static char minRowChar = (char)('A' + minRow);
-        const static char maxRowChar = (char)('A' + maxRow);
+        
+        const static char minRowChar = (char)('A' + minRow); // This is A
+        const static char maxRowChar = (char)('A' + maxRow); // This is B
 
         // Stores the number of tiles on the board,
         // gets updated when addTileAtPos()
