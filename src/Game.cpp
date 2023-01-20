@@ -310,8 +310,8 @@ void Game::fillTilesArray(std::string tilesArray[], int* i, Board* tileSource) {
     while (tilesAdded != board->getNumOfTiles()) {
 
         // Traverse boardVector
-        for (int row = 0; row < board->getBoardRows(); row++) {
-            for (int col = 0; col < board->getBoardCols(); col++) {  
+        for (int row = board->getMinRow(); row <= board->getMaxRow(); row++) {
+            for (int col = board->getMinCol(); col <= board->getMaxCol(); col++) {  
 
                 // Add the tile if there is one             
                 if (board->getBoardVector()[row][col] != nullptr) {
