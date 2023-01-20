@@ -7,7 +7,17 @@ LinkedList::LinkedList() {
 }
 
 LinkedList::LinkedList(const LinkedList& other) {
-    // TODO
+
+    // Check if LinkedList is empty
+    if (other.head != nullptr) {
+        Node* current = other.head;
+
+        // Traverse other LinkedList and copy tiles     
+        while (current != nullptr) {
+            addEnd(new Tile(*current->tile));
+            current = current->next;
+        }
+    }
 }
 
 LinkedList::~LinkedList() {
@@ -82,7 +92,7 @@ bool LinkedList::search(Tile* tile) const {
     while (current != nullptr && result == false) {
         if ((tile->colour == current->tile->colour) &&
             (tile->shape == current->tile->shape)) {
-                result = true;
+            result = true;
         }
         current = current->next;
     }
@@ -200,27 +210,32 @@ void LinkedList::deleteByNode(Tile* tile) {
     if ((tile->colour == this->head->tile->colour) &&
         (tile->shape == this->head->tile->shape)) {
         deleteFront();
-        // AB - Testing Delete tail
-        } else if ((tile->colour == this->tail->tile->colour) &&
-        (tile->shape == this->tail->tile->shape)) {
-            deleteEnd();
 
-    // Traverse LinkedList until matching 
-    // first tile is found and delete
     } else {
         bool result = false;
         Node* current = this->head->next;
+        int pos = 2;
+
+        // Traverse LinkedList
         while (current != nullptr && result == false) {
             if ((tile->colour == current->tile->colour) &&
                 (tile->shape == current->tile->shape)) {
-                Node* temp = current;
-                temp->prev->next = current->next;
-                temp->next->prev = current->prev;
-                delete temp;
-                --this->length;
-                result = true;
+
+                // Delete the first matching tile
+                if (pos == this->length) {
+                    deleteEnd();
+                    result = true;
+                } else {
+                    Node* temp = current;
+                    temp->prev->next = current->next;
+                    temp->next->prev = current->prev;
+                    delete temp;
+                    --this->length;
+                    result = true;
+                }
             }
             current = current->next;
+            ++pos;
         }  
     }
 }

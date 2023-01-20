@@ -1,2 +1,5 @@
 *.o
+.*
 qwirkle
+vscode
+.vscode/settings.json

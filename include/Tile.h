@@ -8,8 +8,15 @@ typedef int Shape;
 
 class Tile {
     public:
+
+        // Constructor for making a tile: 
+        // takes a colour and shape (see TileCodes.h)
         Tile(Colour colour, Shape shape);
+
+        // Deep copy constructor 
         Tile(const Tile& other);
+
+        // Destructor 
         ~Tile();
 
         Colour colour;

@@ -7,13 +7,14 @@
 
 class Player {
     public:
+
         // Constructor for adding a new player
         Player(std::string name);
 
         // Constructor for loading a player
         Player(std::string name, int score, LinkedList* hand);
 
-        // Copy constructor 
+        // Deep copy constructor 
         Player(const Player& other);
 
         // Destructor 
@@ -29,7 +30,7 @@ class Player {
         LinkedList* getHand() const;
 
         // Sets the hand, is used when we load a hand from a saved game
-        void setHand(LinkedList*);
+        // void setHand(LinkedList*);
 
         // Takes a number >= 0 and adds it to player score
         void addScore(int score);

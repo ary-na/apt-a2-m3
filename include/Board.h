@@ -2,17 +2,31 @@
 #define BOARD_H
 
 #include "Tile.h"
+
 #include <vector> 
 #include <iostream>
 #include <exception>
 
+#define MIN_ROW 0
+#define MAX_ROW 25
+
+#define MIN_ROW_CHAR 'A'
+#define MAX_ROW_CHAR 'Z'
+
+#define MIN_COL 0
+#define MAX_COL 25
+
 class Board {                                   
     public:
 
-        // Constructor for when a new game is created,
-        // the board starts with no tiles placed
+        // Default constructor:
+        // starts with an empty board
         Board(); 
 
+        // Deep copy constructor 
+        Board(const Board& other);
+
+        // Destructor 
         ~Board();
 
         // Prints the entire boardVector with tiles
@@ -26,9 +40,6 @@ class Board {
         // returns a tile pointer in that position on the boardVector
         Tile* getTileAtPos(char row, int col) const;
 
-        // Returns the boardVector
-        const std::vector<std::vector<Tile *> > &getBoardVector() const;
-
         // Returns the number of boardRows 
         int getBoardRows() const;
 
@@ -40,6 +51,9 @@ class Board {
 
         // Returns the number of tiles on the board vector 
         int getNumOfTiles() const;
+
+        // Returns the 2D boardVector
+        std::vector<std::vector<Tile*> > getBoardVector() const;
 
     private:
 

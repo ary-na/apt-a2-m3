@@ -2,13 +2,20 @@
 #define LINKEDLIST_H
 
 #include "Node.h"
+
 #include <iostream>
 #include <exception>
 
 class LinkedList {
     public:
+
+        // Default constructor
         LinkedList();
+
+        // Deep copy constructor 
         LinkedList(const LinkedList& other);
+
+        // Destructor
         ~LinkedList();
         
         // Delete every tile in the LinkedList

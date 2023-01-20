@@ -34,13 +34,16 @@ Game::Game(Player* player1, Player* player2, Board* board,
 
     // bool correctTiles = checkTiles();
     bool correctTiles = true;
+    bool correctTiles = checkTiles(player1->getHand(), player2->getHand(), 
+                                   board, tileBag);
 
     if (!correctTiles) {
 
         // TODO: Catch exception
-        // TODO: Throw exception
+        throw std::out_of_range("Game Game() - Incorrect no. of tiles given");
 
     } else {
+
         // Load the tile bag
         this->tileBag = tileBag;
 
@@ -96,11 +99,11 @@ std::string Game::getHighestScorePlayer() const {
     if (this->player1->getScore() > this->player2->getScore()) {
         winner = this->player1->getName();
 
-        // Check if player 2 has the highest score
+    // Check if player 2 has the highest score
     } else if (this->player1->getScore() < this->player2->getScore()) {
         winner = this->player2->getName();
 
-        // If both players have the same score
+    // If both players have the same score
     } else {
         winner = this->player1->getName() + " and " + this->player2->getName();
     }
@@ -131,15 +134,12 @@ void Game::nextPlayerTurn() {
 void Game::fillTileBag(LinkedList *tileBag) {
 
     // Add shapes and colours to array for iteration
-    Colour colours[] = {RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE};
-    Shape shapes[] = {CIRCLE, STAR_4, DIAMOND, SQUARE, STAR_6, CLOVER};
-
-    int coloursLength = sizeof(colours) / sizeof(Colour);
-    int shapesLength = sizeof(shapes) / sizeof(Shape);
+    Colour COLOURS_ARRAY;
+    Shape SHAPES_ARRAY;
 
     // Add 2 of each colour and shape combination to the tileBag
-    for (int i = 0; i < coloursLength; i++) {
-        for (int j = 0; j < shapesLength; j++) {
+    for (int i = 0; i < NO_OF_COLOURS; i++) {
+        for (int j = 0; j < NO_OF_SHAPES; j++) {
             tileBag->addEnd(new Tile(colours[i], shapes[j]));
             tileBag->addEnd(new Tile(colours[i], shapes[j]));
         }
@@ -152,7 +152,6 @@ void Game::shuffleTileBag(LinkedList *tileBag) {
     if (tileBag->getLength() > 0) {
 
         std::unique_ptr<LinkedList> tempTileBag(new LinkedList);
-
         int totalTiles = tileBag->getLength();
 
         // Shuffle tiles and put in temporary tile bag
@@ -220,7 +219,7 @@ bool Game::isReplaceLegal(Tile *tile) const {
 bool Game::isPlaceLegal(Tile *tile, char row, int col) const {
 
     bool isLegal = true;
-    Moves *moves = new Moves(this->getBoard());
+    std::unique_ptr<Moves> moves(new Moves(this->getBoard()));
 
     // Row to validate
     LinkedList *validRow = moves->getRowTiles(row, col);
@@ -238,7 +237,7 @@ bool Game::isPlaceLegal(Tile *tile, char row, int col) const {
     else if (!this->getBoard()->isEmpty() && validRow->getLength() == 0 && validCol->getLength() == 0)
         isLegal = false;
     // A line can never be longer than six tiles
-    else if (validRow->getLength() >= Moves::MAX_NUM_TILES_IN_A_LINE || validCol->getLength() >= Moves::MAX_NUM_TILES_IN_A_LINE)
+    else if (validRow->getLength() >= MAX_TILES_IN_LINE || validCol->getLength() >= MAX_TILES_IN_LINE)
         isLegal = false;
     // Tiles must share one colour or shape attribute
     else if (!(Moves::isTileColourMatch(validRow, tile) || Moves::isTileShapeMatch(validRow, tile)) && validRow->getLength() > 0)
@@ -250,7 +249,6 @@ bool Game::isPlaceLegal(Tile *tile, char row, int col) const {
     else if (validRow->search(tile) || validCol->search(tile))
         isLegal = false;
 
-    delete moves;
     return isLegal;
 }
 
@@ -293,7 +291,116 @@ bool Game::placeTile(Tile *tile, char row, int col) {
     return isLegal;
 }
 
-// Delete, just for testing. 
-LinkedList* Game::GetTileBag() {
-    return this->tileBag;
+bool Game::checkTiles(LinkedList* player1Hand, LinkedList* player2Hand, 
+                      Board* board, LinkedList* tileBag) {
+                        
+    bool correctTiles = true;
+    int totalTiles = player1Hand->getLength() + player2Hand->getLength() + 
+                     board->getNumOfTiles() + tileBag->getLength();
+    
+    // Check if there are the right number of tiles
+    if (totalTiles != MAX_TILES_IN_GAME) {
+        correctTiles = false;
+
+    // Check for 2 of each type of tile
+    } else {
+
+        // Track array index
+        int i = 0;
+  
+        // Add all tiles to a single array
+        std::string tilesArray[MAX_TILES_IN_GAME];
+        fillTilesArray(tilesArray, &i, player1Hand);
+        fillTilesArray(tilesArray, &i, player2Hand);
+        fillTilesArray(tilesArray, &i, tileBag);
+        fillTilesArray(tilesArray, &i, board);
+
+        // Make array with all expected tiles
+        std::string expectedTilesArray[MAX_TILES_IN_GAME];
+        fillExpectedTilesArray(expectedTilesArray);
+
+        // Compare the two arrays
+        correctTiles = arraysEqual(expectedTilesArray, tilesArray);
+    }
+    return correctTiles;
 }
+
+void Game::fillTilesArray(std::string tilesArray[], int* i, Board* tileSource) {
+    int tilesAdded = 0;
+
+    // Stop traversing when no more tiles to add
+    while (tilesAdded != board->getNumOfTiles()) {
+
+        // Traverse boardVector
+        for (int row = 0; row < board->getBoardRows(); row++) {
+            for (int col = 0; col < board->getBoardCols(); col++) {  
+
+                // Add the tile if there is one             
+                if (board->getBoardVector()[row][col] != nullptr) {
+                    Tile* current = board->getBoardVector()[row][col];
+                    tilesArray[*i] = current->colour + 
+                                     std::to_string(current->shape);
+                    (*i)++;
+                    tilesAdded++;
+                }
+            }
+        }
+    }
+}
+
+void Game::fillTilesArray(std::string tilesArray[], int* i, 
+                          LinkedList* tileSource) {
+
+    // Traverse tileSource and add every tile to array                    
+    for (int j = 1; j <= tileSource->getLength(); j++) {
+        tilesArray[*i] = tileSource->getAtPos(j)->colour +
+                         std::to_string(tileSource->getAtPos(j)->shape);
+        (*i)++;
+    }
+}
+
+void Game::fillExpectedTilesArray(std::string expectedTilesArray[]) { 
+
+    // Add shapes and colours to array for iteration
+    Colour COLOURS_ARRAY;
+    Shape SHAPES_ARRAY;
+    
+    // Track array index
+    int i = 0;
+
+    // Add 2 of each colour and shape combination to the expectedTilesArray
+    for (int j = 0; j < NO_OF_COLOURS; j++) {
+        for (int k = 0; k < NO_OF_SHAPES; k++) {
+            expectedTilesArray[i] = colours[j] + std::to_string(shapes[k]);
+            i++;
+            expectedTilesArray[i] = colours[j] + std::to_string(shapes[k]);        
+            i++;
+        }
+    }
+}
+
+bool Game::arraysEqual(std::string array1[], std::string array2[]) {  
+
+    // Make sure both array aee in same order
+    std::sort(array1, array1 + MAX_TILES_IN_GAME);
+    std::sort(array2, array2 + MAX_TILES_IN_GAME);
+
+    bool isEqual = true;
+    int tilesChecked = 0;
+
+    // Linearly compare elements of both arrays
+    while (isEqual && tilesChecked < MAX_TILES_IN_GAME) {
+        for (int i = 0; i < MAX_TILES_IN_GAME; i++) {
+            if (array1[i] != array2[i]) {
+                    isEqual = false;
+            }
+            tilesChecked++;
+        }
+    }
+    return isEqual;
+}
+
+// Delete, just for testing. 
+// LinkedList* Game::GetTileBag() {
+//     return this->tileBag;
+// }

@@ -14,16 +14,17 @@
 class Game {
     public:
 
-        // ** 2.3.10 Special operation: Starting a new game **
-        // Constructor specifically starting a new game:
+        // Constructor for starting a new game:
         // takes two player pointers and sets up a new game
         Game(Player* player1, Player* player2, bool testFlag); 
 
-        // Constructor specifically loading a game:
+        // Constructor for loading a game:
         // takes pointers to two players, a tiles bag, board 
         // and current player and sets up the existing game
         Game(Player* player1, Player* player2, Board* board, 
              LinkedList* tileBag, Player* currentPlayer); 
+
+        // TODO: Deep copy constructor
 
         // Destructor
         ~Game();
@@ -58,8 +59,8 @@ class Game {
 
         // ** 2.3.5 Player action: place a tile **
         // Takes a tile pointer, row (between A-Z) and col (between 0-25), 
-        // and returns true if tile has been placed from the current player's 
-        // hand and their score has been updated, otherwise false:
+        // and returns true if tile has been placed from the current 
+        // player's hand and their score has been updated, otherwise false:
         // a tile can only be placed if isPlaceLegal() is true
         bool placeTile(Tile* tile, char row, int col); 
 
@@ -70,10 +71,10 @@ class Game {
         bool replaceTile(Tile* tile); 
         
         // Used when loading game from file.
-        void setTileBag (LinkedList* tileBag);
+        // void setTileBag (LinkedList* tileBag);
 
         // DELETE: FOR TESTING ONLY
-        LinkedList* GetTileBag();
+        // LinkedList* GetTileBag();
 
     private:
 
@@ -91,8 +92,8 @@ class Game {
         // placeTile(), providing isPlaceLegal() is true
         ScoreCalculator* scoreCalculator;
 
-        // Takes the tileBag pointer and fills it with 72 tiles,
-        // in 6 colors and 6 shapes and 2 of each type
+        // Takes the tileBag pointer and fills it with 72 
+        // tiles, in 6 colors and 6 shapes and 2 of each type
         void fillTileBag(LinkedList* tileBag);
 
         // Takes the tileBag pointer and shuffles the tiles inside
@@ -121,6 +122,28 @@ class Game {
 
         // Testing flag to show in test mode
         bool testFlag;
+        // Takes pointers to two player hands, a board and tile bag and
+        // returns true if there is a correct set of tiles, otherwise false
+        bool checkTiles(LinkedList* player1Hand, LinkedList* player2Hand, 
+                        Board* board, LinkedList* tileBag);
+
+        // Helper function for checkTiles(): takes two arrays of type string 
+        // and compares the values, returns true if identical, otherwise false
+        bool arraysEqual(std::string array1[], std::string array2[]);
+
+        // Helper function for checkTiles(): takes an array of type string 
+        // and fills it from the given index with the tiles from a LinkedList
+        void fillTilesArray(std::string tilesArray[], int* i,
+                            LinkedList* tileSource);
+                            
+        // Helper function for checkTiles(): takes an array of type string 
+        // and fills it from the given index with the tiles from a Board
+        void fillTilesArray(std::string tilesArray[], int* i, 
+                            Board* tileSource);
+        
+        // Helper function for checkTiles(): takes and array of type string 
+        // and fills it with the correct number and combination of tiles
+        void fillExpectedTilesArray(std::string expectedTilesArray[]);
 };
 
 #endif // GAME_H
