@@ -124,12 +124,12 @@ void Game::nextPlayerTurn() {
 void Game::fillTileBag(LinkedList *tileBag) {
 
     // Add shapes and colours to array for iteration
-    Colour COLOURS_ARRAY;
-    Shape SHAPES_ARRAY;
+    Colour colours[] = { RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE };
+    Shape shapes[] = { CIRCLE, STAR_4, DIAMOND, SQUARE, STAR_6, CLOVER };
 
     // Add 2 of each colour and shape combination to the tileBag
-    for (int i = 0; i < NO_OF_COLOURS; i++) {
-        for (int j = 0; j < NO_OF_SHAPES; j++) {
+    for (int i = 0; i < sizeof(colours) / sizeof(Colour); i++) {
+        for (int j = 0; j <sizeof(shapes) / sizeof(Shape); j++) {
             tileBag->addEnd(new Tile(colours[i], shapes[j]));
             tileBag->addEnd(new Tile(colours[i], shapes[j]));
         }
@@ -340,15 +340,15 @@ void Game::fillTilesArray(std::string tilesArray[], int* i,
 void Game::fillExpectedTilesArray(std::string expectedTilesArray[]) { 
 
     // Add shapes and colours to array for iteration
-    Colour COLOURS_ARRAY;
-    Shape SHAPES_ARRAY;
+    Colour colours[] = { RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE };
+    Shape shapes[] = { CIRCLE, STAR_4, DIAMOND, SQUARE, STAR_6, CLOVER };
     
     // Track array index
     int i = 0;
 
     // Add 2 of each colour and shape combination to the expectedTilesArray
-    for (int j = 0; j < NO_OF_COLOURS; j++) {
-        for (int k = 0; k < NO_OF_SHAPES; k++) {
+    for (int j = 0; j < sizeof(colours) / sizeof(Colour); j++) {
+        for (int k = 0; k < sizeof(shapes) / sizeof(Shape); k++) {
             expectedTilesArray[i] = colours[j] + std::to_string(shapes[k]);
             i++;
             expectedTilesArray[i] = colours[j] + std::to_string(shapes[k]);        
