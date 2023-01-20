@@ -7,11 +7,6 @@
 #include <iostream>
 #include <exception>
 
-#define MIN_ROW 'A'
-#define MAX_ROW 'Z'
-#define MIN_COL 0
-#define MAX_COL 25
-
 class Board {                                   
     public:
 
