@@ -12,6 +12,8 @@ public:
 
     ~Moves();
 
+    const static int MAX_NUM_TILES_IN_A_LINE = 6;
+
     const static int MIN_START_COL_NUM = 0;
     const static int MAX_START_COL_NUM = 25;
 

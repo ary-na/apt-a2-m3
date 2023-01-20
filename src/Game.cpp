@@ -215,7 +215,7 @@ bool Game::isPlaceLegal(Tile *tile, char row, int col) const {
     else if (!this->getBoard()->isEmpty() && validRow->getLength() == 0 && validCol->getLength() == 0)
         isLegal = false;
     // A line can never be longer than six tiles
-    else if (validRow->getLength() >= MAX_TILES_IN_LINE || validCol->getLength() >= MAX_TILES_IN_LINE)
+    else if (validRow->getLength() >= Moves::MAX_NUM_TILES_IN_A_LINE || validCol->getLength() >= Moves::MAX_NUM_TILES_IN_A_LINE)
         isLegal = false;
     // Tiles must share one colour or shape attribute
     else if (!(Moves::isTileColourMatch(validRow, tile) || Moves::isTileShapeMatch(validRow, tile)) && validRow->getLength() > 0)

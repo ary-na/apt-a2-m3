@@ -130,7 +130,6 @@ void Board::printBoard() const {
 
     // Print row header
     char rowHeader = 'A';
-
     for (int row = 0; row < this->boardRows; row++) {
         std::cout << rowHeader << " |";
         ++rowHeader;
@@ -148,11 +147,6 @@ void Board::printBoard() const {
         std::cout << std::endl;
     }
 }
-
-// #define MIN_ROW 'A'
-// #define MAX_ROW 'Z'
-// #define MIN_COL 0
-// #define MAX_COL 25
 
 int Board::getBoardRows() const {
     return this->boardRows;

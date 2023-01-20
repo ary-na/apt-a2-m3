@@ -7,12 +7,8 @@
 #include <iostream>
 #include <exception>
 
-#define MIN_ROW 0
-#define MAX_ROW 25
-
-#define MIN_ROW_CHAR 'A'
-#define MAX_ROW_CHAR 'Z'
-
+#define MIN_ROW 'A'
+#define MAX_ROW 'Z'
 #define MIN_COL 0
 #define MAX_COL 25
 
