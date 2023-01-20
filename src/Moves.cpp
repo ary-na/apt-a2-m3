@@ -32,12 +32,12 @@ LinkedList *Moves::getRowTiles(char row, int col) {
 
     try {
         // Add tiles to linked list row while tile row + 1 does not equal to nullptr
-        while (rowStartUp <= MAX_START_ROW_CHAR && board->getTileAtPos(rowStartUp, col) != nullptr) {
+        while (rowStartUp <= board->getMaxRowChar() && board->getTileAtPos(rowStartUp, col) != nullptr) {
             this->rowTiles->addEnd(board->getTileAtPos(rowStartUp, col));
             rowStartUp++;
         }
         // Add tiles to linked list row while tile row - 1 does not equal to nullptr
-        while (rowStartDown >= MIN_START_ROW_CHAR && board->getTileAtPos(rowStartDown, col) != nullptr) {
+        while (rowStartDown >= board->getMinRowChar() && board->getTileAtPos(rowStartDown, col) != nullptr) {
             this->rowTiles->addEnd(board->getTileAtPos(rowStartDown, col));
             rowStartDown--;
         }
@@ -61,12 +61,12 @@ LinkedList *Moves::getColumnTiles(char row, int col) {
 
     try {
         // Add tiles to linked list col while tile column + 1 does not equal to nullptr
-        while (columnStartLeft <= MAX_START_COL_NUM && board->getTileAtPos(row, columnStartLeft) != nullptr) {
+        while (columnStartLeft <= board->getMaxCol() && board->getTileAtPos(row, columnStartLeft) != nullptr) {
             this->columnTiles->addEnd(board->getTileAtPos(row, columnStartLeft));
             columnStartLeft++;
         }
         // Add tiles to linked list col while tile column - 1 does not equal to nullptr
-        while (columnStartRight >= MIN_START_COL_NUM && board->getTileAtPos(row, columnStartRight) != nullptr) {
+        while (columnStartRight >= board->getMinCol() && board->getTileAtPos(row, columnStartRight) != nullptr) {
             this->columnTiles->addEnd(board->getTileAtPos(row, columnStartRight));
             columnStartRight--;
         }

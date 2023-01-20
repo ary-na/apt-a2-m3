@@ -1,6 +1,5 @@
 #include "../include/Controller.h"
 #include <iostream>
-#include <memory>
 
 int main(int argc, char* argv[]) {
 
@@ -18,6 +17,9 @@ int main(int argc, char* argv[]) {
 
     std::unique_ptr<Controller> controller(new Controller);
     controller->launchGame(testFlag);
+
+    delete controller;
+    controller = nullptr;
 
     return EXIT_SUCCESS;
 }
