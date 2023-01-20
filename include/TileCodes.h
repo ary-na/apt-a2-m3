@@ -9,9 +9,6 @@
 #define BLUE 'B'
 #define PURPLE 'P'
 
-#define NO_OF_COLOURS 6
-#define COLOURS_ARRAY colours[NO_OF_COLOURS] = { RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE }
-
 // Shapes
 #define CIRCLE 1
 #define STAR_4 2
@@ -20,9 +17,13 @@
 #define STAR_6 5
 #define CLOVER 6
 
+#define NO_OF_COLOURS 6
 #define NO_OF_SHAPES 6
+
 #define SHAPES_ARRAY shapes[NO_OF_SHAPES] = { CIRCLE, STAR_4, DIAMOND, SQUARE, STAR_6, CLOVER }
+#define COLOURS_ARRAY colours[NO_OF_COLOURS] = { RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE }
 
 #define MAX_TILES_IN_GAME 72
+#define MAX_TILES_IN_LINE 6
 
 #endif // TILECODES_H
