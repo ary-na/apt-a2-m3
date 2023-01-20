@@ -234,7 +234,7 @@ void Controller::turnPrompt() {
 
         // If command is save <filename>
         } else if (command == 3) {
-            saveGame();
+            saveGame(commandInput);
 
         // If command is ^D
         } else if (command == 4) {
@@ -294,7 +294,7 @@ void Controller::replaceTile(std::string commandInput, bool* inputStatus) {
     }
 }
 
-void Controller::saveGame() {
+void Controller::saveGame(std::string fileName) {
 
     // [JACOB] TODO
 
@@ -310,7 +310,7 @@ void Controller::saveGame() {
 
     // TO DO: Need to ask for the save game name
 
-    this->fileHandler->saveGame("NewSaveGame");
+    this->fileHandler->saveGame(fileName);
 
     // The current player does not change, 
     // so that a player may save the game and then take a turn

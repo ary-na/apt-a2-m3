@@ -42,7 +42,7 @@ int Validator::isCommandValid(const std::string &command) {
     else if (std::regex_match(command, std::regex("replace [R|O|Y|G|B|P][1-6]")))
         isValid = 2;
     // Check if save <filename>
-    else if (std::regex_match(command, std::regex("save [A-Za-z1-9]+.save")))
+    else if (std::regex_match(command, std::regex("save [A-Za-z1-9]+")))
         isValid = 3;
     // Check if ^D (EOF)
     else if(std::cin.eof())

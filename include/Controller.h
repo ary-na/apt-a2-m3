@@ -72,7 +72,7 @@ private:
         void endGame(); 
 
         // ** 2.3.7 Function: Saving the Game **
-        void saveGame();
+        void saveGame(std::string fileName);
 
         // ExitMode getter
         bool isExitMode() const;
