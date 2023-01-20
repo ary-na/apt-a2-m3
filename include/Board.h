@@ -2,7 +2,6 @@
 #define BOARD_H
 
 #include "Tile.h"
-
 #include <vector> 
 #include <iostream>
 #include <exception>
@@ -46,11 +45,27 @@ class Board {
         // Returns the 2D boardVector
         std::vector<std::vector<Tile*> > getBoardVector() const;
 
+        int getMinCol() const;
+        int getMaxCol() const;
+        int getMinRow() const;
+        int getMaxRow() const;
+        char getMinRowChar() const;
+        char getMaxRowChar() const;
+
     private:
 
         // The board is a fixed size of 26 x 26
         const static int boardRows = 26;
         const static int boardCols = 26;
+
+        const static int minCol = 0;
+        const static int maxCol = 25;
+    
+        const static int minRow = 0;
+        const static int maxRow = 25;
+    
+        const static char minRowChar = (char)('A' + minRow);
+        const static char maxRowChar = (char)('A' + maxRow);
 
         // Stores the number of tiles on the board,
         // gets updated when addTileAtPos()

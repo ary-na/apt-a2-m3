@@ -171,3 +171,26 @@ int Board::getNumOfTiles() const {
 std::vector<std::vector<Tile*> > Board::getBoardVector() const {
     return this->boardVector;
 }
+
+int Board::getMinCol() const {
+    return this->minCol;
+}
+
+int Board::getMaxCol() const {
+    return this->maxCol;
+}
+
+int Board::getMinRow() const {
+    return this->minRow;
+}
+int Board::getMaxRow() const {
+    return this->maxRow;
+}
+
+char Board::getMinRowChar() const {
+    return this->minRowChar;
+}
+
+char Board::getMaxRowChar() const {
+    return this->maxRowChar;
+}
