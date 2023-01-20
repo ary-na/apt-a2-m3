@@ -129,7 +129,7 @@ int ScoreCalculator::getRowEnd(Board *board, char row, int col)
     try
     {
         // Count forward from the tile to find which location is not occupied by a tile
-        while (rowEndCol < boardCols && board->getTileAtPos(row, rowEndCol) != nullptr)
+        while (rowEndCol <= boardCols && board->getTileAtPos(row, rowEndCol) != nullptr)
         {
             rowEndCol++;
         }

@@ -152,9 +152,9 @@ int Board::getBoardRows() const {
     return this->boardRows;
 }
 
-int Board::getBoardCols() const {
-    return this->boardCols;
-}
+// int Board::getBoardCols() const {
+//     return this->boardCols;
+// }
 
 bool Board::isEmpty() const {
     bool isEmpty = true;

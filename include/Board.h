@@ -34,7 +34,7 @@ class Board {
         int getBoardRows() const;
 
         // Returns the number of boardCols
-        int getBoardCols() const;
+        // int getBoardCols() const;
         
         // Returns true if numOfTiles is < 1, otherwise false
         bool isEmpty() const;
@@ -56,7 +56,7 @@ class Board {
 
         // The board is a fixed size of 26 x 26
         const static int boardRows = 26;
-        const static int boardCols = 26;
+        // const static int boardCols = 26;
 
         const static int minCol = 0;
         const static int maxCol = 25;
