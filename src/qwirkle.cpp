@@ -15,7 +15,7 @@ int main(int argc, char* argv[]) {
     }
     
 
-    std::unique_ptr<Controller> controller(new Controller);
+    Controller* controller(new Controller);
     controller->launchGame(testFlag);
 
     delete controller;
