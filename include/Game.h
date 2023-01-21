@@ -48,8 +48,9 @@ class Game {
         // with up to 6 tiles from the tile bag.
         void fillHand(LinkedList* hand);
 
-        // Returns true if game has ended. A game ends when the tile 
-        // bag is empty and one player has no tiles in their hand.
+        // Returns true if game has ended. A game
+        // ends when the tile bag is empty and 
+        // one player has no tiles in their hand.
         bool isComplete() const;
 
         // Takes a tile, row (A-Z) and col (0-25). Returns true if the 
@@ -57,14 +58,19 @@ class Game {
         // score has been updated and isPlaceLegal() is also true. 
         bool placeTile(Tile* tile, char row, int col); 
 
-        // Takes a tile and returns true if the tile has been replaced from 
-        // the current player's hand and isReplaceLegal() is also true.
+        // Takes a tile and returns true if the tile 
+        // has been replaced from the current player's 
+        // hand and isReplaceLegal() is also true.
         bool replaceTile(Tile* tile); 
 
-        // Helper functions for fillExpectedTilesArray() and fillTileBag(). 
-        // Fills a given array with all the colours or shape a tile can have. 
+        // Helper functions for fillExpectedTilesArray() 
+        // and fillTileBag(). Fills a given array with 
+        // all the colours or shape a tile can have. 
         void makeColoursArray(Colour colours[]);
         void makeShapesArray(Shape shapes[]);
+
+        // DELETE WHEN FINISHED FOR TESTING ONLY
+        LinkedList* getTileBag();
 
     private:
         Board* board; 

@@ -27,8 +27,7 @@ Game::Game(Player *player1, Player *player2, bool testFlag) {
 Game::Game(Player* player1, Player* player2, Board* board,
            LinkedList* tileBag, Player* currentPlayer) {
 
-    // Set the test flag to false 
-    // as the tile bag is provided.
+    // Tile bag provided, don't activate test mode.
     this->testFlag = false;
 
     // Check all tiles total the correct number and type.
@@ -56,7 +55,23 @@ Game::Game(Player* player1, Player* player2, Board* board,
 }
 
 Game::Game(const Game& other) {
-    // TODO
+
+    // Copy the test flag.
+    this->testFlag = other.testFlag;
+
+    // Copy tile bag, players, board and score calculator.
+    this->tileBag = new LinkedList(*other.tileBag);
+    this->player1 = new Player(*other.player1);
+    this->player2 = new Player(*other.player2);
+    this->board = new Board(*other.board);
+    this->scoreCalculator = new ScoreCalculator(*other.scoreCalculator);
+
+    // Set the current player.
+    if (other.currentPlayer == other.player2) {
+        this->currentPlayer = this->player2;
+    } else {
+        this->currentPlayer = this->player1;
+    }
 }
 
 Game::~Game() {
@@ -194,9 +209,12 @@ void Game::shuffleTileBag(LinkedList *tileBag) {
 
 bool Game::isComplete() const {
     bool isComplete = false;
+
+    // A game is complete when the tile bag is empty and 
+    // one of the players has no more tiles in their hand.
     if (this->tileBag->getLength() == 0 &&
-        (this->player1->getHand()->getLength() == 0 ||
-         this->player2->getHand()->getLength() == 0)) {
+       (this->player1->getHand()->getLength() == 0 ||
+        this->player2->getHand()->getLength() == 0)) {
         isComplete = true;
     }
     return isComplete;
@@ -204,6 +222,9 @@ bool Game::isComplete() const {
 
 bool Game::isReplaceLegal(Tile *tile) const {
     bool isLegal = false;
+    
+    // The tile must be in the current player's hand 
+    // and the the tile bag must have tiles in it.
     if (this->currentPlayer->getHand()->search(tile) &&
         this->tileBag->getLength() > 0) {
         isLegal = true;
@@ -424,4 +445,9 @@ void Game::makeShapesArray(Shape shapes[]) {
     shapes[3] = SQUARE;
     shapes[4] = STAR_6;
     shapes[5] = CLOVER;
+}
+
+// DELETE WHEN FINISHED FOR TESTING ONLY
+LinkedList* Game::getTileBag() {
+    return this->tileBag;
 }

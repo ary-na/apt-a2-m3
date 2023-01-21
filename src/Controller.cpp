@@ -8,8 +8,16 @@ Controller::Controller() {
     this->exitMode = false;
 }
 
-Controller::Controller(const Controller& other) {
-    // TODO
+Controller::Controller(const Controller& other) {   
+    if (other.game != nullptr) {
+        this->game = new Game(*other.game);
+    } else {
+        this->game = nullptr;
+    }    
+    this->validator = new Validator(*other.validator);
+    this->fileHandler = new FileHandler(*other.fileHandler);
+    this->testFlag = other.testFlag;
+    this->exitMode = other.exitMode;
 }
 
 Controller::~Controller() {
