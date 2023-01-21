@@ -7,16 +7,31 @@ LinkedList::LinkedList() {
 }
 
 LinkedList::LinkedList(const LinkedList& other) {
-    this->head = nullptr;
-    this->tail = nullptr;
-    this->length = 0;
+    this->length = other.length;
+
+    // Check that the list isn't empty.
     if (other.length != 0) {
-        Node* current = other.head;
-        while (current != nullptr) {
-            addEnd(new Tile(*current->tile));
-            current = current->next;
+
+        // Deep copy head node, which will also deep
+        // copy and link all next and previous nodes.
+        this->head = new Node(*other.head);
+
+        // If only one node, set the tail as head.
+        if (other.length == 1) {
+            this->tail = this->head;
+
+        // Otherwise find and set the tail.
+        } else {
+            Node* current = this->head;
+            while(current->next != nullptr) {
+                current = current->next; 
+            }
+            this->tail = current; 
         }
-    } 
+    } else {
+        this->head = nullptr;
+        this->tail = nullptr;
+    }
 }
 
 LinkedList::~LinkedList() {
