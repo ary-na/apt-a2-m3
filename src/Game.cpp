@@ -198,11 +198,9 @@ void Game::shuffleTileBag(LinkedList *tileBag) {
             // Delete tile from original tile bag.
             tileBag->deleteAtPos(randomVal);
         }
-        // Add tiles back to original tile bag.
-        for (int i = 1; i <= totalTiles; i++) {
-            tileBag->addEnd(new Tile(*tempTileBag->getAtPos(i)));
-        }
-        delete tempTileBag;
+        // Clean up and point to new tile bag. 
+        delete this->tileBag;
+        this->tileBag = tempTileBag;
         tempTileBag = nullptr;
     }
 }
