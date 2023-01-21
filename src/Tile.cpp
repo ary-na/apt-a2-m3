@@ -11,5 +11,4 @@ Tile::Tile(const Tile& other) {
 }
 
 Tile::~Tile() {
-    // No attributes on heap to delete
 }

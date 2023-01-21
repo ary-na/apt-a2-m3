@@ -21,6 +21,19 @@ Game* FileHandler::loadGame(std::string fileName) {
 }
 
 bool FileHandler::saveGame(std::string fileName) {
+    
+
+    std::string path = "savedGames/" + fileName.substr(5, fileName.length()) + ".save";    
+    std::cout << path << std::endl;
+    std::fstream outFile;
+
+
+    outFile.open(path, std::ios::out) ;
+
+    if(outFile.is_open()){
+        outFile << "Testing";
+        outFile.close();
+    }
 
     return true;
 }
@@ -28,18 +41,18 @@ bool FileHandler::saveGame(std::string fileName) {
 Game* FileHandler::absorbLoadGameFile(std::string fileName) {
 
     std::string path = "savedGames/" + fileName + ".save";
-    std::fstream infile;
-    infile.open(path);
+    std::fstream inFile;
+    inFile.open(path);
 
     // Save the content of the file to a vector allowing the game to be created cleanly.
     std::vector<std::string> fileContent;
-    if(infile.is_open()) {        
+    if(inFile.is_open()) {        
         std::string line;
-        while (getline(infile,line)) 
+        while (getline(inFile,line)) 
             fileContent.push_back(line);
     }
 
-    infile.close();
+    inFile.close();
 
     // Create players
     Player* P1 = new Player(fileContent[0],std::stoi(fileContent[1]),playerHandFromFile(fileContent[2]));

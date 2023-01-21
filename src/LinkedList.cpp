@@ -8,11 +8,11 @@ LinkedList::LinkedList() {
 
 LinkedList::LinkedList(const LinkedList& other) {
 
-    // Check if LinkedList is empty
+    // Check if linked list is empty.
     if (other.head != nullptr) {
         Node* current = other.head;
 
-        // Traverse other LinkedList and copy tiles     
+        // Traverse other linked list and copy tiles.     
         while (current != nullptr) {
             addEnd(new Tile(*current->tile));
             current = current->next;
@@ -33,11 +33,11 @@ void LinkedList::clear() {
 void LinkedList::printList() const {
     Node* current = this->head;
 
-    // Check if LinkedList is empty
+    // Check if linked list is empty.
     if (current == nullptr) {
         std::cout << "Empty - No tiles left" << std::endl;
     
-    // Otherwise traverse and print each tile
+    // Otherwise traverse and print each tile.
     } else {
         int count = 1;
         while (current != nullptr) {
@@ -58,13 +58,13 @@ Tile* LinkedList::getFront() const {
 
 Tile* LinkedList::getAtPos(int pos) const {
 
-    // If given pos is out of bounds
+    // If given pos is out of bounds.
     if (pos > this->length || pos < 1 || this->head == nullptr) {
 
-        // TODO: Catch exception
+        // TODO: CATCH EXCEPTION
         throw std::out_of_range("LinkedList getAtPos() - Out of bounds");
 
-    // Traverse until position is reached 
+    // Traverse until position is reached.
     } else {
         int count = 1;
         Node* current = this->head;
@@ -88,7 +88,7 @@ bool LinkedList::search(Tile* tile) const {
     bool result = false;
     Node* current = this->head;
 
-    // Traverse and compare each tile to the given tile
+    // Traverse and compare each tile to the given tile.
     while (current != nullptr && result == false) {
         if ((tile->colour == current->tile->colour) &&
             (tile->shape == current->tile->shape)) {
@@ -102,12 +102,12 @@ bool LinkedList::search(Tile* tile) const {
 void LinkedList::addEnd(Tile* tile) {
     Node* temp = new Node(tile);
 
-    // Add tile as head if LinkedList is empty
+    // Add tile as head if linked list is empty.
     if (this->head == nullptr) {
         this->head = temp;
         this->tail = temp;
 
-    // Add at end of LinkedList
+    // Add at end of linked list.
     } else {
         temp->prev = this->tail;
         this->tail->next = temp;
@@ -119,12 +119,12 @@ void LinkedList::addEnd(Tile* tile) {
 void LinkedList::addFront(Tile* tile) {
     Node* temp = new Node(tile);
 
-    // Add tile as head if LinkedList is empty
+    // Add tile as head if linked list is empty.
     if (this->head == nullptr) {
         this->head = temp;
         this->tail = temp;
 
-    // Add at front of LinkedList
+    // Add at front of linked list.
     } else {
         temp->next = this->head;
         this->head->prev = temp;
@@ -135,21 +135,21 @@ void LinkedList::addFront(Tile* tile) {
 
 void LinkedList::deleteAtPos(int pos) {
 
-    // If given pos is out of bounds
+    // If given pos is out of bounds.
     if (pos > this->length || pos < 1 || this->head == nullptr) {
 
-        // TODO: Catch exception
+        // TODO: CATCH EXCEPTION
         throw std::out_of_range("LinkedList deleteAtPos() - Out of bounds");
     
-    // Delete the head if given pos is head
+    // Delete the head if given pos is head.
     } else if (pos == 1) {
         deleteFront();
 
-    // Delete tail if given pos is tail
+    // Delete tail if given pos is tail.
     } else if (pos == this->length) {
         deleteEnd();
 
-    // Traverse LinkedList to pos and delete 
+    // Traverse linked list to pos and delete.
     } else {
         Node* temp = this->head;
         while (--pos) { 
@@ -164,16 +164,16 @@ void LinkedList::deleteAtPos(int pos) {
 
 void LinkedList::deleteFront() {
 
-    // Ensure the LinkedList is not empty
+    // Ensure the linked list is not empty.
     if (this->head != nullptr) {
         Node* temp = this->head;
 
-        // If the head is the tail
+        // If the head is the tail.
         if (this->length == 1) {
             this->head = nullptr;
             this->tail = nullptr;
 
-        // Otherwise
+        // Otherwise. 
         } else {
             this->head = this->head->next;
             this->head->prev = nullptr;
@@ -185,16 +185,16 @@ void LinkedList::deleteFront() {
 
 void LinkedList::deleteEnd() {
 
-    // Ensure the LinkedList is not empty
+    // Ensure the linked list is not empty.
     if (this->head != nullptr)  {
         Node* temp = this->tail;
 
-        // If the head is the tail
+        // If the head is the tail.
         if (this->length == 1) {
             this->head = nullptr;
             this->tail = nullptr;
 
-        // Otherwise
+        // Otherwise.
         } else {
             this->tail = this->tail->prev;
             this->tail->next = nullptr;
@@ -206,7 +206,7 @@ void LinkedList::deleteEnd() {
 
 void LinkedList::deleteByNode(Tile* tile) {
 
-    // Delete the head if given tile matches the head 
+    // Delete the head if given tile matches the head.
     if ((tile->colour == this->head->tile->colour) &&
         (tile->shape == this->head->tile->shape)) {
         deleteFront();
@@ -216,12 +216,12 @@ void LinkedList::deleteByNode(Tile* tile) {
         Node* current = this->head->next;
         int pos = 2;
 
-        // Traverse LinkedList
+        // Traverse linked list.
         while (current != nullptr && result == false) {
             if ((tile->colour == current->tile->colour) &&
                 (tile->shape == current->tile->shape)) {
 
-                // Delete the first matching tile
+                // Delete the first matching tile.
                 if (pos == this->length) {
                     deleteEnd();
                     result = true;
