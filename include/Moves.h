@@ -8,6 +8,7 @@ class Moves {
     public:
         Moves();
         explicit Moves(Board *board);
+        Moves(const Moves& other);
         ~Moves();
 
         // Returns a list of tiles added to a row

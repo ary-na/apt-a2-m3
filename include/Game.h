@@ -13,8 +13,8 @@
 class Game {
     public:
 
-        // Constructor for starting a new game:
-        // takes two player pointers and sets up a new game
+        // Constructor for starting a new game. 
+        // A game must have two players. 
         Game(Player* player1, Player* player2, bool testFlag); 
 
         // Constructor for loading a game. A game must have 

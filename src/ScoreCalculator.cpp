@@ -4,6 +4,11 @@ ScoreCalculator::ScoreCalculator()
 {
 }
 
+ScoreCalculator::ScoreCalculator(const ScoreCalculator& other) 
+{
+    // [ALEX] TODO
+}
+
 ScoreCalculator::~ScoreCalculator()
 {
 }

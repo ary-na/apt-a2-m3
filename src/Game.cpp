@@ -28,7 +28,7 @@ Game::Game(Player* player1, Player* player2, Board* board,
            LinkedList* tileBag, Player* currentPlayer) {
 
     // Set the test flag to false 
-    // as the tile bag is provided
+    // as the tile bag is provided.
     this->testFlag = false;
 
     // Check all tiles total the correct number and type.
@@ -405,9 +405,19 @@ bool Game::arraysEqual(std::string array1[], std::string array2[]) {
 }
 
 void Game::makeColoursArray(Colour colours[]) {
-    Colour colours[] = { RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE };
+    colours[0] = RED;
+    colours[1] = ORANGE;
+    colours[2] = YELLOW;
+    colours[3] = GREEN;
+    colours[4] = BLUE;
+    colours[5] = PURPLE;
 }
 
 void Game::makeShapesArray(Shape shapes[]) {
-    Shape shapes[] = { CIRCLE, STAR_4, DIAMOND, SQUARE, STAR_6, CLOVER };
+    shapes[0] = CIRCLE;
+    shapes[1] = STAR_4;
+    shapes[2] = DIAMOND;
+    shapes[3] = SQUARE;
+    shapes[4] = STAR_6;
+    shapes[5] = CLOVER;
 }

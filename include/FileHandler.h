@@ -14,6 +14,7 @@
 class FileHandler {
     public:
         FileHandler();
+        FileHandler(const FileHandler& other);
         ~FileHandler();
         
         // ** updates the current state of play based on a saved game file 

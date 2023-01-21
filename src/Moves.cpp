@@ -11,6 +11,10 @@ Moves::Moves(Board *board) {
     this->columnTiles = new LinkedList;
 }
 
+Moves::Moves(const Moves& other) {
+    // TODO
+}
+
 Moves::~Moves() {
     this->board = nullptr;
     this->rowTiles = nullptr;
