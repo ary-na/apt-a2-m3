@@ -56,8 +56,8 @@ Game::Game(Player* player1, Player* player2, Board* board,
 
 Game::Game(const Game& other) {
 
-    // Tile bag provided, don't activate test mode.
-    this->testFlag = false;
+    // Copy the test flag.
+    this->testFlag = other.testFlag;
 
     // Copy tile bag, players, board and score calculator.
     this->tileBag = new LinkedList(*other.tileBag);
