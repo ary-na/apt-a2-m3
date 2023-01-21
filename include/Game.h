@@ -68,10 +68,7 @@ class Game {
         // all the colours or shape a tile can have. 
         void makeColoursArray(Colour colours[]);
         void makeShapesArray(Shape shapes[]);
-
-        // DELETE WHEN FINISHED FOR TESTING ONLY
-        LinkedList* getTileBag();
-
+        
     private:
         Board* board; 
         LinkedList* tileBag; 

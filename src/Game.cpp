@@ -446,8 +446,3 @@ void Game::makeShapesArray(Shape shapes[]) {
     shapes[4] = STAR_6;
     shapes[5] = CLOVER;
 }
-
-// DELETE WHEN FINISHED FOR TESTING ONLY
-LinkedList* Game::getTileBag() {
-    return this->tileBag;
-}
