@@ -13,6 +13,25 @@ FileHandler::~FileHandler() {
     this->validator = nullptr;
 }
 
+bool FileHandler::saveGame(std::string fileName) {
+    
+
+    std::string path = "savedGames/" + fileName.substr(5, fileName.length()) + ".save";    
+    std::cout << path << std::endl;
+    std::fstream outFile;
+
+    this->validator->isSavedFileExist(fileName) ?
+        outFile.open(path, std::ios::app) :
+            outFile.open(path, std::ios::out);
+
+    if(outFile.is_open()){
+        outFile << "Testing";
+        outFile.close();
+    }
+
+    return true;
+}
+
 Game* FileHandler::loadGame(std::string fileName) {
 
     // Validates the file exist
@@ -22,24 +41,6 @@ Game* FileHandler::loadGame(std::string fileName) {
     }
     
     return absorbLoadGameFile(fileName);
-}
-
-bool FileHandler::saveGame(std::string fileName) {
-    
-
-    std::string path = "savedGames/" + fileName.substr(5, fileName.length()) + ".save";    
-    std::cout << path << std::endl;
-    std::fstream outFile;
-
-
-    outFile.open(path, std::ios::out) ;
-
-    if(outFile.is_open()){
-        outFile << "Testing";
-        outFile.close();
-    }
-
-    return true;
 }
 
 Game* FileHandler::absorbLoadGameFile(std::string fileName) {
