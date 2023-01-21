@@ -117,6 +117,11 @@ Game* FileHandler::absorbLoadGameFile(std::string fileName) {
     // BOARD, THIS GIVES THE GAME AN EMPTY BOARD, SO TOTAL 
     // TILE COUNT MAY != 72 AND THROW EXCEPTION
 
+    // THIS CODE WILL WORK FOR GIVING BOARD TO GAME [CARELLE]
+    // Board* testBoard = new Board();
+    // boardStateFromFile(testBoard, fileContent[7]);
+    // Game* game = new Game(P1, P2, testBoard, tileBagFromFile(fileContent[8]),currentPlayerFromName(P1, P2, fileContent[9]));
+    
     // Create Game
     Game* game = new Game(P1, P2, new Board(), tileBagFromFile(fileContent[8]),currentPlayerFromName(P1, P2, fileContent[9]));
  
@@ -142,6 +147,9 @@ LinkedList* FileHandler::playerHandFromFile (std::string playerHandString){
     return playerHand;
 }
 
+// THIS CODE WILL WORK FOR GIVING BOARD TO GAME [CARELLE]
+// void FileHandler:: boardStateFromFile (Board* board, std::string boardState) {
+
 void FileHandler:: boardStateFromFile (Game* game, std::string boardState) {
     std::stringstream s_stream(boardState);
         while(s_stream.good()) {
@@ -150,6 +158,10 @@ void FileHandler:: boardStateFromFile (Game* game, std::string boardState) {
             substr = trim(substr);
 
             std::string num(1 , substr[1]);
+
+            // THIS CODE WILL WORK FOR GIVING BOARD TO GAME [CARELLE]
+            // board->addTileAtPos(new Tile(substr[0],std::stoi(num)), substr[3], 
+
             game->getBoard()->addTileAtPos(new Tile(substr[0],std::stoi(num)), substr[3], 
                     stoi(substr.substr(substr.find('@') + 2, substr.length())));
 

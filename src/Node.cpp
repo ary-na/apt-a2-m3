@@ -7,6 +7,8 @@ Node::Node(Tile* tile) {
 }
 
 Node::Node(const Node& other) {
+    
+    // Deep copy tile.
     this->tile = new Tile(*other.tile);
     
     // Deep copy and link all next nodes.

@@ -160,7 +160,7 @@ void Game::fillTileBag(LinkedList *tileBag) {
     }
 }
 
-LinkedList* Game:: getTileBag(){
+LinkedList* Game:: getTileBag() const {
     return this->tileBag;
 }
 
@@ -415,16 +415,14 @@ bool Game::arraysEqual(std::string array1[], std::string array2[]) {
     std::sort(array2, array2 + this->maxTilesInGame);
 
     bool isEqual = true;
-    int tilesChecked = 0;
+    int i = 0;
 
     // Linearly compare elements of both arrays.
-    while (isEqual && tilesChecked < this->maxTilesInGame) {
-        for (int i = 0; i < this->maxTilesInGame; i++) {
-            if (array1[i] != array2[i]) {
-                    isEqual = false;
-            }
-            tilesChecked++;
+    while (isEqual && i != this->maxTilesInGame) {
+        if (array1[i] != array2[i]) {
+            isEqual = false;
         }
+        i++;
     }
     return isEqual;
 }
