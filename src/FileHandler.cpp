@@ -62,6 +62,10 @@ Game* FileHandler::absorbLoadGameFile(std::string fileName) {
     Player* P1 = new Player(fileContent[0],std::stoi(fileContent[1]),playerHandFromFile(fileContent[2]));
     Player* P2 = new Player(fileContent[3],std::stoi(fileContent[4]),playerHandFromFile(fileContent[5]));
 
+    // NOTE FROM CARELLE: YOU NEED TO GIVE THE GAME THE COMPLETE 
+    // BOARD, THIS GIVES THE GAME AN EMPTY BOARD, SO TOTAL 
+    // TILE COUNT MAY != 72 AND THROW EXCEPTION
+
     // Create Game
     Game* game = new Game(P1, P2, new Board(), tileBagFromFile(fileContent[8]),currentPlayerFromName(P1, P2, fileContent[9]));
  
