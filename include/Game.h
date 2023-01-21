@@ -116,10 +116,8 @@ class Game {
         // (6) The tile must be in the current player's hand.
         bool isPlaceLegal(Tile* tile, char row, int col) const;
 
-        // Takes pointers to two player hands, a board and tile bag and
-        // returns true if there is a correct set of tiles, otherwise false
-        // Takes two player hands, a board and tile bag and returns 
-        // true if there is a correct set of tiles, otherwise false.
+        // Takes two player hands, a board and tile bag and 
+        // returns true if there is a correct set of tiles.
         bool checkTiles(LinkedList* player1Hand, LinkedList* player2Hand, 
                         Board* board, LinkedList* tileBag);
 
@@ -127,7 +125,7 @@ class Game {
         // compares the values, returns true if identical, otherwise false.
         bool arraysEqual(std::string array1[], std::string array2[]);
 
-        // Helper function for checkTiles(). Rakes a string array and
+        // Helper function for checkTiles(). Takes a string array and
         // fills it from the given index with the tiles from a linked list.
         void fillTilesArray(std::string tilesArray[], int* i,
                             LinkedList* tileSource);

@@ -33,7 +33,7 @@ Controller::~Controller() {
 
 void Controller::launchGame(bool testFlag) {
 
-    // If the program was runin test  
+    // If the program was run in test  
     // mode, set the test flag to true.
     if(testFlag) {
         this->testFlag = testFlag;
@@ -51,6 +51,7 @@ void Controller::launchGame(bool testFlag) {
 
 void Controller::mainMenu() {
     do {
+        // The main menu shows the options of the program.
         std::cout << "Menu" << std::endl;
         std::cout << "----" << std::endl;
         std::cout << std::endl;
@@ -214,6 +215,7 @@ void Controller::takeTurn() {
     // The scores of both players.
     std::cout << "Score for " << this->game->getPlayer1()->getName() << ": "
               << this->game->getPlayer1()->getScore() << std::endl;
+
     std::cout << "Score for " << this->game->getPlayer2()->getName() << ": "
               << this->game->getPlayer2()->getScore() << std::endl;
     std::cout << std::endl;
