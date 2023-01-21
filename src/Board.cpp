@@ -142,10 +142,6 @@ void Board::printBoard() const {
     }
 }
 
-int Board::getBoardRows() const {
-    return this->boardRows;
-}
-
 bool Board::isEmpty() const {
     bool isEmpty = true;
     if (this->numOfTiles > 0) {

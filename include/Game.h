@@ -58,6 +58,11 @@ class Game {
         // the current player's hand and isReplaceLegal() is also true.
         bool replaceTile(Tile* tile); 
 
+        // Helper functions for fillExpectedTilesArray() and fillTileBag(). 
+        // Fills a given array with all the colours or shape a tile can have. 
+        void makeColoursArray(Colour colours[]);
+        void makeShapesArray(Shape shapes[]);
+
     private:
         Board* board; 
         LinkedList* tileBag; 
@@ -71,6 +76,11 @@ class Game {
         // Defines tile number for the game. 
         const static int maxTilesInGame = 72;
         const static int maxTilesInLine = 6;
+
+        // When test flag is true, a random seed is set during 
+        // shuffleTileBag() to ensure consistent randomness. 
+        // Run with "./qwirkle T" to activate test mode.
+        bool testFlag;
 
         // Takes the tile bag and fills it with 72 tiles,
         // in 6 colors and 6 shapes and 2 of each type.
@@ -100,8 +110,6 @@ class Game {
         // (6) The tile must be in the current player's hand.
         bool isPlaceLegal(Tile* tile, char row, int col) const;
 
-        // Testing flag to show in test mode
-        bool testFlag;
         // Takes pointers to two player hands, a board and tile bag and
         // returns true if there is a correct set of tiles, otherwise false
         // Takes two player hands, a board and tile bag and returns 

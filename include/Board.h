@@ -44,9 +44,6 @@ class Board {
         char getMinRowChar() const;
         char getMaxRowChar() const;
 
-        // DELETE ONCE REPLACED IN SCORECALCULATOR
-        int getBoardRows() const;
-
     private:
         // Defines the min and max index values for  
         // the rows and cols in the board vector.
@@ -64,9 +61,6 @@ class Board {
         // A 2D vector of tiles.
         // The board is a fixed size of 26 x 26.
         std::vector<std::vector<Tile*> > boardVector;
-
-        // DELETE ONCE REPLACED IN SCORECALCULATOR
-        const static int boardRows = 26;
 };
 
 #endif // BOARD_H
