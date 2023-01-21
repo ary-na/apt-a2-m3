@@ -102,9 +102,12 @@ void Controller::playerNamePrompt(std::string* nameInput) {
         // Players should only have letters, no numbers or symbols
         bool nameValid = validator->isNameValid(*nameInput);
 
-        if (!nameValid) {
+        if (!nameValid && !std::cin.eof()) {
             std::cerr << "Invalid input!" << std::endl;
             std::cout << std::endl;
+        } else if (std::cin.eof()) {
+            awaitingInput = false;
+            exitGame();
         } else {
             awaitingInput = false;
         }
