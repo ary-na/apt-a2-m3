@@ -157,7 +157,7 @@ int ScoreCalculator::getColStart(Board *board, char row, int col)
     try
     {
         // Count up from the tile to find which location is not occupied by a tile
-        while (colStartRow >= MIN_ROW && board->getTileAtPos(colStartRow, col) != nullptr)
+        while (colStartRow >= board->getMinRowChar() && board->getTileAtPos(colStartRow, col) != nullptr)
         {
             colStartRow--;
         }
@@ -165,7 +165,6 @@ int ScoreCalculator::getColStart(Board *board, char row, int col)
     catch (const std::out_of_range &e)
     {
         std::cerr << e.what() << '\n';
-        std::cerr << "getColStart ERROR";
     }
 
     return colStartRow;
@@ -179,9 +178,8 @@ int ScoreCalculator::getColEnd(Board *board, char row, int col)
     // This is a char returned as int and would assume both are in the same case.
     // This is a private function and is intended to be called by getColScore().
 
-    // Get the number of rows on the board
-    // Add 65 to the number to start at A (Ascii A is 65)
-    char boardRows = (board->getBoardRows() + 65);
+    // Get the number of rows on the board as a char
+    char boardRows = board->getMaxRowChar();
 
     // initialise end row as the current row
     int colEndRow = row;
@@ -190,7 +188,7 @@ int ScoreCalculator::getColEnd(Board *board, char row, int col)
     try
     {
         // Count down from the tile to find which location is not occupied by a tile
-        while (colEndRow < boardRows && board->getTileAtPos(colEndRow, col) != nullptr)
+        while (colEndRow <= boardRows && board->getTileAtPos(colEndRow, col) != nullptr)
         {
             colEndRow++;
         }

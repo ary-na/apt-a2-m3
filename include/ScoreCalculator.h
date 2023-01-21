@@ -6,7 +6,7 @@
 #include "Board.h"
 
 // Maximum sizes are dynamic, this assumes that the smallest co-ordinate will be A0
-#define MIN_ROW 'A'
+// #define MIN_ROW 'A'
 // #define MIN_COL 0
 
 class ScoreCalculator {

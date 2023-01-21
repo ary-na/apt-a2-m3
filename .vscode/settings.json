@@ -68,6 +68,9 @@
         "utility": "cpp",
         "deque": "cpp",
         "iterator": "cpp",
-        "memory_resource": "cpp"
+        "memory_resource": "cpp",
+        "iomanip": "cpp",
+        "regex": "cpp",
+        "stack": "cpp"
     }
 }
