@@ -4,6 +4,7 @@ Controller::Controller() {
     this->game = nullptr;
     this->validator = new Validator();
     this->fileHandler = new FileHandler();
+    this->testFlag = false;
     this->exitMode = false;
 }
 
@@ -17,13 +18,19 @@ Controller::~Controller() {
     this->validator = nullptr;
 }
 
-void Controller::launchGame() {
+void Controller::launchGame(bool testFlag) {
 
     // The program should display a welcome message
     std::cout << std::endl;
     std::cout << "Welcome to Qwirkle" << std::endl;
     std::cout << "------------------" << std::endl;
     std::cout << std::endl;
+
+    // If the program is in test mode, set the test flag to true
+    if(testFlag)
+        this->testFlag = testFlag;
+
+    // Then the program should continue to the main menu
 
     // Then continue to the main menu
     mainMenu();
@@ -84,7 +91,7 @@ void Controller::newGame() {
     // Create a new game of Qwirkle
     Player *player1 = new Player(name1Input);
     Player *player2 = new Player(name2Input);
-    this->game = new Game(player1, player2);
+    this->game = new Game(player1, player2, this->testFlag);
 
     // Proceed with normal gameplay
     std::cout << "Let's play!" << std::endl;

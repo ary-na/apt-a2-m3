@@ -22,7 +22,7 @@ class Controller {
         ~Controller();
 
         // ** 2.1 Launch **
-        void launchGame(); 
+        void launchGame(bool testFlag); 
 
 private:
         Game* game;
@@ -81,8 +81,11 @@ private:
         void setExitMode(bool exitMode);
 
         // Absorb the load game file 
-        bool absorbLoadGameFile(std::string fileName);    
+        bool absorbLoadGameFile(std::string fileName);
 
+        // Enable test mode for the game - stop randomisation for tile bag
+        bool testFlag;
+        
         // Promts the user to enter an input and
         // assigns it to the given string pointer
         void inputPrompt(std::string* input);   

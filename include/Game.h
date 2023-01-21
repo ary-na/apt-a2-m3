@@ -12,9 +12,10 @@
 
 class Game {
     public:
-        // Constructor for starting a new game.
-        // A game must have two players.
-        Game(Player* player1, Player* player2); 
+
+        // Constructor for starting a new game:
+        // takes two player pointers and sets up a new game
+        Game(Player* player1, Player* player2, bool testFlag); 
 
         // Constructor for loading a game. A game must have 
         // two players, a tile bag, board and current player.
@@ -99,6 +100,10 @@ class Game {
         // (6) The tile must be in the current player's hand.
         bool isPlaceLegal(Tile* tile, char row, int col) const;
 
+        // Testing flag to show in test mode
+        bool testFlag;
+        // Takes pointers to two player hands, a board and tile bag and
+        // returns true if there is a correct set of tiles, otherwise false
         // Takes two player hands, a board and tile bag and returns 
         // true if there is a correct set of tiles, otherwise false.
         bool checkTiles(LinkedList* player1Hand, LinkedList* player2Hand, 

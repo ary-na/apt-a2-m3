@@ -1,9 +1,22 @@
 #include "../include/Controller.h"
 #include <iostream>
 
-int main(void) {
-    Controller* controller = new Controller();
-    controller->launchGame();
+int main(int argc, char* argv[]) {
+
+    bool testFlag = false;
+
+    if (argv[1] != nullptr)
+    {
+        if (*argv[1] == 'T')
+        {
+            testFlag = true;
+        }
+        
+    }
+    
+
+    Controller* controller(new Controller);
+    controller->launchGame(testFlag);
 
     delete controller;
     controller = nullptr;

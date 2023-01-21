@@ -2,7 +2,10 @@
 #include "../include/Validator.h"
 #include "../include/Moves.h"
 
-Game::Game(Player *player1, Player *player2) {
+Game::Game(Player *player1, Player *player2, bool testFlag) {
+
+    // Set the test flag
+    this->testFlag = testFlag;
 
     // Create the ordering for the tile bag.
     this->tileBag = new LinkedList();
@@ -24,6 +27,12 @@ Game::Game(Player *player1, Player *player2) {
 Game::Game(Player* player1, Player* player2, Board* board,
            LinkedList* tileBag, Player* currentPlayer) {
 
+    // AB - Set the test flag - set to false currently
+    this->testFlag = false;
+
+    // TODO: Check all tiles are there
+
+    // bool correctTiles = checkTiles();
     // Check all tiles total the correct number and type.
     bool correctTiles = checkTiles(player1->getHand(), player2->getHand(), 
                                    board, tileBag);
@@ -155,9 +164,21 @@ void Game::shuffleTileBag(LinkedList *tileBag) {
             // instead of random_device to give predictable value.
             // std::default_random_engine engine(2);
 
-            std::random_device engine;
+            int randomVal = 0;
             std::uniform_int_distribution<int> uniform_dist(min, max);
-            int randomVal = uniform_dist(engine);
+
+            if(this->testFlag) {
+                std::default_random_engine engine(2);
+                randomVal = uniform_dist(engine);
+                //std::cout << "Test Mode Enabled \n";
+            } else {
+                std::random_device engine;
+                randomVal = uniform_dist(engine);
+            }
+
+            //std::random_device engine;
+            // std::uniform_int_distribution<int> uniform_dist(min, max);
+            // int randomVal = uniform_dist(engine);
 
             // Get a tile from tile bag at random pos.
             Tile *randomTile = tileBag->getAtPos(randomVal);
