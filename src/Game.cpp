@@ -145,6 +145,10 @@ void Game::fillTileBag(LinkedList *tileBag) {
     }
 }
 
+LinkedList* Game:: getTileBag(){
+    return this->tileBag;
+}
+
 void Game::shuffleTileBag(LinkedList *tileBag) {
 
     // Check if there are tiles in the tile bag.

@@ -37,6 +37,9 @@ class Game {
         // Returns the board. 
         Board* getBoard() const;
 
+        // Returns the tile bag
+        LinkedList* getTileBag();
+
         // Returns the name of the player with the highest score.
         // Both player names are returned if there is a tie.
         std::string getHighestScorePlayer() const;

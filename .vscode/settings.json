@@ -71,6 +71,7 @@
         "memory_resource": "cpp",
         "iomanip": "cpp",
         "regex": "cpp",
-        "stack": "cpp"
+        "stack": "cpp",
+        "map": "cpp"
     }
 }

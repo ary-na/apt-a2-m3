@@ -323,7 +323,7 @@ void Controller::saveGame(std::string fileName) {
 
     // TO DO: Need to ask for the save game name
 
-    this->fileHandler->saveGame(fileName);
+    this->fileHandler->saveGame(this->game, fileName);
 
     // The current player does not change, 
     // so that a player may save the game and then take a turn

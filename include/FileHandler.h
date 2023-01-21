@@ -28,11 +28,17 @@ class FileHandler {
         // If it does the function will return false.
         //** OUTPUT: if the file is successfully saved, true will be returned, else an error will be printed and false will be returned.  
 
-         bool saveGame(std::string fileName);
+         bool saveGame(Game* game,std::string fileName);
         
     private:
         // For validating user input 
         Validator* validator;
+
+        std::string playerHandToFile(LinkedList* playerHand);
+
+        std::string boardStateToFile(Board* board);
+
+        std::string tileBagToFile(LinkedList* tileBag);
 
         // ** Absorbs the current game file and returns a Game* with the updated state of play.
         // ** INPUT: A valid save file name without the path or extension. It is assumed the file name is correct 

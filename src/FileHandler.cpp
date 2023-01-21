@@ -13,7 +13,7 @@ FileHandler::~FileHandler() {
     this->validator = nullptr;
 }
 
-bool FileHandler::saveGame(std::string fileName) {
+bool FileHandler::saveGame (Game* game, std::string fileName) {
     
 
     std::string path = "savedGames/" + fileName.substr(5, fileName.length()) + ".save";    
@@ -25,14 +25,64 @@ bool FileHandler::saveGame(std::string fileName) {
             outFile.open(path, std::ios::out);
 
     if(outFile.is_open()){
-        outFile << "Testing";
+        outFile << game->getPlayer1()->getName() << std::endl;
+        outFile << game->getPlayer1()->getScore() << std::endl;
+        outFile << playerHandToFile(game->getPlayer1()->getHand()) << std::endl;
+        outFile << game->getPlayer2()->getName() << std::endl;
+        outFile << game->getPlayer2()->getScore() << std::endl;
+        outFile << playerHandToFile(game->getPlayer2()->getHand()) << std::endl;
+        outFile << std::to_string(game->getBoard()->getMaxRow()) + "," + 
+                    std::to_string(game->getBoard()->getMaxCol()) << std::endl;
+        outFile << boardStateToFile(game->getBoard()) << std::endl;
+        outFile << tileBagToFile(game->getTileBag()) << std::endl;
+        outFile << game->getCurrentPlayer()->getName();
+
         outFile.close();
     }
 
     return true;
 }
 
-Game* FileHandler::loadGame(std::string fileName) {
+std::string FileHandler::playerHandToFile(LinkedList* playerHand) {
+
+    std::string stringPlayerHand = "";
+    for(int x = 1; x < playerHand->getLength() + 1; x++) {
+        std::string tile = playerHand->getAtPos(x)->colour + std::to_string(playerHand->getAtPos(x)->shape);
+        x == 1 ? stringPlayerHand = tile : stringPlayerHand.append("," + tile);
+    }
+
+    return stringPlayerHand;
+}
+
+std::string FileHandler::boardStateToFile(Board* board) {
+
+    std::string boardState = "";
+
+      for (char row = 'A'; toupper(row) - 'A' <= board->getMaxRow(); row++) {
+        for (int col = 0; col <= board->getMaxCol() ; col++) {   
+            Tile* tile = board->getTileAtPos(row, col);
+            if(tile !=  nullptr) {
+                std::string tileString =  row + std::to_string(col) + "@" + tile->colour + std::to_string(tile->shape);
+                boardState == "" ? boardState = tileString : boardState = boardState + " ," + tileString;
+            }
+        }
+    }
+
+    return boardState;
+}
+
+std::string FileHandler::tileBagToFile(LinkedList* tileBag) {
+
+    std::string stringTileBag = "";
+    for(int x = 1; x < tileBag->getLength() + 1; x++) {
+        std::string tile = tileBag->getAtPos(x)->colour + std::to_string(tileBag->getAtPos(x)->shape);
+        x == 1 ? stringTileBag = tile : stringTileBag.append("," + tile);
+    }
+
+    return stringTileBag;
+}
+
+Game* FileHandler::loadGame( std::string fileName) {
 
     // Validates the file exist
     if(!this->validator->isSavedFileExist(fileName)){

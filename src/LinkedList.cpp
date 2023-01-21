@@ -59,7 +59,7 @@ Tile* LinkedList::getFront() const {
 Tile* LinkedList::getAtPos(int pos) const {
 
     // If given pos is out of bounds.
-    if (pos > this->length || pos < 1 || this->head == nullptr) {
+    if (pos > this->length || pos < 0 || this->head == nullptr) {
 
         // TODO: CATCH EXCEPTION
         throw std::out_of_range("LinkedList getAtPos() - Out of bounds");

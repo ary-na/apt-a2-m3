@@ -88,7 +88,7 @@ Tile* Board::getTileAtPos(char row, int col) const {
     // If the given row and col is out of bounds.
     if (row > this->maxRow || row < this->minRow || 
         col > this->maxCol || col < this->minCol) {
-        
+            
         // TODO: CATCH EXCEPTION
         throw std::out_of_range("Board getTileAtPos() - Out of bounds");
 
