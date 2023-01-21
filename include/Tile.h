@@ -2,6 +2,7 @@
 #define TILE_H
 
 #include "TileCodes.h"
+#include <iostream>
 
 typedef char Colour; 
 typedef int Shape; 
