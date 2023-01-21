@@ -12,9 +12,10 @@
 
 class Game {
     public:
-        // Constructor for starting a new game.
-        // A game must have two players.
-        Game(Player* player1, Player* player2); 
+
+        // Constructor for starting a new game. 
+        // A game must have two players. 
+        Game(Player* player1, Player* player2, bool testFlag); 
 
         // Constructor for loading a game. A game must have 
         // two players, a tile bag, board and current player.
@@ -36,6 +37,9 @@ class Game {
         // Returns the board. 
         Board* getBoard() const;
 
+        // Returns the tile bag
+        LinkedList* getTileBag();
+
         // Returns the name of the player with the highest score.
         // Both player names are returned if there is a tie.
         std::string getHighestScorePlayer() const;
@@ -44,8 +48,9 @@ class Game {
         // with up to 6 tiles from the tile bag.
         void fillHand(LinkedList* hand);
 
-        // Returns true if game has ended. A game ends when the tile 
-        // bag is empty and one player has no tiles in their hand.
+        // Returns true if game has ended. A game
+        // ends when the tile bag is empty and 
+        // one player has no tiles in their hand.
         bool isComplete() const;
 
         // Takes a tile, row (A-Z) and col (0-25). Returns true if the 
@@ -53,10 +58,17 @@ class Game {
         // score has been updated and isPlaceLegal() is also true. 
         bool placeTile(Tile* tile, char row, int col); 
 
-        // Takes a tile and returns true if the tile has been replaced from 
-        // the current player's hand and isReplaceLegal() is also true.
+        // Takes a tile and returns true if the tile 
+        // has been replaced from the current player's 
+        // hand and isReplaceLegal() is also true.
         bool replaceTile(Tile* tile); 
 
+        // Helper functions for fillExpectedTilesArray() 
+        // and fillTileBag(). Fills a given array with 
+        // all the colours or shape a tile can have. 
+        void makeColoursArray(Colour colours[]);
+        void makeShapesArray(Shape shapes[]);
+        
     private:
         Board* board; 
         LinkedList* tileBag; 
@@ -70,6 +82,11 @@ class Game {
         // Defines tile number for the game. 
         const static int maxTilesInGame = 72;
         const static int maxTilesInLine = 6;
+
+        // When test flag is true, a random seed is set during 
+        // shuffleTileBag() to ensure consistent randomness. 
+        // Run with "./qwirkle T" to activate test mode.
+        bool testFlag;
 
         // Takes the tile bag and fills it with 72 tiles,
         // in 6 colors and 6 shapes and 2 of each type.
@@ -99,6 +116,8 @@ class Game {
         // (6) The tile must be in the current player's hand.
         bool isPlaceLegal(Tile* tile, char row, int col) const;
 
+        // Takes pointers to two player hands, a board and tile bag and
+        // returns true if there is a correct set of tiles, otherwise false
         // Takes two player hands, a board and tile bag and returns 
         // true if there is a correct set of tiles, otherwise false.
         bool checkTiles(LinkedList* player1Hand, LinkedList* player2Hand, 

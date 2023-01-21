@@ -2,12 +2,12 @@
 #define SCORECALCULATOR_H
 
 #include <iostream>
-
 #include "Board.h"
 
 class ScoreCalculator {
     public:
         ScoreCalculator();
+        ScoreCalculator(const ScoreCalculator& other);
         ~ScoreCalculator();
 
         // ** 2.3.9 Special operation: QWIRKLE! **

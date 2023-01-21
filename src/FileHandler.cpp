@@ -4,12 +4,85 @@ FileHandler::FileHandler() {
     this->validator = new Validator();
 }
 
+FileHandler::FileHandler(const FileHandler& other) {
+    // [JACOB] TODO
+}
+
 FileHandler::~FileHandler() {
     delete this->validator;
     this->validator = nullptr;
 }
 
-Game* FileHandler::loadGame(std::string fileName) {
+bool FileHandler::saveGame (Game* game, std::string fileName) {
+    
+
+    std::string path = "savedGames/" + fileName.substr(5, fileName.length()) + ".save";    
+    std::cout << path << std::endl;
+    std::fstream outFile;
+
+    this->validator->isSavedFileExist(fileName) ?
+        outFile.open(path, std::ios::app) :
+            outFile.open(path, std::ios::out);
+
+    if(outFile.is_open()){
+        outFile << game->getPlayer1()->getName() << std::endl;
+        outFile << game->getPlayer1()->getScore() << std::endl;
+        outFile << playerHandToFile(game->getPlayer1()->getHand()) << std::endl;
+        outFile << game->getPlayer2()->getName() << std::endl;
+        outFile << game->getPlayer2()->getScore() << std::endl;
+        outFile << playerHandToFile(game->getPlayer2()->getHand()) << std::endl;
+        outFile << std::to_string(game->getBoard()->getMaxRow()) + "," + 
+                    std::to_string(game->getBoard()->getMaxCol()) << std::endl;
+        outFile << boardStateToFile(game->getBoard()) << std::endl;
+        outFile << tileBagToFile(game->getTileBag()) << std::endl;
+        outFile << game->getCurrentPlayer()->getName();
+
+        outFile.close();
+    }
+
+    return true;
+}
+
+std::string FileHandler::playerHandToFile(LinkedList* playerHand) {
+
+    std::string stringPlayerHand = "";
+    for(int x = 1; x < playerHand->getLength() + 1; x++) {
+        std::string tile = playerHand->getAtPos(x)->colour + std::to_string(playerHand->getAtPos(x)->shape);
+        x == 1 ? stringPlayerHand = tile : stringPlayerHand.append("," + tile);
+    }
+
+    return stringPlayerHand;
+}
+
+std::string FileHandler::boardStateToFile(Board* board) {
+
+    std::string boardState = "";
+
+      for (char row = 'A'; toupper(row) - 'A' <= board->getMaxRow(); row++) {
+        for (int col = 0; col <= board->getMaxCol() ; col++) {   
+            Tile* tile = board->getTileAtPos(row, col);
+            if(tile !=  nullptr) {
+                std::string tileString =  row + std::to_string(col) + "@" + tile->colour + std::to_string(tile->shape);
+                boardState == "" ? boardState = tileString : boardState = boardState + " ," + tileString;
+            }
+        }
+    }
+
+    return boardState;
+}
+
+std::string FileHandler::tileBagToFile(LinkedList* tileBag) {
+
+    std::string stringTileBag = "";
+    for(int x = 1; x < tileBag->getLength() + 1; x++) {
+        std::string tile = tileBag->getAtPos(x)->colour + std::to_string(tileBag->getAtPos(x)->shape);
+        x == 1 ? stringTileBag = tile : stringTileBag.append("," + tile);
+    }
+
+    return stringTileBag;
+}
+
+Game* FileHandler::loadGame( std::string fileName) {
 
     // Validates the file exist
     if(!this->validator->isSavedFileExist(fileName)){
@@ -18,24 +91,6 @@ Game* FileHandler::loadGame(std::string fileName) {
     }
     
     return absorbLoadGameFile(fileName);
-}
-
-bool FileHandler::saveGame(std::string fileName) {
-    
-
-    std::string path = "savedGames/" + fileName.substr(5, fileName.length()) + ".save";    
-    std::cout << path << std::endl;
-    std::fstream outFile;
-
-
-    outFile.open(path, std::ios::out) ;
-
-    if(outFile.is_open()){
-        outFile << "Testing";
-        outFile.close();
-    }
-
-    return true;
 }
 
 Game* FileHandler::absorbLoadGameFile(std::string fileName) {
@@ -57,6 +112,10 @@ Game* FileHandler::absorbLoadGameFile(std::string fileName) {
     // Create players
     Player* P1 = new Player(fileContent[0],std::stoi(fileContent[1]),playerHandFromFile(fileContent[2]));
     Player* P2 = new Player(fileContent[3],std::stoi(fileContent[4]),playerHandFromFile(fileContent[5]));
+
+    // NOTE FROM CARELLE: YOU NEED TO GIVE THE GAME THE COMPLETE 
+    // BOARD, THIS GIVES THE GAME AN EMPTY BOARD, SO TOTAL 
+    // TILE COUNT MAY != 72 AND THROW EXCEPTION
 
     // Create Game
     Game* game = new Game(P1, P2, new Board(), tileBagFromFile(fileContent[8]),currentPlayerFromName(P1, P2, fileContent[9]));
