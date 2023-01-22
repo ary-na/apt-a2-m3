@@ -47,7 +47,7 @@ bool FileHandler::saveGame (const Game* game, const std::string fileName) {
     
     // Validates the fileCreate successfully
     if(!this->validator->isSavedFileExist(fileName.substr(5, fileName.length()))){
-        throw std::out_of_range("Game did not save correctly!");
+        throw std::invalid_argument("Game did not save correctly!");
     }
 
     return true;
@@ -118,7 +118,7 @@ Game* FileHandler::absorbLoadGameFile(const std::string fileName) {
 
     inFile.close();
 
-    Game* game = nullptr;
+    Game* game = new Game();
     Player* P1 = nullptr;
     Player* P2 = nullptr;
 
@@ -128,9 +128,9 @@ Game* FileHandler::absorbLoadGameFile(const std::string fileName) {
         P2 = new Player(fileContent[3],std::stoi(fileContent[4]),playerHandFromFile(fileContent[5]));
 
         // Create Game    
-        game = new Game(P1, P2, initaliseBoardFromFile (fileContent[7]), tileBagFromFile(fileContent[8]),currentPlayerFromName(P1, P2, fileContent[9]));
+        game->loadGameData(P1, P2, initaliseBoardFromFile (fileContent[7]), tileBagFromFile(fileContent[8]),currentPlayerFromName(P1, P2, fileContent[9]));
     
-    } catch (std::out_of_range(& e)) {
+    } catch (std::invalid_argument(& e)) {
         throw std::invalid_argument(e.what());
     }
 

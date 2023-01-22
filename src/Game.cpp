@@ -2,9 +2,7 @@
 #include "../include/Validator.h"
 #include "../include/Moves.h"
 
-Game::Game() {
-
-}
+Game::Game() {}
 
 Game::Game(Player *player1, Player *player2, bool testFlag) {
 
@@ -39,7 +37,7 @@ void Game::loadGameData(Player* player1, Player* player2, Board* board,
                                    board, tileBag);
 
     if (!correctTiles) {
-        throw std::out_of_range("File has incorrect tiles!");
+        throw std::invalid_argument("File has incorrect tiles!");
     } else {
         // Load the tile bag.
         this->tileBag = tileBag;
