@@ -171,7 +171,6 @@ void Controller::loadGame() {
 }
 
 void Controller::credits() {
-    std::cout << std::endl;
     std::cout << "Credits" << std::endl;
     std::cout << "-------" << std::endl;
     std::cout << std::endl;
@@ -335,7 +334,6 @@ void Controller::saveGame(std::string fileName) {
     // Then the program should display a message 
     // and continue with the gameplay 
 
-    std::cout << std::endl;
     std::cout << "Game successfully saved" << std::endl;
     std::cout << std::endl;
 
