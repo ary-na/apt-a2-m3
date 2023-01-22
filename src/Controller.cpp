@@ -139,31 +139,38 @@ void Controller::inputPrompt(std::string* input) {
 }
 
 void Controller::loadGame() {
-
-    // [JACOB] TODO
-    std::cout << std::endl;
     std::cout << "Load game" << std::endl;
     std::cout << "---------" << std::endl;
     std::cout << std::endl;
 
-    // The program should first ask the user for a 
-    // filename from which to load a game
-
+    // The program should ask the user for a file.
     std::cout << "Enter the filename from which load a game" << std::endl;
+
+    bool awaitingInput = true;
+    while (awaitingInput) { 
+
+        // User enters the relative path to the saved game file.
+        std::string fileName = "";
+        inputPrompt(&fileName);
+
+        // If the file passes validation checks, the game is loaded, 
+        // a message is printed and normal fameplay continues.
+        try {
+            this->game = this->fileHandler->loadGame(fileName);
+            awaitingInput = false;  
+
+        // If the file doesn't pass the validation checks.
+        } catch (std::out_of_range(& e)) {
+            std::cerr << e.what() << std::endl;
+            std::cout << std::endl;
+        }
+    }
+    std::cout << "Qwirkle game successfully loaded" << std::endl;
     std::cout << std::endl;
-
-    // The user enters the relative path to 
-    // the saved game file, and presses enter
-
-    std::string fileName = "";
-    inputPrompt(&fileName);
-
-    this->game = this->fileHandler->loadGame(fileName);
     baseGameplay();
 }
 
 void Controller::credits() {
-    std::cout << std::endl;
     std::cout << "Credits" << std::endl;
     std::cout << "-------" << std::endl;
     std::cout << std::endl;
@@ -327,7 +334,6 @@ void Controller::saveGame(std::string fileName) {
     // Then the program should display a message 
     // and continue with the gameplay 
 
-    std::cout << std::endl;
     std::cout << "Game successfully saved" << std::endl;
     std::cout << std::endl;
 

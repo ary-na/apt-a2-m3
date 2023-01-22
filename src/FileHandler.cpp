@@ -12,8 +12,9 @@ FileHandler::~FileHandler() {
 bool FileHandler::saveGame (Game* game, std::string fileName) {
     
 
-    std::string path = "savedGames/" + fileName.substr(5, fileName.length()) + ".save";    
+    std::string path = "savedGames/" + fileName.substr(5, fileName.length()) + ".save";
     std::cout << path << std::endl;
+    std::cout << std::endl;
     std::fstream outFile;
 
     this->validator->isSavedFileExist(fileName) ?
@@ -82,10 +83,9 @@ Game* FileHandler::loadGame( std::string fileName) {
 
     // Validates the file exist
     if(!this->validator->isSavedFileExist(fileName)){
-        errorMessage("File does not exist!");
-        return nullptr;
+        // errorMessage("File does not exist!");
+        throw std::out_of_range("File does not exist!");
     }
-    
     return absorbLoadGameFile(fileName);
 }
 
