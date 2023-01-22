@@ -3,7 +3,13 @@
 #include "../include/Moves.h"
 
 Game::Game() {
-
+    this->testFlag = false;
+    this->tileBag = nullptr;
+    this->player1 = nullptr;
+    this->player2 = nullptr;
+    this->board = nullptr;
+    this->currentPlayer = nullptr;
+    this->scoreCalculator = nullptr;
 }
 
 Game::Game(Player *player1, Player *player2, bool testFlag) {
@@ -28,37 +34,7 @@ Game::Game(Player *player1, Player *player2, bool testFlag) {
     this->scoreCalculator = new ScoreCalculator();
 }
 
-void Game::loadGameData(Player* player1, Player* player2, Board* board,
-           LinkedList* tileBag, Player* currentPlayer) {
-
-    // Tile bag provided, don't activate test mode.
-    this->testFlag = false;
-
-    // Check all tiles total the correct number and type.
-    bool correctTiles = checkTiles(player1->getHand(), player2->getHand(), 
-                                   board, tileBag);
-
-    if (!correctTiles) {
-        throw std::out_of_range("File has incorrect tiles!");
-    } else {
-        // Load the tile bag.
-        this->tileBag = tileBag;
-
-        // Load the players and their hands.
-        this->player1 = player1;
-        this->player2 = player2;
-
-        // Load the board and current player.
-        this->board = board;
-        this->currentPlayer = currentPlayer;
-        this->scoreCalculator = new ScoreCalculator();
-    }
-}
-
 Game::Game(const Game& other) {
-
-    // Copy the test flag.
-    this->testFlag = other.testFlag;
 
     // Copy tile bag, players, board and score calculator.
     this->tileBag = new LinkedList(*other.tileBag);
@@ -91,6 +67,30 @@ Game::~Game() {
     this->board = nullptr;
     delete this->tileBag;
     this->tileBag = nullptr;
+}
+
+void Game::loadGameData(Player* player1, Player* player2, Board* board,
+           LinkedList* tileBag, Player* currentPlayer) {
+
+    // Check all tiles total the correct number and type.
+    bool correctTiles = checkTiles(player1->getHand(), player2->getHand(), 
+                                   board, tileBag);
+
+    if (!correctTiles) {
+        throw std::out_of_range("File has incorrect tiles!");
+    } else {
+        // Load the tile bag.
+        this->tileBag = tileBag;
+
+        // Load the players and their hands.
+        this->player1 = player1;
+        this->player2 = player2;
+
+        // Load the board and current player.
+        this->board = board;
+        this->currentPlayer = currentPlayer;
+        this->scoreCalculator = new ScoreCalculator();
+    }
 }
 
 Player *Game::getCurrentPlayer() const {
