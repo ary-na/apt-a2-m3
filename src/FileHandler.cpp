@@ -62,7 +62,7 @@ std::string FileHandler::boardStateToFile(Board* board) {
         for (int col = 0; col <= board->getMaxCol() ; col++) {   
             Tile* tile = board->getTileAtPos(row, col);
             if(tile !=  nullptr) {
-                std::string tileString =  row + std::to_string(col) + "@" + tile->colour + std::to_string(tile->shape);
+                std::string tileString = tile->colour + std::to_string(tile->shape) + "@" + row + std::to_string(col);
                 boardState == "" ? boardState = tileString : boardState = boardState + " ," + tileString;
             }
         }
