@@ -28,7 +28,7 @@ Game::Game(Player *player1, Player *player2, bool testFlag) {
     this->scoreCalculator = new ScoreCalculator();
 }
 
-bool Game::loadGameData(Player* player1, Player* player2, Board* board,
+void Game::loadGameData(Player* player1, Player* player2, Board* board,
            LinkedList* tileBag, Player* currentPlayer) {
 
     // Tile bag provided, don't activate test mode.
@@ -38,8 +38,9 @@ bool Game::loadGameData(Player* player1, Player* player2, Board* board,
     bool correctTiles = checkTiles(player1->getHand(), player2->getHand(), 
                                    board, tileBag);
 
-    if (correctTiles) {
-
+    if (!correctTiles) {
+        throw std::out_of_range("File has incorrect tiles!");
+    } else {
         // Load the tile bag.
         this->tileBag = tileBag;
 
@@ -52,7 +53,6 @@ bool Game::loadGameData(Player* player1, Player* player2, Board* board,
         this->currentPlayer = currentPlayer;
         this->scoreCalculator = new ScoreCalculator();
     }
-    return correctTiles;
 }
 
 Game::Game(const Game& other) {

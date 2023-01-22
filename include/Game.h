@@ -28,7 +28,7 @@ class Game {
 
         // To be used after Game() when loading a game from a tile. A game 
         // must have two players, a tile bag, board and current player.
-        bool loadGameData(Player* player1, Player* player2, Board* board, 
+        void loadGameData(Player* player1, Player* player2, Board* board, 
              LinkedList* tileBag, Player* currentPlayer); 
         
         // Returns the current player.
