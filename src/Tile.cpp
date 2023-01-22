@@ -11,7 +11,10 @@ Tile::Tile(const Tile& other) {
 }
 
 // Tile::Tile(Tile&& other) {
-//     // TODO
+//     this->shape = other.shape;
+//     this->colour = other.colour;
+//     other.shape = 0;
+//     other.colour = '\0';
 // }
 
 Tile::~Tile() {

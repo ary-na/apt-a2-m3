@@ -1,6 +1,4 @@
 #include "../include/Game.h"
-#include "../include/Validator.h"
-#include "../include/Moves.h"
 
 Game::Game() {
     this->testFlag = false;
