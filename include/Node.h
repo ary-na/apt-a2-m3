@@ -3,11 +3,13 @@
 
 #include "Tile.h"
 #include <iostream>
+#include <utility>
 
 class Node {
     public:
         Node(Tile* tile);
         Node(const Node& other);
+        // Node(Node&& other);
         ~Node();
 
         Tile* tile;

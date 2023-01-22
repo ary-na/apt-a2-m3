@@ -4,6 +4,7 @@
 #include "LinkedList.h"
 #include <string>
 #include <iostream>
+#include <utility>
 
 class Player {
     public:
@@ -14,6 +15,7 @@ class Player {
         Player(std::string name, int score, LinkedList* hand);
 
         Player(const Player& other);
+        // Player(Player&& other);
         ~Player();
 
         // Returns the player's name.

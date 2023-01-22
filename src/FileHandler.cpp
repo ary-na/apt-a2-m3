@@ -5,8 +5,14 @@ FileHandler::FileHandler() {
 }
 
 FileHandler::FileHandler(const FileHandler& other) {
-    // [JACOB] TODO
+    // DON'T DELETE, WE NEED TO DO THIS FOR EVERY CLASS
+    this->validator = new Validator(*other.validator);
 }
+
+// FileHandler::FileHandler(FileHandler&& other) {
+//     // [JACOB] TODO
+//     // DON'T DELETE, WE NEED TO DO THIS FOR EVERY CLASS
+// }
 
 FileHandler::~FileHandler() {
     delete this->validator;
@@ -16,8 +22,7 @@ FileHandler::~FileHandler() {
 bool FileHandler::saveGame (Game* game, std::string fileName) {
     
 
-    std::string path = "savedGames/" + fileName.substr(5, fileName.length()) + ".save";    
-    std::cout << path << std::endl;
+    std::string path = "savedGames/" + fileName.substr(5, fileName.length()) + ".save";
     std::fstream outFile;
 
     this->validator->isSavedFileExist(fileName) ?
@@ -62,7 +67,7 @@ std::string FileHandler::boardStateToFile(Board* board) {
         for (int col = 0; col <= board->getMaxCol() ; col++) {   
             Tile* tile = board->getTileAtPos(row, col);
             if(tile !=  nullptr) {
-                std::string tileString =  row + std::to_string(col) + "@" + tile->colour + std::to_string(tile->shape);
+                std::string tileString = tile->colour + std::to_string(tile->shape) + "@" + row + std::to_string(col);
                 boardState == "" ? boardState = tileString : boardState = boardState + " ," + tileString;
             }
         }
@@ -86,10 +91,9 @@ Game* FileHandler::loadGame( std::string fileName) {
 
     // Validates the file exist
     if(!this->validator->isSavedFileExist(fileName)){
-        errorMessage("File does not exist!");
-        return nullptr;
+        // errorMessage("File does not exist!");
+        throw std::out_of_range("File does not exist!");
     }
-    
     return absorbLoadGameFile(fileName);
 }
 
@@ -109,25 +113,26 @@ Game* FileHandler::absorbLoadGameFile(std::string fileName) {
 
     inFile.close();
 
-    // Create players
-    Player* P1 = new Player(fileContent[0],std::stoi(fileContent[1]),playerHandFromFile(fileContent[2]));
-    Player* P2 = new Player(fileContent[3],std::stoi(fileContent[4]),playerHandFromFile(fileContent[5]));
+    try {
+        // Create players
+        Player* P1 = new Player(fileContent[0],std::stoi(fileContent[1]),playerHandFromFile(fileContent[2]));
+        Player* P2 = new Player(fileContent[3],std::stoi(fileContent[4]),playerHandFromFile(fileContent[5]));
 
-    // NOTE FROM CARELLE: YOU NEED TO GIVE THE GAME THE COMPLETE 
-    // BOARD, THIS GIVES THE GAME AN EMPTY BOARD, SO TOTAL 
-    // TILE COUNT MAY != 72 AND THROW EXCEPTION
+        // Create Game    
+        Game* game = new Game(P1, P2, initaliseBoardFromFile (fileContent[7]), tileBagFromFile(fileContent[8]),currentPlayerFromName(P1, P2, fileContent[9]));
 
-    // Create Game
-    Game* game = new Game(P1, P2, new Board(), tileBagFromFile(fileContent[8]),currentPlayerFromName(P1, P2, fileContent[9]));
- 
-    // Update board state
-    boardStateFromFile (game, fileContent[7]);
+       // Clean up
+        P1 = nullptr;
+        P2 = nullptr;
 
-    // Clean up
-    P1 = nullptr;
-    P2 = nullptr;
+        return game;
 
-    return game;
+    } catch (std::out_of_range(& e)) {
+        throw std::out_of_range(e.what());
+        
+        // Clean up
+        return nullptr;
+    }
 }
 
 LinkedList* FileHandler::playerHandFromFile (std::string playerHandString){
@@ -142,7 +147,8 @@ LinkedList* FileHandler::playerHandFromFile (std::string playerHandString){
     return playerHand;
 }
 
-void FileHandler:: boardStateFromFile (Game* game, std::string boardState) {
+Board* FileHandler:: initaliseBoardFromFile (std::string boardState) {
+    Board* board = new Board ();
     std::stringstream s_stream(boardState);
         while(s_stream.good()) {
             std::string substr;
@@ -150,10 +156,13 @@ void FileHandler:: boardStateFromFile (Game* game, std::string boardState) {
             substr = trim(substr);
 
             std::string num(1 , substr[1]);
-            game->getBoard()->addTileAtPos(new Tile(substr[0],std::stoi(num)), substr[3], 
+
+            board->addTileAtPos(new Tile(substr[0],std::stoi(num)), substr[3], 
                     stoi(substr.substr(substr.find('@') + 2, substr.length())));
 
         }
+
+        return board;
 }
 
 LinkedList* FileHandler::tileBagFromFile (std::string tileBagString){
@@ -177,8 +186,4 @@ std::string FileHandler::trim(const std::string & source) {
     s.erase(0,s.find_first_not_of(" \n\r\t"));
     s.erase(s.find_last_not_of(" \n\r\t")+1);
     return s;
-}
-
-void FileHandler::errorMessage(std::string error) {
-    std::cout << "ERROR: " << error << std::endl;
 }

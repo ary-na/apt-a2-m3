@@ -5,6 +5,7 @@
 #include <vector> 
 #include <iostream>
 #include <exception>
+#include <utility>
 
 class Board {                                   
     public:
@@ -13,6 +14,7 @@ class Board {
         Board(); 
 
         Board(const Board& other);
+        // Board(Board&& other);
         ~Board();
 
         // Prints the entire board vector.

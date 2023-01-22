@@ -35,10 +35,7 @@ Game::Game(Player* player1, Player* player2, Board* board,
                                    board, tileBag);
 
     if (!correctTiles) {
-
-        // TODO: CATCH EXCEPTION
-        throw std::out_of_range("Game Game() - Incorrect no. of tiles given");
-
+        throw std::out_of_range("File has incorrect tiles!");
     } else {
         // Load the tile bag.
         this->tileBag = tileBag;
@@ -73,6 +70,10 @@ Game::Game(const Game& other) {
         this->currentPlayer = this->player1;
     }
 }
+
+// Game::Game(Game&& other) {
+//     // TODO
+// }
 
 Game::~Game() {
     delete this->player1;
@@ -160,7 +161,7 @@ void Game::fillTileBag(LinkedList *tileBag) {
     }
 }
 
-LinkedList* Game:: getTileBag(){
+LinkedList* Game:: getTileBag() const {
     return this->tileBag;
 }
 
@@ -198,11 +199,9 @@ void Game::shuffleTileBag(LinkedList *tileBag) {
             // Delete tile from original tile bag.
             tileBag->deleteAtPos(randomVal);
         }
-        // Add tiles back to original tile bag.
-        for (int i = 1; i <= totalTiles; i++) {
-            tileBag->addEnd(new Tile(*tempTileBag->getAtPos(i)));
-        }
-        delete tempTileBag;
+        // Clean up and point to new tile bag. 
+        delete this->tileBag;
+        this->tileBag = tempTileBag;
         tempTileBag = nullptr;
     }
 }
@@ -415,16 +414,14 @@ bool Game::arraysEqual(std::string array1[], std::string array2[]) {
     std::sort(array2, array2 + this->maxTilesInGame);
 
     bool isEqual = true;
-    int tilesChecked = 0;
+    int i = 0;
 
     // Linearly compare elements of both arrays.
-    while (isEqual && tilesChecked < this->maxTilesInGame) {
-        for (int i = 0; i < this->maxTilesInGame; i++) {
-            if (array1[i] != array2[i]) {
-                    isEqual = false;
-            }
-            tilesChecked++;
+    while (isEqual && i != this->maxTilesInGame) {
+        if (array1[i] != array2[i]) {
+            isEqual = false;
         }
+        i++;
     }
     return isEqual;
 }

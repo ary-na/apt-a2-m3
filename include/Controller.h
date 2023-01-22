@@ -13,6 +13,7 @@ class Controller {
     public:
         Controller();
         Controller(const Controller& other);
+        // Controller(Controller&& other);
         ~Controller();
 
         // Used by main() to start the program. Displays a 
@@ -25,24 +26,26 @@ private:
         FileHandler* fileHandler;
         bool exitMode;
 
-        // When test flag is true, a random seed is set during when 
-        // the game shuffles the tiles to ensure consistent randomness. 
+        // When test flag is true, a random seed is set when the 
+        // game shuffles the tiles to ensure consistent randomness. 
         // Run with "./qwirkle T" to activate test mode.
         bool testFlag;
 
-        // ** 2.2 Main menu **
+        // Displays the main menu and asks the user 
+        // to make a selection by typing a number. 
         void mainMenu();
 
-        // ** 2.2.1 New game **
-        // ** 2.3.10 Special operation: Starting a new game **
+        // Asks for the player names and 
+        // creates a new game of Qwirkle. 
         void newGame(); 
 
         // Helper function for newGame(). Takes a player 
         // name pointer and assigns user input to it.
         void playerNamePrompt(std::string* nameInput);
 
-        // ** 2.2.2 Load game **
-        // ** 2.3.12 Special operation: loading a game **
+        // Asks the user to enter a relative path to the saved game file. 
+        // If the file is valid, the game is loaded and normal gameplay 
+        // continues, otherwise the user is taken back to the main menu.
         void loadGame(); 
 
         // Displays the name, student number, and 
@@ -52,28 +55,40 @@ private:
         // Displays a goodbye message and quits safely. 
         void exitGame();
 
-        // ** 2.3 Base Gameplay **
+        // During baseGameplay(), players will takeTurn()
+        // placing tiles from their hand onto the 
+        // board until the game is complete.
         void baseGameplay();
         void takeTurn();
 
         // Helper function for takeTurn(). Asks the user to 
         // enter a command, validates it and processes it.
+        // (1) <colour><shape> at <row><col>
+        // (2) replace <colour><shape>
+        // (3) save <filename>
+        // (4) EOF character ^D
         void turnPrompt();
 
-        // Helper function for turnPromt(). Takes the user command and tries 
-        // tp place a tile, the input status is set to true if successful.
+        // Takes the user command and tries to place a tile, 
+        // the input status is set to true if successful.
         void placeTile(std::string commandInput, bool* inputStatus);
 
-        // Helper function for turnPromt(). Takes the user command and tries  
-        // to replace a tile, the input status is set to true if successful.
+        // Takes the user command and tries to replace a tile, 
+        // the input status is set to true if successful.
         void replaceTile(std::string commandInput, bool* inputStatus);
 
         // Displays the end game message, scores, 
         // winner name and safely quits the program. 
         void endGame(); 
 
-        // ** 2.3.7 Function: Saving the Game **
+        // Takes the user command and tries and tries to 
+        // save the current state of the game. If the file 
+        // is sucessfully saved, normal gameplay continues.
         void saveGame(std::string fileName);
+
+        // Promts the user to enter an input and
+        // assigns it to the given string pointer.
+        void inputPrompt(std::string* input); 
 
         // Returns true if game is in exist mode. 
         bool isExitMode() const;
@@ -81,12 +96,9 @@ private:
         // Sets the exit mode to true or false. 
         void setExitMode(bool exitMode);
 
-        // Absorb the load game file 
-        bool absorbLoadGameFile(std::string fileName);
-        
-        // Promts the user to enter an input and
-        // assigns it to the given string pointer.
-        void inputPrompt(std::string* input);   
+        // IS THIS USED IN THE CONTROLLER? CAN WE DELETE?
+        // Absorb the load game file.
+        bool absorbLoadGameFile(std::string fileName);  
 };
 
 #endif // CONTROLLER_H

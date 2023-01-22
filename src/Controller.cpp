@@ -20,6 +20,10 @@ Controller::Controller(const Controller& other) {
     this->exitMode = other.exitMode;
 }
 
+// Controller::Controller(Controller&& other) {
+//     // TODO
+// }
+
 Controller::~Controller() {
     if (this->game != nullptr) {
         delete this->game;
@@ -33,7 +37,7 @@ Controller::~Controller() {
 
 void Controller::launchGame(bool testFlag) {
 
-    // If the program was runin test  
+    // If the program was run in test  
     // mode, set the test flag to true.
     if(testFlag) {
         this->testFlag = testFlag;
@@ -51,6 +55,7 @@ void Controller::launchGame(bool testFlag) {
 
 void Controller::mainMenu() {
     do {
+        // The main menu shows the options of the program.
         std::cout << "Menu" << std::endl;
         std::cout << "----" << std::endl;
         std::cout << std::endl;
@@ -138,31 +143,39 @@ void Controller::inputPrompt(std::string* input) {
 }
 
 void Controller::loadGame() {
-
-    // [JACOB] TODO
-    std::cout << std::endl;
     std::cout << "Load game" << std::endl;
     std::cout << "---------" << std::endl;
     std::cout << std::endl;
 
-    // The program should first ask the user for a 
-    // filename from which to load a game
-
+    // The program should ask the user for a file.
     std::cout << "Enter the filename from which load a game" << std::endl;
-    std::cout << std::endl;
 
-    // The user enters the relative path to 
-    // the saved game file, and presses enter
-
+    // User enters the relative path to the saved game file.
     std::string fileName = "";
     inputPrompt(&fileName);
 
-    this->game = this->fileHandler->loadGame(fileName);
-    baseGameplay();
+    bool gameLoaded = false;
+
+    // If the file passes validation checks, the game is loaded, 
+    // a message is printed and normal gameplay continues.
+    try {
+        this->game = this->fileHandler->loadGame(fileName);
+        gameLoaded = true;
+
+    // If the file doesn't pass the validation checks, an error
+    // message displays and the user is taken back to the main menu.
+    } catch (std::out_of_range(& e)) {
+        std::cerr << e.what() << std::endl;
+        std::cout << std::endl;
+    }
+    if (gameLoaded) {
+        std::cout << "Qwirkle game successfully loaded" << std::endl;
+        std::cout << std::endl;
+        baseGameplay();
+    }
 }
 
 void Controller::credits() {
-    std::cout << std::endl;
     std::cout << "Credits" << std::endl;
     std::cout << "-------" << std::endl;
     std::cout << std::endl;
@@ -200,8 +213,9 @@ void Controller::baseGameplay() {
         takeTurn();
         gameComplete = this->game->isComplete();
     }
-    if (!this->isExitMode())
+    if (!this->isExitMode()) {
         endGame();
+    }      
 }
 
 void Controller::takeTurn() {
@@ -214,6 +228,7 @@ void Controller::takeTurn() {
     // The scores of both players.
     std::cout << "Score for " << this->game->getPlayer1()->getName() << ": "
               << this->game->getPlayer1()->getScore() << std::endl;
+
     std::cout << "Score for " << this->game->getPlayer2()->getName() << ": "
               << this->game->getPlayer2()->getScore() << std::endl;
     std::cout << std::endl;
@@ -317,25 +332,15 @@ void Controller::replaceTile(std::string commandInput, bool* inputStatus) {
 
 void Controller::saveGame(std::string fileName) {
 
-    // [JACOB] TODO
+    // Saves the current state of the game to the provided 
+    // filename. The file is overwritten if it already exists.
+    this->fileHandler->saveGame(this->game, fileName);
 
-    // The program should save the current state of the game 
-    // to the provided filename (overwriting the file if it already exists) 
-
-    // Then the program should display a message 
-    // and continue with the gameplay 
-
-    std::cout << std::endl;
+    // The program displays a message and continues with gameplay. 
     std::cout << "Game successfully saved" << std::endl;
     std::cout << std::endl;
 
-    // TO DO: Need to ask for the save game name
-
-    this->fileHandler->saveGame(this->game, fileName);
-
-    // The current player does not change, 
-    // so that a player may save the game and then take a turn
-
+    // [JACOB] TODO
     // If the program has problems saving the file, it should display 
     // a message, and continue with normal gameplay without crashing.
 }
