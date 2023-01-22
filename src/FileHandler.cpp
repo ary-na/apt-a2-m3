@@ -118,25 +118,27 @@ Game* FileHandler::absorbLoadGameFile(std::string fileName) {
 
     inFile.close();
 
+    Game* game = nullptr;
+    Player* P1 = nullptr;
+    Player* P2 = nullptr;
+
     try {
         // Create players
-        Player* P1 = new Player(fileContent[0],std::stoi(fileContent[1]),playerHandFromFile(fileContent[2]));
-        Player* P2 = new Player(fileContent[3],std::stoi(fileContent[4]),playerHandFromFile(fileContent[5]));
+        P1 = new Player(fileContent[0],std::stoi(fileContent[1]),playerHandFromFile(fileContent[2]));
+        P2 = new Player(fileContent[3],std::stoi(fileContent[4]),playerHandFromFile(fileContent[5]));
 
         // Create Game    
-        Game* game = new Game(P1, P2, initaliseBoardFromFile (fileContent[7]), tileBagFromFile(fileContent[8]),currentPlayerFromName(P1, P2, fileContent[9]));
-
-       // Clean up
-        P1 = nullptr;
-        P2 = nullptr;
-
-        return game;
-
+        game = new Game(P1, P2, initaliseBoardFromFile (fileContent[7]), tileBagFromFile(fileContent[8]),currentPlayerFromName(P1, P2, fileContent[9]));
+    
     } catch (std::out_of_range(& e)) {
         throw std::out_of_range(e.what());
-
-        return nullptr;
     }
+
+    // Clean up
+    P1 = nullptr;
+    P2 = nullptr;
+
+    return game;
 }
 
 LinkedList* FileHandler::playerHandFromFile (std::string playerHandString){
