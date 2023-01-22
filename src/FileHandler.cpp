@@ -4,10 +4,6 @@ FileHandler::FileHandler() {
     this->validator = new Validator();
 }
 
-FileHandler::FileHandler(const FileHandler& other) {
-    // [JACOB] TODO
-}
-
 FileHandler::~FileHandler() {
     delete this->validator;
     this->validator = nullptr;
