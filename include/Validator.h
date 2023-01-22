@@ -12,7 +12,7 @@ public:
 public:
     Validator();
     Validator(const Validator& other);
-    Validator(Validator&& other);
+    // Validator(Validator&& other);
     ~Validator();
 
     // Check if username is valid (Players should only consist of letters (no numbers or symbols))

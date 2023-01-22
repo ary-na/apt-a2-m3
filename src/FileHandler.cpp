@@ -9,10 +9,10 @@ FileHandler::FileHandler(const FileHandler& other) {
     this->validator = new Validator(*other.validator);
 }
 
-FileHandler::FileHandler(FileHandler&& other) {
-    // [JACOB] TODO
-    // DON'T DELETE, WE NEED TO DO THIS FOR EVERY CLASS
-}
+// FileHandler::FileHandler(FileHandler&& other) {
+//     // [JACOB] TODO
+//     // DON'T DELETE, WE NEED TO DO THIS FOR EVERY CLASS
+// }
 
 FileHandler::~FileHandler() {
     delete this->validator;

@@ -18,9 +18,12 @@ Player::Player(const Player& other) {
     this->hand = new LinkedList(*other.hand);
 }
 
-Player::Player(Player&& other) {
-    // TODO
-}
+// Player::Player(Player&& other) {
+//     // TODO
+//     this->name = other.name;
+//     this->score = other.score;
+//     this->hand = other.hand;
+// }
 
 Player::~Player() {
     delete this->hand;

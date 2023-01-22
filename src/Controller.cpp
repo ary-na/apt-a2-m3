@@ -20,9 +20,9 @@ Controller::Controller(const Controller& other) {
     this->exitMode = other.exitMode;
 }
 
-Controller::Controller(Controller&& other) {
-    // TODO
-}
+// Controller::Controller(Controller&& other) {
+//     // TODO
+// }
 
 Controller::~Controller() {
     if (this->game != nullptr) {

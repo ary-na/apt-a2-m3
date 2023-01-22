@@ -71,9 +71,9 @@ Game::Game(const Game& other) {
     }
 }
 
-Game::Game(Game&& other) {
-    // TODO
-}
+// Game::Game(Game&& other) {
+//     // TODO
+// }
 
 Game::~Game() {
     delete this->player1;

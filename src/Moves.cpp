@@ -15,9 +15,9 @@ Moves::Moves(const Moves& other) {
     // [ARIAN] TODO
 }
 
-Moves::Moves(Moves&& other) {
-    // [ARIAN] TODO
-}
+// Moves::Moves(Moves&& other) {
+//     // [ARIAN] TODO
+// }
 
 Moves::~Moves() {
     this->board = nullptr;

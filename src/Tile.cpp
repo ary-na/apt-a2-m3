@@ -10,9 +10,9 @@ Tile::Tile(const Tile& other) {
     this->colour = other.colour;
 }
 
-Tile::Tile(Tile&& other) {
-    // TODO
-}
+// Tile::Tile(Tile&& other) {
+//     // TODO
+// }
 
 Tile::~Tile() {
 }
