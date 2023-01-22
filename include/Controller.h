@@ -42,9 +42,9 @@ private:
         // name pointer and assigns user input to it.
         void playerNamePrompt(std::string* nameInput);
 
-        // Asks the user to enter a relative path to the 
-        // saved game file. If the file is valid, the 
-        // game is loaded and normal gameplay continues.
+        // Asks the user to enter a relative path to the saved game file. 
+        // If the file is valid, the game is loaded and normal gameplay 
+        // continues, otherwise the user is taken back to the main menu.
         void loadGame(); 
 
         // Displays the name, student number, and 
