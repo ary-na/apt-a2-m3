@@ -79,10 +79,6 @@ class FileHandler {
 
         // ** Trim the start and end of a strign of whitespace
         std::string trim(const std::string & source);
-
-        // ** Used to ensure a consistent error message
-        void errorMessage(std::string);
-
 };
 
 #endif // FILEHANDLER_H

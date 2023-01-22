@@ -13,8 +13,6 @@ bool FileHandler::saveGame (Game* game, std::string fileName) {
     
 
     std::string path = "savedGames/" + fileName.substr(5, fileName.length()) + ".save";
-    std::cout << path << std::endl;
-    std::cout << std::endl;
     std::fstream outFile;
 
     this->validator->isSavedFileExist(fileName) ?
@@ -170,8 +168,4 @@ std::string FileHandler::trim(const std::string & source) {
     s.erase(0,s.find_first_not_of(" \n\r\t"));
     s.erase(s.find_last_not_of(" \n\r\t")+1);
     return s;
-}
-
-void FileHandler::errorMessage(std::string error) {
-    std::cout << "ERROR: " << error << std::endl;
 }
