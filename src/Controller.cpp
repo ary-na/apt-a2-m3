@@ -158,7 +158,7 @@ void Controller::loadGame() {
         try {
             this->game = this->fileHandler->loadGame(fileName);
             awaitingInput = false;  
-              
+
         // If the file doesn't pass the validation checks.
         } catch (std::out_of_range(& e)) {
             std::cerr << e.what() << std::endl;
@@ -166,6 +166,7 @@ void Controller::loadGame() {
         }
     }
     std::cout << "Qwirkle game successfully loaded" << std::endl;
+    std::cout << std::endl;
     baseGameplay();
 }
 
