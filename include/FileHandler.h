@@ -56,10 +56,7 @@ class FileHandler {
         // ** Updates the current state of the board for the game based on the state of play.   
         // ** INPUT: An initialised Game* & A comma-separated string with the format being the tile data, followed by an “@” symbol, then the board’s position. 
         // Example: “B4@B2, B6@B3, B5@B4”
-        void boardStateFromFile (Game* game, std::string boardState);
-
-        // THIS CODE WILL WORK FOR GIVING BOARD TO GAME [CARELLE]
-        // void boardStateFromFile (Board* board, std::string boardState);
+        Board* initaliseBoardFromFile (std::string boardState);
         
         // Returns Hand from file.
         // INPUT: A comma-separated string is being passed to the function with tile data being represented as colour than shape Example “Y5,R5,O2”.

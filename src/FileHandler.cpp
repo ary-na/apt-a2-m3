@@ -112,21 +112,9 @@ Game* FileHandler::absorbLoadGameFile(std::string fileName) {
     // Create players
     Player* P1 = new Player(fileContent[0],std::stoi(fileContent[1]),playerHandFromFile(fileContent[2]));
     Player* P2 = new Player(fileContent[3],std::stoi(fileContent[4]),playerHandFromFile(fileContent[5]));
-
-    // NOTE FROM CARELLE: YOU NEED TO GIVE THE GAME THE COMPLETE 
-    // BOARD, THIS GIVES THE GAME AN EMPTY BOARD, SO TOTAL 
-    // TILE COUNT MAY != 72 AND THROW EXCEPTION
-
-    // THIS CODE WILL WORK FOR GIVING BOARD TO GAME [CARELLE]
-    // Board* testBoard = new Board();
-    // boardStateFromFile(testBoard, fileContent[7]);
-    // Game* game = new Game(P1, P2, testBoard, tileBagFromFile(fileContent[8]),currentPlayerFromName(P1, P2, fileContent[9]));
     
     // Create Game
-    Game* game = new Game(P1, P2, new Board(), tileBagFromFile(fileContent[8]),currentPlayerFromName(P1, P2, fileContent[9]));
- 
-    // Update board state
-    boardStateFromFile (game, fileContent[7]);
+    Game* game = new Game(P1, P2, initaliseBoardFromFile (fileContent[7]), tileBagFromFile(fileContent[8]),currentPlayerFromName(P1, P2, fileContent[9]));
 
     // Clean up
     P1 = nullptr;
@@ -147,10 +135,8 @@ LinkedList* FileHandler::playerHandFromFile (std::string playerHandString){
     return playerHand;
 }
 
-// THIS CODE WILL WORK FOR GIVING BOARD TO GAME [CARELLE]
-// void FileHandler:: boardStateFromFile (Board* board, std::string boardState) {
-
-void FileHandler:: boardStateFromFile (Game* game, std::string boardState) {
+Board* FileHandler:: initaliseBoardFromFile (std::string boardState) {
+    Board* board = new Board ();
     std::stringstream s_stream(boardState);
         while(s_stream.good()) {
             std::string substr;
@@ -159,13 +145,12 @@ void FileHandler:: boardStateFromFile (Game* game, std::string boardState) {
 
             std::string num(1 , substr[1]);
 
-            // THIS CODE WILL WORK FOR GIVING BOARD TO GAME [CARELLE]
-            // board->addTileAtPos(new Tile(substr[0],std::stoi(num)), substr[3], 
-
-            game->getBoard()->addTileAtPos(new Tile(substr[0],std::stoi(num)), substr[3], 
+            board->addTileAtPos(new Tile(substr[0],std::stoi(num)), substr[3], 
                     stoi(substr.substr(substr.find('@') + 2, substr.length())));
 
         }
+
+        return board;
 }
 
 LinkedList* FileHandler::tileBagFromFile (std::string tileBagString){
