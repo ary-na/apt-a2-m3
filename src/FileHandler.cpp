@@ -86,10 +86,9 @@ Game* FileHandler::loadGame( std::string fileName) {
 
     // Validates the file exist
     if(!this->validator->isSavedFileExist(fileName)){
-        errorMessage("File does not exist!");
-        return nullptr;
+        // errorMessage("File does not exist!");
+        throw std::out_of_range("File does not exist!");
     }
-    
     return absorbLoadGameFile(fileName);
 }
 

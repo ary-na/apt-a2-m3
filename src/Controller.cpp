@@ -140,25 +140,34 @@ void Controller::inputPrompt(std::string* input) {
 
 void Controller::loadGame() {
 
-    // [JACOB] TODO
-    std::cout << std::endl;
     std::cout << "Load game" << std::endl;
     std::cout << "---------" << std::endl;
     std::cout << std::endl;
 
-    // The program should first ask the user for a 
-    // filename from which to load a game
+    // The program should first ask the user for 
+    // a filename from which to load a game.
 
     std::cout << "Enter the filename from which load a game" << std::endl;
-    std::cout << std::endl;
 
     // The user enters the relative path to 
-    // the saved game file, and presses enter
+    // the saved game file, and presses enter.
 
-    std::string fileName = "";
-    inputPrompt(&fileName);
+    bool awaitingInput = true;
+    while (awaitingInput) { 
 
-    this->game = this->fileHandler->loadGame(fileName);
+        std::string fileName = "";
+        inputPrompt(&fileName);
+
+        try {
+            this->game = this->fileHandler->loadGame(fileName);
+            awaitingInput = false;
+        } catch (std::out_of_range(& e)) {
+            std::cerr << e.what() << std::endl;
+            std::cout << std::endl;
+        }
+    }
+
+    
     baseGameplay();
 }
 

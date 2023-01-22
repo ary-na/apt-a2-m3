@@ -35,10 +35,7 @@ Game::Game(Player* player1, Player* player2, Board* board,
                                    board, tileBag);
 
     if (!correctTiles) {
-
-        // TODO: CATCH EXCEPTION
-        throw std::out_of_range("Game Game() - Incorrect no. of tiles given");
-
+        throw std::out_of_range("File has incorrect tiles!");
     } else {
         // Load the tile bag.
         this->tileBag = tileBag;
