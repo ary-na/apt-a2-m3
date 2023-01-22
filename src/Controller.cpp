@@ -326,12 +326,17 @@ void Controller::replaceTile(std::string commandInput, bool* inputStatus) {
 }
 
 void Controller::saveGame(std::string fileName) {
+    
+    try {
+        this->fileHandler->saveGame(this->game, fileName);
+        std::cout << "Game successfully saved" << std::endl;
 
-    this->fileHandler->saveGame(this->game, fileName);
-
-    std::cout << "Game successfully saved" << std::endl;
+    // If the file doesn't pass the validation checks.
+    } catch (std::out_of_range(& e)) {
+        std::cerr << e.what() << std::endl;
+        std::cout << std::endl;
+    }
     std::cout << std::endl;
-
 }
 
 void Controller::endGame() {

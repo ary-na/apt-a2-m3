@@ -34,6 +34,11 @@ bool FileHandler::saveGame (Game* game, std::string fileName) {
 
         outFile.close();
     }
+    
+    // Validates the fileCreate successfully
+    if(!this->validator->isSavedFileExist(fileName.substr(5, fileName.length()))){
+        throw std::out_of_range("Game did not save correctly!");
+    }
 
     return true;
 }
@@ -45,8 +50,9 @@ std::string FileHandler::playerHandToFile(LinkedList* playerHand) {
         std::string tile = playerHand->getAtPos(x)->colour + std::to_string(playerHand->getAtPos(x)->shape);
         x == 1 ? stringPlayerHand = tile : stringPlayerHand.append("," + tile);
     }
-
+    
     return stringPlayerHand;
+
 }
 
 std::string FileHandler::boardStateToFile(Board* board) {
@@ -81,7 +87,6 @@ Game* FileHandler::loadGame( std::string fileName) {
 
     // Validates the file exist
     if(!this->validator->isSavedFileExist(fileName)){
-        // errorMessage("File does not exist!");
         throw std::out_of_range("File does not exist!");
     }
     return absorbLoadGameFile(fileName);
@@ -119,50 +124,57 @@ Game* FileHandler::absorbLoadGameFile(std::string fileName) {
 
     } catch (std::out_of_range(& e)) {
         throw std::out_of_range(e.what());
-        
-        // Clean up
+
         return nullptr;
     }
 }
 
 LinkedList* FileHandler::playerHandFromFile (std::string playerHandString){
     LinkedList* playerHand = new LinkedList();
-    std::stringstream s_stream(playerHandString);
-    while(s_stream.good()) {
-        std::string substr;
-        getline(s_stream, substr, ','); //get first string delimited by comma
-        std::string num(1 , substr[1]);
-        playerHand->addEnd(new Tile(substr[0], std::stoi(num)));
+    
+    if(playerHandString != "") {
+        std::stringstream s_stream(playerHandString);
+        while(s_stream.good()) {
+            std::string substr;
+            getline(s_stream, substr, ','); //get first string delimited by comma
+            std::string num(1 , substr[1]);
+            playerHand->addEnd(new Tile(substr[0], std::stoi(num)));
+        }
     }
     return playerHand;
 }
 
 Board* FileHandler:: initaliseBoardFromFile (std::string boardState) {
     Board* board = new Board ();
-    std::stringstream s_stream(boardState);
-        while(s_stream.good()) {
-            std::string substr;
-            getline(s_stream, substr, ',');
-            substr = trim(substr);
 
-            std::string num(1 , substr[1]);
+    if(boardState != "") {
+        std::stringstream s_stream(boardState);
+            while(s_stream.good()) {
+                std::string substr;
+                getline(s_stream, substr, ',');
+                substr = trim(substr);
 
-            board->addTileAtPos(new Tile(substr[0],std::stoi(num)), substr[3], 
-                    stoi(substr.substr(substr.find('@') + 2, substr.length())));
+                std::string num(1 , substr[1]);
 
+                board->addTileAtPos(new Tile(substr[0],std::stoi(num)), substr[3], 
+                        stoi(substr.substr(substr.find('@') + 2, substr.length())));
+
+            }
         }
-
-        return board;
+    
+    return board;
 }
 
 LinkedList* FileHandler::tileBagFromFile (std::string tileBagString){
     LinkedList* tileBag = new LinkedList();
-    std::stringstream s_stream(tileBagString);
-    while(s_stream.good()) {
-        std::string substr;
-        getline(s_stream, substr, ','); //get first string delimited by comma
-        std::string num(1 , substr[1]);
-        tileBag->addEnd(new Tile(substr[0], std::stoi(num)));
+    if(tileBagString != "") {
+        std::stringstream s_stream(tileBagString);
+        while(s_stream.good()) {
+            std::string substr;
+            getline(s_stream, substr, ','); //get first string delimited by comma
+            std::string num(1 , substr[1]);
+            tileBag->addEnd(new Tile(substr[0], std::stoi(num)));
+        }
     }
     return tileBag;
 }
