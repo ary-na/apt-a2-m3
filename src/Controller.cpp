@@ -163,6 +163,7 @@ void Controller::loadGame() {
         } catch (std::out_of_range(& e)) {
             std::cerr << e.what() << std::endl;
             std::cout << std::endl;
+            mainMenu();
         }
     }
     std::cout << "Qwirkle game successfully loaded" << std::endl;
