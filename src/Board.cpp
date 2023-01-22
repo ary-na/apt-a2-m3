@@ -40,6 +40,10 @@ Board::Board(const Board& other) {
     }
 }
 
+Board::Board(Board&& other) {
+    // TODO
+}
+
 Board::~Board() {
     
     // Check if there are any tiles to delete.

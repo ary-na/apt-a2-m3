@@ -13,6 +13,7 @@ class Board {
         Board(); 
 
         Board(const Board& other);
+        Board(Board&& other);
         ~Board();
 
         // Prints the entire board vector.

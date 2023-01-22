@@ -8,6 +8,7 @@ class ScoreCalculator {
     public:
         ScoreCalculator();
         ScoreCalculator(const ScoreCalculator& other);
+        ScoreCalculator(ScoreCalculator&& other);
         ~ScoreCalculator();
 
         // ** 2.3.9 Special operation: QWIRKLE! **

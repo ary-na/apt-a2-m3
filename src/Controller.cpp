@@ -20,6 +20,10 @@ Controller::Controller(const Controller& other) {
     this->exitMode = other.exitMode;
 }
 
+Controller::Controller(Controller&& other) {
+    // TODO
+}
+
 Controller::~Controller() {
     if (this->game != nullptr) {
         delete this->game;
@@ -153,12 +157,13 @@ void Controller::loadGame() {
     bool gameLoaded = false;
 
     // If the file passes validation checks, the game is loaded, 
-    // a message is printed and normal fameplay continues.
+    // a message is printed and normal gameplay continues.
     try {
         this->game = this->fileHandler->loadGame(fileName);
         gameLoaded = true;
 
-    // If the file doesn't pass the validation checks.
+    // If the file doesn't pass the validation checks, an error
+    // message displays and the user is taken back to the main menu.
     } catch (std::out_of_range(& e)) {
         std::cerr << e.what() << std::endl;
         std::cout << std::endl;
@@ -208,8 +213,9 @@ void Controller::baseGameplay() {
         takeTurn();
         gameComplete = this->game->isComplete();
     }
-    if (!this->isExitMode())
+    if (!this->isExitMode()) {
         endGame();
+    }      
 }
 
 void Controller::takeTurn() {

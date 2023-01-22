@@ -4,6 +4,16 @@ FileHandler::FileHandler() {
     this->validator = new Validator();
 }
 
+FileHandler::FileHandler(const FileHandler& other) {
+    // DON'T DELETE, WE NEED TO DO THIS FOR EVERY CLASS
+    this->validator = new Validator(*other.validator);
+}
+
+FileHandler::FileHandler(FileHandler&& other) {
+    // [JACOB] TODO
+    // DON'T DELETE, WE NEED TO DO THIS FOR EVERY CLASS
+}
+
 FileHandler::~FileHandler() {
     delete this->validator;
     this->validator = nullptr;

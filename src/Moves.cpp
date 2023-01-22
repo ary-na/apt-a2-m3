@@ -12,7 +12,11 @@ Moves::Moves(Board *board) {
 }
 
 Moves::Moves(const Moves& other) {
-    // TODO
+    // [ARIAN] TODO
+}
+
+Moves::Moves(Moves&& other) {
+    // [ARIAN] TODO
 }
 
 Moves::~Moves() {

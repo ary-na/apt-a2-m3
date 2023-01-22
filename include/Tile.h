@@ -14,6 +14,7 @@ class Tile {
         Tile(Colour colour, Shape shape);
 
         Tile(const Tile& other);
+        Tile(Tile&& other);
         ~Tile();
 
         Colour colour;

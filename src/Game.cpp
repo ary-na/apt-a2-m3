@@ -71,6 +71,10 @@ Game::Game(const Game& other) {
     }
 }
 
+Game::Game(Game&& other) {
+    // TODO
+}
+
 Game::~Game() {
     delete this->player1;
     this->player1 = nullptr;

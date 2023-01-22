@@ -23,6 +23,7 @@ class Game {
              LinkedList* tileBag, Player* currentPlayer); 
 
         Game(const Game& other);
+        Game(Game&& other);
         ~Game();
         
         // Returns the current player.
