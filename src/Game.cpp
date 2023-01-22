@@ -11,7 +11,6 @@ Game::Game() {
     this->currentPlayer = nullptr;
     this->scoreCalculator = nullptr;
 }
-Game::Game() {}
 
 Game::Game(Player *player1, Player *player2, bool testFlag) {
 
