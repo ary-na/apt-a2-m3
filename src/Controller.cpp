@@ -326,24 +326,15 @@ void Controller::replaceTile(std::string commandInput, bool* inputStatus) {
 
 void Controller::saveGame(std::string fileName) {
 
-    // [JACOB] TODO
+    // Saves the current state of the game to the provided 
+    // filename. The file is overwritten if it already exists.
+    this->fileHandler->saveGame(this->game, fileName);
 
-    // The program should save the current state of the game 
-    // to the provided filename (overwriting the file if it already exists) 
-
-    // Then the program should display a message 
-    // and continue with the gameplay 
-
+    // The program displays a message and continues with gameplay. 
     std::cout << "Game successfully saved" << std::endl;
     std::cout << std::endl;
 
-    // TO DO: Need to ask for the save game name
-
-    this->fileHandler->saveGame(this->game, fileName);
-
-    // The current player does not change, 
-    // so that a player may save the game and then take a turn
-
+    // [JACOB] TODO
     // If the program has problems saving the file, it should display 
     // a message, and continue with normal gameplay without crashing.
 }

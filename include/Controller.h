@@ -42,8 +42,9 @@ private:
         // name pointer and assigns user input to it.
         void playerNamePrompt(std::string* nameInput);
 
-        // ** 2.2.2 Load game **
-        // ** 2.3.12 Special operation: loading a game **
+        // Asks the user to enter a relative path to the 
+        // saved game file. If the file is valid, the 
+        // game is loaded and normal gameplay continues.
         void loadGame(); 
 
         // Displays the name, student number, and 
@@ -79,9 +80,14 @@ private:
         // winner name and safely quits the program. 
         void endGame(); 
 
-        // ** 2.3.7 Function: Saving the Game **
-        // Helper function for turnPromt().
+        // Takes the user command and tries and tries to 
+        // save the current state of the game. If the file 
+        // is sucessfully saved, normal gameplay continues.
         void saveGame(std::string fileName);
+
+        // Promts the user to enter an input and
+        // assigns it to the given string pointer.
+        void inputPrompt(std::string* input); 
 
         // Returns true if game is in exist mode. 
         bool isExitMode() const;
@@ -89,12 +95,9 @@ private:
         // Sets the exit mode to true or false. 
         void setExitMode(bool exitMode);
 
+        // IS THIS USED IN THE CONTROLLER? CAN WE DELETE?
         // Absorb the load game file.
-        bool absorbLoadGameFile(std::string fileName);
-        
-        // Promts the user to enter an input and
-        // assigns it to the given string pointer.
-        void inputPrompt(std::string* input);   
+        bool absorbLoadGameFile(std::string fileName);  
 };
 
 #endif // CONTROLLER_H

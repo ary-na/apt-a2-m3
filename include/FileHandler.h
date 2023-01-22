@@ -46,7 +46,7 @@ class FileHandler {
         // and the function is not accounting for incorrect file names. 
         // ** OUTPUT: if the format of the file is valid, a Game* will be returned. If not, a NullPtr will be returned and an error will be printed out.   
  
-         Game* absorbLoadGameFile(std::string fileName);
+        Game* absorbLoadGameFile(std::string fileName);
         
         // Returns Hand from file.
         // INPUT: A comma-separated string is being passed to the function with tile data being represented as colour than shape Example “Y5,R5,O2”.
