@@ -2,6 +2,10 @@
 #include "../include/Validator.h"
 #include "../include/Moves.h"
 
+Game::Game() {
+
+}
+
 Game::Game(Player *player1, Player *player2, bool testFlag) {
 
     // Set the test flag.
@@ -24,7 +28,7 @@ Game::Game(Player *player1, Player *player2, bool testFlag) {
     this->scoreCalculator = new ScoreCalculator();
 }
 
-Game::Game(Player* player1, Player* player2, Board* board,
+bool Game::loadGameData(Player* player1, Player* player2, Board* board,
            LinkedList* tileBag, Player* currentPlayer) {
 
     // Tile bag provided, don't activate test mode.
@@ -34,9 +38,8 @@ Game::Game(Player* player1, Player* player2, Board* board,
     bool correctTiles = checkTiles(player1->getHand(), player2->getHand(), 
                                    board, tileBag);
 
-    if (!correctTiles) {
-        throw std::out_of_range("File has incorrect tiles!");
-    } else {
+    if (correctTiles) {
+
         // Load the tile bag.
         this->tileBag = tileBag;
 
@@ -49,6 +52,7 @@ Game::Game(Player* player1, Player* player2, Board* board,
         this->currentPlayer = currentPlayer;
         this->scoreCalculator = new ScoreCalculator();
     }
+    return correctTiles;
 }
 
 Game::Game(const Game& other) {

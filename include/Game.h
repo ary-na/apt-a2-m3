@@ -13,19 +13,23 @@
 
 class Game {
     public:
+        // Default constructor create a game with no data. This is 
+        // only to be used when loading a game. After calling the 
+        // constructor, you must load the data in with loadGame().
+        Game();
 
         // Constructor for starting a new game. 
         // A game must have two players. 
         Game(Player* player1, Player* player2, bool testFlag); 
 
-        // Constructor for loading a game. A game must have 
-        // two players, a tile bag, board and current player.
-        Game(Player* player1, Player* player2, Board* board, 
-             LinkedList* tileBag, Player* currentPlayer); 
-
         Game(const Game& other);
         // Game(Game&& other);
         ~Game();
+
+        // To be used after Game() when loading a game from a tile. A game 
+        // must have two players, a tile bag, board and current player.
+        bool loadGameData(Player* player1, Player* player2, Board* board, 
+             LinkedList* tileBag, Player* currentPlayer); 
         
         // Returns the current player.
         Player* getCurrentPlayer() const;
