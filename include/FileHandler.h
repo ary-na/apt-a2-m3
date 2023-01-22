@@ -15,13 +15,15 @@
 class FileHandler {
     public:
         FileHandler();
+        FileHandler(const FileHandler& other);
+        // FileHandler(FileHandler&& other);
         ~FileHandler();
         
         // ** updates the current state of play based on a saved game file 
         // ** INPUT: Required a valid save file name. The path and extension of the game file is not required. 
         // ** OUTPUT: If the name of the file is valid, and the format of the file is valid, a Game* will be returned. 
         // If not, a NullPtr will be returned and an error will be printed out. 
-         Game* loadGame(std::string fileName);
+        Game* loadGame(std::string fileName);
 
         // ** saves the current state of play to a “.save” file.
         // ** INPUT: The name of the file. If the file already exists, this will be overwritten. The name cannot contain special characters or whitespace. 
@@ -53,6 +55,7 @@ class FileHandler {
         // ** INPUT: A valid save file name without the path or extension. It is assumed the file name is correct 
         // and the function is not accounting for incorrect file names. 
         // ** OUTPUT: if the format of the file is valid, a Game* will be returned. If not, a NullPtr will be returned and an error will be printed out.   
+ 
         Game* absorbLoadGameFile(std::string fileName);
         
         // ** Returns Hand from file.

@@ -9,6 +9,7 @@
 #include <iostream> 
 #include <memory>
 #include <random>
+#include <utility>
 
 class Game {
     public:
@@ -23,6 +24,7 @@ class Game {
              LinkedList* tileBag, Player* currentPlayer); 
 
         Game(const Game& other);
+        // Game(Game&& other);
         ~Game();
         
         // Returns the current player.

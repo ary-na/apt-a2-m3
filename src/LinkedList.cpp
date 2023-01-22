@@ -34,6 +34,10 @@ LinkedList::LinkedList(const LinkedList& other) {
     }
 }
 
+// LinkedList::LinkedList(LinkedList&& other) {
+//     // TODO
+// }
+
 LinkedList::~LinkedList() {
     clear();
 }

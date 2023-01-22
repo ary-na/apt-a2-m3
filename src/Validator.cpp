@@ -7,6 +7,10 @@ Validator::Validator(const Validator& other) {
     // [ARIAN] TODO
 }
 
+// Validator::Validator(Validator&& other) {
+//     // [ARIAN] TODO
+// }
+
 Validator::~Validator() {
 }
 

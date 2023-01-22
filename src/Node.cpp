@@ -30,6 +30,10 @@ Node::Node(const Node& other) {
     }
 }
 
+// Node::Node(Node&& other) {
+//     // TODO
+// }
+
 Node::~Node() {
     delete this->tile;
     this->tile = nullptr;
