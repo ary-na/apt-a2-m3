@@ -84,7 +84,7 @@ private:
         // Takes the user command and tries and tries to 
         // save the current state of the game. If the file 
         // is sucessfully saved, normal gameplay continues.
-        void saveGame(std::string fileName);
+        void saveGame(const std::string fileName);
 
         // Promts the user to enter an input and
         // assigns it to the given string pointer.
@@ -95,10 +95,6 @@ private:
 
         // Sets the exit mode to true or false. 
         void setExitMode(bool exitMode);
-
-        // IS THIS USED IN THE CONTROLLER? CAN WE DELETE?
-        // Absorb the load game file.
-        bool absorbLoadGameFile(std::string fileName);  
 };
 
 #endif // CONTROLLER_H
