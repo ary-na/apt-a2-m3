@@ -164,10 +164,11 @@ void Controller::loadGame() {
 
     // If the file doesn't pass the validation checks, an error
     // message displays and the user is taken back to the main menu.
-    } catch (std::out_of_range(& e)) {
+    } catch (std::exception(& e)) {
         std::cerr << e.what() << std::endl;
         std::cout << std::endl;
     }
+
     if (gameLoaded) {
         std::cout << "Qwirkle game successfully loaded" << std::endl;
         std::cout << std::endl;
@@ -337,7 +338,7 @@ void Controller::saveGame(std::string fileName) {
         std::cout << "Game successfully saved" << std::endl;
 
     // If the file doesn't pass the validation checks.
-    } catch (std::out_of_range(& e)) {
+    } catch (std::exception(& e)) {
         std::cerr << e.what() << std::endl;
         std::cout << std::endl;
     }
