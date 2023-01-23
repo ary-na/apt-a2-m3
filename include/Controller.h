@@ -24,6 +24,9 @@ private:
         Game* game;
         Validator* validator;
         FileHandler* fileHandler;
+
+        // If exit mode is true, the mainMenu() loop 
+        // will end and the game will safely exit.  
         bool exitMode;
 
         // When test flag is true, a random seed is set when the 

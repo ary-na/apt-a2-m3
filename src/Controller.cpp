@@ -317,7 +317,8 @@ void Controller::placeTile(std::string commandInput, bool* inputStatus) {
     if (!tilePlaced) {
         std::cerr << "Illegal move!" << std::endl;
         std::cout << std::endl;
-        delete tileInput;  
+        delete tileInput; 
+        tileInput = nullptr; 
     } else {
         *inputStatus = false;
     }
@@ -337,13 +338,15 @@ void Controller::replaceTile(std::string commandInput, bool* inputStatus) {
         std::cerr << "Illegal move!" << std::endl;
         std::cout << std::endl;
         delete tileInput;
+        tileInput = nullptr;
     } else {
         *inputStatus = false;
     }
 }
 
 void Controller::saveGame(std::string fileName) {
-    
+
+    // Save the current state of the game to the provided filename.
     try {
         this->fileHandler->saveGame(this->game, fileName);
         std::cout << "Game successfully saved" << std::endl;
@@ -354,7 +357,6 @@ void Controller::saveGame(std::string fileName) {
         std::cout << std::endl;
     }
     std::cout << std::endl;
-
 }
 
 void Controller::endGame() {

@@ -181,6 +181,7 @@ void LinkedList::deleteAtPos(int pos) {
         temp->prev->next = temp->next;
         temp->next->prev = temp->prev;
         delete temp;
+        temp = nullptr;
         --this->length;
     }
 }
@@ -202,6 +203,7 @@ void LinkedList::deleteFront() {
             this->head->prev = nullptr;
         }
         delete temp;
+        temp = nullptr;
         --this->length;
     }
 }
@@ -223,6 +225,7 @@ void LinkedList::deleteEnd() {
             this->tail->next = nullptr;
         }
         delete temp;
+        temp = nullptr;
         --this->length;
     }
 }
@@ -253,6 +256,7 @@ void LinkedList::deleteByNode(Tile* tile) {
                     temp->prev->next = current->next;
                     temp->next->prev = current->prev;
                     delete temp;
+                    temp = nullptr;
                     --this->length;
                     result = true;
                 }
