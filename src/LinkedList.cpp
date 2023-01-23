@@ -34,9 +34,14 @@ LinkedList::LinkedList(const LinkedList& other) {
     }
 }
 
-// LinkedList::LinkedList(LinkedList&& other) {
-//     // TODO
-// }
+LinkedList::LinkedList(LinkedList&& other) {
+    this->length = other.length; 
+    this->head = other.head;
+    this->tail = other.tail;
+    other.length = 0;
+    other.head = nullptr;
+    other.tail = nullptr;
+}
 
 LinkedList::~LinkedList() {
     clear();

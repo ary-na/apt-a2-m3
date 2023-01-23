@@ -13,7 +13,7 @@ class Controller {
     public:
         Controller();
         Controller(const Controller& other);
-        // Controller(Controller&& other);
+        Controller(Controller&& other);
         ~Controller();
 
         // Used by main() to start the program. Displays a 

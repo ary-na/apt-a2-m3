@@ -40,9 +40,26 @@ Board::Board(const Board& other) {
     }
 }
 
-// Board::Board(Board&& other) {
-//     // TODO
-// }
+Board::Board(Board&& other) {
+    this->numOfTiles = other.numOfTiles;
+    this->boardVector = other.boardVector;
+
+    // Traverse boardVector and clear tiles.
+    if (other.numOfTiles > 0) {
+        int tilesCleared = 0;
+        while (tilesCleared != other.numOfTiles) { 
+            for (int row = other.minRow; row <= other.maxRow; row++) {
+                for (int col = other.minCol; col <= other.maxCol; col++)  {
+                    if (other.boardVector[row][col] != nullptr) {
+                        other.boardVector[row][col] = nullptr;
+                        ++tilesCleared;
+                    }
+                }   
+            }
+        }
+    }
+    other.numOfTiles = 0;
+}
 
 Board::~Board() {
     

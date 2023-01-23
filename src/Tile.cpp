@@ -10,12 +10,12 @@ Tile::Tile(const Tile& other) {
     this->colour = other.colour;
 }
 
-// Tile::Tile(Tile&& other) {
-//     this->shape = other.shape;
-//     this->colour = other.colour;
-//     other.shape = 0;
-//     other.colour = '\0';
-// }
+Tile::Tile(Tile&& other) {
+    this->shape = other.shape;
+    this->colour = other.colour;
+    other.shape = 0;
+    other.colour = '\0';
+}
 
 Tile::~Tile() {
 }

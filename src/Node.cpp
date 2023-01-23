@@ -30,9 +30,14 @@ Node::Node(const Node& other) {
     }
 }
 
-// Node::Node(Node&& other) {
-//     // TODO
-// }
+Node::Node(Node&& other) {
+    this->tile = other.tile;
+    this->next = other.next;
+    this->prev = other.prev;
+    other.tile = nullptr;
+    other.next = nullptr;
+    other.prev = nullptr;
+}
 
 Node::~Node() {
     delete this->tile;

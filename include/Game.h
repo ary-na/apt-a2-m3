@@ -24,7 +24,7 @@ class Game {
         Game(Player* player1, Player* player2, bool testFlag); 
 
         Game(const Game& other);
-        // Game(Game&& other);
+        Game(Game&& other);
         ~Game();
 
         // To be used after Game() when loading a game from a tile. A game 

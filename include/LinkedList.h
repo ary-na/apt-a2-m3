@@ -10,7 +10,7 @@ class LinkedList {
     public:
         LinkedList();
         LinkedList(const LinkedList& other);
-        // LinkedList(LinkedList&& other);
+        LinkedList(LinkedList&& other);
         ~LinkedList();
         
         // Delete every tile.

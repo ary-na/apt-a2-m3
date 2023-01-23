@@ -49,9 +49,20 @@ Game::Game(const Game& other) {
     }
 }
 
-// Game::Game(Game&& other) {
-//     // TODO
-// }
+Game::Game(Game&& other) {
+    this->player1 = other.player1;   
+    this->player2 = other.player2;  
+    this->currentPlayer = other.currentPlayer;  
+    this->scoreCalculator = other.scoreCalculator;
+    this->board = other.board;
+    this->tileBag = other.tileBag;
+    other.player1 = nullptr;
+    other.player2 = nullptr;
+    other.currentPlayer = nullptr;
+    other.scoreCalculator = nullptr;
+    other.board = nullptr;
+    other.tileBag = nullptr;
+}
 
 Game::~Game() {
     delete this->player1;

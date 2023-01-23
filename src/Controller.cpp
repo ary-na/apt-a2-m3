@@ -20,9 +20,18 @@ Controller::Controller(const Controller& other) {
     this->exitMode = other.exitMode;
 }
 
-// Controller::Controller(Controller&& other) {
-//     // TODO
-// }
+Controller::Controller(Controller&& other) {
+    this->game = other.game;
+    this->validator = other.validator;
+    this->fileHandler = other.fileHandler;
+    this->testFlag = other.testFlag;
+    this->exitMode  = other.exitMode;
+    other.game = nullptr;
+    other.validator = nullptr;
+    other.fileHandler = nullptr;
+    other.testFlag = false;
+    other.exitMode = false;
+}
 
 Controller::~Controller() {
     if (this->game != nullptr) {
