@@ -14,6 +14,10 @@ Validator::Validator(const Validator& other) {
 Validator::~Validator() {
 }
 
+void Validator::setTestFlag(const bool testFlag){
+    this->testFlag = testFlag;
+}
+
 bool Validator::isNameValid(const std::string &input) {
 
     // @author - Arian Najafi Yamchelo
@@ -25,19 +29,21 @@ bool Validator::isNameValid(const std::string &input) {
 }
 
 bool Validator::isSavedFileExist(std::string fileName) {
-    std::string path = "savedGames/" + fileName + ".save";
+
+    std::string path = this->testFlag ? "tests/" + fileName + ".save": 
+                            "savedGames/" + fileName + ".save";
 
     std::fstream infile;
     infile.open(path);
 
+    bool validPath = true;
     // Check if file exist 
     if (!infile.is_open()) {
-        return false;
-
+        validPath =  false;
     }
 
     infile.close();
-    return true;
+    return validPath;
 }
 
 int Validator::isCommandValid(const std::string &command) {

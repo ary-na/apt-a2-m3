@@ -21,10 +21,17 @@ public:
     // Check if saved file exist
     bool isSavedFileExist(std::string fileName);
 
-    // bool isPlayerNameValid (std::string playerName);
-
     // Check if command input is valid
     int isCommandValid(const std::string &command);
+    
+    void setTestFlag(const bool testFlag);
+
+    private:
+        
+    // When test flag is true, a random seed is set when the 
+    // game shuffles the tiles to ensure consistent randomness. 
+    // Run with "./qwirkle T" to activate test mode.
+    bool testFlag;
 };
 
 #endif // VALIDATOR_H

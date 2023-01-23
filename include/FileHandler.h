@@ -17,6 +17,8 @@ class FileHandler {
         FileHandler();
         FileHandler(const FileHandler& other);
         ~FileHandler();
+
+        void setTestFlag(const bool testFlag);
         
         // @author - Jacob Depares
         // ** updates the current state of play based on a saved game file 
@@ -33,6 +35,11 @@ class FileHandler {
         bool saveGame(const Game* game, const std::string fileName);
         
     private:
+        
+        // When test flag is true, a random seed is set when the 
+        // game shuffles the tiles to ensure consistent randomness. 
+        // Run with "./qwirkle T" to activate test mode.
+        bool testFlag;
 
         // @author - Jacob Depares
         // For validating user input 

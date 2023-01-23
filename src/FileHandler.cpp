@@ -2,6 +2,7 @@
 
 FileHandler::FileHandler() {
     this->validator = new Validator();
+    this->testFlag = false;
 }
 
 FileHandler::FileHandler(const FileHandler& other) {
@@ -19,10 +20,16 @@ FileHandler::~FileHandler() {
     this->validator = nullptr;
 }
 
+void FileHandler::setTestFlag(const bool testFlag){
+    this->testFlag = testFlag;
+    this->validator->setTestFlag(testFlag);
+}
+
 bool FileHandler::saveGame (const Game* game, const std::string fileName) {
     
-
-    std::string path = "savedGames/" + fileName.substr(5, fileName.length()) + ".save";
+    std::string path = this->testFlag ? "tests/" + fileName.substr(5, fileName.length()) + ".save": 
+            "savedGames/" + fileName.substr(5, fileName.length()) + ".save";
+    
     std::fstream outFile;
 
     this->validator->isSavedFileExist(fileName) ?
@@ -104,7 +111,9 @@ Game* FileHandler::loadGame(const std::string fileName) {
 
 Game* FileHandler::absorbLoadGameFile(const std::string fileName) {
 
-    std::string path = "savedGames/" + fileName + ".save";
+    std::string path = this->testFlag ? "tests/" + fileName + ".save": 
+        "savedGames/" + fileName + ".save";
+
     std::fstream inFile;
     inFile.open(path);
 
@@ -128,7 +137,8 @@ Game* FileHandler::absorbLoadGameFile(const std::string fileName) {
         P2 = new Player(fileContent[3],std::stoi(fileContent[4]),playerHandFromFile(fileContent[5]));
 
         // Create Game    
-        game->loadGameData(P1, P2, initaliseBoardFromFile (fileContent[7]), tileBagFromFile(fileContent[8]),currentPlayerFromName(P1, P2, fileContent[9]));
+        game->loadGameData(P1, P2, initaliseBoardFromFile (fileContent[7]), 
+                        tileBagFromFile(fileContent[8]),currentPlayerFromName(P1, P2, fileContent[9]));
     
     } catch (std::invalid_argument(& e)) {
         throw std::invalid_argument(e.what());

@@ -41,6 +41,8 @@ void Controller::launchGame(bool testFlag) {
     // mode, set the test flag to true.
     if(testFlag) {
         this->testFlag = testFlag;
+        this->fileHandler->setTestFlag(testFlag);
+        this->validator->setTestFlag(testFlag);
     }
 
     // The program should display a welcome message.
