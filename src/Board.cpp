@@ -201,3 +201,25 @@ char Board::getMinRowChar() const {
 char Board::getMaxRowChar() const {
     return this->maxRowChar;
 }
+
+void Board::fillTilesArray(std::string tilesArray[], int* i) {
+    int tilesAdded = 0;
+
+    // Stop traversing when no more tiles to add.
+    while (tilesAdded != this->numOfTiles) {
+
+        // Traverse board vector and add tile if there is one.
+        for (int row = this->minRow; row <= this->maxRow; row++) {
+            for (int col = this->minCol; col <= this->maxCol; col++) {     
+                 
+                if (this->boardVector[row][col] != nullptr) {
+                    Tile* current = this->boardVector[row][col];
+                    tilesArray[*i] = current->colour + 
+                                     std::to_string(current->shape);
+                    (*i)++;
+                    tilesAdded++;
+                }
+            }
+        }
+    }
+}

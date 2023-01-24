@@ -15,16 +15,14 @@ Game::Game(Player *player1, Player *player2, bool testFlag) {
     // Set the test flag.
     this->testFlag = testFlag;
 
-    // Create the ordering for the tile bag.
-    this->tileBag = new LinkedList();
-    fillTileBag(this->tileBag);
-    shuffleTileBag(this->tileBag);
-
-    // Set up the initial players and their hands.
+    // Create the tile bag and board.
+    this->tileBag = new TileBag(testFlag);
+    
+    // Set up the players and their hands.
     this->player1 = player1;
     this->player2 = player2;
-    fillHand(player1->getHand());
-    fillHand(player2->getHand());
+    this->tileBag->fillHand(player1->getHand());
+    this->tileBag->fillHand(player2->getHand());
 
     // Start with empty board and player 1 starts.
     this->board = new Board();
@@ -35,7 +33,7 @@ Game::Game(Player *player1, Player *player2, bool testFlag) {
 Game::Game(const Game& other) {
 
     // Copy tile bag, players, board and score calculator.
-    this->tileBag = new LinkedList(*other.tileBag);
+    this->tileBag = new TileBag(*other.tileBag);
     this->player1 = new Player(*other.player1);
     this->player2 = new Player(*other.player2);
     this->board = new Board(*other.board);
@@ -50,17 +48,17 @@ Game::Game(const Game& other) {
 }
 
 Game::Game(Game&& other) {
-    this->player1 = other.player1;   
+    this->player1 = other.player1;  
+    other.player1 = nullptr; 
     this->player2 = other.player2;  
-    this->currentPlayer = other.currentPlayer;  
-    this->scoreCalculator = other.scoreCalculator;
-    this->board = other.board;
-    this->tileBag = other.tileBag;
-    other.player1 = nullptr;
     other.player2 = nullptr;
-    other.currentPlayer = nullptr;
+    this->currentPlayer = other.currentPlayer; 
+    other.currentPlayer = nullptr; 
+    this->scoreCalculator = other.scoreCalculator;
     other.scoreCalculator = nullptr;
+    this->board = other.board;
     other.board = nullptr;
+    this->tileBag = other.tileBag;
     other.tileBag = nullptr;
 }
 
@@ -79,23 +77,19 @@ Game::~Game() {
 }
 
 void Game::loadGameData(Player* player1, Player* player2, Board* board,
-           LinkedList* tileBag, Player* currentPlayer) {
+           TileBag* tileBag, Player* currentPlayer) {
 
-    // Check all tiles total the correct number and type.
+    // Check that given data contains a full set of tiles.
     bool correctTiles = checkTiles(player1->getHand(), player2->getHand(), 
                                    board, tileBag);
 
+    // Create game and load data if tiles are correct.
     if (!correctTiles) {
         throw std::out_of_range("File has incorrect tiles!");
     } else {
-        // Load the tile bag.
         this->tileBag = tileBag;
-
-        // Load the players and their hands.
         this->player1 = player1;
         this->player2 = player2;
-
-        // Load the board and current player.
         this->board = board;
         this->currentPlayer = currentPlayer;
         this->scoreCalculator = new ScoreCalculator();
@@ -136,19 +130,6 @@ std::string Game::getHighestScorePlayer() const {
     return winner;
 }
 
-void Game::fillHand(LinkedList *hand) {
-    while ((hand->getLength() < 6) && (this->tileBag->getLength() > 0)) {
-
-        // When a tile is drawn from the bag, it's taken from the front.
-        Tile *tileDrawn = this->tileBag->getFront();
-
-        // When adding a tile, it's always added at the end.
-        hand->addEnd(new Tile(*tileDrawn));
-
-        tileBag->deleteFront();
-    }
-}
-
 void Game::nextPlayerTurn() {
     if (this->currentPlayer == player1) {
         this->currentPlayer = player2;
@@ -157,66 +138,8 @@ void Game::nextPlayerTurn() {
     }
 }
 
-void Game::fillTileBag(LinkedList *tileBag) {
-
-    // Add shapes and colours to array for iteration.
-    Colour colours[TOTAL_COLOURS];
-    makeColoursArray(colours);
-    Shape shapes[TOTAL_SHAPES];
-    makeShapesArray(shapes);
-
-    // Add 2 of each colour and shape combination to the tile bag.
-    for (int i = 0; i < sizeof(colours) / sizeof(Colour); i++) {
-        for (int j = 0; j <sizeof(shapes) / sizeof(Shape); j++) {
-            tileBag->addEnd(new Tile(colours[i], shapes[j]));
-            tileBag->addEnd(new Tile(colours[i], shapes[j]));
-        }
-    }
-}
-
-LinkedList* Game:: getTileBag() const {
+TileBag* Game:: getTileBag() const {
     return this->tileBag;
-}
-
-void Game::shuffleTileBag(LinkedList *tileBag) {
-
-    // Check if there are tiles in the tile bag.
-    if (tileBag->getLength() > 0) {
-        LinkedList* tempTileBag = new LinkedList();
-        int totalTiles = tileBag->getLength();
-
-        // Shuffle tiles and put in temporary tile bag.
-        for (int i = 0; i < totalTiles; i++) {
-
-            // Generate a random number between min and max.
-            int min = 1;
-            int max = tileBag->getLength();
-            int randomVal = 0;
-            std::uniform_int_distribution<int> uniform_dist(min, max);
-
-            // If test flag is true, set seed 
-            // to ensure consistent randomness.
-            if(this->testFlag) {
-                std::default_random_engine engine(2);
-                randomVal = uniform_dist(engine);
-            } else {
-                std::random_device engine;
-                randomVal = uniform_dist(engine);
-            }
-            // Get a tile from tile bag at random pos.
-            Tile *randomTile = tileBag->getAtPos(randomVal);
-
-            // Add a deep copy to the temp tile bag.
-            tempTileBag->addEnd(new Tile(*randomTile));
-
-            // Delete tile from original tile bag.
-            tileBag->deleteAtPos(randomVal);
-        }
-        // Clean up and point to new tile bag. 
-        delete this->tileBag;
-        this->tileBag = tempTileBag;
-        tempTileBag = nullptr;
-    }
 }
 
 bool Game::isComplete() const {
@@ -224,9 +147,9 @@ bool Game::isComplete() const {
 
     // A game is complete when the tile bag is empty and 
     // one of the players has no more tiles in their hand.
-    if (this->tileBag->getLength() == 0 &&
-       (this->player1->getHand()->getLength() == 0 ||
-        this->player2->getHand()->getLength() == 0)) {
+    if (this->tileBag->isEmpty() &&
+       (this->player1->getHand()->getLength() == 0 ||                           // HAND CLASS?
+        this->player2->getHand()->getLength() == 0)) {                          // HAND CLASS?
         isComplete = true;
     }
     return isComplete;
@@ -237,8 +160,8 @@ bool Game::isReplaceLegal(Tile *tile) const {
     
     // The tile must be in the current player's hand 
     // and the the tile bag must have tiles in it.
-    if (this->currentPlayer->getHand()->search(tile) &&
-        this->tileBag->getLength() > 0) {
+    if (this->currentPlayer->getHand()->search(tile) &&                         // HAND CLASS?
+        !this->tileBag->isEmpty()) {
         isLegal = true;
     }
     return isLegal;
@@ -253,7 +176,7 @@ bool Game::isPlaceLegal(Tile *tile, char row, int col) const {
     LinkedList *validCol = moves->getColumnTiles(row, col);
 
     // The tile must be in the current player's hand.
-    if (!this->currentPlayer->getHand()->search(tile)) {
+    if (!this->currentPlayer->getHand()->search(tile)) {                        // HAND CLASS?
         isLegal = false;
 
     // Tile cannot be placed at a location of another tile on the board.
@@ -294,11 +217,11 @@ bool Game::replaceTile(Tile *tile) {
     if (isLegal) {
 
         // Remove the given tile from hand and place it in the tile bag.
-        this->currentPlayer->getHand()->deleteByNode(tile);
-        this->tileBag->addEnd(tile);
+        this->currentPlayer->getHand()->deleteByNode(tile);                     // HAND CLASS?
+        this->tileBag->addTile(tile);
 
         // Draw a new tile from the tile bag and add it to the hand.
-        fillHand(this->currentPlayer->getHand());
+        this->tileBag->fillHand(this->currentPlayer->getHand());
 
         // Continue with the other player’s turn.
         nextPlayerTurn();
@@ -312,7 +235,7 @@ bool Game::placeTile(Tile *tile, char row, int col) {
 
         // Place the tile onto the board.
         this->board->addTileAtPos(tile, row, col);
-        this->currentPlayer->getHand()->deleteByNode(tile);
+        this->currentPlayer->getHand()->deleteByNode(tile);                     // HAND CLASS?
 
         // Update the player’s score.
         int score = scoreCalculator->calculateScore(this->board, row, col);
@@ -320,7 +243,7 @@ bool Game::placeTile(Tile *tile, char row, int col) {
 
         // Draw a replacement tile from the tile bag and add it
         // to the player’s hand, if there are available tiles.
-        fillHand(this->currentPlayer->getHand());
+        this->tileBag->fillHand(this->currentPlayer->getHand());
 
         // Continue with the other player’s turn.
         nextPlayerTurn();
@@ -329,11 +252,11 @@ bool Game::placeTile(Tile *tile, char row, int col) {
 }
 
 bool Game::checkTiles(LinkedList* player1Hand, LinkedList* player2Hand, 
-                      Board* board, LinkedList* tileBag) {
+                      Board* board, TileBag* tileBag) {
                       
     bool correctTiles = true;
     int totalTiles = player1Hand->getLength() + player2Hand->getLength() + 
-                     board->getNumOfTiles() + tileBag->getLength();
+                     board->getNumOfTiles() + tileBag->getNumOfTiles();
     
     // Check if there are the right number of tiles.
     if (totalTiles != this->maxTilesInGame) {
@@ -347,10 +270,10 @@ bool Game::checkTiles(LinkedList* player1Hand, LinkedList* player2Hand,
   
         // Add all given tiles to a single array.
         std::string tilesArray[this->maxTilesInGame];
-        fillTilesArray(tilesArray, &i, player1Hand);
-        fillTilesArray(tilesArray, &i, player2Hand);
-        fillTilesArray(tilesArray, &i, tileBag);
-        fillTilesArray(tilesArray, &i, board);
+        fillTilesArray(tilesArray, &i, player1Hand);                            // HAND CLASS?
+        fillTilesArray(tilesArray, &i, player2Hand);                            // HAND CLASS?
+        tileBag->fillTilesArray(tilesArray, &i);
+        board->fillTilesArray(tilesArray, &i);
 
         // Make array with all expected tiles.
         std::string expectedTilesArray[this->maxTilesInGame];
@@ -362,41 +285,17 @@ bool Game::checkTiles(LinkedList* player1Hand, LinkedList* player2Hand,
     return correctTiles;
 }
 
-void Game::fillTilesArray(std::string tilesArray[], int* i, Board* tileSource) {
-    int tilesAdded = 0;
-
-    // Stop traversing when no more tiles to add.
-    while (tilesAdded != tileSource->getNumOfTiles()) {
-
-        // Traverse board vector and add tile if there is one.
-        for (int row = tileSource->getMinRow(); 
-             row <= tileSource->getMaxRow(); row++) {
-
-            for (int col = tileSource->getMinCol(); 
-                 col <= tileSource->getMaxCol(); col++) {     
-                          
-                if (tileSource->getBoardVector()[row][col] != nullptr) {
-                    Tile* current = tileSource->getBoardVector()[row][col];
-                    tilesArray[*i] = current->colour + 
-                                     std::to_string(current->shape);
-                    (*i)++;
-                    tilesAdded++;
-                }
-            }
-        }
-    }
-}
-
 void Game::fillTilesArray(std::string tilesArray[], int* i, 
                           LinkedList* tileSource) {
 
-    // Traverse tile aource and add every tile to array.                   
+    // Traverse tile source and add every tile to array.                   
     for (int j = 1; j <= tileSource->getLength(); j++) {
         tilesArray[*i] = tileSource->getAtPos(j)->colour +
                          std::to_string(tileSource->getAtPos(j)->shape);
         (*i)++;
     }
 }
+
 
 void Game::fillExpectedTilesArray(std::string expectedTilesArray[]) { 
 

@@ -2,10 +2,10 @@
 #define FILEHANDLER_H
 
 #include "LinkedList.h"
+#include "TileBag.h"
 #include "Game.h"
 #include "Board.h"
 #include "Validator.h"
-
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -62,7 +62,7 @@ class FileHandler {
         // ** returns tile bag as a comma-separated string
         // ** INPUT: A linked list representing the tile bag. 
         // ** OUTPUT: A comma-separated string representing the tile bag with tile data being represented as colour than shape Example “Y5,R5,O2”.
-        std::string tileBagToFile(const LinkedList* tileBag);
+        std::string tileBagToFile(const TileBag* tileBag);
 
         // @author - Jacob Depares
         // ** Absorbs the current game file and returns a Game* with the updated state of play.
@@ -89,7 +89,7 @@ class FileHandler {
         // ** Returns Hand from file.
         // ** INPUT: A comma-separated string is being passed to the function with tile data being represented as colour than shape Example “Y5,R5,O2”.
         // ** OUTPUT: A LinkedList* of tiles representing the current player’s hand. 
-        LinkedList* tileBagFromFile (const std::string playerHandString);   
+        TileBag* tileBagFromFile (const std::string playerHandString);   
 
         // @author - Jacob Depares
         // ** Returns the current player
