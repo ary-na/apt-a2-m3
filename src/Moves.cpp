@@ -1,6 +1,6 @@
 #include "../include/Moves.h"
 
-Moves::Moves() : board() {
+Moves::Moves() : board(nullptr) {
     this->rowTiles = new LinkedList();
     this->columnTiles = new LinkedList();
 }
@@ -12,12 +12,19 @@ Moves::Moves(Board *board) {
 }
 
 Moves::Moves(const Moves& other) {
-    // [ARIAN] TODO
+    this->board = other.board;
+    this->rowTiles = new LinkedList(*other.rowTiles);
+    this->columnTiles = new LinkedList(*other.columnTiles);
 }
 
-// Moves::Moves(Moves&& other) {
-//     // [ARIAN] TODO
-// }
+Moves::Moves(Moves&& other) : board(nullptr), rowTiles(nullptr), columnTiles(nullptr) {
+     this->board = other.board;
+     this->rowTiles = other.rowTiles;
+     this->columnTiles = other.columnTiles;
+     other.board = nullptr;
+     other.rowTiles = nullptr;
+     other.columnTiles = nullptr;
+}
 
 Moves::~Moves() {
     this->board = nullptr;

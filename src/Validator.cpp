@@ -1,15 +1,17 @@
 #include "../include/Validator.h"
 
 Validator::Validator() {
+    this->testFlag = false;
 }
 
 Validator::Validator(const Validator& other) {
-    // [ARIAN] TODO
+    this->testFlag = other.testFlag;
 }
 
-// Validator::Validator(Validator&& other) {
-//     // [ARIAN] TODO
-// }
+Validator::Validator(Validator&& other) : testFlag(nullptr) {
+    this->testFlag = other.testFlag;
+    other.testFlag = nullptr;
+}
 
 Validator::~Validator() {
 }
