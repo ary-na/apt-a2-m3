@@ -62,8 +62,9 @@ std::string LinkedList::getAsString() {
             if (count != 1) {
                 listString.append(",");
             }
-            listString.append(current->tile->colour + 
-                              std::to_string(current->tile->shape));
+            std::string tileString = current->tile->colour + 
+                                     std::to_string(current->tile->shape);
+            listString.append(tileString);
             current = current->next;
             ++count;
         }
