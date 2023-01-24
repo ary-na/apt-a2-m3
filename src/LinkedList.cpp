@@ -53,25 +53,30 @@ void LinkedList::clear() {
     }
 }
 
-void LinkedList::printList() const {
+std::string LinkedList::getAsString() {
+    std::string listString = "";
     Node* current = this->head;
-
-    // Check if linked list is empty.
-    if (current == nullptr) {
-        std::cout << "Empty - No tiles left" << std::endl;
-    
-    // Otherwise traverse and print each tile.
-    } else {
+    if (current != nullptr) {
         int count = 1;
         while (current != nullptr) {
             if (count != 1) {
-                std::cout << ",";
+                listString.append(",");
             }
-            std::cout << current->tile->colour << current->tile->shape;
+            listString.append(current->tile->colour + 
+                              std::to_string(current->tile->shape));
             current = current->next;
             ++count;
         }
-        std::cout << std::endl; 
+    }
+    return listString;
+}
+
+void LinkedList::printList() {
+    std::string listString = getAsString();
+    if (this->length == 0) {
+        std::cout << "Empty - No tiles left" << std::endl;
+    } else {
+        std::cout << getAsString() << std::endl;
     }
 }
 

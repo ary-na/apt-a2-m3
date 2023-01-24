@@ -17,7 +17,7 @@ class LinkedList {
         void clear(); 
 
         // Print every tile.
-        void printList() const; 
+        void printList(); 
 
         // Returns the head.
         Tile* getFront() const;
@@ -51,6 +51,9 @@ class LinkedList {
 
         // Takes a tile and removes the first match.
         void deleteByNode(Tile* tile); 
+        
+        // Returns the linked list as a string.
+        std::string getAsString();
 
     private:
         Node* head;

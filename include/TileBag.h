@@ -49,6 +49,9 @@ class TileBag {
         // the tiles from the tile bag. Used in checkTiles() in a game. 
         void fillTilesArray(std::string tilesArray[], int* i);
 
+        // Returns the tile bag as a string.
+        std::string getAsString();
+
     private:
         LinkedList* tileList;
 };

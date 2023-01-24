@@ -123,3 +123,8 @@ void TileBag::fillTilesArray(std::string tilesArray[], int* i) {
         (*i)++;
     }
 }
+
+std::string TileBag::getAsString() {
+    std::cout << this->tileList->getAsString() << std::endl;
+    this->tileList->getAsString();
+}

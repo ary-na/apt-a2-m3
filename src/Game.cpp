@@ -285,7 +285,7 @@ bool Game::checkTiles(LinkedList* player1Hand, LinkedList* player2Hand,
     return correctTiles;
 }
 
-void Game::fillTilesArray(std::string tilesArray[], int* i, 
+void Game::fillTilesArray(std::string tilesArray[], int* i,                     // HAND CLASS?
                           LinkedList* tileSource) {
 
     // Traverse tile source and add every tile to array.                   
@@ -296,14 +296,11 @@ void Game::fillTilesArray(std::string tilesArray[], int* i,
     }
 }
 
-
 void Game::fillExpectedTilesArray(std::string expectedTilesArray[]) { 
 
     // Add shapes and colours to array for iteration.
-    Colour colours[TOTAL_COLOURS];
-    makeColoursArray(colours);
-    Shape shapes[TOTAL_SHAPES];
-    makeShapesArray(shapes);
+    Colour colours[] = { RED, ORANGE, YELLOW, BLUE, PURPLE };
+    Shape shapes[] = { CIRCLE, STAR_4, DIAMOND, SQUARE, STAR_6, CLOVER };
 
     // Track array index.
     int i = 0;
@@ -336,22 +333,4 @@ bool Game::arraysEqual(std::string array1[], std::string array2[]) {
         i++;
     }
     return isEqual;
-}
-
-void Game::makeColoursArray(Colour colours[]) {
-    colours[0] = RED;
-    colours[1] = ORANGE;
-    colours[2] = YELLOW;
-    colours[3] = GREEN;
-    colours[4] = BLUE;
-    colours[5] = PURPLE;
-}
-
-void Game::makeShapesArray(Shape shapes[]) {
-    shapes[0] = CIRCLE;
-    shapes[1] = STAR_4;
-    shapes[2] = DIAMOND;
-    shapes[3] = SQUARE;
-    shapes[4] = STAR_6;
-    shapes[5] = CLOVER;
 }

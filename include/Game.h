@@ -62,11 +62,6 @@ class Game {
         // Takes a tile and returns true if the tile has been replaced from 
         // the current player's hand and isReplaceLegal() is also true.
         bool replaceTile(Tile* tile); 
-
-        // Helper functions for fillExpectedTilesArray() and fillTileBag().     // TBC WHERE THESE WILL SIT
-        // Fills a given array with all the colours or shape a tile can have. 
-        void makeColoursArray(Colour colours[]);
-        void makeShapesArray(Shape shapes[]);
         
     private:
         Board* board;  
