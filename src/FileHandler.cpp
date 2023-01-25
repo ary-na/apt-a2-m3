@@ -42,8 +42,8 @@ bool FileHandler::saveGame(const Game* game, const std::string fileName) {
         outFile << game->getPlayer2()->getName() << std::endl;
         outFile << game->getPlayer2()->getScore() << std::endl;
         outFile << playerHandToFile(game->getPlayer2()->getHand()->getHandList()) << std::endl;
-        outFile << std::to_string(game->getBoard()->getMaxRow()) + "," + 
-                   std::to_string(game->getBoard()->getMaxCol()) << std::endl;
+        outFile << std::to_string(game->getBoard()->getMaxRow()) + "," +                            // SHOULD WE + 1 HERE TO OUTPUT ARRAY SIZE?
+                   std::to_string(game->getBoard()->getMaxCol()) << std::endl;                      // SHOULD WE + 1 HERE TO OUTPUT ARRAY SIZE?
         outFile << boardStateToFile(game->getBoard()) << std::endl;
         outFile << tileBagToFile(game->getTileBag()) << std::endl;
         outFile << game->getCurrentPlayer()->getName();

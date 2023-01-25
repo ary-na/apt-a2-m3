@@ -13,7 +13,7 @@ class Hand {
         ~Hand();
 
         // Returns the hand as a string.
-        std::string getAsString();
+        std::string getAsStr();
 
         // Returns the total titles.
         int getNumOfTiles() const;
@@ -36,7 +36,7 @@ class Hand {
 
         // Prints all tiles in hand. 
         void printHand();
-        
+
         // Adds the given tile to the end of the hand. 
         void addTile(Tile* tile);
         

@@ -19,7 +19,7 @@ class Tile {
         ~Tile();
 
         // Returns the tile colour and shape as a string. 
-        std::string getAsString();
+        std::string getAsStr();
 
         Colour colour;
         Shape shape;

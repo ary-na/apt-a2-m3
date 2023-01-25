@@ -53,7 +53,7 @@ class LinkedList {
         void deleteByNode(Tile* tile); 
 
         // Returns the linked list as a string.
-        std::string getAsString();
+        std::string getAsStr();
 
         // Takes a string array and adds the tiles 
         // from the list to it. The tiles will be 

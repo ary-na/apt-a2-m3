@@ -118,6 +118,6 @@ void TileBag::addToArray(std::string tilesArray[], int* i) {
     this->tileBagList->addToArray(tilesArray, i);
 }
 
-std::string TileBag::getAsString() {
-    return this->tileBagList->getAsString();
+std::string TileBag::getAsStr() {
+    return this->tileBagList->getAsStr();
 }

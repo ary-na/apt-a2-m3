@@ -50,7 +50,7 @@ class TileBag {
         void addToArray(std::string tilesArray[], int* i);
 
         // Returns the tile bag as a string.
-        std::string getAsString();
+        std::string getAsStr();
 
     private:
         LinkedList* tileBagList;

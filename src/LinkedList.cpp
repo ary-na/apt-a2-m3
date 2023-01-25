@@ -53,29 +53,29 @@ void LinkedList::clear() {
     }
 }
 
-std::string LinkedList::getAsString() {
-    std::string listString = "";
+std::string LinkedList::getAsStr() {
+    std::string listStr = "";
     Node* current = this->head;
     if (current != nullptr) {
         int count = 1;
         while (current != nullptr) {
             if (count != 1) {
-                listString.append(",");
+                listStr += ",";
             }
-            listString.append(current->tile->getAsString());
+            listStr += current->tile->getAsStr();
             current = current->next;
             ++count;
         }
     }
-    return listString;
+    return listStr;
 }
 
 void LinkedList::printList() {
-    std::string listString = getAsString();
+    std::string listStr = getAsStr();
     if (this->length == 0) {
         std::cout << "Empty - No tiles left" << std::endl;
     } else {
-        std::cout << getAsString() << std::endl;
+        std::cout << getAsStr() << std::endl;
     }
 }
 
@@ -274,7 +274,7 @@ void LinkedList::deleteByNode(Tile* tile) {
 void LinkedList::addToArray(std::string array[], int* i) {  
     Node* current = this->head;
     while (current!= nullptr) {
-        array[*i] = current->tile->getAsString();
+        array[*i] = current->tile->getAsStr();
         current = current->next;
         (*i)++;
     }

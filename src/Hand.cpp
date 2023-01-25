@@ -18,8 +18,8 @@ Hand::~Hand() {
     this->handList = nullptr;
 }
 
-std::string Hand::getAsString() {
-    return this->handList->getAsString();
+std::string Hand::getAsStr() {
+    return this->handList->getAsStr();
 }
 
 LinkedList* Hand::getHandList() {
