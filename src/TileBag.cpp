@@ -43,8 +43,8 @@ LinkedList* TileBag::getTileBagList() const {
 void TileBag::fillTileBag() {
 
     // Add shapes and colours to array for iteration.
-    Colour colours[] = { RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE };
-    Shape shapes[] = { CIRCLE, STAR_4, DIAMOND, SQUARE, STAR_6, CLOVER };
+    Colour colours[] = { COLOURS };           
+    Shape shapes[] = { SHAPES };  
 
     // Add 2 of each colour and shape combination to the tile bag.
     for (int i = 0; i < sizeof(colours) / sizeof(Colour); i++) {
@@ -57,7 +57,7 @@ void TileBag::fillTileBag() {
 
 void TileBag::shuffleTileBag(bool testFlag) {
 
-    // Check if there are tiles in the tile bag.
+    // Check if there are tiles in the tile bag.place
     if (this->tileBagList->getLength() > 0) {
         LinkedList* tempTileList= new LinkedList();
         int totalTiles = this->tileBagList->getLength();

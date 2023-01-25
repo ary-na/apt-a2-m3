@@ -291,8 +291,8 @@ bool Game::checkTiles(Hand* player1Hand, Hand* player2Hand,
 void Game::fillExpectedTilesArray(std::string expectedTilesArray[]) { 
 
     // Add shapes and colours to array for iteration.
-    Colour colours[] = { RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE };            // UNSURE ABOUT THIS
-    Shape shapes[] = { CIRCLE, STAR_4, DIAMOND, SQUARE, STAR_6, CLOVER };       // UNSURE ABOUT THIS
+    Colour colours[] = { COLOURS };           
+    Shape shapes[] = { SHAPES };     
 
     // Track array index.
     int i = 0;
