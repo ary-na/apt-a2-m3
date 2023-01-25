@@ -40,6 +40,8 @@ class Hand {
         // Adds the given tile to the end of the hand. 
         void addTile(Tile* tile);
 
+        // Returns the maximum number of tiles 
+        // a player can have in their hand. 
         int getMaxTilesInHand() const;
         
     private:
