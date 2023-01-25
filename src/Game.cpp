@@ -21,8 +21,8 @@ Game::Game(Player *player1, Player *player2, bool testFlag) {
     // Set up the players and their hands.
     this->player1 = player1;
     this->player2 = player2;
-    this->tileBag->fillHand(player1->getHand()->getHandList());                 // UNSURE ABOUT THIS
-    this->tileBag->fillHand(player2->getHand()->getHandList());                 // UNSURE ABOUT THIS
+    this->tileBag->fillHand(player1->getHand());     
+    this->tileBag->fillHand(player2->getHand());            
 
     // Start with empty board and player 1 starts.
     this->board = new Board();
@@ -221,7 +221,7 @@ bool Game::replaceTile(Tile *tile) {
         this->tileBag->addTile(tile);
 
         // Draw a new tile from the tile bag and add it to the hand.
-        this->tileBag->fillHand(this->currentPlayer->getHand()->getHandList()); // UNSURE ABOUT THIS
+        this->tileBag->fillHand(this->currentPlayer->getHand()); 
 
         // Continue with the other player’s turn.
         nextPlayerTurn();
@@ -243,7 +243,7 @@ bool Game::placeTile(Tile *tile, char row, int col) {
 
         // Draw a replacement tile from the tile bag and add it
         // to the player’s hand, if there are available tiles.
-        this->tileBag->fillHand(this->currentPlayer->getHand()->getHandList()); // UNSURE ABOUT THIS
+        this->tileBag->fillHand(this->currentPlayer->getHand()); 
 
         // Continue with the other player’s turn.
         nextPlayerTurn();

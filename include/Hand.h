@@ -39,9 +39,12 @@ class Hand {
 
         // Adds the given tile to the end of the hand. 
         void addTile(Tile* tile);
+
+        int getMaxTilesInHand() const;
         
     private:
         LinkedList* handList;
+        const static int maxTilesInHand = 6;
 };
 
 #endif // HAND_H

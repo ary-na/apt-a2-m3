@@ -57,3 +57,7 @@ void Hand::printHand() {
 void Hand::addTile(Tile* tile) {
     this->handList->addEnd(tile);
 }
+
+int Hand::getMaxTilesInHand() const {
+    return this->maxTilesInHand;
+}

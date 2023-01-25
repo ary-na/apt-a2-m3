@@ -100,14 +100,15 @@ void TileBag::addTile(Tile* tile) {
     this->tileBagList->addEnd(tile);
 }
 
-void TileBag::fillHand(LinkedList *hand) {
-    while ((hand->getLength() < 6) && (this->tileBagList->getLength() > 0)) {
+void TileBag::fillHand(Hand* hand) {
+
+    while ((hand->getNumOfTiles() < hand->getMaxTilesInHand()) && !isEmpty()) {
 
         // Draw a tile from the front of the tile bag. 
         Tile *tileDrawn = this->tileBagList->getFront();
 
         // Add it to the end of the player's hand. 
-        hand->addEnd(new Tile(*tileDrawn));
+        hand->addTile(new Tile(*tileDrawn));
 
         // Remove the tile from the tile bag.
         tileBagList->deleteFront();

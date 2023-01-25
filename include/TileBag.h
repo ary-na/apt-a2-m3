@@ -2,6 +2,7 @@
 #define TILEBAG_H
 
 #include "LinkedList.h"
+#include "Player.h"
 #include <utility>
 #include <string>
 #include <iostream> 
@@ -43,7 +44,7 @@ class TileBag {
 
         // Takes a player's hands and fills it
         // with up to 6 tiles from the tile bag.
-        void fillHand(LinkedList *hand);
+        void fillHand(Hand* hand);
 
         // Takes a string array and fills it from the given index with
         // the tiles from the tile bag. Used in checkTiles() in a game. 
