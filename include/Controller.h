@@ -5,6 +5,7 @@
 #include "Game.h"
 #include "Validator.h"
 #include "FileHandler.h"
+#include "Hand.h"
 #include <iostream>
 #include <string>
 #include <sstream>

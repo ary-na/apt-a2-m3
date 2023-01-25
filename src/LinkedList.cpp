@@ -275,6 +275,7 @@ void LinkedList::addToArray(std::string array[], int* i) {
     Node* current = this->head;
     while (current!= nullptr) {
         array[*i] = current->tile->getAsString();
+        current = current->next;
         (*i)++;
     }
 }

@@ -6,11 +6,11 @@
 #include "Board.h"
 #include "TileBag.h"
 #include "ScoreCalculator.h"
+#include "Hand.h"
 #include "Moves.h"
 #include <string>
 #include <iostream> 
 #include <memory>
-#include <random>
 #include <utility>
 
 class Game {
@@ -29,7 +29,7 @@ class Game {
         // To be used after Game() when loading a game from a file. A game 
         // must have two players, a tile bag, board and current player.
         void loadGameData(Player* player1, Player* player2, Board* board, 
-             TileBag* tileBag, Player* currentPlayer); 
+                          TileBag* tileBag, Player* currentPlayer); 
         
         // Returns the current player.
         Player* getCurrentPlayer() const;
@@ -51,7 +51,7 @@ class Game {
         std::string getHighestScorePlayer() const;
 
         // Returns true if game has ended. A game ends when the tile  
-        // bag is empty and  one player has no tiles in their hand.
+        // bag is empty and one player has no tiles in their hand.
         bool isComplete() const;
 
         // Takes a tile, row (A-Z) and col (0-25). Returns true if the 
@@ -104,17 +104,12 @@ class Game {
 
         // Takes two player hands, a board and tile bag and 
         // returns true if there is a correct set of tiles.
-        bool checkTiles(LinkedList* player1Hand, LinkedList* player2Hand, 
+        bool checkTiles(Hand* player1Hand, Hand* player2Hand, 
                         Board* board, TileBag* tileBag);
 
         // Helper function for checkTiles(). Takes two string arrays and
         // compares the values, returns true if identical, otherwise false.
         bool arraysEqual(std::string array1[], std::string array2[]);
-
-        // Helper function for checkTiles(). Takes a string array and
-        // fills it from the given index with the tiles from a linked list.
-        void fillTilesArray(std::string tilesArray[], int* i,
-                            LinkedList* tileSource);
         
         // Helper function for checkTiles(). Takes a string array and
         // fills it with the correct number and combination of tiles.

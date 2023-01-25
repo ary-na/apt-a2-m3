@@ -76,7 +76,7 @@ class FileHandler {
         // ** Returns Hand from file.
         // ** INPUT: A comma-separated string is being passed to the function with tile data being represented as colour than shape Example “Y5,R5,O2”.
         // ** OUTPUT: A LinkedList* of tiles representing the current player’s hand. 
-        LinkedList* playerHandFromFile (const std::string playerHandString);
+        Hand* playerHandFromFile(const std::string playerHandString);
 
         // @author - Jacob Depares
         // ** Updates the current state of the board for the game based on the state of play.   

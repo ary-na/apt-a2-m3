@@ -46,21 +46,18 @@ Controller::~Controller() {
 
 void Controller::launchGame(bool testFlag) {
 
-    // If the program was run in test  
-    // mode, set the test flag to true.
+    // If the program was run in test mode, set test flag to true.
     if(testFlag) {
         this->testFlag = testFlag;
         this->fileHandler->setTestFlag(testFlag);
         this->validator->setTestFlag(testFlag);
     }
 
-    // The program should display a welcome message.
+    // The program shows a message and continues to the main menu. 
     std::cout << std::endl;
     std::cout << "Welcome to Qwirkle" << std::endl;
     std::cout << "------------------" << std::endl;
     std::cout << std::endl;
-
-    // Then continue to the main menu.
     mainMenu();
 }
 
@@ -251,7 +248,7 @@ void Controller::takeTurn() {
 
     // The tiles in the current player’s hand.
     std::cout << "Your hand is" << std::endl;
-    this->game->getCurrentPlayer()->getHand()->printList();
+    this->game->getCurrentPlayer()->getHand()->printHand();
     std::cout << std::endl;
 
     // The user prompt.

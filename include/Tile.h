@@ -17,6 +17,8 @@ class Tile {
         Tile(const Tile& other);
         Tile(Tile&& other);
         ~Tile();
+
+        // Returns the tile colour and shape as a string. 
         std::string getAsString();
 
         Colour colour;

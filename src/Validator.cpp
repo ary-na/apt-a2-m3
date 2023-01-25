@@ -8,9 +8,9 @@ Validator::Validator(const Validator& other) {
     this->testFlag = other.testFlag;
 }
 
-Validator::Validator(Validator&& other) : testFlag(nullptr) {
+Validator::Validator(Validator&& other) : testFlag(nullptr) {                   // YOU CAN'T SET BOOL TO NULL, USE FALSE
     this->testFlag = other.testFlag;
-    other.testFlag = nullptr;
+    other.testFlag = nullptr;                                                   // YOU CAN'T SET BOOL TO NULL, USE FALSE
 }
 
 Validator::~Validator() {

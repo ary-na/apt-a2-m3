@@ -38,10 +38,10 @@ bool FileHandler::saveGame(const Game* game, const std::string fileName) {
     if(outFile.is_open()){
         outFile << game->getPlayer1()->getName() << std::endl;
         outFile << game->getPlayer1()->getScore() << std::endl;
-        outFile << playerHandToFile(game->getPlayer1()->getHand()) << std::endl;
+        outFile << playerHandToFile(game->getPlayer1()->getHand()->getHandList()) << std::endl;
         outFile << game->getPlayer2()->getName() << std::endl;
         outFile << game->getPlayer2()->getScore() << std::endl;
-        outFile << playerHandToFile(game->getPlayer2()->getHand()) << std::endl;
+        outFile << playerHandToFile(game->getPlayer2()->getHand()->getHandList()) << std::endl;
         outFile << std::to_string(game->getBoard()->getMaxRow()) + "," + 
                    std::to_string(game->getBoard()->getMaxCol()) << std::endl;
         outFile << boardStateToFile(game->getBoard()) << std::endl;
@@ -91,7 +91,7 @@ std::string FileHandler::tileBagToFile(const TileBag* tileBag) {
 
     std::string stringTileBag = "";
     for(int x = 1; x < tileBag->getNumOfTiles() + 1; x++) {
-        std::string tile = tileBag->getTileList()->getAtPos(x)->colour + std::to_string(tileBag->getTileList()->getAtPos(x)->shape);
+        std::string tile = tileBag->getTileBagList()->getAtPos(x)->colour + std::to_string(tileBag->getTileBagList()->getAtPos(x)->shape);
         x == 1 ? stringTileBag = tile : stringTileBag.append("," + tile);
     }
 
@@ -156,8 +156,8 @@ Game* FileHandler::absorbLoadGameFile(const std::string fileName) {
     return game;
 }
 
-LinkedList* FileHandler::playerHandFromFile (const std::string playerHandString){
-    LinkedList* playerHand = new LinkedList();
+Hand* FileHandler::playerHandFromFile(const std::string playerHandString){
+    Hand* playerHand = new Hand();
     
     if(playerHandString != "") {
         std::stringstream s_stream(playerHandString);
@@ -165,7 +165,7 @@ LinkedList* FileHandler::playerHandFromFile (const std::string playerHandString)
             std::string substr;
             getline(s_stream, substr, ','); //get first string delimited by comma
             std::string num(1 , substr[1]);
-            playerHand->addEnd(new Tile(substr[0], std::stoi(num)));
+            playerHand->addTile(new Tile(substr[0], std::stoi(num)));
         }
     }
     return playerHand;

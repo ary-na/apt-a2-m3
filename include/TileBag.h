@@ -21,13 +21,13 @@ class TileBag {
         TileBag(TileBag&& other);
         ~TileBag();
 
-        // Returns the linked list for the tile bag.
-        LinkedList* getTileList() const;
+        // Returns the linked list for the tile bag.                            // DO WE NEED THIS NOW 
+        LinkedList* getTileBagList() const;                                     // WE HAVE GETASSTRING()?
 
         // Returns the total titles.
         int getNumOfTiles() const;
 
-        // Returns true if totalTiles() is 0.
+        // Returns true if getNumOfTiles() is 0.
         bool isEmpty();
 
         // Fills the tile bag with 72 tiles, in 
@@ -53,7 +53,7 @@ class TileBag {
         std::string getAsString();
 
     private:
-        LinkedList* tileList;
+        LinkedList* tileBagList;
 };
 
 #endif // TILEBAG_H
