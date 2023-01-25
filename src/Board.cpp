@@ -202,7 +202,7 @@ char Board::getMaxRowChar() const {
     return this->maxRowChar;
 }
 
-void Board::fillTilesArray(std::string tilesArray[], int* i) {
+void Board::addToArray(std::string tilesArray[], int* i) {
     int tilesAdded = 0;
 
     // Stop traversing when no more tiles to add.

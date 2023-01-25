@@ -114,14 +114,8 @@ void TileBag::fillHand(LinkedList *hand) {
     }
 }
 
-void TileBag::fillTilesArray(std::string tilesArray[], int* i) {
-
-    // Convert tiles in the tile list to string and add to given array.                   
-    for (int j = 1; j <= this->tileList->getLength(); j++) {
-        tilesArray[*i] = this->tileList->getAtPos(j)->colour +
-                         std::to_string(this->tileList->getAtPos(j)->shape);
-        (*i)++;
-    }
+void TileBag::addToArray(std::string tilesArray[], int* i) {
+    this->tileList->addToArray(tilesArray, i);
 }
 
 std::string TileBag::getAsString() {

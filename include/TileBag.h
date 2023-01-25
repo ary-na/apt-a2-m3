@@ -47,7 +47,7 @@ class TileBag {
 
         // Takes a string array and fills it from the given index with
         // the tiles from the tile bag. Used in checkTiles() in a game. 
-        void fillTilesArray(std::string tilesArray[], int* i);
+        void addToArray(std::string tilesArray[], int* i);
 
         // Returns the tile bag as a string.
         std::string getAsString();

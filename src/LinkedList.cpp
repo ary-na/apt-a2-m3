@@ -62,9 +62,7 @@ std::string LinkedList::getAsString() {
             if (count != 1) {
                 listString.append(",");
             }
-            std::string tileString = current->tile->colour + 
-                                     std::to_string(current->tile->shape);
-            listString.append(tileString);
+            listString.append(current->tile->getAsString());
             current = current->next;
             ++count;
         }
@@ -270,5 +268,13 @@ void LinkedList::deleteByNode(Tile* tile) {
             current = current->next;
             ++pos;
         }  
+    }
+}
+
+void LinkedList::addToArray(std::string array[], int* i) {  
+    Node* current = this->head;
+    while (current!= nullptr) {
+        array[*i] = current->tile->getAsString();
+        (*i)++;
     }
 }

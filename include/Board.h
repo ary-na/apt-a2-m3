@@ -34,9 +34,10 @@ class Board {
         // Returns the number of tiles in the board vector.
         int getNumOfTiles() const;
 
-        // Takes a string array and fills it from the given index 
-        // with the tiles from a board. Used for checkTiles() in game. 
-        void fillTilesArray(std::string tilesArray[], int* i);
+        // Takes a string array and adds the tiles from the board 
+        // to it. The tiles will be added to the array starting 
+        // the given index. Used for checkTiles() in game. 
+        void addToArray(std::string tilesArray[], int* i);
 
         // Returns the 2D board vector.
         std::vector<std::vector<Tile*> > getBoardVector() const;

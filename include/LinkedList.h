@@ -55,6 +55,11 @@ class LinkedList {
         // Returns the linked list as a string.
         std::string getAsString();
 
+        // Takes a string array and adds the tiles 
+        // from the list to it. The tiles will be 
+        // added to the array starting the given index.
+        void addToArray(std::string array[], int* i);
+
     private:
         Node* head;
         Node* tail;

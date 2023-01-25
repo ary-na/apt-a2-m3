@@ -17,6 +17,7 @@ class Tile {
         Tile(const Tile& other);
         Tile(Tile&& other);
         ~Tile();
+        std::string getAsString();
 
         Colour colour;
         Shape shape;

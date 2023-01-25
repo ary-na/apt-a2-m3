@@ -28,6 +28,7 @@ Game::Game(Player *player1, Player *player2, bool testFlag) {
     this->board = new Board();
     this->currentPlayer = player1;
     this->scoreCalculator = new ScoreCalculator();
+    std::cout << this->tileBag->getAsString() << std::endl;
 }
 
 Game::Game(const Game& other) {
@@ -272,8 +273,8 @@ bool Game::checkTiles(LinkedList* player1Hand, LinkedList* player2Hand,
         std::string tilesArray[this->maxTilesInGame];
         fillTilesArray(tilesArray, &i, player1Hand);                            // HAND CLASS?
         fillTilesArray(tilesArray, &i, player2Hand);                            // HAND CLASS?
-        tileBag->fillTilesArray(tilesArray, &i);
-        board->fillTilesArray(tilesArray, &i);
+        tileBag->addToArray(tilesArray, &i);
+        board->addToArray(tilesArray, &i);
 
         // Make array with all expected tiles.
         std::string expectedTilesArray[this->maxTilesInGame];
