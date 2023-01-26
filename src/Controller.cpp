@@ -48,6 +48,7 @@ void Controller::launchGame(bool testFlag) {
 
     // If the program was run in test mode, set test flag to true.
     if(testFlag) {
+        std::cout << this->testFlag << std::endl;
         this->testFlag = testFlag;
         this->fileHandler->setTestFlag(testFlag);
         this->validator->setTestFlag(testFlag);

@@ -7,12 +7,8 @@ FileHandler::FileHandler() {
 
 FileHandler::FileHandler(const FileHandler& other) {
     this->validator = new Validator(*other.validator);
+    this->testFlag = &other.testFlag;
 }
-
-// FileHandler::FileHandler(FileHandler&& other) {
-//     // [JACOB] TODO
-//     // DON'T DELETE, WE NEED TO DO THIS FOR EVERY CLASS
-// }
 
 FileHandler::~FileHandler() {
     delete this->validator;
@@ -42,8 +38,8 @@ bool FileHandler::saveGame(const Game* game, const std::string fileName) {
         outFile << game->getPlayer2()->getName() << std::endl;
         outFile << game->getPlayer2()->getScore() << std::endl;
         outFile << playerHandToFile(game->getPlayer2()->getHand()->getHandList()) << std::endl;
-        outFile << std::to_string(game->getBoard()->getMaxRow()) + "," +                            // SHOULD WE + 1 HERE TO OUTPUT ARRAY SIZE?
-                   std::to_string(game->getBoard()->getMaxCol()) << std::endl;                      // SHOULD WE + 1 HERE TO OUTPUT ARRAY SIZE?
+        outFile << std::to_string(game->getBoard()->getMaxRow() + 1) + "," +                           
+                   std::to_string(game->getBoard()->getMaxCol() + 1) << std::endl;                     
         outFile << boardStateToFile(game->getBoard()) << std::endl;
         outFile << tileBagToFile(game->getTileBag()) << std::endl;
         outFile << game->getCurrentPlayer()->getName();
