@@ -128,6 +128,7 @@ void Controller::newGame() {
         std::cout << std::endl;
         delete this->game;
         this->game = nullptr;
+        exitGame();
     }
     
     // If new game is successful, proceed with gameplay.
@@ -264,7 +265,9 @@ void Controller::takeTurn() {
     std::cout << std::endl;
 
     // The user prompt.
-    turnPrompt();
+    if(!exitMode) {
+        turnPrompt();
+    }
 }
 
 void Controller::playerScore(Player* player) {
@@ -274,7 +277,7 @@ void Controller::playerScore(Player* player) {
 
 void Controller::turnPrompt() {
     bool awaitingInput = true;
-    while (awaitingInput) {
+    while (awaitingInput && !isExitMode()) {
         
         // Ask user to enter command.
         std::string commandInput = "";
@@ -344,7 +347,8 @@ void Controller::placeTile(std::string commandInput, bool* inputStatus) {
         std::cout << e.what() << std::endl;
         std::cout << std::endl;
         delete tileInput; 
-        tileInput = nullptr; 
+        tileInput = nullptr;
+        exitGame();
     }
 }
 
