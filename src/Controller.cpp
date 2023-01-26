@@ -124,7 +124,7 @@ void Controller::newGame() {
 
     // Return to main menu if new game unsuccessful. 
     } catch (std::out_of_range& e) {
-        std::cerr << e.what() << std::endl;
+        std::cout << e.what() << std::endl;
         std::cout << std::endl;
         delete this->game;
         this->game = nullptr;
@@ -188,7 +188,7 @@ void Controller::loadGame() {
     // If the file doesn't pass the validation checks, an error
     // message displays and the user is taken back to the main menu.
     } catch (std::exception(& e)) {
-        std::cerr << e.what() << std::endl;
+        std::cout << e.what() << std::endl;
         std::cout << std::endl;
     }
 
@@ -341,7 +341,7 @@ void Controller::placeTile(std::string commandInput, bool* inputStatus) {
 
     // If something else happens and the tile can't be place. 
     } catch (std::out_of_range& e) {
-        std::cerr << e.what() << std::endl;
+        std::cout << e.what() << std::endl;
         std::cout << std::endl;
         delete tileInput; 
         tileInput = nullptr; 
@@ -377,7 +377,7 @@ void Controller::saveGame(std::string fileName) {
 
     // If the file doesn't pass the validation checks.
     } catch (std::exception(& e)) {
-        std::cerr << e.what() << std::endl;
+        std::cout << e.what() << std::endl;
         std::cout << std::endl;
     }
     std::cout << std::endl;
