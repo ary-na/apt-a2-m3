@@ -123,7 +123,7 @@ void Controller::newGame() {
         gameCreated = true;
 
     // Return to main menu if new game unsuccessful. 
-    } catch (std::out_of_range(& e)) {
+    } catch (std::out_of_range& e) {
         std::cerr << e.what() << std::endl;
         std::cout << std::endl;
         delete this->game;
@@ -323,16 +323,26 @@ void Controller::placeTile(std::string commandInput, bool* inputStatus) {
         colInput = commandInput[13] - '0';
     }
 
-    // Try to place the tile.
-    bool tilePlaced = this->game->placeTile(tileInput, rowInput, colInput);
+    try {
+        // Try to place the tile. 
+        bool tilePlaced = this->game->placeTile(tileInput, rowInput, colInput);
 
-    if (!tilePlaced) {
-        std::cout << "Illegal move!" << std::endl;
+        // If the tile placement is illegal. 
+        if (!tilePlaced) {
+            std::cout << "Illegal move!" << std::endl;
+            std::cout << std::endl;
+            delete tileInput; 
+            tileInput = nullptr; 
+        } else {
+            *inputStatus = false;
+        }
+
+    // If something else happens and the tile can't be place. 
+    } catch (std::out_of_range& e) {
+        std::cerr << e.what() << std::endl;
         std::cout << std::endl;
         delete tileInput; 
         tileInput = nullptr; 
-    } else {
-        *inputStatus = false;
     }
 }
 

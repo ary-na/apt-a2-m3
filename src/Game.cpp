@@ -172,45 +172,50 @@ bool Game::isPlaceLegal(Tile *tile, char row, int col) const {
     bool isLegal = true;
     auto *moves = new Moves(this->board);
 
-    // Row and col to validate.
-    LinkedList *validRow = moves->getRowTiles(row, col);
-    LinkedList *validCol = moves->getColumnTiles(row, col);
+    try {
+        // Row and col to validate.
+        LinkedList *validRow = moves->getRowTiles(row, col);            
+        LinkedList *validCol = moves->getColumnTiles(row, col);           
 
-    // The tile must be in the current player's hand.
-    if (!this->currentPlayer->getHand()->containsTile(tile)) {
-        isLegal = false;
+        // The tile must be in the current player's hand.
+        if (!this->currentPlayer->getHand()->containsTile(tile)) {
+            isLegal = false;
 
-    // Tile cannot be placed at a location of another tile on the board.
-    } else if (moves->isTileExistAtLocation(row, col)) {
-        isLegal = false;
-    
-    // Tiles must be placed in the same line.
-    } else if (!this->getBoard()->isEmpty() && 
-               validRow->getLength() == 0 && validCol->getLength() == 0) {
-        isLegal = false;
+        // Tile cannot be placed at a location of another tile on the board.
+        } else if (moves->isTileExistAtLocation(row, col)) {
+            isLegal = false;
+        
+        // Tiles must be placed in the same line.
+        } else if (!this->getBoard()->isEmpty() && 
+                   validRow->getLength() == 0 && validCol->getLength() == 0) {
+            isLegal = false;
 
-    // A line can never be longer than 6 tiles.
-    } else if (validRow->getLength() >= maxTilesInLine ||
-               validCol->getLength() >= maxTilesInLine) {
-        isLegal = false;
+        // A line can never be longer than 6 tiles.
+        } else if (validRow->getLength() >= maxTilesInLine ||
+                   validCol->getLength() >= maxTilesInLine) {
+            isLegal = false;
 
-    // Tiles must share one colour or shape attribute.
-    } else if (!(Moves::isTileColourMatch(validRow, tile) || 
-                 Moves::isTileShapeMatch(validRow, tile)) && 
-                 validRow->getLength() > 0) {
-        isLegal = false;
+        // Tiles must share one colour or shape attribute.
+        } else if (!(Moves::isTileColourMatch(validRow, tile) ||          
+                   Moves::isTileShapeMatch(validRow, tile)) &&               
+                   validRow->getLength() > 0) {
+            isLegal = false;
 
-    // Tiles must share one colour or shape attribute.
-    } else if (!(Moves::isTileColourMatch(validCol, tile) || 
-                 Moves::isTileShapeMatch(validCol, tile)) && 
-                 validCol->getLength() > 0) {
-        isLegal = false;
+        // Tiles must share one colour or shape attribute.
+        } else if (!(Moves::isTileColourMatch(validCol, tile) ||           
+                   Moves::isTileShapeMatch(validCol, tile)) &&                  
+                   validCol->getLength() > 0) {
+            isLegal = false;
 
-    // There cannot be duplicate tiles in a line.
-    } else if (validRow->search(tile) || validCol->search(tile)) {
-        isLegal = false;
+        // There cannot be duplicate tiles in a line.
+        } else if (validRow->search(tile) || validCol->search(tile)) {
+            isLegal = false;
+        }
+
+    // If exception occurs during checks.
+    } catch (std::out_of_range& e) {
+        throw std::out_of_range("Error, program couldn't check tile placement!");
     }
-
     delete moves;
     moves = nullptr;
     return isLegal;
@@ -218,8 +223,8 @@ bool Game::isPlaceLegal(Tile *tile, char row, int col) const {
 
 bool Game::replaceTile(Tile *tile) {
     bool isLegal = isReplaceLegal(tile);
-    if (isLegal) {
 
+    if (isLegal) {
         // Remove the given tile from hand and place it in the tile bag.
         this->currentPlayer->getHand()->removeTile(tile);
         this->tileBag->addTile(tile);
@@ -235,8 +240,8 @@ bool Game::replaceTile(Tile *tile) {
 
 bool Game::placeTile(Tile *tile, char row, int col) {
     bool isLegal = isPlaceLegal(tile, row, col);
+    
     if (isLegal) {
-
         // Place the tile onto the board.
         this->board->addTileAtPos(tile, row, col);
         this->currentPlayer->getHand()->removeTile(tile);
