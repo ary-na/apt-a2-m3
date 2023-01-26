@@ -47,7 +47,7 @@ Controller::~Controller() {
 void Controller::launchGame(bool testFlag) {
 
     // If the program was run in test mode, set test flag to true.
-    if(testFlag) {
+    if (testFlag) {
         std::cout << this->testFlag << std::endl;
         this->testFlag = testFlag;
         this->fileHandler->setTestFlag(testFlag);
@@ -116,12 +116,24 @@ void Controller::newGame() {
     // Create a new game of Qwirkle.
     Player *player1 = new Player(name1Input);
     Player *player2 = new Player(name2Input);
-    this->game = new Game(player1, player2, this->testFlag);
+    this->game = new Game();
 
-    // Proceed with normal gameplay.
-    std::cout << "Let's play!" << std::endl;
-    std::cout << std::endl;
-    baseGameplay();
+    bool gameCreated = false;
+
+    try {
+        this->game->newGame(player1, player2, this->testFlag);
+        gameCreated = true;
+    } catch (std::out_of_range(& e)) {
+        std::cerr << e.what() << std::endl;
+        std::cout << std::endl;
+    }
+
+    if (gameCreated) {
+        // Proceed with normal gameplay.
+        std::cout << "Let's play!" << std::endl;
+        std::cout << std::endl;
+        baseGameplay();
+    }
 }
 
 void Controller::playerNamePrompt(std::string* nameInput) {

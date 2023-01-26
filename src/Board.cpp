@@ -3,8 +3,10 @@
 Board::Board() {
     
     // Make 2D vector.
-    std::vector<Tile*> row(this->maxCol + 1, nullptr);
-    this->boardVector = std::vector<std::vector<Tile*> >(this->maxRow + 1, row);
+    int vectorCol = this->maxCol + 1;
+    int vectorRow = this->maxRow + 1;
+    std::vector<Tile*> row(vectorCol, nullptr);
+    this->boardVector = std::vector<std::vector<Tile*> >(vectorRow, row);
 
     // Board starts with no tiles.
     this->numOfTiles = 0;
@@ -13,8 +15,12 @@ Board::Board() {
 Board::Board(const Board& other) {
 
     // Make 2D vector and copy the number of tiles. 
-    std::vector<Tile*> row(other.maxCol + 1, nullptr);
-    this->boardVector = std::vector<std::vector<Tile*> >(other.maxRow + 1, row);
+    int vectorCol = other.maxCol + 1;
+    int vectorRow = other.maxRow + 1;
+    std::vector<Tile*> row(vectorCol + 1, nullptr);
+    this->boardVector = std::vector<std::vector<Tile*> >(vectorRow + 1, row);
+
+    // Copy the number of tiles.
     this->numOfTiles = other.numOfTiles;
 
     // Traverse boardVector and copy tiles.
@@ -103,8 +109,6 @@ Tile* Board::getTileAtPos(char row, int col) const {
     // If the given row and col is out of bounds.
     if (row > this->maxRow || row < this->minRow || 
         col > this->maxCol || col < this->minCol) {
-            
-        // TODO: CATCH EXCEPTION
         throw std::out_of_range("Board getTileAtPos() - Out of bounds");
 
     // Get the tile at the given row and col.
@@ -117,31 +121,34 @@ Tile* Board::getTileAtPos(char row, int col) const {
 void Board::printBoard() const {
 
     // Print col header.
-    int colHeader = this->minCol;
-    for (int col = this->minCol; col <= this->maxCol + 1; col++) {
+    int colHeader = this->maxCol + 1;
+    int colHeaderText = this->minCol;
+
+    for (int col = this->minCol; col <= colHeader; col++) {
         if (col == 0) {
             std::cout << "   ";
         } else {
-            std::cout << colHeader << " ";
-            if (colHeader < 10) {
+            std::cout << colHeaderText << " ";
+            if (colHeaderText < 10) {
                 std::cout << " ";
             }
-            colHeader++;
+            colHeaderText++;
         }
     }
     std::cout << std::endl;
 
     // Print col header underline.
-    for (int col = this->minCol; col <= this->maxCol + 1; col++) {
+    for (int col = this->minCol; col <= colHeader; col++) {
         std::cout << "---";
     }
     std::cout << std::endl;
 
     // Print row header.
-    char rowHeader = this->minRowChar;
+    char rowHeaderText = this->minRowChar;
+
     for (int row = this->minRow; row <= this->maxRow; row++) {
-        std::cout << rowHeader << " |";
-        ++rowHeader;
+        std::cout << rowHeaderText << " |";
+        ++rowHeaderText;
 
         // Print tiles in row.
         for (int col = this->minCol; col <= this->maxCol; col++) {   

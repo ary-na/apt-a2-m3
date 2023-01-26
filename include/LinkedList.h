@@ -29,8 +29,8 @@ class LinkedList {
         // Returns total number of tiles.
         int getLength() const; 
 
-        // Takes a tile and returns true 
-        // if exists in the linked list.
+        // Takes a tile and returns 
+        // true if exists in the list.
         bool search(Tile* tile) const; 
 
         // Takes a tile and adds it to the end.
@@ -52,7 +52,7 @@ class LinkedList {
         // Takes a tile and removes the first match.
         void deleteByNode(Tile* tile); 
 
-        // Returns the linked list as a string.
+        // Returns the list as a string.
         std::string getAsStr();
 
         // Takes a string array and adds the tiles 

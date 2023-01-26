@@ -4,12 +4,6 @@ TileBag::TileBag() {
     this->tileBagList = new LinkedList();
 }
 
-TileBag::TileBag(bool testFlag) {
-    this->tileBagList = new LinkedList();
-    fillTileBag();
-    shuffleTileBag(testFlag);
-}
-
 TileBag::TileBag(const TileBag& other) {
     this->tileBagList = new LinkedList(*other.tileBagList);
 }
@@ -40,6 +34,11 @@ LinkedList* TileBag::getTileBagList() const {
     return this->tileBagList;
 }
 
+void TileBag::newGameTileBag(bool testFlag) {
+    fillTileBag();
+    shuffleTileBag(testFlag);
+}
+
 void TileBag::fillTileBag() {
 
     // Add shapes and colours to array for iteration.
@@ -48,7 +47,7 @@ void TileBag::fillTileBag() {
 
     // Add 2 of each colour and shape combination to the tile bag.
     for (int i = 0; i < sizeof(colours) / sizeof(Colour); i++) {
-        for (int j = 0; j <sizeof(shapes) / sizeof(Shape); j++) {
+        for (int j = 0; j < sizeof(shapes) / sizeof(Shape); j++) {
             this->tileBagList->addEnd(new Tile(colours[i], shapes[j]));
             this->tileBagList->addEnd(new Tile(colours[i], shapes[j]));
         }
@@ -57,7 +56,7 @@ void TileBag::fillTileBag() {
 
 void TileBag::shuffleTileBag(bool testFlag) {
 
-    // Check if there are tiles in the tile bag.place
+    // Check if there are tiles in the tile bag.
     if (this->tileBagList->getLength() > 0) {
         LinkedList* tempTileList= new LinkedList();
         int totalTiles = this->tileBagList->getLength();
@@ -71,23 +70,29 @@ void TileBag::shuffleTileBag(bool testFlag) {
             int randomVal = 0;
             std::uniform_int_distribution<int> uniform_dist(min, max);
 
-            // If test flag is true, set seed 
-            // to ensure consistent randomness.
-            if(testFlag) {
+            // If test flag is true, set seed for consistent randomness.
+            if (testFlag) {
                 std::default_random_engine engine(2);
                 randomVal = uniform_dist(engine);
             } else {
                 std::random_device engine;
                 randomVal = uniform_dist(engine);
             }
-            // Get a tile from tile bag at random pos.
-            Tile *randomTile = this->tileBagList->getAtPos(randomVal);
 
-            // Add tile to the temp tile bag.
-            tempTileList->addEnd(new Tile(*randomTile));
+            try {
+                // Get a tile from tile bag at random pos.
+                Tile *randomTile = this->tileBagList->getAtPos(randomVal);
 
-            // Delete tile from original tile bag.
-            this->tileBagList->deleteAtPos(randomVal);
+                // Add tile to the temp tile bag.
+                tempTileList->addEnd(new Tile(*randomTile));
+
+                // Delete tile from original tile bag.
+                this->tileBagList->deleteAtPos(randomVal);
+
+            // If error happens while copying tiles.
+            } catch (std::out_of_range(& e)) {
+                throw std::out_of_range("Error making tile bag for new game!");
+            }
         }
         // Clean up and point to new tile bag. 
         delete this->tileBagList;

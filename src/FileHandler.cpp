@@ -135,7 +135,7 @@ Game* FileHandler::absorbLoadGameFile(const std::string fileName) {
         currentPlayer = currentPlayerFromName(player1, player2, fileContent[9]);                 
         board = initaliseBoardFromFile(fileContent[7]);
         tileBag = tileBagFromFile(fileContent[8]);
-        game->loadGameData(player1, player2, board, tileBag, currentPlayer);
+        game->loadGame(player1, player2, board, tileBag, currentPlayer);
 
     // If game cannot be loaded from file.
     } catch (std::invalid_argument(& e)) {

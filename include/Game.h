@@ -16,12 +16,9 @@
 
 class Game {
     public:
-        // Constructor for loading a game. Creates a game with no data. 
-        // After calling this constructor, you must use loadGame().
+        // Constructor for creating a game with no data. After calling 
+        // this, you must use loadGame() or newGame() to add the data. 
         Game();
-
-        // Constructor for making a new game. A game must have two players. 
-        Game(Player* player1, Player* player2, bool testFlag); 
 
         Game(const Game& other);
         Game(Game&& other);
@@ -29,8 +26,10 @@ class Game {
 
         // To be used after Game() when loading a game from a file. A game 
         // must have two players, a tile bag, board and current player.
-        void loadGameData(Player* player1, Player* player2, Board* board, 
-                          TileBag* tileBag, Player* currentPlayer); 
+        void loadGame(Player* player1, Player* player2, Board* board, 
+                      TileBag* tileBag, Player* currentPlayer); 
+        
+        void newGame(Player* player1, Player* player2, bool testFlag);
         
         // Returns the current player.
         Player* getCurrentPlayer() const;
@@ -108,13 +107,13 @@ class Game {
         bool checkTiles(Hand* player1Hand, Hand* player2Hand, 
                         Board* board, TileBag* tileBag);
 
-        // Helper function for checkTiles(). Takes two string arrays and
-        // compares the values, returns true if identical, otherwise false.
+        // Takes two string arrays and compares the values,
+        // returns true if identical. Used in checkTiles(). 
         bool arraysEqual(std::string array1[], std::string array2[]);
         
-        // Helper function for checkTiles(). Takes a string array and
-        // fills it with the correct number and combination of tiles.
-        void fillExpectedTilesArray(std::string expectedTilesArray[]);
+        // Takes a string array and adds every tile 
+        // a game should have. Used in checkTiles(). 
+        void addToArray(std::string expectedTilesArray[]);
 };
 
 #endif // GAME_H

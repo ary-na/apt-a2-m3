@@ -30,8 +30,9 @@ class Hand {
         // Returns the hand list. 
         LinkedList* getHandList();
 
-        // Takes a string array and fills it from the given index with
-        // the tiles from the hand. Used in checkTiles() in a game. 
+        // Takes a string array and adds the tiles from the hand
+        // to it. The tiles will be added to the array starting 
+        // the given index. Used for checkTiles() in game. 
         void addToArray(std::string tilesArray[], int* i);
 
         // Prints all tiles in hand. 

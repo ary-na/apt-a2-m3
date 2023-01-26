@@ -36,7 +36,7 @@ class Board {
 
         // Takes a string array and adds the tiles from the board 
         // to it. The tiles will be added to the array starting 
-        // the given index. Used for checkTiles() in game. 
+        // the given index. Used for checkTiles() in game.  
         void addToArray(std::string tilesArray[], int* i);
 
         // Returns the 2D board vector.

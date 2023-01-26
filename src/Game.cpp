@@ -10,26 +10,6 @@ Game::Game() {
     this->scoreCalculator = nullptr;
 }
 
-Game::Game(Player *player1, Player *player2, bool testFlag) {
-
-    // Set the test flag.
-    this->testFlag = testFlag;
-
-    // Create the tile bag and board.
-    this->tileBag = new TileBag(testFlag);
-    
-    // Set up the players and their hands.
-    this->player1 = player1;
-    this->player2 = player2;
-    this->tileBag->fillHand(player1->getHand());     
-    this->tileBag->fillHand(player2->getHand());            
-
-    // Start with empty board and player 1 starts.
-    this->board = new Board();
-    this->currentPlayer = player1;
-    this->scoreCalculator = new ScoreCalculator();
-}
-
 Game::Game(const Game& other) {
 
     // Copy tile bag, players, board and score calculator.
@@ -76,7 +56,29 @@ Game::~Game() {
     this->tileBag = nullptr;
 }
 
-void Game::loadGameData(Player* player1, Player* player2, Board* board,
+void Game::newGame(Player *player1, Player *player2, bool testFlag) {
+
+    // Set the test flag.
+    this->testFlag = testFlag;
+
+    // Create the tile bag and board.
+    this->tileBag = new TileBag();
+    this->tileBag->newGameTileBag(testFlag);
+    
+    // Set up the players and their hands.
+    this->player1 = player1;
+    this->player2 = player2;
+    this->tileBag->fillHand(player1->getHand());     
+    this->tileBag->fillHand(player2->getHand());            
+
+    // Start with empty board and player 1 starts.
+    this->board = new Board();
+    this->currentPlayer = player1;
+    this->scoreCalculator = new ScoreCalculator();
+
+}
+
+void Game::loadGame(Player* player1, Player* player2, Board* board,
            TileBag* tileBag, Player* currentPlayer) {
 
     // Check that given data contains a full set of tiles.
@@ -147,8 +149,7 @@ bool Game::isComplete() const {
 
     // A game is complete when the tile bag is empty and 
     // one of the players has no more tiles in their hand.
-    if (this->tileBag->isEmpty() && 
-       (this->player1->getHand()->isEmpty() || 
+    if (this->tileBag->isEmpty() && (this->player1->getHand()->isEmpty() ||  
         this->player2->getHand()->isEmpty())) {                          
         isComplete = true;
     }
@@ -211,6 +212,7 @@ bool Game::isPlaceLegal(Tile *tile, char row, int col) const {
     }
 
     delete moves;
+    moves = nullptr;
     return isLegal;
 }
 
@@ -280,7 +282,7 @@ bool Game::checkTiles(Hand* player1Hand, Hand* player2Hand,
 
         // Make array with all expected tiles.
         std::string expectedTilesArray[this->maxTilesInGame];
-        fillExpectedTilesArray(expectedTilesArray);                             // UNSURE ABOUT THIS
+        addToArray(expectedTilesArray);
 
         // Compare the two arrays.
         correctTiles = arraysEqual(expectedTilesArray, tilesArray);
@@ -288,7 +290,7 @@ bool Game::checkTiles(Hand* player1Hand, Hand* player2Hand,
     return correctTiles;
 }
 
-void Game::fillExpectedTilesArray(std::string expectedTilesArray[]) { 
+void Game::addToArray(std::string expectedTilesArray[]) { 
 
     // Add shapes and colours to array for iteration.
     Colour colours[] = { COLOURS };           
