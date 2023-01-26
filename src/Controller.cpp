@@ -124,7 +124,7 @@ void Controller::newGame() {
         gameCreated = true;
 
     // Return to main menu if new game unsuccessful. 
-    } catch (std::out_of_range(& e)) {
+    } catch (std::out_of_range& e) {
         std::cerr << e.what() << std::endl;
         std::cout << std::endl;
         delete this->game;
