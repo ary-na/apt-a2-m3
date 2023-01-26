@@ -65,6 +65,9 @@ private:
         void baseGameplay();
         void takeTurn();
 
+        // Takes a player and displays their score. 
+        void playerScore(Player* player);
+
         // Helper function for takeTurn(). Asks the user to 
         // enter a command, validates it and processes it.
         // (1) <colour><shape> at <row><col>

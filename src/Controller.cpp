@@ -251,12 +251,8 @@ void Controller::takeTurn() {
     std::cout << std::endl;
 
     // The scores of both players.
-    std::cout << "Score for " << this->game->getPlayer1()->getName() << ": "
-              << this->game->getPlayer1()->getScore() << std::endl;
-
-    std::cout << "Score for " << this->game->getPlayer2()->getName() << ": "
-              << this->game->getPlayer2()->getScore() << std::endl;
-    std::cout << std::endl;
+    playerScore(this->game->getPlayer1());
+    playerScore(this->game->getPlayer2());
 
     // The state of the board.
     this->game->getBoard()->printBoard();
@@ -269,6 +265,11 @@ void Controller::takeTurn() {
 
     // The user prompt.
     turnPrompt();
+}
+
+void Controller::playerScore(Player* player) {
+    std::cout << "Score for " << player->getName() << ": "
+              << player->getScore() << std::endl;
 }
 
 void Controller::turnPrompt() {
@@ -389,12 +390,8 @@ void Controller::endGame() {
     std::cout << std::endl;
 
     // Display the scores.
-    std::cout << "Score for " << this->game->getPlayer1()->getName() << ": "
-              << this->game->getPlayer1()->getScore() << std::endl;
-
-    std::cout << "Score for " << this->game->getPlayer2()->getName() << ": "
-              << this->game->getPlayer2()->getScore() << std::endl;
-    std::cout << std::endl;
+    playerScore(this->game->getPlayer1());
+    playerScore(this->game->getPlayer2());
 
     // Display the winner name.
     std::cout << "Player " << this->game->getHighestScorePlayer()
