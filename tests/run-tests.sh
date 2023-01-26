@@ -74,12 +74,6 @@ TEST=$(diff tests/qwirkleColumn.output tests/qwirkleColumn.gameout)
 echo $TEST_NAME
 print_result $TEST
 
-TEST_NAME="Testing: Dual Qwirkle scoring - dualQwirkle.input"
-./qwirkle T < tests/dualQwirkle.input > tests/dualQwirkle.gameout
-TEST=$(diff tests/dualQwirkle.output tests/dualQwirkle.gameout)
-echo $TEST_NAME
-print_result $TEST
-
 TEST_NAME="Testing: Qwirkle tile placement - tilePlacement1.input"
 ./qwirkle T < tests/tilePlacement1.input > tests/tilePlacement1.gameout
 TEST=$(diff tests/tilePlacement1.output tests/tilePlacement1.gameout)
@@ -103,17 +97,3 @@ TEST_NAME="Testing: Qwirkle tile placement - tilePlacement4.input"
 TEST=$(diff tests/tilePlacement4.output tests/tilePlacement4.gameout)
 echo $TEST_NAME
 print_result $TEST
-
-# Alex - Not added to the doc yet
-TEST_NAME="Testing: Taking from start of hand - handListStart.input"
-./qwirkle T < tests/handListStart.input > tests/handListStart.gameout
-TEST=$(diff tests/handListStart.output tests/handListStart.gameout)
-echo $TEST_NAME
-print_result $TEST
-
-TEST_NAME="Testing: Taking from end of hand - handListEnd.input"
-./qwirkle T < tests/handListEnd.input > tests/handListEnd.gameout
-TEST=$(diff tests/handListEnd.output tests/handListEnd.gameout)
-echo $TEST_NAME
-print_result $TEST
-

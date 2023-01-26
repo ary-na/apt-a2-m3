@@ -48,6 +48,7 @@ void Controller::launchGame(bool testFlag) {
 
     // If the program was run in test mode, set test flag to true.
     if (testFlag) {
+        std::cout << this->testFlag << std::endl;
         this->testFlag = testFlag;
         this->fileHandler->setTestFlag(testFlag);
         this->validator->setTestFlag(testFlag);
@@ -86,7 +87,7 @@ void Controller::mainMenu() {
         } else if (menuInput == "4") {
             exitGame();
         } else {
-            std::cout << "Select a valid menu option!" << std::endl;
+            std::cerr << "Select a valid menu option!" << std::endl;
             std::cout << std::endl;
         }
     } while (!this->isExitMode());
@@ -149,7 +150,7 @@ void Controller::playerNamePrompt(std::string* nameInput) {
         bool nameValid = validator->isNameValid(*nameInput);
 
         if (!nameValid && !std::cin.eof()) {
-            std::cout << "Invalid input!" << std::endl;
+            std::cerr << "Invalid input!" << std::endl;
             std::cout << std::endl;
         } else if (std::cin.eof()) {
             awaitingInput = false;
@@ -250,11 +251,8 @@ void Controller::takeTurn() {
     std::cout << std::endl;
 
     // The scores of both players.
-    std::cout << "Score for " << this->game->getPlayer1()->getName() << ": "
-              << this->game->getPlayer1()->getScore() << std::endl;
-
-    std::cout << "Score for " << this->game->getPlayer2()->getName() << ": "
-              << this->game->getPlayer2()->getScore() << std::endl;
+    playerScore(this->game->getPlayer1());
+    playerScore(this->game->getPlayer2());
     std::cout << std::endl;
 
     // The state of the board.
@@ -270,6 +268,11 @@ void Controller::takeTurn() {
     turnPrompt();
 }
 
+void Controller::playerScore(Player* player) {
+    std::cout << "Score for " << player->getName() << ": "
+              << player->getScore() << std::endl;
+}
+
 void Controller::turnPrompt() {
     bool awaitingInput = true;
     while (awaitingInput) {
@@ -281,7 +284,7 @@ void Controller::turnPrompt() {
 
         // If command is invalid.
         if (command == -1) {
-            std::cout << "Invalid input!" << std::endl;
+            std::cerr << "Invalid input!" << std::endl;
             std::cout << std::endl;
 
         // If command is place <colour><shape> at <row><col>.
@@ -329,7 +332,7 @@ void Controller::placeTile(std::string commandInput, bool* inputStatus) {
 
         // If the tile placement is illegal. 
         if (!tilePlaced) {
-            std::cout << "Illegal move!" << std::endl;
+            std::cerr << "Illegal move!" << std::endl;
             std::cout << std::endl;
             delete tileInput; 
             tileInput = nullptr; 
@@ -357,7 +360,7 @@ void Controller::replaceTile(std::string commandInput, bool* inputStatus) {
     bool tileReplaced = this->game->replaceTile(tileInput);
             
     if (!tileReplaced) {
-        std::cout << "Illegal move!" << std::endl;
+        std::cerr << "Illegal move!" << std::endl;
         std::cout << std::endl;
         delete tileInput;
         tileInput = nullptr;
@@ -388,11 +391,8 @@ void Controller::endGame() {
     std::cout << std::endl;
 
     // Display the scores.
-    std::cout << "Score for " << this->game->getPlayer1()->getName() << ": "
-              << this->game->getPlayer1()->getScore() << std::endl;
-
-    std::cout << "Score for " << this->game->getPlayer2()->getName() << ": "
-              << this->game->getPlayer2()->getScore() << std::endl;
+    playerScore(this->game->getPlayer1());
+    playerScore(this->game->getPlayer2());
     std::cout << std::endl;
 
     // Display the winner name.
