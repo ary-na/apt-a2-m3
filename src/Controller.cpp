@@ -253,6 +253,7 @@ void Controller::takeTurn() {
     // The scores of both players.
     playerScore(this->game->getPlayer1());
     playerScore(this->game->getPlayer2());
+    std::cout << std::endl;
 
     // The state of the board.
     this->game->getBoard()->printBoard();
@@ -392,6 +393,7 @@ void Controller::endGame() {
     // Display the scores.
     playerScore(this->game->getPlayer1());
     playerScore(this->game->getPlayer2());
+    std::cout << std::endl;
 
     // Display the winner name.
     std::cout << "Player " << this->game->getHighestScorePlayer()
