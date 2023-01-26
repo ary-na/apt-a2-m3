@@ -2,20 +2,39 @@
 
 ScoreCalculator::ScoreCalculator()
 {
+    // Default constructor
 }
 
 ScoreCalculator::ScoreCalculator(const ScoreCalculator& other) 
 {
     // [ALEX] TODO
+    // Copy Constructor
+
 }
 
-// ScoreCalculator::ScoreCalculator(ScoreCalculator&& other) 
-// {
-//     // [ALEX] TODO
-// }
+ScoreCalculator::ScoreCalculator& operator=(const ScoreCalculator& other) 
+{
+    // [ALEX] TODO
+    // Copy assignment
+
+}
+
+ScoreCalculator::ScoreCalculator(ScoreCalculator&& other) 
+{
+    // [ALEX] TODO
+    // Move Constructor
+}
+
+ScoreCalculator::ScoreCalculator& operator=(ScoreCalculator&& other);
+{
+    // [ALEX] TODO 
+    // Move assignment
+}
+
 
 ScoreCalculator::~ScoreCalculator()
 {
+    // Default destructor
 }
 
 int ScoreCalculator::calculateScore(Board *board, char row, int col)
