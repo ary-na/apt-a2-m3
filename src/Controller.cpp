@@ -86,7 +86,7 @@ void Controller::mainMenu() {
         } else if (menuInput == "4") {
             exitGame();
         } else {
-            std::cerr << "Select a valid menu option!" << std::endl;
+            std::cout << "Select a valid menu option!" << std::endl;
             std::cout << std::endl;
         }
     } while (!this->isExitMode());
@@ -149,7 +149,7 @@ void Controller::playerNamePrompt(std::string* nameInput) {
         bool nameValid = validator->isNameValid(*nameInput);
 
         if (!nameValid && !std::cin.eof()) {
-            std::cerr << "Invalid input!" << std::endl;
+            std::cout << "Invalid input!" << std::endl;
             std::cout << std::endl;
         } else if (std::cin.eof()) {
             awaitingInput = false;
