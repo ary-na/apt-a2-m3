@@ -8,7 +8,8 @@
 #define GREEN 'G'
 #define BLUE 'B'
 #define PURPLE 'P'
-#define TOTAL_COLOURS 6
+
+#define COLOURS RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE
 
 // Shapes
 #define CIRCLE 1
@@ -17,6 +18,7 @@
 #define SQUARE 4
 #define STAR_6 5
 #define CLOVER 6
-#define TOTAL_SHAPES 6
+
+#define SHAPES CIRCLE, STAR_4, DIAMOND, SQUARE, STAR_6, CLOVER 
 
 #endif // TILECODES_H

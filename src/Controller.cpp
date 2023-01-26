@@ -20,9 +20,18 @@ Controller::Controller(const Controller& other) {
     this->exitMode = other.exitMode;
 }
 
-// Controller::Controller(Controller&& other) {
-//     // TODO
-// }
+Controller::Controller(Controller&& other) {
+    this->game = other.game;
+    this->validator = other.validator;
+    this->fileHandler = other.fileHandler;
+    this->testFlag = other.testFlag;
+    this->exitMode  = other.exitMode;
+    other.game = nullptr;
+    other.validator = nullptr;
+    other.fileHandler = nullptr;
+    other.testFlag = false;
+    other.exitMode = false;
+}
 
 Controller::~Controller() {
     if (this->game != nullptr) {
@@ -37,19 +46,19 @@ Controller::~Controller() {
 
 void Controller::launchGame(bool testFlag) {
 
-    // If the program was run in test  
-    // mode, set the test flag to true.
-    if(testFlag) {
+    // If the program was run in test mode, set test flag to true.
+    if (testFlag) {
+        std::cout << this->testFlag << std::endl;
         this->testFlag = testFlag;
+        this->fileHandler->setTestFlag(testFlag);
+        this->validator->setTestFlag(testFlag);
     }
 
-    // The program should display a welcome message.
+    // The program shows a message and continues to the main menu. 
     std::cout << std::endl;
     std::cout << "Welcome to Qwirkle" << std::endl;
     std::cout << "------------------" << std::endl;
     std::cout << std::endl;
-
-    // Then continue to the main menu.
     mainMenu();
 }
 
@@ -107,12 +116,27 @@ void Controller::newGame() {
     // Create a new game of Qwirkle.
     Player *player1 = new Player(name1Input);
     Player *player2 = new Player(name2Input);
-    this->game = new Game(player1, player2, this->testFlag);
+    this->game = new Game();
+    bool gameCreated = false;
 
-    // Proceed with normal gameplay.
-    std::cout << "Let's play!" << std::endl;
-    std::cout << std::endl;
-    baseGameplay();
+    try {
+        this->game->newGame(player1, player2, this->testFlag);
+        gameCreated = true;
+
+    // Return to main menu if new game unsuccessful. 
+    } catch (std::out_of_range(& e)) {
+        std::cerr << e.what() << std::endl;
+        std::cout << std::endl;
+        delete this->game;
+        this->game = nullptr;
+    }
+    
+    // If new game is successful, proceed with gameplay.
+    if (gameCreated) {
+        std::cout << "Let's play!" << std::endl;
+        std::cout << std::endl;
+        baseGameplay();
+    }
 }
 
 void Controller::playerNamePrompt(std::string* nameInput) {
@@ -164,10 +188,11 @@ void Controller::loadGame() {
 
     // If the file doesn't pass the validation checks, an error
     // message displays and the user is taken back to the main menu.
-    } catch (std::out_of_range(& e)) {
+    } catch (std::exception(& e)) {
         std::cerr << e.what() << std::endl;
         std::cout << std::endl;
     }
+
     if (gameLoaded) {
         std::cout << "Qwirkle game successfully loaded" << std::endl;
         std::cout << std::endl;
@@ -239,7 +264,7 @@ void Controller::takeTurn() {
 
     // The tiles in the current player’s hand.
     std::cout << "Your hand is" << std::endl;
-    this->game->getCurrentPlayer()->getHand()->printList();
+    this->game->getCurrentPlayer()->getHand()->printHand();
     std::cout << std::endl;
 
     // The user prompt.
@@ -305,7 +330,8 @@ void Controller::placeTile(std::string commandInput, bool* inputStatus) {
     if (!tilePlaced) {
         std::cerr << "Illegal move!" << std::endl;
         std::cout << std::endl;
-        delete tileInput;  
+        delete tileInput; 
+        tileInput = nullptr; 
     } else {
         *inputStatus = false;
     }
@@ -325,6 +351,7 @@ void Controller::replaceTile(std::string commandInput, bool* inputStatus) {
         std::cerr << "Illegal move!" << std::endl;
         std::cout << std::endl;
         delete tileInput;
+        tileInput = nullptr;
     } else {
         *inputStatus = false;
     }
@@ -332,17 +359,17 @@ void Controller::replaceTile(std::string commandInput, bool* inputStatus) {
 
 void Controller::saveGame(std::string fileName) {
 
-    // Saves the current state of the game to the provided 
-    // filename. The file is overwritten if it already exists.
-    this->fileHandler->saveGame(this->game, fileName);
+    // Save the current state of the game to the provided filename.
+    try {
+        this->fileHandler->saveGame(this->game, fileName);
+        std::cout << "Game successfully saved" << std::endl;
 
-    // The program displays a message and continues with gameplay. 
-    std::cout << "Game successfully saved" << std::endl;
+    // If the file doesn't pass the validation checks.
+    } catch (std::exception(& e)) {
+        std::cerr << e.what() << std::endl;
+        std::cout << std::endl;
+    }
     std::cout << std::endl;
-
-    // [JACOB] TODO
-    // If the program has problems saving the file, it should display 
-    // a message, and continue with normal gameplay without crashing.
 }
 
 void Controller::endGame() {

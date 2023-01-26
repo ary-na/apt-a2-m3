@@ -3,10 +3,10 @@
 Player::Player(std::string name) {
     this->name = name;
     this->score = 0;
-    this->hand = new LinkedList();
+    this->hand = new Hand();
 }
 
-Player::Player(std::string name, int score, LinkedList* hand) {
+Player::Player(std::string name, int score, Hand* hand) {
     this->name = name;
     this->score = score;
     this->hand = hand;
@@ -15,15 +15,17 @@ Player::Player(std::string name, int score, LinkedList* hand) {
 Player::Player(const Player& other) {
     this->name = other.name;
     this->score = other.score;
-    this->hand = new LinkedList(*other.hand);
+    this->hand = new Hand(*other.hand);
 }
 
-// Player::Player(Player&& other) {
-//     // TODO
-//     this->name = other.name;
-//     this->score = other.score;
-//     this->hand = other.hand;
-// }
+Player::Player(Player&& other) {
+    this->name = other.name;
+    this->score = other.score;
+    this->hand = other.hand;
+    other.name = "";
+    other.score = 0;
+    other.hand = nullptr;
+}
 
 Player::~Player() {
     delete this->hand;
@@ -38,7 +40,7 @@ int Player::getScore() const {
     return this->score;
 }
 
-LinkedList* Player::getHand() const { 
+Hand* Player::getHand() const { 
     return this->hand;
 }
 

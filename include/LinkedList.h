@@ -10,14 +10,14 @@ class LinkedList {
     public:
         LinkedList();
         LinkedList(const LinkedList& other);
-        // LinkedList(LinkedList&& other);
+        LinkedList(LinkedList&& other);
         ~LinkedList();
         
         // Delete every tile.
         void clear(); 
 
         // Print every tile.
-        void printList() const; 
+        void printList(); 
 
         // Returns the head.
         Tile* getFront() const;
@@ -29,8 +29,8 @@ class LinkedList {
         // Returns total number of tiles.
         int getLength() const; 
 
-        // Takes a tile and returns true 
-        // if exists in the linked list.
+        // Takes a tile and returns 
+        // true if exists in the list.
         bool search(Tile* tile) const; 
 
         // Takes a tile and adds it to the end.
@@ -51,6 +51,14 @@ class LinkedList {
 
         // Takes a tile and removes the first match.
         void deleteByNode(Tile* tile); 
+
+        // Returns the list as a string.
+        std::string getAsStr();
+
+        // Takes a string array and adds the tiles 
+        // from the list to it. The tiles will be 
+        // added to the array starting the given index.
+        void addToArray(std::string array[], int* i);
 
     private:
         Node* head;

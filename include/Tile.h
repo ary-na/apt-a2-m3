@@ -15,8 +15,11 @@ class Tile {
         Tile(Colour colour, Shape shape);
 
         Tile(const Tile& other);
-        // Tile(Tile&& other);
+        Tile(Tile&& other);
         ~Tile();
+
+        // Returns the tile colour and shape as a string. 
+        std::string getAsStr();
 
         Colour colour;
         Shape shape;

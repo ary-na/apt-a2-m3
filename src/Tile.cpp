@@ -10,9 +10,17 @@ Tile::Tile(const Tile& other) {
     this->colour = other.colour;
 }
 
-// Tile::Tile(Tile&& other) {
-//     // TODO
-// }
+Tile::Tile(Tile&& other) {
+    this->shape = other.shape;
+    this->colour = other.colour;
+    other.shape = 0;
+    other.colour = '\0';
+}
 
 Tile::~Tile() {
+}
+
+ std::string Tile::getAsStr() {
+    std::string tileStr = this->colour + std::to_string(this->shape);
+    return tileStr;
 }

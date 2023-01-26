@@ -14,7 +14,7 @@ class Board {
         Board(); 
 
         Board(const Board& other);
-        // Board(Board&& other);
+        Board(Board&& other);
         ~Board();
 
         // Prints the entire board vector.
@@ -34,6 +34,11 @@ class Board {
         // Returns the number of tiles in the board vector.
         int getNumOfTiles() const;
 
+        // Takes a string array and adds the tiles from the board 
+        // to it. The tiles will be added to the array starting 
+        // the given index. Used for checkTiles() in game.  
+        void addToArray(std::string tilesArray[], int* i);
+
         // Returns the 2D board vector.
         std::vector<std::vector<Tile*> > getBoardVector() const;
 
@@ -46,6 +51,9 @@ class Board {
         char getMinRowChar() const;
         char getMaxRowChar() const;
 
+        // Returns the board as a string.
+        std::string getAsStr();
+
     private:
         // Defines the min and max index values for  
         // the rows and cols in the board vector.
@@ -53,15 +61,14 @@ class Board {
         const static int maxCol = 25;
         const static int minRow = 0;
         const static int maxRow = 25; 
-        const static char minRowChar = (char)('A' + minRow); // This is A
-        const static char maxRowChar = (char)('A' + maxRow); // This is B
+        const static char minRowChar = (char)('A' + minRow); 
+        const static char maxRowChar = (char)('A' + maxRow); 
 
         // Stores the number of tiles on the board.
         // This gets updated when addTileAtPos(). 
         int numOfTiles;
 
-        // A 2D vector of tiles.
-        // The board is a fixed size of 26 x 26.
+        // A 2D vector of tiles. The board is a fixed size of 26 x 26.
         std::vector<std::vector<Tile*> > boardVector;
 };
 

@@ -74,4 +74,26 @@ TEST=$(diff tests/qwirkleColumn.output tests/qwirkleColumn.gameout)
 echo $TEST_NAME
 print_result $TEST
 
- 
+TEST_NAME="Testing: Qwirkle tile placement - tilePlacement1.input"
+./qwirkle T < tests/tilePlacement1.input > tests/tilePlacement1.gameout
+TEST=$(diff tests/tilePlacement1.output tests/tilePlacement1.gameout)
+echo $TEST_NAME
+print_result $TEST
+
+TEST_NAME="Testing: Qwirkle tile placement - tilePlacement2.input"
+./qwirkle T < tests/tilePlacement2.input > tests/tilePlacement2.gameout
+TEST=$(diff tests/tilePlacement2.output tests/tilePlacement2.gameout)
+echo $TEST_NAME
+print_result $TEST
+
+TEST_NAME="Testing: Qwirkle tile placement - tilePlacement3.input"
+./qwirkle T < tests/tilePlacement3.input > tests/tilePlacement3.gameout
+TEST=$(diff tests/tilePlacement3.output tests/tilePlacement3.gameout)
+echo $TEST_NAME
+print_result $TEST
+
+TEST_NAME="Testing: Qwirkle tile placement - tilePlacement4.input"
+./qwirkle T < tests/tilePlacement4.input > tests/tilePlacement4.gameout
+TEST=$(diff tests/tilePlacement4.output tests/tilePlacement4.gameout)
+echo $TEST_NAME
+print_result $TEST

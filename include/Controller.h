@@ -5,6 +5,7 @@
 #include "Game.h"
 #include "Validator.h"
 #include "FileHandler.h"
+#include "Hand.h"
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -13,7 +14,7 @@ class Controller {
     public:
         Controller();
         Controller(const Controller& other);
-        // Controller(Controller&& other);
+        Controller(Controller&& other);
         ~Controller();
 
         // Used by main() to start the program. Displays a 
@@ -24,6 +25,9 @@ private:
         Game* game;
         Validator* validator;
         FileHandler* fileHandler;
+
+        // If exit mode is true, the mainMenu() loop 
+        // will end and the game will safely exit.  
         bool exitMode;
 
         // When test flag is true, a random seed is set when the 
@@ -84,7 +88,7 @@ private:
         // Takes the user command and tries and tries to 
         // save the current state of the game. If the file 
         // is sucessfully saved, normal gameplay continues.
-        void saveGame(std::string fileName);
+        void saveGame(const std::string fileName);
 
         // Promts the user to enter an input and
         // assigns it to the given string pointer.
@@ -95,10 +99,6 @@ private:
 
         // Sets the exit mode to true or false. 
         void setExitMode(bool exitMode);
-
-        // IS THIS USED IN THE CONTROLLER? CAN WE DELETE?
-        // Absorb the load game file.
-        bool absorbLoadGameFile(std::string fileName);  
 };
 
 #endif // CONTROLLER_H
