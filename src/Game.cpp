@@ -87,7 +87,7 @@ void Game::loadGame(Player* player1, Player* player2, Board* board,
 
     // Create game and load data if tiles are correct.
     if (!correctTiles) {
-        throw std::out_of_range("File has incorrect tiles!");
+        throw std::logic_error("File has incorrect tiles!");
     } else {
         this->tileBag = tileBag;
         this->player1 = player1;
