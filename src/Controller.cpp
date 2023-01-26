@@ -117,19 +117,22 @@ void Controller::newGame() {
     Player *player1 = new Player(name1Input);
     Player *player2 = new Player(name2Input);
     this->game = new Game();
-
     bool gameCreated = false;
 
     try {
         this->game->newGame(player1, player2, this->testFlag);
         gameCreated = true;
+
+    // Return to main menu if new game unsuccessful. 
     } catch (std::out_of_range(& e)) {
         std::cerr << e.what() << std::endl;
         std::cout << std::endl;
+        delete this->game;
+        this->game = nullptr;
     }
-
+    
+    // If new game is successful, proceed with gameplay.
     if (gameCreated) {
-        // Proceed with normal gameplay.
         std::cout << "Let's play!" << std::endl;
         std::cout << std::endl;
         baseGameplay();
