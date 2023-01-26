@@ -8,22 +8,24 @@ class ScoreCalculator {
     public:
         ScoreCalculator();
         ScoreCalculator(const ScoreCalculator& other);
-        ScoreCalculator& operator=(const ScoreCalculator& other);
         ScoreCalculator(ScoreCalculator&& other);
-        ScoreCalculator& operator=(ScoreCalculator&& other);
         ~ScoreCalculator();
-
-        // ** 2.3.9 Special operation: QWIRKLE! **
-        // Prints the Qwirkle message, 
-        // to be used if a Qwirkle is scored
-        void printQwirkle() const; 
 
         // Calculates the users score based on the state of the board and played tile
         // part of ** 2.3.5 Player Action:  Place a Tile **
+        // input: the board at the current state of the played tile, the row (as upper case CHAR)
+        //        and the column (int) of the played tile. A tile is scored by counting ONLY, 
+        //        the program must validate the move against the rules prior to calling.
+        // output: the sum of the tiles from the row and column of the placed tile, plus any
+        //         potential bonus points (6) if there is a row of 6.
         int calculateScore(Board* board, char row, int col);
         
 
     private:
+        // ** 2.3.9 Special operation: QWIRKLE! **
+        // Prints the Qwirkle message, 
+        // to be used if a Qwirkle is scored
+        void printQwirkle() const; 
 
         // Based on the played tile, calculates the score for a row - used by calculateScore
         int getRowScore(Board* board, char row, int col);

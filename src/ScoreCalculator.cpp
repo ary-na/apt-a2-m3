@@ -1,41 +1,16 @@
 #include "../include/ScoreCalculator.h"
 
-ScoreCalculator::ScoreCalculator()
-{
-    // Default constructor
-}
+// Primary constructor
+ScoreCalculator::ScoreCalculator() {}
 
-ScoreCalculator::ScoreCalculator(const ScoreCalculator& other) 
-{
-    // [ALEX] TODO
-    // Copy Constructor
+// Copy Constructor
+ScoreCalculator::ScoreCalculator(const ScoreCalculator& other) {}
 
-}
+// Move Constructor
+ScoreCalculator::ScoreCalculator(ScoreCalculator&& other) {}
 
-ScoreCalculator::ScoreCalculator& operator=(const ScoreCalculator& other) 
-{
-    // [ALEX] TODO
-    // Copy assignment
-
-}
-
-ScoreCalculator::ScoreCalculator(ScoreCalculator&& other) 
-{
-    // [ALEX] TODO
-    // Move Constructor
-}
-
-ScoreCalculator::ScoreCalculator& operator=(ScoreCalculator&& other);
-{
-    // [ALEX] TODO 
-    // Move assignment
-}
-
-
-ScoreCalculator::~ScoreCalculator()
-{
-    // Default destructor
-}
+// Destructor
+ScoreCalculator::~ScoreCalculator() {}
 
 int ScoreCalculator::calculateScore(Board *board, char row, int col)
 {
@@ -49,7 +24,7 @@ int ScoreCalculator::calculateScore(Board *board, char row, int col)
     int rowScore = getRowScore(board, row, col);
     int colScore = getColScore(board, row, col);
 
-    // Catches tiles with no adjacent tiles
+    // Catches tiles with no adjacent tiles - i.e. first placed tile
     if (colScore == 1 && rowScore == 1)
     {
         totalPoints = 1;
