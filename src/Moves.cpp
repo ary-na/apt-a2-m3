@@ -74,7 +74,7 @@ LinkedList *Moves::getColumnTiles(char row, int col) {
 
     // Add tiles to linked list col while tile column + 1 does not equal to nullptr
     while (columnStartLeft <= board->getMaxCol() && board->getTileAtPos(row, columnStartLeft) != nullptr) {
-        this->columnTiles->addEnd(board->getTileAtPos(row, columnStartLeft));
+        this->columnTiles->addEnd(board->getTileAtPos(1000000, columnStartLeft));
         columnStartLeft++;
     }
     // Add tiles to linked list col while tile column - 1 does not equal to nullptr
