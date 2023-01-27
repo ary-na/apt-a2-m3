@@ -24,7 +24,7 @@ int ScoreCalculator::calculateScore(Board *board, char row, int col)
     int rowScore = getRowScore(board, row, col);
     int colScore = getColScore(board, row, col);
 
-    // Catches tiles with no adjacent tiles - i.e. first placed tile
+    // Catches tiles with no adjacent tiles
     if (colScore == 1 && rowScore == 1)
     {
         totalPoints = 1;
@@ -111,7 +111,7 @@ int ScoreCalculator::getRowStart(Board *board, char row, int col)
     }
     catch (const std::out_of_range &e)
     {
-        throw std::out_of_range("Program error, couldn't calculate score!");
+        throw std::out_of_range("Error, program couldn't calculate score!");
         // std::cout << "getRowStart Error";
         // std::cerr << e.what() << '\n';
     }
@@ -142,9 +142,7 @@ int ScoreCalculator::getRowEnd(Board *board, char row, int col)
     }
     catch (const std::out_of_range &e)
     {
-        throw std::out_of_range("Program error, couldn't calculate score!");
-        // std::cerr << e.what() << '\n';
-        // std::cout << "getRowEnd Error";
+        throw std::out_of_range("Error, program couldn't calculate score!");
     }
 
     return rowEndCol;
@@ -172,8 +170,7 @@ int ScoreCalculator::getColStart(Board *board, char row, int col)
     }
     catch (const std::out_of_range &e)
     {
-        throw std::out_of_range("Program error, couldn't calculate score!");
-        // std::cerr << e.what() << '\n';
+        throw std::out_of_range("Error, program couldn't calculate score!");
     }
 
     return colStartRow;
@@ -204,9 +201,7 @@ int ScoreCalculator::getColEnd(Board *board, char row, int col)
     }
     catch (const std::out_of_range &e)
     {
-        throw std::out_of_range("Program error, couldn't calculate score!");
-        // std::cerr << e.what() << '\n';
-        // std::cout << "getColEnd Error";
+        throw std::out_of_range("Error, program couldn't calculate score!");
     }
 
     return colEndRow;
