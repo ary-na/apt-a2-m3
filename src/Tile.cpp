@@ -20,7 +20,7 @@ Tile::Tile(Tile&& other) {
 Tile::~Tile() {
 }
 
- std::string Tile::getAsStr() {
+std::string Tile::getAsStr() {
     std::string tileStr = this->colour + std::to_string(this->shape);
     return tileStr;
 }

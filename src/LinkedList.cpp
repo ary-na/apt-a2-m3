@@ -53,32 +53,6 @@ void LinkedList::clear() {
     }
 }
 
-std::string LinkedList::getAsStr() {
-    std::string listStr = "";
-    Node* current = this->head;
-    if (current != nullptr) {
-        int count = 1;
-        while (current != nullptr) {
-            if (count != 1) {
-                listStr += ",";
-            }
-            listStr += current->tile->getAsStr();
-            current = current->next;
-            ++count;
-        }
-    }
-    return listStr;
-}
-
-void LinkedList::printList() {
-    std::string listStr = getAsStr();
-    if (this->length == 0) {
-        std::cout << "Empty - No tiles left" << std::endl;
-    } else {
-        std::cout << getAsStr() << std::endl;
-    }
-}
-
 Tile* LinkedList::getFront() const {
     return this->head->tile;
 }
@@ -260,6 +234,36 @@ void LinkedList::deleteByNode(Tile* tile) {
             current = current->next;
             ++pos;
         }  
+    }
+}
+
+// CUSTOM FUNCTIONS
+// NOT TYPICALLY IN A LINKED LIST
+// TBC, ASKING ALI IF THEY ARE OK 
+
+std::string LinkedList::getAsStr() {
+    std::string listStr = "";
+    Node* current = this->head;
+    if (current != nullptr) {
+        int count = 1;
+        while (current != nullptr) {
+            if (count != 1) {
+                listStr += ",";
+            }
+            listStr += current->tile->getAsStr();
+            current = current->next;
+            ++count;
+        }
+    }
+    return listStr;
+}
+
+void LinkedList::printList() {
+    std::string listStr = getAsStr();
+    if (this->length == 0) {
+        std::cout << "Empty - No tiles left" << std::endl;
+    } else {
+        std::cout << getAsStr() << std::endl;
     }
 }
 

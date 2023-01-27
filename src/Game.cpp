@@ -75,7 +75,6 @@ void Game::newGame(Player *player1, Player *player2, bool testFlag) {
     this->board = new Board();
     this->currentPlayer = player1;
     this->scoreCalculator = new ScoreCalculator();
-
 }
 
 void Game::loadGame(Player* player1, Player* player2, Board* board,
