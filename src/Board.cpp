@@ -17,8 +17,8 @@ Board::Board(const Board& other) {
     // Make 2D vector and copy the number of tiles. 
     int vectorCol = other.maxCol + 1;
     int vectorRow = other.maxRow + 1;
-    std::vector<Tile*> row(vectorCol + 1, nullptr);
-    this->boardVector = std::vector<std::vector<Tile*> >(vectorRow + 1, row);
+    std::vector<Tile*> row(vectorCol, nullptr);
+    this->boardVector = std::vector<std::vector<Tile*> >(vectorRow, row);
 
     // Copy the number of tiles.
     this->numOfTiles = other.numOfTiles;
