@@ -34,7 +34,7 @@ bool FileHandler::saveGame(const Game* game, const std::string fileName) {
     if(outFile.is_open()){
         outFile << game->getPlayer1()->getName() << std::endl;
         outFile << game->getPlayer1()->getScore() << std::endl;
-        outFile << playerHandToFile(game->getPlayer1()->getHand()->getHandList()) << std::endl;
+        outFile << game->getPlayer1()->getHand()->getHandList()->getAsStr() << std::endl;
         outFile << game->getPlayer2()->getName() << std::endl;
         outFile << game->getPlayer2()->getScore() << std::endl;
         outFile << playerHandToFile(game->getPlayer2()->getHand()->getHandList()) << std::endl;
