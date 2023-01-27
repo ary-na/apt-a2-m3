@@ -117,3 +117,26 @@ TEST=$(diff tests/handListEnd.output tests/handListEnd.gameout)
 echo $TEST_NAME
 print_result $TEST
 
+TEST_NAME="Testing: Run full game (p1 win) - fullGameP1.input"
+./qwirkle T < tests/fullGameP1.input > tests/fullGameP1.gameout
+TEST=$(diff tests/fullGameP1.output tests/fullGameP1.gameout)
+echo $TEST_NAME
+print_result $TEST
+
+TEST_NAME="Testing: Run full game (p2 win) - fullGameP2.input"
+./qwirkle T < tests/fullGameP2.input > tests/fullGameP2.gameout
+TEST=$(diff tests/fullGameP2.output tests/fullGameP2.gameout)
+echo $TEST_NAME
+print_result $TEST
+
+TEST_NAME="Testing: Run full game (Draw) - fullGameDraw.input"
+./qwirkle T < tests/fullGameDraw.input > tests/fullGameDraw.gameout
+TEST=$(diff tests/fullGameDraw.output tests/fullGameDraw.gameout)
+echo $TEST_NAME
+print_result $TEST
+
+TEST_NAME="Testing: Invalid player entries - playerError.input"
+./qwirkle T < tests/playerError.input > tests/playerError.gameout
+TEST=$(diff tests/playerError.output tests/playerError.gameout)
+echo $TEST_NAME
+print_result $TEST
