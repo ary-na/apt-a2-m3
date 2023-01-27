@@ -7,7 +7,12 @@ FileHandler::FileHandler() {
 
 FileHandler::FileHandler(const FileHandler& other) {
     this->validator = new Validator(*other.validator);
-    this->testFlag = &other.testFlag;
+    this->testFlag = other.testFlag;
+}
+
+FileHandler::FileHandler(FileHandler&& other) {
+    this->validator = new Validator(*other.validator);
+    this->testFlag = other.testFlag;
 }
 
 FileHandler::~FileHandler() {
@@ -55,15 +60,8 @@ bool FileHandler::saveGame(const Game* game, const std::string fileName) {
     return true;
 }
 
-std::string FileHandler::playerHandToFile(const LinkedList* playerHand) {
-
-    std::string stringPlayerHand = "";
-    for(int x = 1; x < playerHand->getLength() + 1; x++) {
-        std::string tile = playerHand->getAtPos(x)->colour + std::to_string(playerHand->getAtPos(x)->shape);
-        x == 1 ? stringPlayerHand = tile : stringPlayerHand.append("," + tile);
-    }
-    
-    return stringPlayerHand;
+std::string FileHandler::playerHandToFile(LinkedList* playerHand) {
+    return playerHand->getAsStr();
 }
 
 std::string FileHandler::boardStateToFile(const Board* board) {
@@ -83,15 +81,8 @@ std::string FileHandler::boardStateToFile(const Board* board) {
     return boardState;
 }
 
-std::string FileHandler::tileBagToFile(const TileBag* tileBag) {
-
-    std::string stringTileBag = "";
-    for(int x = 1; x < tileBag->getNumOfTiles() + 1; x++) {
-        std::string tile = tileBag->getTileBagList()->getAtPos(x)->colour + std::to_string(tileBag->getTileBagList()->getAtPos(x)->shape);
-        x == 1 ? stringTileBag = tile : stringTileBag.append("," + tile);
-    }
-
-    return stringTileBag;
+std::string FileHandler::tileBagToFile(TileBag* tileBag) {
+    return tileBag->getAsStr();
 }
 
 Game* FileHandler::loadGame(const std::string fileName) {

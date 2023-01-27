@@ -75,7 +75,6 @@ void Game::newGame(Player *player1, Player *player2, bool testFlag) {
     this->board = new Board();
     this->currentPlayer = player1;
     this->scoreCalculator = new ScoreCalculator();
-
 }
 
 void Game::loadGame(Player* player1, Player* player2, Board* board,
@@ -87,7 +86,7 @@ void Game::loadGame(Player* player1, Player* player2, Board* board,
 
     // Create game and load data if tiles are correct.
     if (!correctTiles) {
-        throw std::out_of_range("File has incorrect tiles!");
+        throw std::logic_error("File has incorrect tiles!");
     } else {
         this->tileBag = tileBag;
         this->player1 = player1;
@@ -214,7 +213,7 @@ bool Game::isPlaceLegal(Tile *tile, char row, int col) const {
 
     // If exception occurs during checks.
     } catch (std::out_of_range& e) {
-        throw std::out_of_range("Error, program couldn't check tile placement!");
+        throw std::out_of_range("Program error, couldn't check tile placement!");
     }
     delete moves;
     moves = nullptr;

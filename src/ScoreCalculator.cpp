@@ -1,22 +1,16 @@
 #include "../include/ScoreCalculator.h"
 
-ScoreCalculator::ScoreCalculator()
-{
-}
+// Primary constructor
+ScoreCalculator::ScoreCalculator() {}
 
-ScoreCalculator::ScoreCalculator(const ScoreCalculator& other) 
-{
-    // [ALEX] TODO
-}
+// Copy Constructor
+ScoreCalculator::ScoreCalculator(const ScoreCalculator& other) {}
 
-// ScoreCalculator::ScoreCalculator(ScoreCalculator&& other) 
-// {
-//     // [ALEX] TODO
-// }
+// Move Constructor
+ScoreCalculator::ScoreCalculator(ScoreCalculator&& other) {}
 
-ScoreCalculator::~ScoreCalculator()
-{
-}
+// Destructor
+ScoreCalculator::~ScoreCalculator() {}
 
 int ScoreCalculator::calculateScore(Board *board, char row, int col)
 {
@@ -30,7 +24,7 @@ int ScoreCalculator::calculateScore(Board *board, char row, int col)
     int rowScore = getRowScore(board, row, col);
     int colScore = getColScore(board, row, col);
 
-    // Catches tiles with no adjacent tiles
+    // Catches tiles with no adjacent tiles - i.e. first placed tile
     if (colScore == 1 && rowScore == 1)
     {
         totalPoints = 1;
@@ -117,7 +111,7 @@ int ScoreCalculator::getRowStart(Board *board, char row, int col)
     }
     catch (const std::out_of_range &e)
     {
-        throw std::out_of_range("Error, program couldn't calculate score!");
+        throw std::out_of_range("Program error, couldn't calculate score!");
         // std::cout << "getRowStart Error";
         // std::cerr << e.what() << '\n';
     }
@@ -148,7 +142,7 @@ int ScoreCalculator::getRowEnd(Board *board, char row, int col)
     }
     catch (const std::out_of_range &e)
     {
-        throw std::out_of_range("Error, program couldn't calculate score!");
+        throw std::out_of_range("Program error, couldn't calculate score!");
         // std::cerr << e.what() << '\n';
         // std::cout << "getRowEnd Error";
     }
@@ -178,7 +172,7 @@ int ScoreCalculator::getColStart(Board *board, char row, int col)
     }
     catch (const std::out_of_range &e)
     {
-        throw std::out_of_range("Error, program couldn't calculate score!");
+        throw std::out_of_range("Program error, couldn't calculate score!");
         // std::cerr << e.what() << '\n';
     }
 
@@ -210,7 +204,7 @@ int ScoreCalculator::getColEnd(Board *board, char row, int col)
     }
     catch (const std::out_of_range &e)
     {
-        throw std::out_of_range("Error, program couldn't calculate score!");
+        throw std::out_of_range("Program error, couldn't calculate score!");
         // std::cerr << e.what() << '\n';
         // std::cout << "getColEnd Error";
     }

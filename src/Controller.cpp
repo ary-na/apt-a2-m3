@@ -48,7 +48,6 @@ void Controller::launchGame(bool testFlag) {
 
     // If the program was run in test mode, set test flag to true.
     if (testFlag) {
-        std::cout << this->testFlag << std::endl;
         this->testFlag = testFlag;
         this->fileHandler->setTestFlag(testFlag);
         this->validator->setTestFlag(testFlag);
@@ -87,7 +86,7 @@ void Controller::mainMenu() {
         } else if (menuInput == "4") {
             exitGame();
         } else {
-            std::cerr << "Select a valid menu option!" << std::endl;
+            std::cout << "Select a valid menu option!" << std::endl;
             std::cout << std::endl;
         }
     } while (!this->isExitMode());
@@ -125,10 +124,11 @@ void Controller::newGame() {
 
     // Return to main menu if new game unsuccessful. 
     } catch (std::out_of_range& e) {
-        std::cerr << e.what() << std::endl;
+        std::cout << e.what() << std::endl;
         std::cout << std::endl;
         delete this->game;
         this->game = nullptr;
+        exitGame();
     }
     
     // If new game is successful, proceed with gameplay.
@@ -150,7 +150,7 @@ void Controller::playerNamePrompt(std::string* nameInput) {
         bool nameValid = validator->isNameValid(*nameInput);
 
         if (!nameValid && !std::cin.eof()) {
-            std::cerr << "Invalid input!" << std::endl;
+            std::cout << "Invalid input!" << std::endl;
             std::cout << std::endl;
         } else if (std::cin.eof()) {
             awaitingInput = false;
@@ -189,7 +189,7 @@ void Controller::loadGame() {
     // If the file doesn't pass the validation checks, an error
     // message displays and the user is taken back to the main menu.
     } catch (std::exception(& e)) {
-        std::cerr << e.what() << std::endl;
+        std::cout << e.what() << std::endl;
         std::cout << std::endl;
     }
 
@@ -265,7 +265,9 @@ void Controller::takeTurn() {
     std::cout << std::endl;
 
     // The user prompt.
-    turnPrompt();
+    if(!exitMode) {
+        turnPrompt();
+    }
 }
 
 void Controller::playerScore(Player* player) {
@@ -275,7 +277,7 @@ void Controller::playerScore(Player* player) {
 
 void Controller::turnPrompt() {
     bool awaitingInput = true;
-    while (awaitingInput) {
+    while (awaitingInput && !isExitMode()) {
         
         // Ask user to enter command.
         std::string commandInput = "";
@@ -284,7 +286,7 @@ void Controller::turnPrompt() {
 
         // If command is invalid.
         if (command == -1) {
-            std::cerr << "Invalid input!" << std::endl;
+            std::cout << "Invalid input!" << std::endl;
             std::cout << std::endl;
 
         // If command is place <colour><shape> at <row><col>.
@@ -332,7 +334,7 @@ void Controller::placeTile(std::string commandInput, bool* inputStatus) {
 
         // If the tile placement is illegal. 
         if (!tilePlaced) {
-            std::cerr << "Illegal move!" << std::endl;
+            std::cout << "Illegal move!" << std::endl;
             std::cout << std::endl;
             delete tileInput; 
             tileInput = nullptr; 
@@ -342,10 +344,11 @@ void Controller::placeTile(std::string commandInput, bool* inputStatus) {
 
     // If something else happens and the tile can't be place. 
     } catch (std::out_of_range& e) {
-        std::cerr << e.what() << std::endl;
+        std::cout << e.what() << std::endl;
         std::cout << std::endl;
         delete tileInput; 
-        tileInput = nullptr; 
+        tileInput = nullptr;
+        exitGame();
     }
 }
 
@@ -360,7 +363,7 @@ void Controller::replaceTile(std::string commandInput, bool* inputStatus) {
     bool tileReplaced = this->game->replaceTile(tileInput);
             
     if (!tileReplaced) {
-        std::cerr << "Illegal move!" << std::endl;
+        std::cout << "Illegal move!" << std::endl;
         std::cout << std::endl;
         delete tileInput;
         tileInput = nullptr;
@@ -378,7 +381,7 @@ void Controller::saveGame(std::string fileName) {
 
     // If the file doesn't pass the validation checks.
     } catch (std::exception(& e)) {
-        std::cerr << e.what() << std::endl;
+        std::cout << e.what() << std::endl;
         std::cout << std::endl;
     }
     std::cout << std::endl;

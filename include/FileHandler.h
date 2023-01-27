@@ -16,6 +16,7 @@ class FileHandler {
     public:
         FileHandler();
         FileHandler(const FileHandler& other);
+        FileHandler(FileHandler&& other);
         ~FileHandler();
 
         void setTestFlag(const bool testFlag);
@@ -49,7 +50,7 @@ class FileHandler {
         // ** returns players hand as a comma-separated string
         // ** INPUT: A linked list representing the players hand. 
         // ** OUTPUT: A comma-separated string representing the players hand with tile data being represented as colour than shape Example “Y5,R5,O2”.
-        std::string playerHandToFile(const LinkedList* playerHand);
+        std::string playerHandToFile(LinkedList* playerHand);
 
         // @author - Jacob Depares
         // ** returns board state as a comma-separated string
@@ -62,7 +63,7 @@ class FileHandler {
         // ** returns tile bag as a comma-separated string
         // ** INPUT: A linked list representing the tile bag. 
         // ** OUTPUT: A comma-separated string representing the tile bag with tile data being represented as colour than shape Example “Y5,R5,O2”.
-        std::string tileBagToFile(const TileBag* tileBag);
+        std::string tileBagToFile(TileBag* tileBag);
 
         // @author - Jacob Depares
         // ** Absorbs the current game file and returns a Game* with the updated state of play.
