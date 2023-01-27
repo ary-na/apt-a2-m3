@@ -16,6 +16,7 @@ class FileHandler {
     public:
         FileHandler();
         FileHandler(const FileHandler& other);
+        FileHandler(FileHandler&& other);
         ~FileHandler();
 
         void setTestFlag(const bool testFlag);

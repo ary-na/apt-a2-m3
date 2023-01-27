@@ -7,7 +7,12 @@ FileHandler::FileHandler() {
 
 FileHandler::FileHandler(const FileHandler& other) {
     this->validator = new Validator(*other.validator);
-    this->testFlag = &other.testFlag;
+    this->testFlag = other.testFlag;
+}
+
+FileHandler::FileHandler(FileHandler&& other) {
+    this->validator = new Validator(*other.validator);
+    this->testFlag = other.testFlag;
 }
 
 FileHandler::~FileHandler() {
@@ -55,7 +60,7 @@ bool FileHandler::saveGame(const Game* game, const std::string fileName) {
     return true;
 }
 
-std::string FileHandler::playerHandToFile( LinkedList* playerHand) {
+std::string FileHandler::playerHandToFile(LinkedList* playerHand) {
     return playerHand->getAsStr();
 }
 
