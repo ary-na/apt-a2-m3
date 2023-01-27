@@ -237,10 +237,6 @@ void LinkedList::deleteByNode(Tile* tile) {
     }
 }
 
-// CUSTOM FUNCTIONS
-// NOT TYPICALLY IN A LINKED LIST
-// TBC, ASKING ALI IF THEY ARE OK 
-
 std::string LinkedList::getAsStr() {
     std::string listStr = "";
     Node* current = this->head;

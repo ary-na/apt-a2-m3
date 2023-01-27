@@ -91,7 +91,7 @@ void TileBag::shuffleTileBag(bool testFlag) {
 
             // If error happens while copying tiles.
             } catch (std::out_of_range(& e)) {
-                throw std::out_of_range("Program error, couldn't make tile bag!");
+                throw std::out_of_range("Program error, can't make tile bag!");
             }
         }
         // Clean up and point to new tile bag. 
