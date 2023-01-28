@@ -21,7 +21,7 @@ make
 echo "Program Testing"
 
 TEST_NAME="Testing: Menu, select credits - credits.input"
-./qwirkle < tests/credits.input > tests/credits.gameout 
+./qwirkle T < tests/credits.input > tests/credits.gameout 
 TEST=$(diff -w -B tests/credits.output tests/credits.gameout)
 echo $TEST_NAME
 print_result $TEST
@@ -33,14 +33,20 @@ echo $TEST_NAME
 print_result $TEST
 
 TEST_NAME="Testing: Menu, select exit game - quit.input"
-./qwirkle < tests/quit.input > tests/quit.gameout 
+./qwirkle T < tests/quit.input > tests/quit.gameout 
 TEST=$(diff -w -B tests/quit.output tests/quit.gameout)
 echo $TEST_NAME
 print_result $TEST
 
 TEST_NAME="Testing: Menu, enter EOF - menuEOF.input"
-./qwirkle < tests/menuEOF.input > tests/menuEOF.gameout
+./qwirkle T < tests/menuEOF.input > tests/menuEOF.gameout
 TEST=$(diff -w -B tests/menuEOF.output tests/menuEOF.gameout)
+echo $TEST_NAME
+print_result $TEST
+
+TEST_NAME="Testing: During turn, enter EOF - turnEOF.input"
+./qwirkle T < tests/turnEOF.input > tests/turnEOF.gameout
+TEST=$(diff -w -B tests/turnEOF.output tests/turnEOF.gameout)
 echo $TEST_NAME
 print_result $TEST
 
