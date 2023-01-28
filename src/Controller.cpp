@@ -89,7 +89,7 @@ void Controller::mainMenu() {
             std::cout << "Select a valid menu option!" << std::endl;
             std::cout << std::endl;
         }
-    } while (!this->isExitMode());
+    } while (!this->isExitMode() && !std::cin.eof());
 }
 
 void Controller::newGame() {
