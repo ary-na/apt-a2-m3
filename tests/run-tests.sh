@@ -20,19 +20,19 @@ make
 
 echo "Program Testing"
 
-TEST_NAME="Testing: Menu → Select credits - credits.input"
+TEST_NAME="Testing: Menu: Select credits - credits.input"
 ./qwirkle < tests/credits.input > tests/credits.gameout 
 TEST=$(diff -w -B tests/credits.output tests/credits.gameout)
 echo $TEST_NAME
 print_result $TEST
 
-TEST_NAME="Testing: Menu → Select new game - newGame.input"
+TEST_NAME="Testing: Menu: Select new game - newGame.input"
 ./qwirkle T < tests/newGame.input > tests/newGame.gameout 
 TEST=$(diff -w tests/newGame.output tests/newGame.gameout)
 echo $TEST_NAME
 print_result $TEST
 
-TEST_NAME="Testing: Menu → Exit game - quit.input"
+TEST_NAME="Testing: Menu: Select exit game - quit.input"
 ./qwirkle < tests/quit.input > tests/quit.gameout 
 TEST=$(diff -w -B tests/quit.output tests/quit.gameout)
 echo $TEST_NAME
@@ -116,6 +116,8 @@ TEST_NAME="Testing: Taking from end of hand - handListEnd.input"
 TEST=$(diff tests/handListEnd.output tests/handListEnd.gameout)
 echo $TEST_NAME
 print_result $TEST
+
+
 
 TEST_NAME="Testing: Run full game (p1 win) - fullGameP1.input"
 ./qwirkle T < tests/fullGameP1.input > tests/fullGameP1.gameout
