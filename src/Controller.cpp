@@ -83,13 +83,13 @@ void Controller::mainMenu() {
             loadGame();
         } else if (menuInput == "3") {
             credits();
-        } else if (menuInput == "4") {
+        } else if (menuInput == "4" || std::cin.eof()) {
             exitGame();
         } else {
             std::cout << "Select a valid menu option!" << std::endl;
             std::cout << std::endl;
         }
-    } while (!this->isExitMode() && !std::cin.eof());
+    } while (!this->isExitMode());
 }
 
 void Controller::newGame() {
