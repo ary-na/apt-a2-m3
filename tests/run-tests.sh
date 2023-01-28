@@ -153,8 +153,14 @@ TEST=$(diff -w -B tests/replaceEmptyTileBag.output tests/replaceEmptyTileBag.gam
 echo $TEST_NAME
 print_result $TEST
 
-TEST_NAME="Testing: Skip turn when tile bag not empty - skipNotAvailable.input"
+TEST_NAME="Testing: Skip turn fail when tile bag not empty - skipNotAvailable.input"
 ./qwirkle T < tests/skipNotAvailable.input > tests/skipNotAvailable.gameout
 TEST=$(diff -w -B tests/skipNotAvailable.output tests/skipNotAvailable.gameout)
+echo $TEST_NAME
+print_result $TEST
+
+TEST_NAME="Testing: Skip turn success when tile bag empty - skipAvailable.input"
+./qwirkle T < tests/skipAvailable.input > tests/skipAvailable.gameout
+TEST=$(diff -w -B tests/skipAvailable.output tests/skipAvailable.gameout)
 echo $TEST_NAME
 print_result $TEST
