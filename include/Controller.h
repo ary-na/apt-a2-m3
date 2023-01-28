@@ -45,7 +45,7 @@ private:
 
         // Helper function for newGame(). Takes a player 
         // name pointer and assigns user input to it.
-        void playerNamePrompt(std::string* nameInput, std::string nameInput1 = "");
+        void playerNamePrompt(std::string* nameInput, const std::string &nameInput1 = "");
 
         // Asks the user to enter a relative path to the saved game file. 
         // If the file is valid, the game is loaded and normal gameplay 

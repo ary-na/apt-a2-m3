@@ -139,7 +139,7 @@ void Controller::newGame() {
     }
 }
 
-void Controller::playerNamePrompt(std::string* nameInput, std::string nameInput1) {
+void Controller::playerNamePrompt(std::string* nameInput, const std::string &nameInput1) {
     bool awaitingInput = true;
     while (awaitingInput) {
 
