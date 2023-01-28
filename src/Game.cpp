@@ -8,6 +8,7 @@ Game::Game() {
     this->board = nullptr;
     this->currentPlayer = nullptr;
     this->scoreCalculator = nullptr;
+    this->prevTurnSkipped = false;
 }
 
 Game::Game(const Game& other) {
@@ -18,6 +19,7 @@ Game::Game(const Game& other) {
     this->player2 = new Player(*other.player2);
     this->board = new Board(*other.board);
     this->scoreCalculator = new ScoreCalculator(*other.scoreCalculator);
+    this->prevTurnSkipped = other.prevTurnSkipped;
 
     // Set the current player.
     if (other.currentPlayer == other.player2) {
@@ -40,6 +42,8 @@ Game::Game(Game&& other) {
     other.board = nullptr;
     this->tileBag = other.tileBag;
     other.tileBag = nullptr;
+    this->prevTurnSkipped = other.prevTurnSkipped;
+    other.prevTurnSkipped = false;
 }
 
 Game::~Game() {
@@ -143,16 +147,17 @@ TileBag* Game:: getTileBag() const {
     return this->tileBag;
 }
 
-bool Game::isComplete() const {
-    bool isComplete = false;
+bool Game::isComplete() {
 
     // A game is complete when the tile bag is empty and 
-    // one of the players has no more tiles in their hand.
-    if (this->tileBag->isEmpty() && (this->player1->getHand()->isEmpty() ||  
-        this->player2->getHand()->isEmpty())) {                          
-        isComplete = true;
+    // one of the players has no more tiles in their hand
+    // or both players have skipped their turn consecutively. 
+    if (!this->gameComplete && this->tileBag->isEmpty() &&
+        (this->player1->getHand()->isEmpty() || 
+        this->player2->getHand()->isEmpty())) {                       
+        this->gameComplete = true;
     }
-    return isComplete;
+    return this->gameComplete;
 }
 
 bool Game::isReplaceLegal(Tile *tile) const {
@@ -220,6 +225,28 @@ bool Game::isPlaceLegal(Tile *tile, char row, int col) const {
     return isLegal;
 }
 
+bool Game::skipTurn() {
+    bool skipTurn = false; 
+    if (this->tileBag->isEmpty()) {
+        nextPlayerTurn();
+        skipTurn = true;
+        if (prevTurnSkipped) {
+            this->gameComplete = true;
+        } else {
+            this->prevTurnSkipped = true;
+        }
+    }
+    return skipTurn;
+}
+
+bool Game::isSkipAvailable() {
+    bool skipAvailable = false; 
+    if (this->tileBag->isEmpty()) {
+        skipAvailable = true; 
+    }
+    return skipAvailable;
+}
+
 bool Game::replaceTile(Tile *tile) {
     bool isLegal = isReplaceLegal(tile);
 
@@ -233,6 +260,7 @@ bool Game::replaceTile(Tile *tile) {
 
         // Continue with the other player’s turn.
         nextPlayerTurn();
+        this->prevTurnSkipped = false;
     }
     return isLegal;
 }
@@ -255,6 +283,7 @@ bool Game::placeTile(Tile *tile, char row, int col) {
 
         // Continue with the other player’s turn.
         nextPlayerTurn();
+        this->prevTurnSkipped = false;
     }
     return isLegal;
 }

@@ -306,6 +306,10 @@ void Controller::turnPrompt() {
             awaitingInput = false;
             std::cout << std::endl;
             exitGame();
+
+        // If command is skip.
+        } else if (command == 5) {
+            skipTurn(&awaitingInput);
         }
     }
 }
@@ -361,12 +365,31 @@ void Controller::replaceTile(std::string commandInput, bool* inputStatus) {
 
     // Try to replace the tile.
     bool tileReplaced = this->game->replaceTile(tileInput);
-            
+    
     if (!tileReplaced) {
+
         std::cout << "Illegal move!" << std::endl;
         std::cout << std::endl;
         delete tileInput;
         tileInput = nullptr;
+
+        // Check if skip vailable if tile can't be replaced.
+        bool skipAvailable = this->game->isSkipAvailable();
+
+        if (skipAvailable) {
+            std::cout << "Tile bag empty, replace not available," << std::endl;
+            std::cout << "enter 'skip' to go to next player" << std::endl;
+            std::cout << std::endl;
+        } 
+    } else {
+        *inputStatus = false;
+    }
+}
+
+void Controller::skipTurn(bool* inputStatus) {
+    bool turnSkipped = this-game->skipTurn();
+    if(!turnSkipped) {
+        std::cout << "You can't skip at this stage of the game!" << std::endl;
     } else {
         *inputStatus = false;
     }
@@ -401,6 +424,7 @@ void Controller::endGame() {
     // Display the winner name.
     std::cout << "Player " << this->game->getHighestScorePlayer()
               << " won!" << std::endl;
+    std::cout << std::endl;
 
     // Quit safely.
     exitGame();

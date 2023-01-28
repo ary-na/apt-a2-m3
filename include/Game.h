@@ -50,9 +50,10 @@ class Game {
         // Both player names are returned if there is a tie.
         std::string getHighestScorePlayer() const;
 
-        // Returns true if game has ended. A game ends when the tile  
-        // bag is empty and one player has no tiles in their hand.
-        bool isComplete() const;
+        // Returns true if game has ended. A game is complete when the tile 
+        // bag is empty and one of the players has no more tiles in their 
+        // hand or both players have skipped their turn consecutively. 
+        bool isComplete();
 
         // Takes a tile, row (A-Z) and col (0-25). Returns true if the 
         // tile has been placed from the current player's hand, their 
@@ -62,6 +63,15 @@ class Game {
         // Takes a tile and returns true if the tile has been replaced from 
         // the current player's hand and isReplaceLegal() is also true.
         bool replaceTile(Tile* tile); 
+
+        // Toggles to the next player's turn. The current player 
+        // will not recieve any points. If the previous player also
+        // skipped their turn, the game will be set to complete. 
+        bool skipTurn();
+
+        // Returns true if both players have tiles in 
+        // their hands and the tile bag is empty. 
+        bool isSkipAvailable();
         
     private:
         Board* board;  
@@ -81,6 +91,14 @@ class Game {
         // shuffleTileBag() to ensure consistent randomness. 
         // Run with "./qwirkle T" to activate test mode.
         bool testFlag;
+
+        // This is set to true if skipTurn() is successful. 
+        bool prevTurnSkipped;
+
+        // This is set to true if the tile bag is empty and one of  
+        // the players has no more tiles in their hand or both
+        // players have skipped their turn consecutively. 
+        bool gameComplete;
 
         // Used after a player completes their turn to toggle
         // the current player between player 1 and player 2.

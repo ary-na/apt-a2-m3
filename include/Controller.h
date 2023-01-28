@@ -65,10 +65,14 @@ private:
         void baseGameplay();
         void takeTurn();
 
+        // Tries to skip the current player's turn,
+        // the input status is set to true if successful.
+        void skipTurn(bool* inputStatus);
+
         // Takes a player and displays their score. 
         void playerScore(Player* player);
 
-        // Helper function for takeTurn(). Asks the user to 
+        // Called during takeTurn(). Asks the user to 
         // enter a command, validates it and processes it.
         // (1) <colour><shape> at <row><col>
         // (2) replace <colour><shape>
