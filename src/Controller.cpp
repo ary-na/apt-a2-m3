@@ -377,8 +377,8 @@ void Controller::replaceTile(std::string commandInput, bool* inputStatus) {
         bool skipAvailable = this->game->isSkipAvailable();
 
         if (skipAvailable) {
-            std::cout << "Tile bag empty, replace not available," << std::endl;
-            std::cout << "enter 'skip' to go to next player" << std::endl;
+            std::cout << "Tile bag empty - Replace not available, "
+                      << "enter 'skip' to go to next player" << std::endl;
             std::cout << std::endl;
         } 
     } else {

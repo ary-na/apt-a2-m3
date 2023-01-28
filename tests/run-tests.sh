@@ -146,3 +146,9 @@ TEST_NAME="Testing: Invalid player entries - playerError.input"
 TEST=$(diff tests/playerError.output tests/playerError.gameout)
 echo $TEST_NAME
 print_result $TEST
+
+TEST_NAME="Testing: Replace tile when tile bag is empty - replaceEmptyTileBag.input"
+./qwirkle T < tests/replaceEmptyTileBag.input > tests/replaceEmptyTileBag.gameout
+TEST=$(diff -w -B tests/replaceEmptyTileBag.output tests/replaceEmptyTileBag.gameout)
+echo $TEST_NAME
+print_result $TEST
