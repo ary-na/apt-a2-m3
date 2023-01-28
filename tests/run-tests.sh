@@ -117,7 +117,11 @@ TEST=$(diff tests/handListEnd.output tests/handListEnd.gameout)
 echo $TEST_NAME
 print_result $TEST
 
-
+TEST_NAME="Testing: Take first matching tile from hand when duplicates - handListDuplicate.input"
+./qwirkle T < tests/handListDuplicate.input > tests/handListDuplicate.gameout
+TEST=$(diff -w -B tests/handListDuplicate.output tests/handListDuplicate.gameout)
+echo $TEST_NAME
+print_result $TEST
 
 TEST_NAME="Testing: Run full game (p1 win) - fullGameP1.input"
 ./qwirkle T < tests/fullGameP1.input > tests/fullGameP1.gameout
