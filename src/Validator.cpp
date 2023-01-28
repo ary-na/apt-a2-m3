@@ -8,8 +8,9 @@ Validator::Validator(const Validator &other) {
     this->testFlag = other.testFlag;
 }
 
-Validator::Validator(Validator &&other) :
-        testFlag(&other.testFlag) {}
+Validator::Validator(Validator&& other) : testFlag(other.testFlag) {
+    other.testFlag = false;
+}
 
 Validator::~Validator() {
 }
