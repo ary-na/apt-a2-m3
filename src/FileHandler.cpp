@@ -13,6 +13,8 @@ FileHandler::FileHandler(const FileHandler& other) {
 FileHandler::FileHandler(FileHandler&& other) {
     this->validator = new Validator(*other.validator);
     this->testFlag = other.testFlag;
+    other.validator = nullptr;
+    other.testFlag = false;
 }
 
 FileHandler::~FileHandler() {
