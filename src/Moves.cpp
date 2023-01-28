@@ -17,10 +17,7 @@ Moves::Moves(const Moves& other) {
     this->columnTiles = new LinkedList(*other.columnTiles);
 }
 
-Moves::Moves(Moves&& other) : board(nullptr), rowTiles(nullptr), columnTiles(nullptr) {
-     this->board = other.board;
-     this->rowTiles = other.rowTiles;
-     this->columnTiles = other.columnTiles;
+Moves::Moves(Moves&& other) : board(other.board), rowTiles(other.rowTiles), columnTiles(other.columnTiles) {
      other.board = nullptr;
      other.rowTiles = nullptr;
      other.columnTiles = nullptr;
