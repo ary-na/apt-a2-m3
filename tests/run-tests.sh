@@ -164,3 +164,9 @@ TEST_NAME="Testing: Skip turn success when tile bag empty - skipAvailable.input"
 TEST=$(diff -w -B tests/skipAvailable.output tests/skipAvailable.gameout)
 echo $TEST_NAME
 print_result $TEST
+
+TEST_NAME="Testing: Skip turn for both players and game ends - skipGameEnds.input"
+./qwirkle T < tests/skipGameEnds.input > tests/skipGameEnds.gameout
+TEST=$(diff -w -B tests/skipGameEnds.output tests/skipGameEnds.gameout)
+echo $TEST_NAME
+print_result $TEST
