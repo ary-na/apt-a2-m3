@@ -195,7 +195,7 @@ TileBag* FileHandler::tileBagFromFile(const std::string tileBagString){
 }
 
 Player* FileHandler::currentPlayerFromName (Player* P1, Player* P2, std::string playerName) const{
-    return  P1->getName().compare(playerName) == 1 ? P1 : P2;
+    return  P1->getName().compare(playerName) == 0 ? P1 : P2;
 }
 
 std::string FileHandler::trim(const std::string & source) {
