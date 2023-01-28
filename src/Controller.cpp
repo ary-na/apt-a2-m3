@@ -110,7 +110,7 @@ void Controller::newGame() {
               << "(uppercase characters only)" << std::endl;
 
     std::string name2Input = "";
-    playerNamePrompt(&name2Input);
+    playerNamePrompt(&name2Input, name1Input);
 
     // Create a new game of Qwirkle.
     Player *player1 = new Player(name1Input);
@@ -132,14 +132,14 @@ void Controller::newGame() {
     }
     
     // If new game is successful, proceed with gameplay.
-    if (gameCreated) {
+    if (gameCreated && !exitMode) {
         std::cout << "Let's play!" << std::endl;
         std::cout << std::endl;
         baseGameplay();
     }
 }
 
-void Controller::playerNamePrompt(std::string* nameInput) {
+void Controller::playerNamePrompt(std::string* nameInput, std::string nameInput1) {
     bool awaitingInput = true;
     while (awaitingInput) {
 
@@ -147,7 +147,7 @@ void Controller::playerNamePrompt(std::string* nameInput) {
         inputPrompt(nameInput);
 
         // Players should only have letters, no numbers or symbols.
-        bool nameValid = validator->isNameValid(*nameInput);
+        bool nameValid = validator->isNameValid(*nameInput, nameInput1);
 
         if (!nameValid && !std::cin.eof()) {
             std::cout << "Invalid input!" << std::endl;

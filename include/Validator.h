@@ -18,7 +18,7 @@ public:
     ~Validator();
 
     // Check if username is valid (Players should only consist of letters (no numbers or symbols))
-    bool isNameValid(const std::string &input);
+    bool isNameValid(const std::string &input, const std::string &nameInput1);
 
     // Check if saved file exist
     bool isSavedFileExist(std::string fileName);
