@@ -388,7 +388,7 @@ void Controller::replaceTile(std::string commandInput, bool* inputStatus) {
 
 void Controller::skipTurn(bool* inputStatus) {
     bool turnSkipped = this-game->skipTurn();
-    if(!turnSkipped) {
+    if(turnSkipped) {
         *inputStatus = false;
     } else {
         std::cout << "You can't skip at this stage of the game!" << std::endl;
