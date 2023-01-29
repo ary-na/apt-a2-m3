@@ -116,7 +116,6 @@ TEST=$(diff tests/tilePlacement4.output tests/tilePlacement4.gameout)
 echo $TEST_NAME
 print_result $TEST
 
-# Alex - Not added to the doc yet
 TEST_NAME="Testing: Taking from start of hand - handListStart.input"
 ./qwirkle T < tests/handListStart.input > tests/handListStart.gameout
 TEST=$(diff tests/handListStart.output tests/handListStart.gameout)
