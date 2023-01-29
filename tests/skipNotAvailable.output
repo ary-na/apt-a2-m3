@@ -10,15 +10,12 @@ Menu
 3. Credits (show student information)
 4. Quit
 > 
-
 Starting a new game
 
 Enter a name for player 1 (uppercase characters only)
 > 
-
 Enter a name for player 2 (uppercase characters only)
 > 
-
 Let's play!
 
 A, it's your turn
@@ -56,13 +53,12 @@ Y |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  
 Z |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 
 Your hand is
-B1,R3,Y6,G2,G1,P5
+Y3,Y4,Y4,Y5,Y5,Y6
 
-> skip
-
-Invalid input!
-
+>
 You can't skip at this stage of the game!
+>
+Invalid input!
 
 > 
 
