@@ -20,6 +20,7 @@ make
 
 echo "Program Testing"
 
+# Input Tests
 TEST_NAME="Testing: Menu, select credits - credits.input"
 ./qwirkle T < tests/credits.input > tests/credits.gameout 
 TEST=$(diff -w -B tests/credits.output tests/credits.gameout)
@@ -49,6 +50,14 @@ TEST_NAME="Testing: During turn, enter EOF - turnEOF.input"
 TEST=$(diff -w -B tests/turnEOF.output tests/turnEOF.gameout)
 echo $TEST_NAME
 print_result $TEST
+
+TEST_NAME="Testing: Invalid player entries - playerError.input"
+./qwirkle T < tests/playerError.input > tests/playerError.gameout
+TEST=$(diff tests/playerError.output tests/playerError.gameout)
+echo $TEST_NAME
+print_result $TEST
+
+# Tile placement and scoring tests
 
 TEST_NAME="Testing: Top left corner place tiles - corner1.input"
 ./qwirkle T < tests/corner1.input > tests/corner1.gameout 
@@ -92,6 +101,8 @@ TEST=$(diff tests/dualQwirkle.output tests/dualQwirkle.gameout)
 echo $TEST_NAME
 print_result $TEST
 
+# Validation testing of tile placement
+
 TEST_NAME="Testing: Qwirkle tile placement - tilePlacement1.input"
 ./qwirkle T < tests/tilePlacement1.input > tests/tilePlacement1.gameout
 TEST=$(diff tests/tilePlacement1.output tests/tilePlacement1.gameout)
@@ -116,6 +127,8 @@ TEST=$(diff tests/tilePlacement4.output tests/tilePlacement4.gameout)
 echo $TEST_NAME
 print_result $TEST
 
+# Linked list testing of Hand and Tile Bag
+
 TEST_NAME="Testing: Taking from start of hand - handListStart.input"
 ./qwirkle T < tests/handListStart.input > tests/handListStart.gameout
 TEST=$(diff tests/handListStart.output tests/handListStart.gameout)
@@ -133,6 +146,14 @@ TEST_NAME="Testing: Take first matching tile from hand when duplicates - handLis
 TEST=$(diff -w -B tests/handListDuplicate.output tests/handListDuplicate.gameout)
 echo $TEST_NAME
 print_result $TEST
+
+TEST_NAME="Testing: Replace tile when tile bag is empty - replaceEmptyTileBag.input"
+./qwirkle T < tests/replaceEmptyTileBag.input > tests/replaceEmptyTileBag.gameout
+TEST=$(diff -w -B tests/replaceEmptyTileBag.output tests/replaceEmptyTileBag.gameout)
+echo $TEST_NAME
+print_result $TEST
+
+# Full game testing
 
 TEST_NAME="Testing: Run full game (p1 win) - fullGameP1.input"
 ./qwirkle T < tests/fullGameP1.input > tests/fullGameP1.gameout
@@ -152,17 +173,7 @@ TEST=$(diff tests/fullGameDraw.output tests/fullGameDraw.gameout)
 echo $TEST_NAME
 print_result $TEST
 
-TEST_NAME="Testing: Invalid player entries - playerError.input"
-./qwirkle T < tests/playerError.input > tests/playerError.gameout
-TEST=$(diff tests/playerError.output tests/playerError.gameout)
-echo $TEST_NAME
-print_result $TEST
-
-TEST_NAME="Testing: Replace tile when tile bag is empty - replaceEmptyTileBag.input"
-./qwirkle T < tests/replaceEmptyTileBag.input > tests/replaceEmptyTileBag.gameout
-TEST=$(diff -w -B tests/replaceEmptyTileBag.output tests/replaceEmptyTileBag.gameout)
-echo $TEST_NAME
-print_result $TEST
+# Skip Turn Tests
 
 TEST_NAME="Testing: Skip turn fail when tile bag not empty - skipNotAvailable.input"
 ./qwirkle T < tests/skipNotAvailable.input > tests/skipNotAvailable.gameout
@@ -181,3 +192,64 @@ TEST_NAME="Testing: Skip turn for both players and game ends - skipGameEnds.inpu
 TEST=$(diff -w -B tests/skipGameEndsP1Win.output tests/skipGameEndsP1Win.gameout)
 echo $TEST_NAME
 print_result $TEST
+
+# Save game tests
+TEST_NAME="Testing: Save a blank game - saveGameNew.input"
+./qwirkle T < tests/saveGameNew.input > tests/saveGameNew.gameout
+TEST=$(diff -w -B tests/saveGameNew.output tests/saveGameNew.gameout)
+echo $TEST_NAME
+print_result $TEST
+TEST_NAME="Testing: Save a blank game, check the save file - saveGameNew.expsave"
+TEST=$(diff -w -B tests/saveGameNew.save tests/saveGameNew.expsave)
+echo $TEST_NAME
+print_result $TEST
+
+
+TEST_NAME="Testing: Save a partial game - saveGamePartial.input"
+./qwirkle T < tests/saveGamePartial.input > tests/saveGamePartial.gameout
+TEST=$(diff -w -B tests/saveGamePartial.output tests/saveGamePartial.gameout)
+echo $TEST_NAME
+print_result $TEST
+TEST_NAME="Testing: Save a partial game, check the save file - saveGamePartial.expsave"
+TEST=$(diff -w -B tests/saveGamePartial.save tests/saveGamePartial.expsave)
+echo $TEST_NAME
+print_result $TEST
+
+TEST_NAME="Testing: Save a game with an invalid location - saveGameInvalid.input"
+./qwirkle T < tests/saveGameInvalid.input > tests/saveGameInvalid.gameout
+TEST=$(diff -w -B tests/saveGameInvalid.output tests/saveGameInvalid.gameout)
+echo $TEST_NAME
+print_result $TEST
+
+# Load Game Tests
+
+TEST_NAME="Testing: Load a game, P1 active player - loadGameValidP1.input"
+./qwirkle T < tests/loadGameValidP1.input > tests/loadGameValidP1.gameout
+TEST=$(diff -w -B tests/loadGameValidP1.output tests/loadGameValidP1.gameout)
+echo $TEST_NAME
+print_result $TEST
+
+TEST_NAME="Testing: Load a game, P2 active player - loadGameValidP2.input"
+./qwirkle T < tests/loadGameValidP2.input > tests/loadGameValidP2.gameout
+TEST=$(diff -w -B tests/loadGameValidP2.output tests/loadGameValidP2.gameout)
+echo $TEST_NAME
+print_result $TEST
+
+TEST_NAME="Testing: Load a game, no save file exists - loadGameNoSave.input"
+./qwirkle T < tests/loadGameNoSave.input > tests/loadGameNoSave.gameout
+TEST=$(diff -w -B tests/loadGameNoSave.output tests/loadGameNoSave.gameout)
+echo $TEST_NAME
+print_result $TEST
+
+TEST_NAME="Testing: Load a game, invalid save file exists - loadGameInvalid.input"
+./qwirkle T < tests/loadGameInvalid.input > tests/loadGameInvalid.gameout
+TEST=$(diff -w -B tests/loadGameInvalid.output tests/loadGameInvalid.gameout)
+echo $TEST_NAME
+print_result $TEST
+
+
+
+
+
+
+
