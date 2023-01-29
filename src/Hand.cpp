@@ -22,10 +22,6 @@ std::string Hand::getAsStr() {
     return this->handList->getAsStr();
 }
 
-LinkedList* Hand::getHandList() {
-    return this->handList;
-}
-
 bool Hand::isEmpty() {
     bool isEmpty = false;
     if (getNumOfTiles() < 1) {

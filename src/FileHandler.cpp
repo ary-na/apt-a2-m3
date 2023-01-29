@@ -39,10 +39,10 @@ bool FileHandler::saveGame(const Game* game, const std::string fileName) {
     if(outFile.is_open()){
         outFile << game->getPlayer1()->getName() << std::endl;
         outFile << game->getPlayer1()->getScore() << std::endl;
-        outFile << playerHandToFile(game->getPlayer1()->getHand()->getHandList()) << std::endl;
+        outFile << playerHandToFile(game->getPlayer1()->getHand()) << std::endl;
         outFile << game->getPlayer2()->getName() << std::endl;
         outFile << game->getPlayer2()->getScore() << std::endl;
-        outFile << playerHandToFile(game->getPlayer2()->getHand()->getHandList()) << std::endl;
+        outFile << playerHandToFile(game->getPlayer2()->getHand()) << std::endl;
         outFile << std::to_string(game->getBoard()->getMaxRow() + 1) + "," +                           
                    std::to_string(game->getBoard()->getMaxCol() + 1) << std::endl;                     
         outFile << boardStateToFile(game->getBoard()) << std::endl;
@@ -60,23 +60,24 @@ bool FileHandler::saveGame(const Game* game, const std::string fileName) {
     return true;
 }
 
-std::string FileHandler::playerHandToFile(LinkedList* playerHand) {
+std::string FileHandler::playerHandToFile(Hand* playerHand) {
     return playerHand->getAsStr();
 }
 
-std::string FileHandler::boardStateToFile(const Board* board) {
+std::string FileHandler::boardStateToFile(Board* board) {
 
-    std::string boardState = "";
+    // std::string boardState = "";
+    std::string boardState = board->getAsStr();
 
-      for (char row = 'A'; toupper(row) - 'A' <= board->getMaxRow(); row++) {
-        for (int col = 0; col <= board->getMaxCol() ; col++) {   
-            Tile* tile = board->getTileAtPos(row, col);
-            if(tile !=  nullptr) {
-                std::string tileString = tile->colour + std::to_string(tile->shape) + "@" + row + std::to_string(col);
-                boardState == "" ? boardState = tileString : boardState = boardState + " ," + tileString;
-            }
-        }
-    }
+    //   for (char row = 'A'; toupper(row) - 'A' <= board->getMaxRow(); row++) {
+    //     for (int col = 0; col <= board->getMaxCol() ; col++) {   
+    //         Tile* tile = board->getTileAtPos(row, col);
+    //         if(tile !=  nullptr) {
+    //             std::string tileString = tile->colour + std::to_string(tile->shape) + "@" + row + std::to_string(col);
+    //             boardState == "" ? boardState = tileString : boardState = boardState + " ," + tileString;
+    //         }
+    //     }
+    // }
 
     return boardState;
 }

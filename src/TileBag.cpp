@@ -30,10 +30,6 @@ bool TileBag::isEmpty() {
     return isEmpty;
 }
 
-LinkedList* TileBag::getTileBagList() const {
-    return this->tileBagList;
-}
-
 void TileBag::newGameTileBag(bool testFlag) {
     fillTileBag();
     shuffleTileBag(testFlag);
