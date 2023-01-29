@@ -21,9 +21,6 @@ class TileBag {
         TileBag(TileBag&& other);
         ~TileBag();
 
-        // Returns the linked list for the tile bag.                            // DO WE NEED THIS NOW 
-        LinkedList* getTileBagList() const;                                     // WE HAVE GETASSTRING()?
-
         // Returns the total titles.
         int getNumOfTiles() const;
 

@@ -27,9 +27,6 @@ class Hand {
         // Removes the first tile matching the given tile. 
         void removeTile(Tile* tile);
 
-        // Returns the hand list. 
-        LinkedList* getHandList();
-
         // Takes a string array and adds the tiles from the hand
         // to it. The tiles will be added to the array starting 
         // the given index. Used for checkTiles() in game. 

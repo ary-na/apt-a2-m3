@@ -50,14 +50,14 @@ class FileHandler {
         // ** returns players hand as a comma-separated string
         // ** INPUT: A linked list representing the players hand. 
         // ** OUTPUT: A comma-separated string representing the players hand with tile data being represented as colour than shape Example “Y5,R5,O2”.
-        std::string playerHandToFile(LinkedList* playerHand);
+        std::string playerHandToFile(Hand* playerHand);
 
         // @author - Jacob Depares
         // ** returns board state as a comma-separated string
         // ** INPUT: the board in play 
         // ** OUTPUT: A comma-separated string with the format being the tile data, followed by an “@” symbol, then the board’s position. 
         // Example: “B4@B2, B6@B3, B5@B4”
-        std::string boardStateToFile(const Board* board);
+        std::string boardStateToFile(Board* board);
 
         // @author - Jacob Depares
         // ** returns tile bag as a comma-separated string
