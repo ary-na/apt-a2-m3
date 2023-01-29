@@ -225,25 +225,25 @@ bool Game::isPlaceLegal(Tile *tile, char row, int col) const {
     return isLegal;
 }
 
-bool Game::skipTurn() {
-    bool skipTurn = false; 
-    if (this->tileBag->isEmpty()) {
+void Game::skipTurn() {
+    if (isSkipAvailable()) {
         nextPlayerTurn();
-        skipTurn = true;
         if (prevTurnSkipped) {
             this->gameComplete = true;
         } else {
             this->prevTurnSkipped = true;
         }
     }
-    return skipTurn;
 }
 
 bool Game::isSkipAvailable() {
     bool skipAvailable = false; 
+    //std::cout << "Tile Bag Empty Status: " << this->tileBag->isEmpty() << "\n";
     if (this->tileBag->isEmpty()) {
         skipAvailable = true; 
+        //std::cout << "Tile Bag Empty Status from if is true \n";
     }
+    //std::cout << "isSkipAvailable Status: " << skipAvailable << "\n";
     return skipAvailable;
 }
 

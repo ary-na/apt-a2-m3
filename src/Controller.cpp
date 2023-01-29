@@ -386,12 +386,12 @@ void Controller::replaceTile(std::string commandInput, bool* inputStatus) {
 }
 
 void Controller::skipTurn(bool* inputStatus) {
-    bool turnSkipped = this-game->skipTurn();
-    if(turnSkipped) {
-        *inputStatus = false;
-    } else {
-        std::cout << "You can't skip at this stage of the game!" << std::endl;
-    }
+    bool skipAvailable = skipAvailable = this->game->isSkipAvailable();
+    if(skipAvailable)
+        this->game->skipTurn();
+    else
+        std::cout << "You can't skip at this stage of the game! Please play a tile.." << std::endl;
+    *inputStatus = false;
 }
 
 void Controller::saveGame(std::string fileName) {

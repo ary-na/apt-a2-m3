@@ -116,7 +116,6 @@ TEST=$(diff tests/tilePlacement4.output tests/tilePlacement4.gameout)
 echo $TEST_NAME
 print_result $TEST
 
-# Alex - Not added to the doc yet
 TEST_NAME="Testing: Taking from start of hand - handListStart.input"
 ./qwirkle T < tests/handListStart.input > tests/handListStart.gameout
 TEST=$(diff tests/handListStart.output tests/handListStart.gameout)
@@ -178,7 +177,7 @@ echo $TEST_NAME
 print_result $TEST
 
 TEST_NAME="Testing: Skip turn for both players and game ends - skipGameEnds.input"
-./qwirkle T < tests/skipGameEnds.input > tests/skipGameEnds.gameout
-TEST=$(diff -w -B tests/skipGameEnds.output tests/skipGameEnds.gameout)
+./qwirkle T < tests/skipGameEndsP1Win.input > tests/skipGameEndsP1Win.gameout
+TEST=$(diff -w -B tests/skipGameEndsP1Win.output tests/skipGameEndsP1Win.gameout)
 echo $TEST_NAME
 print_result $TEST

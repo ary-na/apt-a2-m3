@@ -21,7 +21,7 @@ Qwirkle game successfully loaded
 
 BOB, it's your turn
 
-Score for BOB: 1
+Score for BOB: 3
 Score for TOM: 2
 
    0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 
@@ -60,7 +60,7 @@ R1
 
 TOM, it's your turn
 
-Score for BOB: 1
+Score for BOB: 3
 Score for TOM: 2
 
    0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 
@@ -99,9 +99,9 @@ R1
 
 Game over
 
-Score for BOB: 1
+Score for BOB: 3
 Score for TOM: 2
 
-Player TOM won!
+Player BOB won!
 
 Goodbye
