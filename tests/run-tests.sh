@@ -177,7 +177,7 @@ echo $TEST_NAME
 print_result $TEST
 
 TEST_NAME="Testing: Skip turn for both players and game ends - skipGameEnds.input"
-./qwirkle T < tests/skipGameEnds.input > tests/skipGameEnds.gameout
-TEST=$(diff -w -B tests/skipGameEnds.output tests/skipGameEnds.gameout)
+./qwirkle T < tests/skipGameEndsP1Win.input > tests/skipGameEndsP1Win.gameout
+TEST=$(diff -w -B tests/skipGameEndsP1Win.output tests/skipGameEndsP1Win.gameout)
 echo $TEST_NAME
 print_result $TEST

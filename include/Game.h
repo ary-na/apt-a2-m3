@@ -67,7 +67,8 @@ class Game {
         // Toggles to the next player's turn. The current player 
         // will not recieve any points. If the previous player also
         // skipped their turn, the game will be set to complete. 
-        bool skipTurn();
+        // This function should be called only if it is valid to skip.
+        void skipTurn();
 
         // Returns true if both players have tiles in 
         // their hands and the tile bag is empty. 
@@ -132,6 +133,7 @@ class Game {
         // Takes a string array and adds every tile 
         // a game should have. Used in checkTiles(). 
         void addToArray(std::string expectedTilesArray[]);
+
 };
 
 #endif // GAME_H
