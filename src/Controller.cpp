@@ -367,7 +367,6 @@ void Controller::replaceTile(std::string commandInput, bool* inputStatus) {
     bool tileReplaced = this->game->replaceTile(tileInput);
     
     if (!tileReplaced) {
-
         std::cout << "Illegal move!" << std::endl;
         std::cout << std::endl;
         delete tileInput;
