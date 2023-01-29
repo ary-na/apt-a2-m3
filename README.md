@@ -46,7 +46,11 @@ Menu
 4. Quit
 > 
 ```
+If you want to test the game, a set of predefined tests have been created and loaded. Run these with the following command from the games directory
 
+```
+./tests/run-tests.sh  
+```
 
 ### References
 
