@@ -164,7 +164,7 @@ bool Game::isReplaceLegal(Tile *tile) const {
     bool isLegal = false;
     
     // The tile must be in the current player's hand 
-    // and the the tile bag must have tiles in it.
+    // and the tile bag must have tiles in it.
     if (this->currentPlayer->getHand()->containsTile(tile) && 
         !this->tileBag->isEmpty()) {
         isLegal = true;
@@ -174,7 +174,7 @@ bool Game::isReplaceLegal(Tile *tile) const {
 
 bool Game::isPlaceLegal(Tile *tile, char row, int col) const {
     bool isLegal = true;
-    auto *moves = new Moves(this->board);
+    Moves *moves = new Moves(this->board);
 
     try {
         // Row and col to validate.
@@ -194,18 +194,15 @@ bool Game::isPlaceLegal(Tile *tile, char row, int col) const {
                    validRow->getLength() == 0 && validCol->getLength() == 0) {
             isLegal = false;
 
-        // A line can never be longer than 6 tiles.
-        } else if (validRow->getLength() >= maxTilesInLine ||
-                   validCol->getLength() >= maxTilesInLine) {
-            isLegal = false;
-
         // Tiles must share one colour or shape attribute.
+        // A line can never be longer than 6 tiles.
         } else if (!(Moves::isTileColourMatch(validRow, tile) ||          
                    Moves::isTileShapeMatch(validRow, tile)) &&               
                    validRow->getLength() > 0) {
             isLegal = false;
 
         // Tiles must share one colour or shape attribute.
+        // A line can never be longer than 6 tiles.
         } else if (!(Moves::isTileColourMatch(validCol, tile) ||           
                    Moves::isTileShapeMatch(validCol, tile)) &&                  
                    validCol->getLength() > 0) {

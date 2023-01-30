@@ -86,7 +86,6 @@ class Game {
 
         // Defines tile numbers for the game. 
         const static int maxTilesInGame = 72;
-        const static int maxTilesInLine = 6;
 
         // When test flag is true, a random seed is set during 
         // shuffleTileBag() to ensure consistent randomness. 
