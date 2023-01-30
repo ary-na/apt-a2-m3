@@ -138,7 +138,7 @@ Hand* FileHandler::playerHandFromFile(const std::string playerHandString){
         std::stringstream s_stream(playerHandString);
         while(s_stream.good()) {
             std::string substr;
-            getline(s_stream, substr, ','); //get first string delimited by comma
+            getline(s_stream, substr, ','); 
             std::string num(1 , substr[1]);
             playerHand->addTile(new Tile(substr[0], std::stoi(num)));
         }
@@ -162,8 +162,7 @@ Board* FileHandler:: initaliseBoardFromFile (const std::string boardState) {
                         stoi(substr.substr(substr.find('@') + 2, substr.length())));
 
             }
-        }
-    
+        }    
     return board;
 }
 
@@ -174,7 +173,7 @@ TileBag* FileHandler::tileBagFromFile(const std::string tileBagString){
         std::stringstream s_stream(tileBagString);
         while(s_stream.good()) {
             std::string substr;
-            getline(s_stream, substr, ','); //get first string delimited by comma
+            getline(s_stream, substr, ','); 
             std::string num(1 , substr[1]);
             tileBag->addTile(new Tile(substr[0], std::stoi(num)));
         }
@@ -190,6 +189,6 @@ Player* FileHandler::currentPlayerFromName
 std::string FileHandler::trim(const std::string & source) {
     std::string s(source);
     s.erase(0,s.find_first_not_of(" \n\r\t"));
-    s.erase(s.find_last_not_of(" \n\r\t")+1);
+    s.erase(s.find_last_not_of(" \n\r\t") + 1);
     return s;
 }
