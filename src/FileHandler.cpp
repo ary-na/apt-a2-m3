@@ -11,8 +11,9 @@ FileHandler::FileHandler(const FileHandler& other) {
 }
 
 FileHandler::FileHandler(FileHandler&& other) {
-    this->validator = new Validator(*other.validator);
+    this->validator = other.validator;
     this->testFlag = other.testFlag;
+    other.testFlag = false;
 }
 
 FileHandler::~FileHandler() {
@@ -36,7 +37,7 @@ bool FileHandler::saveGame(const Game* game, const std::string fileName) {
         outFile.open(path, std::ios::app) :
             outFile.open(path, std::ios::out);
 
-    if(outFile.is_open()){
+    if (outFile.is_open()){
         outFile << game->getPlayer1()->getName() << std::endl;
         outFile << game->getPlayer1()->getScore() << std::endl;
         outFile << playerHandToFile(game->getPlayer1()->getHand()) << std::endl;
@@ -53,7 +54,7 @@ bool FileHandler::saveGame(const Game* game, const std::string fileName) {
     }
     
     // Validates the fileCreate successfully
-    if(!this->validator->isSavedFileExist(fileName.substr(5, fileName.length()))){
+    if (!this->validator->isSavedFileExist(fileName.substr(5, fileName.length()))){
         throw std::invalid_argument("Game did not save correctly!");
     }
 
@@ -65,21 +66,7 @@ std::string FileHandler::playerHandToFile(Hand* playerHand) {
 }
 
 std::string FileHandler::boardStateToFile(Board* board) {
-
-    // std::string boardState = "";
-    std::string boardState = board->getAsStr();
-
-    //   for (char row = 'A'; toupper(row) - 'A' <= board->getMaxRow(); row++) {
-    //     for (int col = 0; col <= board->getMaxCol() ; col++) {   
-    //         Tile* tile = board->getTileAtPos(row, col);
-    //         if(tile !=  nullptr) {
-    //             std::string tileString = tile->colour + std::to_string(tile->shape) + "@" + row + std::to_string(col);
-    //             boardState == "" ? boardState = tileString : boardState = boardState + " ," + tileString;
-    //         }
-    //     }
-    // }
-
-    return boardState;
+    return board->getAsStr();
 }
 
 std::string FileHandler::tileBagToFile(TileBag* tileBag) {
@@ -89,7 +76,7 @@ std::string FileHandler::tileBagToFile(TileBag* tileBag) {
 Game* FileHandler::loadGame(const std::string fileName) {
 
     // Validates the file exist
-    if(!this->validator->isSavedFileExist(fileName)){
+    if (!this->validator->isSavedFileExist(fileName)){
         throw std::out_of_range("File does not exist!");
     }
     return absorbLoadGameFile(fileName);
@@ -105,7 +92,7 @@ Game* FileHandler::absorbLoadGameFile(const std::string fileName) {
 
     // Save the content of the file to a vector allowing the game to be created cleanly.
     std::vector<std::string> fileContent;
-    if(inFile.is_open()) {        
+    if (inFile.is_open()) {        
         std::string line;
         while (getline(inFile,line)) 
             fileContent.push_back(line);
@@ -147,7 +134,7 @@ Game* FileHandler::absorbLoadGameFile(const std::string fileName) {
 Hand* FileHandler::playerHandFromFile(const std::string playerHandString){
     Hand* playerHand = new Hand();
     
-    if(playerHandString != "") {
+    if (playerHandString != "") {
         std::stringstream s_stream(playerHandString);
         while(s_stream.good()) {
             std::string substr;
@@ -162,7 +149,7 @@ Hand* FileHandler::playerHandFromFile(const std::string playerHandString){
 Board* FileHandler:: initaliseBoardFromFile (const std::string boardState) {
     Board* board = new Board ();
 
-    if(boardState != "") {
+    if (boardState != "") {
         std::stringstream s_stream(boardState);
             while(s_stream.good()) {
                 std::string substr;
@@ -183,7 +170,7 @@ Board* FileHandler:: initaliseBoardFromFile (const std::string boardState) {
 TileBag* FileHandler::tileBagFromFile(const std::string tileBagString){
     TileBag* tileBag = new TileBag();
 
-    if(tileBagString != "") {
+    if (tileBagString != "") {
         std::stringstream s_stream(tileBagString);
         while(s_stream.good()) {
             std::string substr;
