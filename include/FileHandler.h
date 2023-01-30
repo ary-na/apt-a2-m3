@@ -97,7 +97,7 @@ class FileHandler {
         // ** INPUT: Valid current players and a player name
         // ** OUTPUT: if an invalid player name is passed, the function will return a NullPtr and produce an error. 
         // If a valid name is passed, the function will return a ptr to the player.
-        Player* currentPlayerFromName (Player* P1, Player* P2, std::string playerName) const; 
+        Player* currentPlayerFromName (Player* player1, Player* player2, std::string playerName) const; 
 
         // @author - Jacob Depares
         // ** Trim the start and end of a strign of whitespace
