@@ -1,7 +1,6 @@
 #ifndef FILEHANDLER_H
 #define FILEHANDLER_H
 
-#include "LinkedList.h"
 #include "TileBag.h"
 #include "Game.h"
 #include "Board.h"
@@ -48,7 +47,7 @@ class FileHandler {
 
         // @author - Jacob Depares
         // ** returns players hand as a comma-separated string
-        // ** INPUT: A linked list representing the players hand. 
+        // ** INPUT: A Hand* representing the players hand. 
         // ** OUTPUT: A comma-separated string representing the players hand with tile data being represented as colour than shape Example “Y5,R5,O2”.
         std::string playerHandToFile(Hand* playerHand);
 
@@ -61,7 +60,7 @@ class FileHandler {
 
         // @author - Jacob Depares
         // ** returns tile bag as a comma-separated string
-        // ** INPUT: A linked list representing the tile bag. 
+        // ** INPUT: A TileBag* representing the tile bag. 
         // ** OUTPUT: A comma-separated string representing the tile bag with tile data being represented as colour than shape Example “Y5,R5,O2”.
         std::string tileBagToFile(TileBag* tileBag);
 
@@ -76,7 +75,7 @@ class FileHandler {
         // @author - Jacob Depares
         // ** Returns Hand from file.
         // ** INPUT: A comma-separated string is being passed to the function with tile data being represented as colour than shape Example “Y5,R5,O2”.
-        // ** OUTPUT: A LinkedList* of tiles representing the current player’s hand. 
+        // ** OUTPUT: A Hand* of tiles representing the current player’s hand. 
         Hand* playerHandFromFile(const std::string playerHandString);
 
         // @author - Jacob Depares
@@ -89,7 +88,7 @@ class FileHandler {
         // @author - Jacob Depares
         // ** Returns Hand from file.
         // ** INPUT: A comma-separated string is being passed to the function with tile data being represented as colour than shape Example “Y5,R5,O2”.
-        // ** OUTPUT: A LinkedList* of tiles representing the current player’s hand. 
+        // ** OUTPUT: A TileBag* of tiles representing the current player’s hand. 
         TileBag* tileBagFromFile (const std::string playerHandString);   
 
         // @author - Jacob Depares
