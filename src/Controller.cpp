@@ -139,7 +139,8 @@ void Controller::newGame() {
     }
 }
 
-void Controller::playerNamePrompt(std::string* nameInput, const std::string &nameInput1) {
+void Controller::playerNamePrompt(std::string* nameInput, const std::string 
+    &nameInput1) {
     bool awaitingInput = true;
     while (awaitingInput) {
 
@@ -387,10 +388,12 @@ void Controller::replaceTile(std::string commandInput, bool* inputStatus) {
 
 void Controller::skipTurn(bool* inputStatus) {
     bool skipAvailable = skipAvailable = this->game->isSkipAvailable();
-    if(skipAvailable)
+    if(skipAvailable) {
         this->game->skipTurn();
-    else
-        std::cout << "You can't skip at this stage of the game! Please play a tile.." << std::endl;
+    }
+    else {
+        std::cout << "You can't skip at this stage of the game!" << std::endl;
+    }
     *inputStatus = false;
 }
 
