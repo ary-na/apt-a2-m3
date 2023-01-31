@@ -23,7 +23,7 @@ class Controller {
         // welcome message and continues to the main menu. 
         void launchGame(bool testFlag); 
 
-private:
+    private:
         Game* game;
 
         // @author - Arian Najafi Yamchelo
@@ -97,7 +97,7 @@ private:
         // Takes the user command and tries to replace a tile, 
         // the input status is set to true if successful.
         void replaceTile(std::string commandInput, bool* inputStatus);
-        
+
         // @author - Arian Najafi Yamchelo
         // Displays the end game message, scores, 
         // winner name and safely quits the program. 
