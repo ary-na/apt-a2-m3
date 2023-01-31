@@ -27,6 +27,7 @@ LinkedList::LinkedList(const LinkedList& other) {
                 current = current->next; 
             }
             this->tail = current; 
+            current = nullptr;
         }
     } else {
         this->head = nullptr;
@@ -75,6 +76,7 @@ Tile* LinkedList::getAtPos(int pos) const {
             ++count;
             current = current->next;
         }
+        current = nullptr;
         return returnTile;
     }
 }
@@ -95,6 +97,7 @@ bool LinkedList::search(Tile* tile) const {
         }
         current = current->next;
     }
+    current = nullptr;
     return result;
 }
 
@@ -113,6 +116,7 @@ void LinkedList::addEnd(Tile* tile) {
         this->tail = temp;
     }
     ++this->length;
+    temp = nullptr;
 }
 
 void LinkedList::addFront(Tile* tile) {
@@ -130,6 +134,7 @@ void LinkedList::addFront(Tile* tile) {
         this->head = temp;
     }
     ++this->length;
+    temp = nullptr;
 }
 
 void LinkedList::deleteAtPos(int pos) {
@@ -234,6 +239,7 @@ void LinkedList::deleteByNode(Tile* tile) {
             current = current->next;
             ++pos;
         }  
+        current = nullptr;
     }
 }
 
@@ -251,6 +257,7 @@ std::string LinkedList::getAsStr() {
             ++count;
         }
     }
+    current = nullptr;
     return listStr;
 }
 
@@ -270,4 +277,5 @@ void LinkedList::addToArray(std::string array[], int* i) {
         current = current->next;
         (*i)++;
     }
+    current = nullptr;
 }
