@@ -77,10 +77,11 @@ void TileBag::shuffleTileBag(bool testFlag) {
 
             try {
                 // Get a tile from tile bag at random pos.
-                Tile *randomTile = this->tileBagList->getAtPos(randomVal);
+                Tile* randomTile = this->tileBagList->getAtPos(randomVal);
 
                 // Add tile to the temp tile bag.
                 tempTileList->addEnd(new Tile(*randomTile));
+                randomTile = nullptr;
 
                 // Delete tile from original tile bag.
                 this->tileBagList->deleteAtPos(randomVal);
@@ -106,10 +107,11 @@ void TileBag::fillHand(Hand* hand) {
     while ((hand->getNumOfTiles() < hand->getMaxTilesInHand()) && !isEmpty()) {
 
         // Draw a tile from the front of the tile bag. 
-        Tile *tileDrawn = this->tileBagList->getFront();
+        Tile* tileDrawn = this->tileBagList->getFront();
 
         // Add it to the end of the player's hand. 
         hand->addTile(new Tile(*tileDrawn));
+        tileDrawn = nullptr;
 
         // Remove the tile from the tile bag.
         tileBagList->deleteFront();
