@@ -214,10 +214,10 @@ void LinkedList::deleteByNode(Tile* tile) {
 
         // Traverse list.
         while (current != nullptr && result == false) {
-            if ((tile->colour == current->tile->colour) &&
-                (tile->shape == current->tile->shape)) {
 
-                // Delete the first matching tile.
+            // Delete the first matching tile.
+            if ((tile->colour == current->tile->colour) &&
+                (tile->shape == current->tile->shape)) { 
                 if (pos == this->length) {
                     deleteEnd();
                     result = true;
