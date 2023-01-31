@@ -24,17 +24,19 @@ Board::Board(const Board& other) {
     // Traverse board vector and copy tiles.
     if (other.numOfTiles > 0) {
         int tilesAdded = 0;
+        Tile* temp = nullptr;
         while (tilesAdded != other.numOfTiles) {
             for (int row = this->minRow; row <= other.maxRow; row++) {
                 for (int col = this->minCol; col <= other.maxCol; col++)  {
                     if (other.boardVector[row][col] != nullptr) {
-                        Tile* temp = new Tile(*other.boardVector[row][col]);
+                        temp = new Tile(*other.boardVector[row][col]);
                         this->boardVector[row][col] = temp;
                         tilesAdded++;
                     }
                 }
             }
         }
+        temp = nullptr;
     }
 }
 
@@ -67,7 +69,7 @@ Board::~Board() {
     if (this->numOfTiles > 0) {
         int tilesDeleted = 0;
 
-        // Traverse board vector and delete tiles.
+        // Traverse board vector and delete tiles
         while (tilesDeleted != this->numOfTiles) {
             for (int row = this->minRow; row <= this->maxRow; row++) {
                 for (int col = this->minCol; col <= this->maxCol; col++)  {
@@ -202,13 +204,14 @@ char Board::getMaxRowChar() const {
 
 void Board::addToArray(std::string tilesArray[], int* i) {
     int tilesAdded = 0;
+    Tile* current = nullptr;
 
     // Traverse board vector, add tile if there is one.
     while (tilesAdded != this->numOfTiles) {
         for (int row = this->minRow; row <= this->maxRow; row++) {
             for (int col = this->minCol; col <= this->maxCol; col++) {        
                 if (this->boardVector[row][col] != nullptr) {
-                    Tile* current = this->boardVector[row][col];
+                    current = this->boardVector[row][col];
                     tilesArray[*i] = current->getAsStr();
                     (*i)++;
                     tilesAdded++;
@@ -216,6 +219,7 @@ void Board::addToArray(std::string tilesArray[], int* i) {
             }
         }
     }
+    current = nullptr;
 }
 
 std::string Board::getAsStr() {
