@@ -29,6 +29,8 @@ class Game {
         void loadGame(Player* player1, Player* player2, Board* board, 
                       TileBag* tileBag, Player* currentPlayer); 
         
+        // A new game must have two players. The test flag 
+        // will be passed from main() and set accordingly. 
         void newGame(Player* player1, Player* player2, bool testFlag);
         
         // Returns the current player.
@@ -52,7 +54,7 @@ class Game {
 
         // Returns true if game has ended. A game is complete when the tile 
         // bag is empty and one of the players has no more tiles in their 
-        // hand or both players have skipped their turn consecutively. 
+        // hand or if both players have skipped their turn consecutively. 
         bool isComplete();
 
         // Takes a tile, row (A-Z) and col (0-25). Returns true if the 
@@ -64,10 +66,8 @@ class Game {
         // the current player's hand and isReplaceLegal() is also true.
         bool replaceTile(Tile* tile); 
 
-        // Toggles to the next player's turn. The current player 
-        // will not recieve any points. If the previous player also
-        // skipped their turn, the game will be set to complete. 
-        // This function should be called only if it is valid to skip.
+        // Toggles to the next player's turn. The current player will not score. 
+        // The game will be set to complete if the previous player also skipped. 
         void skipTurn();
 
         // Returns true if both players have tiles in 
@@ -84,20 +84,18 @@ class Game {
         // Calculates the current player's score in placeTile().
         ScoreCalculator* scoreCalculator;
 
-        // Defines tile numbers for the game. 
+        // Defines the maximum number of tiles allowed in game. 
         const static int maxTilesInGame = 72;
 
-        // When test flag is true, a random seed is set during 
-        // shuffleTileBag() to ensure consistent randomness. 
-        // Run with "./qwirkle T" to activate test mode.
+        // When test flag is true, a random seed is set in shuffleTileBag() 
+        // to ensure consistent randomness. Run with "./qwirkle T" to activate.
         bool testFlag;
 
         // This is set to true if skipTurn() is successful. 
         bool prevTurnSkipped;
 
-        // This is set to true if the tile bag is empty and one of  
-        // the players has no more tiles in their hand or both
-        // players have skipped their turn consecutively. 
+        // This is set to true if the tile bag is empty and one player has no 
+        // tiles in their hand or both players skipped their turn consecutively. 
         bool gameComplete;
 
         // Used after a player completes their turn to toggle
@@ -132,7 +130,6 @@ class Game {
         // Takes a string array and adds every tile 
         // a game should have. Used in checkTiles(). 
         void addToArray(std::string expectedTilesArray[]);
-
 };
 
 #endif // GAME_H

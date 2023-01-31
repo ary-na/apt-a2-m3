@@ -149,9 +149,8 @@ TileBag* Game:: getTileBag() const {
 
 bool Game::isComplete() {
 
-    // A game is complete when the tile bag is empty and 
-    // one of the players has no more tiles in their hand
-    // or both players have skipped their turn consecutively. 
+    // A game is complete when the tile bag is empty and one player has no  
+    // tiles in their hand or both players skipped their turn consecutively. 
     if (!this->gameComplete && this->tileBag->isEmpty() &&
         (this->player1->getHand()->isEmpty() || 
         this->player2->getHand()->isEmpty())) {                       
@@ -235,16 +234,15 @@ void Game::skipTurn() {
 
 bool Game::isSkipAvailable() {
     bool skipAvailable = false; 
-    //std::cout << "Tile Bag Empty Status: " << this->tileBag->isEmpty() << "\n";
     if (this->tileBag->isEmpty()) {
         skipAvailable = true; 
-        //std::cout << "Tile Bag Empty Status from if is true \n";
     }
-    //std::cout << "isSkipAvailable Status: " << skipAvailable << "\n";
     return skipAvailable;
 }
 
 bool Game::replaceTile(Tile *tile) {
+
+    // Check if replace is legal according to the rules.
     bool isLegal = isReplaceLegal(tile);
 
     if (isLegal) {
@@ -263,10 +261,12 @@ bool Game::replaceTile(Tile *tile) {
 }
 
 bool Game::placeTile(Tile *tile, char row, int col) {
+
+    // Check if the placement is legal according to the rules.
     bool isLegal = isPlaceLegal(tile, row, col);
     
     if (isLegal) {
-        // Place the tile onto the board.
+        // Place the tile on the board.
         this->board->addTileAtPos(tile, row, col);
         this->currentPlayer->getHand()->removeTile(tile);
 
@@ -274,8 +274,7 @@ bool Game::placeTile(Tile *tile, char row, int col) {
         int score = scoreCalculator->calculateScore(this->board, row, col);
         this->currentPlayer->addScore(score);
 
-        // Draw a replacement tile from the tile bag and add it
-        // to the player’s hand, if there are available tiles.
+        // If the tile bag isn't empty, draw replacement and add to hand. 
         this->tileBag->fillHand(this->currentPlayer->getHand()); 
 
         // Continue with the other player’s turn.
