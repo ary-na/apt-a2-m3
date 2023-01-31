@@ -8,7 +8,11 @@
 class Node {
     public:
         Node(Tile* tile);
+
+        // Deep copies node, including it's next and prev nodes. 
+        // This is used for the linked list copy constructor. 
         Node(const Node& other);
+
         Node(Node&& other);
         ~Node();
 
