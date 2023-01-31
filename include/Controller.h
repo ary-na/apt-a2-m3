@@ -25,13 +25,19 @@ class Controller {
 
 private:
         Game* game;
+
+        // @author - Arian Najafi Yamchelo
         Validator* validator;
+
+        // @author - Jacob Depares
         FileHandler* fileHandler;
 
+        // @author - Arian Najafi Yamchelo
         // If exit mode is true, the mainMenu() loop 
         // will end and the game will exit safely.  
         bool exitMode;
 
+        // @author - Alex Barron
         // When test flag is true, a random seed is set when the 
         // game shuffles the tiles to ensure consistent randomness. 
         // Run with "./qwirkle T" to activate test mode.
@@ -91,7 +97,8 @@ private:
         // Takes the user command and tries to replace a tile, 
         // the input status is set to true if successful.
         void replaceTile(std::string commandInput, bool* inputStatus);
-
+        
+        // @author - Arian Najafi Yamchelo
         // Displays the end game message, scores, 
         // winner name and safely quits the program. 
         void endGame(); 

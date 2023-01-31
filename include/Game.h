@@ -72,7 +72,7 @@ class Game {
         // Toggles to the next player's turn. The current player will not score. 
         // The game will be set to complete if the previous player also skipped. 
         void skipTurn();
-        
+
         // @author - Alex Barron
         // Returns true if both players have tiles in 
         // their hands and the tile bag is empty. 
@@ -85,12 +85,14 @@ class Game {
         Player* currentPlayer;
         TileBag* tileBag; 
 
+        // @author - Alex Barron
         // Calculates the current player's score in placeTile().
         ScoreCalculator* scoreCalculator;
 
         // Defines the maximum number of tiles allowed in game. 
         const static int maxTilesInGame = 72;
-
+        
+        // @author - Alex Barron
         // When test flag is true, a random seed is set in shuffleTileBag() 
         // to ensure consistent randomness. Run with "./qwirkle T" to activate.
         bool testFlag;
