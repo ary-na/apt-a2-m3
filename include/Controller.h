@@ -81,6 +81,7 @@ class Controller {
         // Takes a player and displays their score. 
         void playerScore(Player* player);
 
+        // @author - Arian Najafi Yamchelo
         // Called during takeTurn(). Asks the user to 
         // enter a command, validates it and processes it.
         // (1) <colour><shape> at <row><col>
