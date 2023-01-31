@@ -14,6 +14,8 @@
 #include <utility>
 #include <algorithm>
 
+// @author - Carelle Mulawa-Richards (unless specified)
+
 class Game {
     public:
         // Constructor for creating a game with no data. After calling 
@@ -66,10 +68,12 @@ class Game {
         // the current player's hand and isReplaceLegal() is also true.
         bool replaceTile(Tile* tile); 
 
+        // @author - Alex Barron
         // Toggles to the next player's turn. The current player will not score. 
         // The game will be set to complete if the previous player also skipped. 
         void skipTurn();
-
+        
+        // @author - Alex Barron
         // Returns true if both players have tiles in 
         // their hands and the tile bag is empty. 
         bool isSkipAvailable();
@@ -108,6 +112,7 @@ class Game {
         // (2) The tile bag must have tiles in it.
         bool isReplaceLegal(Tile* tile) const;
 
+        // @author - Arian Najafi Yamchelo
         // Takes a tile, row (A-Z) and col (0-25) and returns true if 
         // placement is legal according to the rules, otherwise false.
         // (1) Tiles must share one colour or shape attribute.

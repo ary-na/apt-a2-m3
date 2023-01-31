@@ -5,6 +5,8 @@
 #include <iostream>
 #include <utility>
 
+// @author - Carelle Mulawa-Richards
+
 class Node {
     public:
         Node(Tile* tile);

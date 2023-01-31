@@ -5,6 +5,8 @@
 #include <iostream>
 #include <utility>
 
+// @author - Carelle Mulawa-Richards
+
 typedef char Colour; 
 typedef int Shape; 
 

@@ -10,6 +10,8 @@
 #include <string>
 #include <sstream>
 
+// @author - Carelle Mulawa-Richards (unless specified)
+
 class Controller {
     public:
         Controller();
@@ -35,6 +37,7 @@ private:
         // Run with "./qwirkle T" to activate test mode.
         bool testFlag;
 
+        // @author - Arian Najafi Yamchelo
         // Displays the main menu and asks the user 
         // to make a selection by typing a number. 
         void mainMenu();
@@ -46,6 +49,7 @@ private:
         void playerNamePrompt(std::string* nameInput, 
                               const std::string &nameInput1 = "");
 
+        // @author - Jacob Depares
         // Asks the user for a relative path to a saved game file. 
         // If file is valid, the game is loaded and gameplay continues. 
         // Otherwise, the user is taken back to the main menu.
@@ -54,6 +58,7 @@ private:
         // Displays details of each student in the group.
         void credits(); 
 
+        // @author - Arian Najafi Yamchelo
         // Displays a goodbye message and quits safely. 
         void exitGame();
 
@@ -62,6 +67,7 @@ private:
         void baseGameplay();
         void takeTurn();
 
+        // @author - Alex Barron
         // Tries to skip the current player's turn,
         // the input status is set to true if successful.
         void skipTurn(bool* inputStatus);
@@ -90,6 +96,7 @@ private:
         // winner name and safely quits the program. 
         void endGame(); 
 
+        // @author - Jacob Depares
         // Takes the user command and tries and tries to save the 
         // current game. If sucessfully saved, gameplay continues.
         void saveGame(const std::string fileName);
@@ -98,9 +105,11 @@ private:
         // assigns it to the given string pointer.
         void inputPrompt(std::string* input); 
 
+        // @author - Arian Najafi Yamchelo
         // Returns true if game is in exist mode. 
         bool isExitMode() const;
 
+        // @author - Arian Najafi Yamchelo
         // Sets the exit mode to true or false. 
         void setExitMode(bool exitMode);
 };

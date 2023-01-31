@@ -7,6 +7,8 @@
 #include <exception>
 #include <utility>
 
+// @author - Carelle Mulawa-Richards
+
 class Board {                                   
     public:
         // Constructor for game with empty board. 

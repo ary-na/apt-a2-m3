@@ -1,13 +1,15 @@
 #ifndef TILEBAG_H
 #define TILEBAG_H
 
+#include "Hand.h"
 #include "LinkedList.h"
-#include "Player.h"
 #include <utility>
 #include <string>
 #include <iostream> 
 #include <memory>
 #include <random>
+
+// @author - Carelle Mulawa-Richards
 
 class TileBag {
     public:

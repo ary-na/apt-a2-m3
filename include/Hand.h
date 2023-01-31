@@ -5,6 +5,8 @@
 #include <iostream>
 #include <utility>
 
+// @author - Carelle Mulawa-Richards
+
 class Hand {
     public:
         Hand();

@@ -3,10 +3,10 @@
 // Milestone 2: Basic Qwirkle Implementation (Group Component)
 
 // Prepared by Group 2:
-// Carelle Mulawa-Richards (s3749114)
-// Jacob Depares (s3851480)
-// Alexander Barron (s3831619)
-// Arian Najafi Yamchelo (s3910902)
+// @author - Carelle Mulawa-Richards (s3749114)
+// @author - Jacob Depares (s3851480)
+// @author - Alexander Barron (s3831619)
+// @author - Arian Najafi Yamchelo (s3910902)
 
 #include "../include/Controller.h"
 #include <iostream>

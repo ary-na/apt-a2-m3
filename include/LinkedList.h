@@ -6,6 +6,8 @@
 #include <exception>
 #include <utility>
 
+// @author - Carelle Mulawa-Richards
+
 class LinkedList {
     public:
         LinkedList();

@@ -6,6 +6,8 @@
 #include <iostream>
 #include <utility>
 
+// @author - Carelle Mulawa-Richards
+
 class Player {
     public:
         // Constructor for adding a new player.
@@ -27,8 +29,7 @@ class Player {
         // Returns the player's hand.
         Hand* getHand() const;
 
-        // Takes a number >= 0 and 
-        // adds it to the score.
+        // Takes a number >= 0 and adds it to the score.
         void addScore(int score);
 
     private:
