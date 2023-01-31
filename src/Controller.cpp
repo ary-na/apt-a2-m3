@@ -46,14 +46,14 @@ Controller::~Controller() {
 
 void Controller::launchGame(bool testFlag) {
 
-    // If the program was run in test mode, set test flag to true.
+    // If program was run in test mode, set test flag to true.
     if (testFlag) {
         this->testFlag = testFlag;
         this->fileHandler->setTestFlag(testFlag);
         this->validator->setTestFlag(testFlag);
     }
 
-    // The program shows a message and continues to the main menu. 
+    // Program shows a message and continues to the main menu. 
     std::cout << std::endl;
     std::cout << "Welcome to Qwirkle" << std::endl;
     std::cout << "------------------" << std::endl;
@@ -67,13 +67,12 @@ void Controller::mainMenu() {
         std::cout << "Menu" << std::endl;
         std::cout << "----" << std::endl;
         std::cout << std::endl;
-
         std::cout << "1. New game" << std::endl;
         std::cout << "2. Load game" << std::endl;
         std::cout << "3. Credits (show student information)" << std::endl;
         std::cout << "4. Quit" << std::endl;
 
-        // The user selects an option by typing a number. 
+        // User selects an option by typing a number. 
         std::string menuInput = "";
         inputPrompt(&menuInput);
 
@@ -139,8 +138,9 @@ void Controller::newGame() {
     }
 }
 
-void Controller::playerNamePrompt(std::string* nameInput, const std::string 
-    &nameInput1) {
+void Controller::playerNamePrompt(std::string* nameInput, 
+                                  const std::string &nameInput1) {
+    
     bool awaitingInput = true;
     while (awaitingInput) {
 
@@ -179,21 +179,20 @@ void Controller::loadGame() {
     std::string fileName = "";
     inputPrompt(&fileName);
 
+    // Load the file.
     bool gameLoaded = false;
 
-    // If the file passes validation checks, the game is loaded, 
-    // a message is printed and normal gameplay continues.
     try {
         this->game = this->fileHandler->loadGame(fileName);
         gameLoaded = true;
 
-    // If the file doesn't pass the validation checks, an error
-    // message displays and the user is taken back to the main menu.
+    // If file invalid, show error message and go back to main menu. 
     } catch (std::exception(& e)) {
         std::cout << e.what() << std::endl;
         std::cout << std::endl;
     }
 
+    // If file valid, show success message and continue gameplay. 
     if (gameLoaded) {
         std::cout << "Qwirkle game successfully loaded" << std::endl;
         std::cout << std::endl;
@@ -205,22 +204,18 @@ void Controller::credits() {
     std::cout << "Credits" << std::endl;
     std::cout << "-------" << std::endl;
     std::cout << std::endl;
-
     std::cout << "Name: Carelle Mulawa-Richards" << std::endl;
     std::cout << "Student ID: s3749114" << std::endl;
     std::cout << "Email: s3749114@student.rmit.edu.au" << std::endl;
     std::cout << std::endl;
-
     std::cout << "Name: Jacob Depares" << std::endl;
     std::cout << "Student ID: S3851480" << std::endl;
     std::cout << "Email: S3851480@student.rmit.edu.au" << std::endl;
     std::cout << std::endl;
-
     std::cout << "Name: Alexander Barron" << std::endl;
     std::cout << "Student ID: s3831619" << std::endl;
     std::cout << "Email: s3831619@student.rmit.edu.au" << std::endl;
     std::cout << std::endl;
-
     std::cout << "Name: Arian Najafi Yamchelo" << std::endl;
     std::cout << "Student ID: S3910902" << std::endl;
     std::cout << "Email: S3910902@student.rmit.edu.au" << std::endl;
@@ -317,7 +312,7 @@ void Controller::turnPrompt() {
 
 void Controller::placeTile(std::string commandInput, bool* inputStatus) {
 
-    // Extract tile and from input.
+    // Extract tile from input.
     Colour colourInput = commandInput[6];
     Shape shapeInput = commandInput[7] - '0';
     Tile *tileInput = new Tile(colourInput, shapeInput);
@@ -334,7 +329,7 @@ void Controller::placeTile(std::string commandInput, bool* inputStatus) {
     }
 
     try {
-        // Try to place the tile. 
+        // Place the tile. 
         bool tilePlaced = this->game->placeTile(tileInput, rowInput, colInput);
 
         // If the tile placement is illegal. 
@@ -347,7 +342,7 @@ void Controller::placeTile(std::string commandInput, bool* inputStatus) {
             *inputStatus = false;
         }
 
-    // If something else happens and the tile can't be place. 
+    // If there is a program error and the tile can't be placed. 
     } catch (std::out_of_range& e) {
         std::cout << e.what() << std::endl;
         std::cout << std::endl;
@@ -366,7 +361,8 @@ void Controller::replaceTile(std::string commandInput, bool* inputStatus) {
 
     // Try to replace the tile.
     bool tileReplaced = this->game->replaceTile(tileInput);
-    
+
+    // If replace is illegal. 
     if (!tileReplaced) {
         std::cout << "Illegal move!" << std::endl;
         std::cout << std::endl;
@@ -399,7 +395,7 @@ void Controller::skipTurn(bool* inputStatus) {
 
 void Controller::saveGame(std::string fileName) {
 
-    // Save the current state of the game to the provided filename.
+    // Save the current game to the provided filename.
     try {
         this->fileHandler->saveGame(this->game, fileName);
         std::cout << "Game successfully saved" << std::endl;

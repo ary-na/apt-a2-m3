@@ -27,7 +27,7 @@ private:
         FileHandler* fileHandler;
 
         // If exit mode is true, the mainMenu() loop 
-        // will end and the game will safely exit.  
+        // will end and the game will exit safely.  
         bool exitMode;
 
         // When test flag is true, a random seed is set when the 
@@ -39,29 +39,26 @@ private:
         // to make a selection by typing a number. 
         void mainMenu();
 
-        // Asks for the player names and 
-        // creates a new game of Qwirkle. 
+        // Asks for the names and makes a new game. 
         void newGame(); 
 
-        // Helper function for newGame(). Takes a player 
-        // name pointer and assigns user input to it.
-        void playerNamePrompt(std::string* nameInput, const std::string &nameInput1 = "");
+        // Used in newGame(). Assigns name input to given string pointer.
+        void playerNamePrompt(std::string* nameInput, 
+                              const std::string &nameInput1 = "");
 
-        // Asks the user to enter a relative path to the saved game file. 
-        // If the file is valid, the game is loaded and normal gameplay 
-        // continues, otherwise the user is taken back to the main menu.
+        // Asks the user for a relative path to a saved game file. 
+        // If file is valid, the game is loaded and gameplay continues. 
+        // Otherwise, the user is taken back to the main menu.
         void loadGame(); 
 
-        // Displays the name, student number, and 
-        // email address of each student in the group.
+        // Displays details of each student in the group.
         void credits(); 
 
         // Displays a goodbye message and quits safely. 
         void exitGame();
 
-        // During baseGameplay(), players will takeTurn()
-        // placing tiles from their hand onto the 
-        // board until the game is complete.
+        // During baseGameplay(), players will takeTurn() placing tiles 
+        // from their hand onto the board, until the game is complete.
         void baseGameplay();
         void takeTurn();
 
@@ -78,6 +75,7 @@ private:
         // (2) replace <colour><shape>
         // (3) save <filename>
         // (4) EOF character ^D
+        // (5) skip
         void turnPrompt();
 
         // Takes the user command and tries to place a tile, 
@@ -92,9 +90,8 @@ private:
         // winner name and safely quits the program. 
         void endGame(); 
 
-        // Takes the user command and tries and tries to 
-        // save the current state of the game. If the file 
-        // is sucessfully saved, normal gameplay continues.
+        // Takes the user command and tries and tries to save the 
+        // current game. If sucessfully saved, gameplay continues.
         void saveGame(const std::string fileName);
 
         // Promts the user to enter an input and

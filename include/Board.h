@@ -9,8 +9,7 @@
 
 class Board {                                   
     public:
-        // Default constructor for stating 
-        // a game with an empty board. 
+        // Constructor for game with empty board. 
         Board(); 
 
         Board(const Board& other);
@@ -20,7 +19,7 @@ class Board {
         // Prints the entire board vector.
         void printBoard() const;
 
-        // Takes a tile  and adds it at a given 
+        // Takes a tile and adds it at a given 
         // row (A-Z) and col (0-25) position.
         void addTileAtPos(Tile* tile, char row, int col);
 
@@ -28,14 +27,14 @@ class Board {
         // the tile in that position in the board vector.
         Tile* getTileAtPos(char row, int col) const;
         
-        // Returns true if the board has no tiles.
+        // Returns true if board has no tiles.
         bool isEmpty() const;
 
         // Returns the number of tiles in the board vector.
         int getNumOfTiles() const;
 
         // Takes a string array and adds the tiles from the board 
-        // to it. The tiles will be added to the array starting 
+        // to it. The tiles will be added to the array starting at 
         // the given index. Used for checkTiles() in game.  
         void addToArray(std::string tilesArray[], int* i);
 
@@ -65,7 +64,7 @@ class Board {
         const static char maxRowChar = (char)('A' + maxRow); 
 
         // Stores the number of tiles on the board.
-        // This gets updated when addTileAtPos(). 
+        // This gets updated during addTileAtPos(). 
         int numOfTiles;
 
         // A 2D vector of tiles. The board is a fixed size of 26 x 26.
