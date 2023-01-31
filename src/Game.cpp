@@ -212,6 +212,9 @@ bool Game::isPlaceLegal(Tile *tile, char row, int col) const {
             isLegal = false;
         }
 
+        validRow = nullptr;
+        validCol = nullptr;
+
     // If exception occurs during checks.
     } catch (std::out_of_range& e) {
         throw std::out_of_range("Program error, can't check tile placement!");
