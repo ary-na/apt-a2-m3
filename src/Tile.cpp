@@ -17,8 +17,7 @@ Tile::Tile(Tile&& other) {
     other.colour = '\0';
 }
 
-Tile::~Tile() {
-}
+Tile::~Tile() {}
 
 std::string Tile::getAsStr() {
     std::string tileStr = this->colour + std::to_string(this->shape);
