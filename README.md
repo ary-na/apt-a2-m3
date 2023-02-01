@@ -4,7 +4,6 @@ RMIT University - Academic Integrity Warning:
 > "For serious breaches of academic integrity, students can be charged with academic misconduct. Possible penalties include **cancellation of results** and **expulsion resulting in the cancellation of a student's program**."
 For more information visit [Academic Integrity at RMIT](https://www.rmit.edu.au/students/my-course/assessment-results/academic-integrity)
 
-
 ## How to run
 
 To run the app, change to the following directory
@@ -46,13 +45,16 @@ Menu
 4. Quit
 > 
 ```
+
+## How to run tests
+
 If you want to test the game, a set of predefined tests have been created and loaded. Run these with the following command from the games directory
 
 ```
 ./tests/run-tests.sh  
 ```
 
-### References
+### Bibliography
 
 Corob-msft (n.d.). How to: Define move constructors and move assignment operators (C++). [online] learn.microsoft.com. Available at: https://learn.microsoft.com/en-us/cpp/cpp/move-constructors-and-move-assignment-operators-cpp?view=msvc-170 [Accessed 24 Jan. 2023].
 
