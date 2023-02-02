@@ -83,20 +83,20 @@ class FileHandler {
         // ** INPUT: A comma-separated string with the format being the tile data, followed by an “@” symbol, then the board’s position. 
         // Example: “B4@B2, B6@B3, B5@B4”
         // ** Output: an initialised board with an updated board state
-        Board* initaliseBoardFromFile (const std::string boardState);
+        Board* initaliseBoardFromFile(const std::string boardState);
         
         // @author - Jacob Depares
         // ** Returns Hand from file.
         // ** INPUT: A comma-separated string is being passed to the function with tile data being represented as colour than shape Example “Y5,R5,O2”.
         // ** OUTPUT: A TileBag* of tiles representing the current player’s hand. 
-        TileBag* tileBagFromFile (const std::string playerHandString);   
+        TileBag* tileBagFromFile(const std::string playerHandString);   
 
         // @author - Jacob Depares
         // ** Returns the current player
         // ** INPUT: Valid current players and a player name
         // ** OUTPUT: if an invalid player name is passed, the function will return a NullPtr and produce an error. 
         // If a valid name is passed, the function will return a ptr to the player.
-        Player* currentPlayerFromName (Player* player1, Player* player2, std::string playerName) const; 
+        Player* currentPlayerFromName(Player* player1, Player* player2, std::string playerName) const; 
 
         // @author - Jacob Depares
         // ** Trim the start and end of a strign of whitespace
