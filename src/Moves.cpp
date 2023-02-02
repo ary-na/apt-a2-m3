@@ -94,7 +94,6 @@ LinkedList *Moves::getColumnTiles(char row, int col) {
 
 bool Moves::isTileColourMatch(const LinkedList *line, Tile *tile) {
 
-    // @author - Arian Najafi Yamchelo
     // This function should be called with a linked list of rows or columns and a played tile.
     // It will return a boolean value depending on whether the colour
     // of the tile played matches the tile next to it.
@@ -114,7 +113,6 @@ bool Moves::isTileColourMatch(const LinkedList *line, Tile *tile) {
 
 bool Moves::isTileShapeMatch(const LinkedList *line, Tile *tile) {
 
-    // @author - Arian Najafi Yamchelo
     // This function should be called with a linked list of rows or columns and a played tile.
     // It will return a boolean value depending on whether the shape
     // of the tile played matches the tile next to it.
@@ -124,7 +122,7 @@ bool Moves::isTileShapeMatch(const LinkedList *line, Tile *tile) {
     bool match = true;
 
     // Traverse linked list
-    for (int i = line->getLength(); i > 0; i--)
+    for (int i = line->getLength(); i > 0; i--) 
         // Check if shapes match
         if (line->getAtPos(i)->shape != tile->shape)
             match = false;
@@ -134,7 +132,6 @@ bool Moves::isTileShapeMatch(const LinkedList *line, Tile *tile) {
 
 bool Moves::isTileExistAtLocation(char row, int col) {
 
-    // @author - Arian Najafi Yamchelo
     // This function should be called with tile coordinates.
     // It will return a boolean value depending on whether a tile exists at the location.
     // This is a public function and can be called by the game

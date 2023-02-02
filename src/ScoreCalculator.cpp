@@ -124,7 +124,6 @@ int ScoreCalculator::getRowStart(Board *board, char row, int col)
 
 int ScoreCalculator::getRowEnd(Board *board, char row, int col)
 {
-    // @author - Alex Barron
     // This function should be called with the current board and the row and 
     // column of a played tile. This will return, as int, the end column number 
     // for a row.
@@ -155,7 +154,6 @@ int ScoreCalculator::getRowEnd(Board *board, char row, int col)
 
 int ScoreCalculator::getColStart(Board *board, char row, int col)
 {
-    // @author - Alex Barron
     // This function should be called with the current board and the row and
     // column of a played tile. This will return, as int, the start row number 
     // for a column. This is a char returned as int and would assume both are 
@@ -184,7 +182,6 @@ int ScoreCalculator::getColStart(Board *board, char row, int col)
 
 int ScoreCalculator::getColEnd(Board *board, char row, int col)
 {
-    // @author - Alex Barron
     // This function should be called with the current board and the row and
     // column of a played tile. This will return, as int, the end row number
     // for a column. This is a char returned as int and would assume both are
@@ -216,7 +213,6 @@ int ScoreCalculator::getColEnd(Board *board, char row, int col)
 
 int ScoreCalculator::checkQwirklePoints(int score)
 {
-    // @author - Alex Barron
     // This function should be called with the score for a row or column.
     // If the score is 6, then a set has been completed and a qwirkle is scored.
     // This will call the printQwirkle function and return a bonus 6 points.
@@ -234,7 +230,6 @@ int ScoreCalculator::checkQwirklePoints(int score)
 
 void ScoreCalculator::printQwirkle() const
 {
-    // @author - Carelle Mulawa-Richards
     // This function should be called if a qwirkle is scored to print the
     // message to the screen.
     // This is a private function, intended to be called by checkQwirklePoints()

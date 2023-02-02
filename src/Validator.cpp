@@ -22,7 +22,6 @@ void Validator::setTestFlag(const bool testFlag) {
 bool Validator::isNameValid(const std::string &nameInput,
                             const std::string &nameInput1) {
 
-    // @author - Arian Najafi Yamchelo
     // This function should be called with a string parameter.
     // It will return a boolean value depending on the string input.
     // This is a public function and can be called from the controller
