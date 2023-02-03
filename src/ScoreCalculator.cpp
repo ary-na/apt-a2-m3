@@ -12,8 +12,7 @@ ScoreCalculator::ScoreCalculator(ScoreCalculator &&other) {}
 // Destructor
 ScoreCalculator::~ScoreCalculator() {}
 
-int ScoreCalculator::calculateScore(Board *board, char row, int col)
-{
+int ScoreCalculator::calculateScore(Board *board, char row, int col) {
     // This function should be called with the current board and the row and 
     // column of a played tile. This will return, as int, the total score for a 
     // turn.
@@ -25,31 +24,26 @@ int ScoreCalculator::calculateScore(Board *board, char row, int col)
     int colScore = getColScore(board, row, col);
 
     // Catches tiles with no adjacent tiles
-    if (colScore == 1 && rowScore == 1)
-    {
+    if (colScore == 1 && rowScore == 1) {
         totalPoints = 1;
     }
     // Catches tiles added to extend a row only
-    else if (colScore == 1 && rowScore > 1)
-    {
+    else if (colScore == 1 && rowScore > 1) {
         totalPoints = rowScore;
     }
     // Catches tiles added to extend a column only
-    else if (colScore > 1 && rowScore == 1)
-    {
+    else if (colScore > 1 && rowScore == 1) {
         totalPoints = colScore;
     }
     // Catches tiles added which extend both a row and a column
-    else
-    {
+    else {
         totalPoints = rowScore + colScore;
     }
 
     return totalPoints;
 }
 
-int ScoreCalculator::getRowScore(Board *board, char row, int col)
-{
+int ScoreCalculator::getRowScore(Board *board, char row, int col) {
     // This function should be called with the current board and the row and 
     // column of a played tile. This will return, as int, the total score for a 
     // row.
@@ -69,9 +63,7 @@ int ScoreCalculator::getRowScore(Board *board, char row, int col)
     return rowScore;
 }
 
-int ScoreCalculator::getColScore(Board *board, char row, int col)
-{
-    // @author - Alex Barron
+int ScoreCalculator::getColScore(Board *board, char row, int col) {
     // This function should be called with the current board and the row and 
     // column of a played tile. This will return, as int, the total score for a 
     // column.
@@ -91,9 +83,7 @@ int ScoreCalculator::getColScore(Board *board, char row, int col)
     return colScore;
 }
 
-int ScoreCalculator::getRowStart(Board *board, char row, int col)
-{
-    // @author - Alex Barron
+int ScoreCalculator::getRowStart(Board *board, char row, int col) {
     // This function should be called with the current board and the row and 
     // column of a played tile. This will return, as int, the start column 
     // number for a row.
@@ -103,25 +93,21 @@ int ScoreCalculator::getRowStart(Board *board, char row, int col)
     int rowStartCol = col;
 
     // Try / Catch in case of out of range exception for board
-    try
-    {
+    try {
         // Count back from the tile to find which location is not occupied
         while (rowStartCol >= board->getMinCol() 
-            && board->getTileAtPos(row, rowStartCol) != nullptr)
-        {
+            && board->getTileAtPos(row, rowStartCol) != nullptr) {
             rowStartCol--;
         }
     }
-    catch (const std::out_of_range &e)
-    {
+    catch (const std::out_of_range &e) {
         throw std::out_of_range("Error, program couldn't calculate score!");
     }
 
     return rowStartCol;
 }
 
-int ScoreCalculator::getRowEnd(Board *board, char row, int col)
-{
+int ScoreCalculator::getRowEnd(Board *board, char row, int col) {
     // This function should be called with the current board and the row and 
     // column of a played tile. This will return, as int, the end column number 
     // for a row.
@@ -133,25 +119,21 @@ int ScoreCalculator::getRowEnd(Board *board, char row, int col)
     int rowEndCol = col;
 
     // Try / Catch in case of out of range exception for board
-    try
-    {
+    try {
         // Count forward from the tile to find which location is not occupied
         while (rowEndCol <= boardCols 
-            && board->getTileAtPos(row, rowEndCol) != nullptr)
-        {
+            && board->getTileAtPos(row, rowEndCol) != nullptr) {
             rowEndCol++;
         }
     }
-    catch (const std::out_of_range &e)
-    {
+    catch (const std::out_of_range &e) {
         throw std::out_of_range("Error, program couldn't calculate score!");
     }
 
     return rowEndCol;
 }
 
-int ScoreCalculator::getColStart(Board *board, char row, int col)
-{
+int ScoreCalculator::getColStart(Board *board, char row, int col) {
     // This function should be called with the current board and the row and
     // column of a played tile. This will return, as int, the start row number 
     // for a column. This is a char returned as int and would assume both are 
@@ -162,8 +144,7 @@ int ScoreCalculator::getColStart(Board *board, char row, int col)
     int colStartRow = row;
 
     // Try / Catch in case of out of range exception for board
-    try
-    {
+    try {
         // Count up from the tile to find which location is not occupied
         while (colStartRow >= board->getMinRowChar() 
             && board->getTileAtPos(colStartRow, col) != nullptr)
@@ -171,15 +152,13 @@ int ScoreCalculator::getColStart(Board *board, char row, int col)
             colStartRow--;
         }
     }
-    catch (const std::out_of_range &e)
-    {
+    catch (const std::out_of_range &e) {
         throw std::out_of_range("Error, program couldn't calculate score!");
     }
     return colStartRow;
 }
 
-int ScoreCalculator::getColEnd(Board *board, char row, int col)
-{
+int ScoreCalculator::getColEnd(Board *board, char row, int col) {
     // This function should be called with the current board and the row and
     // column of a played tile. This will return, as int, the end row number
     // for a column. This is a char returned as int and would assume both are
@@ -193,8 +172,7 @@ int ScoreCalculator::getColEnd(Board *board, char row, int col)
     int colEndRow = row;
 
     // Try / Catch in case of out of range exception for board
-    try
-    {
+    try {
         // Count down from the tile to find which location is not occupied
         while (colEndRow <= boardRows 
             && board->getTileAtPos(colEndRow, col) != nullptr)
@@ -202,15 +180,13 @@ int ScoreCalculator::getColEnd(Board *board, char row, int col)
             colEndRow++;
         }
     }
-    catch (const std::out_of_range &e)
-    {
+    catch (const std::out_of_range &e) {
         throw std::out_of_range("Error, program couldn't calculate score!");
     }
     return colEndRow;
 }
 
-int ScoreCalculator::checkQwirklePoints(int score)
-{
+int ScoreCalculator::checkQwirklePoints(int score) {
     // This function should be called with the score for a row or column.
     // If the score is 6, then a set has been completed and a qwirkle is scored.
     // This will call the printQwirkle function and return a bonus 6 points.
@@ -218,16 +194,14 @@ int ScoreCalculator::checkQwirklePoints(int score)
     // or getRowScore().
 
     int points = 0;
-    if (score == 6)
-    {
+    if (score == 6) {
         printQwirkle();
         points = 6;
     }
     return points;
 }
 
-void ScoreCalculator::printQwirkle() const
-{
+void ScoreCalculator::printQwirkle() const {
     // This function should be called if a qwirkle is scored to print the
     // message to the screen.
     // This is a private function, intended to be called by checkQwirklePoints()
