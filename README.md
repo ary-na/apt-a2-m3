@@ -21,13 +21,13 @@ make
 and then
 
 ```
-./qwirkle  
+./Qwirkle  
 ```
 
 or to run the app with test mode enabled, run the following command
 
 ```
-./qwirkle T
+./Qwirkle T
 ```
 
 then you can play Qwirkle
