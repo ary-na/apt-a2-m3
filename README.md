@@ -1,4 +1,4 @@
-# APT-Assignment2-M3
+# APT-A2-M3
 
 RMIT University - Academic Integrity Warning:
 > "For serious breaches of academic integrity, students can be charged with academic misconduct. Possible penalties include **cancellation of results** and **expulsion resulting in the cancellation of a student's program**."
@@ -9,7 +9,7 @@ For more information visit [Academic Integrity at RMIT](https://www.rmit.edu.au/
 To run the app, change to the following directory
 
 ```
-cd ../APT-Assignment2
+cd ../apt-a2-m3
 ```
 
 and run the following command
