@@ -14,7 +14,6 @@ ScoreCalculator::~ScoreCalculator() {}
 
 int ScoreCalculator::calculateScore(Board *board, char row, int col)
 {
-    // @author - Alex Barron
     // This function should be called with the current board and the row and 
     // column of a played tile. This will return, as int, the total score for a 
     // turn.
@@ -51,7 +50,6 @@ int ScoreCalculator::calculateScore(Board *board, char row, int col)
 
 int ScoreCalculator::getRowScore(Board *board, char row, int col)
 {
-    // @author - Alex Barron
     // This function should be called with the current board and the row and 
     // column of a played tile. This will return, as int, the total score for a 
     // row.

@@ -34,7 +34,6 @@ Moves::~Moves() {
 
 LinkedList *Moves::getRowTiles(char row, int col) {
 
-    // @author - Arian Najafi Yamchelo
     // This function should be called with tile coordinates.
     // It will return a linked list of tiles placed on a row.
     // This is a public function and can be called by the game
@@ -64,7 +63,6 @@ LinkedList *Moves::getRowTiles(char row, int col) {
 
 LinkedList *Moves::getColumnTiles(char row, int col) {
 
-    // @author - Arian Najafi Yamchelo
     // This function should be called with tile coordinates.
     // It will return a linked list of tiles placed on a column.
     // This is a public function and can be called by the game
