@@ -5,12 +5,12 @@ Tile::Tile(Colour colour, Shape shape) {
     this->colour = Colour(colour);
 }
 
-Tile::Tile(const Tile& other) {
+Tile::Tile(const Tile &other) {
     this->shape = other.shape;
     this->colour = other.colour;
 }
 
-Tile::Tile(Tile&& other) {
+Tile::Tile(Tile &&other) {
     this->shape = other.shape;
     this->colour = other.colour;
     other.shape = 0;

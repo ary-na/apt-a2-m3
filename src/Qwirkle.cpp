@@ -11,7 +11,7 @@
 #include "../include/Controller.h"
 #include <iostream>
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
 
     // When test flag is true, a random seed is set 
     // to ensure consistent randomness of the tile bag.
@@ -24,7 +24,7 @@ int main(int argc, char* argv[]) {
     }
 
     // Run Qwirkle program.
-    Controller* controller(new Controller);
+    Controller *controller(new Controller);
     controller->launchGame(testFlag);
 
     delete controller;

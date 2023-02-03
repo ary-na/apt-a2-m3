@@ -120,7 +120,7 @@ bool Moves::isTileShapeMatch(const LinkedList *line, Tile *tile) {
     bool match = true;
 
     // Traverse linked list
-    for (int i = line->getLength(); i > 0; i--) 
+    for (int i = line->getLength(); i > 0; i--)
         // Check if shapes match
         if (line->getAtPos(i)->shape != tile->shape)
             match = false;

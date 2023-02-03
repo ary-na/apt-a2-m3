@@ -1,20 +1,20 @@
 #include "../include/Node.h"
 
-Node::Node(Tile* tile) {
+Node::Node(Tile *tile) {
     this->tile = tile;
     this->next = nullptr;
     this->prev = nullptr;
 }
 
-Node::Node(const Node& other) {
-    
+Node::Node(const Node &other) {
+
     // Deep copy tile.
     this->tile = new Tile(*other.tile);
 
     // Deep copy and link all next nodes.
-    Node* current = other.next;
-    Node* temp = nullptr;
-    
+    Node *current = other.next;
+    Node *temp = nullptr;
+
     while (current != nullptr) {
         temp = new Node(new Tile(*current->tile));
         temp->prev = this;
@@ -35,7 +35,7 @@ Node::Node(const Node& other) {
     current = nullptr;
 }
 
-Node::Node(Node&& other) {
+Node::Node(Node &&other) {
     this->tile = other.tile;
     this->next = other.next;
     this->prev = other.prev;

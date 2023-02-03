@@ -27,15 +27,15 @@ int ScoreCalculator::calculateScore(Board *board, char row, int col) {
     if (colScore == 1 && rowScore == 1) {
         totalPoints = 1;
     }
-    // Catches tiles added to extend a row only
+        // Catches tiles added to extend a row only
     else if (colScore == 1 && rowScore > 1) {
         totalPoints = rowScore;
     }
-    // Catches tiles added to extend a column only
+        // Catches tiles added to extend a column only
     else if (colScore > 1 && rowScore == 1) {
         totalPoints = colScore;
     }
-    // Catches tiles added which extend both a row and a column
+        // Catches tiles added which extend both a row and a column
     else {
         totalPoints = rowScore + colScore;
     }
@@ -95,8 +95,8 @@ int ScoreCalculator::getRowStart(Board *board, char row, int col) {
     // Try / Catch in case of out of range exception for board
     try {
         // Count back from the tile to find which location is not occupied
-        while (rowStartCol >= board->getMinCol() 
-            && board->getTileAtPos(row, rowStartCol) != nullptr) {
+        while (rowStartCol >= board->getMinCol()
+               && board->getTileAtPos(row, rowStartCol) != nullptr) {
             rowStartCol--;
         }
     }
@@ -121,8 +121,8 @@ int ScoreCalculator::getRowEnd(Board *board, char row, int col) {
     // Try / Catch in case of out of range exception for board
     try {
         // Count forward from the tile to find which location is not occupied
-        while (rowEndCol <= boardCols 
-            && board->getTileAtPos(row, rowEndCol) != nullptr) {
+        while (rowEndCol <= boardCols
+               && board->getTileAtPos(row, rowEndCol) != nullptr) {
             rowEndCol++;
         }
     }
@@ -146,9 +146,8 @@ int ScoreCalculator::getColStart(Board *board, char row, int col) {
     // Try / Catch in case of out of range exception for board
     try {
         // Count up from the tile to find which location is not occupied
-        while (colStartRow >= board->getMinRowChar() 
-            && board->getTileAtPos(colStartRow, col) != nullptr)
-        {
+        while (colStartRow >= board->getMinRowChar()
+               && board->getTileAtPos(colStartRow, col) != nullptr) {
             colStartRow--;
         }
     }
@@ -174,9 +173,8 @@ int ScoreCalculator::getColEnd(Board *board, char row, int col) {
     // Try / Catch in case of out of range exception for board
     try {
         // Count down from the tile to find which location is not occupied
-        while (colEndRow <= boardRows 
-            && board->getTileAtPos(colEndRow, col) != nullptr)
-        {
+        while (colEndRow <= boardRows
+               && board->getTileAtPos(colEndRow, col) != nullptr) {
             colEndRow++;
         }
     }

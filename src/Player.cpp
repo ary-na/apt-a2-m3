@@ -6,19 +6,19 @@ Player::Player(std::string name) {
     this->hand = new Hand();
 }
 
-Player::Player(std::string name, int score, Hand* hand) {
+Player::Player(std::string name, int score, Hand *hand) {
     this->name = name;
     this->score = score;
     this->hand = hand;
 }
 
-Player::Player(const Player& other) {
+Player::Player(const Player &other) {
     this->name = other.name;
     this->score = other.score;
     this->hand = new Hand(*other.hand);
 }
 
-Player::Player(Player&& other) {
+Player::Player(Player &&other) {
     this->name = other.name;
     this->score = other.score;
     this->hand = other.hand;
@@ -40,7 +40,7 @@ int Player::getScore() const {
     return this->score;
 }
 
-Hand* Player::getHand() const { 
+Hand *Player::getHand() const {
     return this->hand;
 }
 

@@ -8,24 +8,24 @@ Controller::Controller() {
     this->exitMode = false;
 }
 
-Controller::Controller(const Controller& other) {   
+Controller::Controller(const Controller &other) {
     if (other.game != nullptr) {
         this->game = new Game(*other.game);
     } else {
         this->game = nullptr;
-    }    
+    }
     this->validator = new Validator(*other.validator);
     this->fileHandler = new FileHandler(*other.fileHandler);
     this->testFlag = other.testFlag;
     this->exitMode = other.exitMode;
 }
 
-Controller::Controller(Controller&& other) {
+Controller::Controller(Controller &&other) {
     this->game = other.game;
     this->validator = other.validator;
     this->fileHandler = other.fileHandler;
     this->testFlag = other.testFlag;
-    this->exitMode  = other.exitMode;
+    this->exitMode = other.exitMode;
     other.game = nullptr;
     other.validator = nullptr;
     other.fileHandler = nullptr;
@@ -121,15 +121,15 @@ void Controller::newGame() {
         this->game->newGame(player1, player2, this->testFlag);
         gameCreated = true;
 
-    // Return to main menu if new game unsuccessful. 
-    } catch (std::out_of_range& e) {
+        // Return to main menu if new game unsuccessful.
+    } catch (std::out_of_range &e) {
         std::cout << e.what() << std::endl;
         std::cout << std::endl;
         delete this->game;
         this->game = nullptr;
         exitGame();
     }
-    
+
     // If new game is successful, proceed with gameplay.
     if (gameCreated && !exitMode) {
         std::cout << "Let's play!" << std::endl;
@@ -138,9 +138,9 @@ void Controller::newGame() {
     }
 }
 
-void Controller::playerNamePrompt(std::string* nameInput, 
+void Controller::playerNamePrompt(std::string *nameInput,
                                   const std::string &nameInput1) {
-    
+
     bool awaitingInput = true;
     while (awaitingInput) {
 
@@ -162,7 +162,7 @@ void Controller::playerNamePrompt(std::string* nameInput,
     }
 }
 
-void Controller::inputPrompt(std::string* input) {
+void Controller::inputPrompt(std::string *input) {
     std::cout << "> ", getline(std::cin, *input);
     std::cout << std::endl;
 }
@@ -186,8 +186,8 @@ void Controller::loadGame() {
         this->game = this->fileHandler->loadGame(fileName);
         gameLoaded = true;
 
-    // If file invalid, show error message and go back to main menu. 
-    } catch (std::exception(& e)) {
+        // If file invalid, show error message and go back to main menu.
+    } catch (std::exception(&e)) {
         std::cout << e.what() << std::endl;
         std::cout << std::endl;
     }
@@ -236,7 +236,7 @@ void Controller::baseGameplay() {
     }
     if (!this->isExitMode()) {
         endGame();
-    }      
+    }
 }
 
 void Controller::takeTurn() {
@@ -261,12 +261,12 @@ void Controller::takeTurn() {
     std::cout << std::endl;
 
     // The user prompt.
-    if(!exitMode) {
+    if (!exitMode) {
         turnPrompt();
     }
 }
 
-void Controller::playerScore(Player* player) {
+void Controller::playerScore(Player *player) {
     std::cout << "Score for " << player->getName() << ": "
               << player->getScore() << std::endl;
 }
@@ -274,7 +274,7 @@ void Controller::playerScore(Player* player) {
 void Controller::turnPrompt() {
     bool awaitingInput = true;
     while (awaitingInput && !isExitMode()) {
-        
+
         // Ask user to enter command.
         std::string commandInput = "";
         inputPrompt(&commandInput);
@@ -285,32 +285,32 @@ void Controller::turnPrompt() {
             std::cout << "Invalid input!" << std::endl;
             std::cout << std::endl;
 
-        // If command is place <colour><shape> at <row><col>.
+            // If command is place <colour><shape> at <row><col>.
         } else if (command == 1) {
             placeTile(commandInput, &awaitingInput);
 
-        // If command is replace <colour><shape>.
+            // If command is replace <colour><shape>.
         } else if (command == 2) {
             replaceTile(commandInput, &awaitingInput);
 
-        // If command is save <filename>.
+            // If command is save <filename>.
         } else if (command == 3) {
             saveGame(commandInput);
 
-        // If command is EOF character ^D.
+            // If command is EOF character ^D.
         } else if (command == 4) {
             awaitingInput = false;
             std::cout << std::endl;
             exitGame();
 
-        // If command is skip.
+            // If command is skip.
         } else if (command == 5) {
             skipTurn(&awaitingInput);
         }
     }
 }
 
-void Controller::placeTile(std::string commandInput, bool* inputStatus) {
+void Controller::placeTile(std::string commandInput, bool *inputStatus) {
 
     // Extract tile from input.
     Colour colourInput = commandInput[6];
@@ -322,8 +322,8 @@ void Controller::placeTile(std::string commandInput, bool* inputStatus) {
     int colInput;
 
     if (commandInput.length() > 14) {
-        colInput = std::stoi(std::to_string(commandInput[13] - '0') + 
-                   std::to_string(commandInput[14] - '0'));
+        colInput = std::stoi(std::to_string(commandInput[13] - '0') +
+                             std::to_string(commandInput[14] - '0'));
     } else {
         colInput = commandInput[13] - '0';
     }
@@ -336,23 +336,23 @@ void Controller::placeTile(std::string commandInput, bool* inputStatus) {
         if (!tilePlaced) {
             std::cout << "Illegal move!" << std::endl;
             std::cout << std::endl;
-            delete tileInput; 
-            tileInput = nullptr; 
+            delete tileInput;
+            tileInput = nullptr;
         } else {
             *inputStatus = false;
         }
 
-    // If there is a program error and the tile can't be placed. 
-    } catch (std::out_of_range& e) {
+        // If there is a program error and the tile can't be placed.
+    } catch (std::out_of_range &e) {
         std::cout << e.what() << std::endl;
         std::cout << std::endl;
-        delete tileInput; 
+        delete tileInput;
         tileInput = nullptr;
         exitGame();
     }
 }
 
-void Controller::replaceTile(std::string commandInput, bool* inputStatus) {
+void Controller::replaceTile(std::string commandInput, bool *inputStatus) {
 
     // Extract tile from input.
     Colour colourInput = commandInput[8];
@@ -376,18 +376,17 @@ void Controller::replaceTile(std::string commandInput, bool* inputStatus) {
             std::cout << "Tile bag empty - Replace not available, "
                       << "enter 'skip' to go to next player" << std::endl;
             std::cout << std::endl;
-        } 
+        }
     } else {
         *inputStatus = false;
     }
 }
 
-void Controller::skipTurn(bool* inputStatus) {
+void Controller::skipTurn(bool *inputStatus) {
     bool skipAvailable = skipAvailable = this->game->isSkipAvailable();
-    if(skipAvailable) {
+    if (skipAvailable) {
         this->game->skipTurn();
-    }
-    else {
+    } else {
         std::cout << "You can't skip at this stage of the game!" << std::endl;
     }
     *inputStatus = false;
@@ -400,8 +399,8 @@ void Controller::saveGame(std::string fileName) {
         this->fileHandler->saveGame(this->game, fileName);
         std::cout << "Game successfully saved" << std::endl;
 
-    // If the file doesn't pass the validation checks.
-    } catch (std::exception(& e)) {
+        // If the file doesn't pass the validation checks.
+    } catch (std::exception(&e)) {
         std::cout << e.what() << std::endl;
         std::cout << std::endl;
     }

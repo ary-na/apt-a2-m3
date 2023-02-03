@@ -34,8 +34,8 @@ bool Validator::isNameValid(const std::string &nameInput,
         nameInput1.empty()) {
         nameValid = true;
     }
-    // Check if name input matches the regex,
-    // and players don't have the same name
+        // Check if name input matches the regex,
+        // and players don't have the same name
     else if (std::regex_match(nameInput, std::regex("[A-Z]+")) &&
              nameInput != nameInput1) {
         nameValid = true;
@@ -70,20 +70,20 @@ int Validator::isCommandValid(const std::string &command) {
             "place [R|O|Y|G|B|P][1-6] at [A-Z](0?[0-9]|1[0-9]|2[0-5])\\b"))) {
         isValid = 1;
     }
-    // Check if replace <colour><shape>
+        // Check if replace <colour><shape>
     else if (std::regex_match(command,
                               std::regex("replace [R|O|Y|G|B|P][1-6]"))) {
         isValid = 2;
     }
-    // Check if save <filename>
+        // Check if save <filename>
     else if (std::regex_match(command, std::regex("save [A-Za-z1-9]+"))) {
         isValid = 3;
     }
-    // Check if ^D (EOF)
+        // Check if ^D (EOF)
     else if (std::cin.eof()) {
         isValid = 4;
     }
-    // Check if skip
+        // Check if skip
     else if (std::regex_match(command, std::regex("skip"))) {
         isValid = 5;
     }

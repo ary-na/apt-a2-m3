@@ -1,24 +1,24 @@
 #include "../include/Board.h"
 
 Board::Board() {
-    
+
     // Make 2D vector.
     int vectorCol = this->maxCol + 1;
     int vectorRow = this->maxRow + 1;
-    std::vector<Tile*> row(vectorCol, nullptr);
-    this->boardVector = std::vector<std::vector<Tile*> >(vectorRow, row);
+    std::vector<Tile *> row(vectorCol, nullptr);
+    this->boardVector = std::vector<std::vector<Tile *> >(vectorRow, row);
 
     // Board starts with no tiles.
     this->numOfTiles = 0;
 }
 
-Board::Board(const Board& other) {
+Board::Board(const Board &other) {
 
     // Make 2D vector and copy number of tiles.
     int vectorCol = other.maxCol + 1;
     int vectorRow = other.maxRow + 1;
-    std::vector<Tile*> row(vectorCol, nullptr);
-    this->boardVector = std::vector<std::vector<Tile*> >(vectorRow, row);
+    std::vector<Tile *> row(vectorCol, nullptr);
+    this->boardVector = std::vector<std::vector<Tile *> >(vectorRow, row);
     this->numOfTiles = other.numOfTiles;
 
     // Traverse board vector and copy tiles.
@@ -26,9 +26,9 @@ Board::Board(const Board& other) {
         int tilesAdded = 0;
         while (tilesAdded != other.numOfTiles) {
             for (int row = this->minRow; row <= other.maxRow; row++) {
-                for (int col = this->minCol; col <= other.maxCol; col++)  {
+                for (int col = this->minCol; col <= other.maxCol; col++) {
                     if (other.boardVector[row][col] != nullptr) {
-                        Tile* temp = new Tile(*other.boardVector[row][col]);
+                        Tile *temp = new Tile(*other.boardVector[row][col]);
                         this->boardVector[row][col] = temp;
                         temp = nullptr;
                         tilesAdded++;
@@ -39,7 +39,7 @@ Board::Board(const Board& other) {
     }
 }
 
-Board::Board(Board&& other) {
+Board::Board(Board &&other) {
 
     // Move board vector and number of tiles.
     this->numOfTiles = other.numOfTiles;
@@ -48,14 +48,14 @@ Board::Board(Board&& other) {
     // Clear other. 
     if (other.numOfTiles > 0) {
         int tilesCleared = 0;
-        while (tilesCleared != other.numOfTiles) { 
+        while (tilesCleared != other.numOfTiles) {
             for (int row = other.minRow; row <= other.maxRow; row++) {
-                for (int col = other.minCol; col <= other.maxCol; col++)  {
+                for (int col = other.minCol; col <= other.maxCol; col++) {
                     if (other.boardVector[row][col] != nullptr) {
                         other.boardVector[row][col] = nullptr;
                         tilesCleared++;
                     }
-                }   
+                }
             }
         }
     }
@@ -63,7 +63,7 @@ Board::Board(Board&& other) {
 }
 
 Board::~Board() {
-    
+
     // Check if any tiles to delete.
     if (this->numOfTiles > 0) {
         int tilesDeleted = 0;
@@ -71,25 +71,25 @@ Board::~Board() {
         // Traverse board vector and delete tiles
         while (tilesDeleted != this->numOfTiles) {
             for (int row = this->minRow; row <= this->maxRow; row++) {
-                for (int col = this->minCol; col <= this->maxCol; col++)  {
+                for (int col = this->minCol; col <= this->maxCol; col++) {
                     if (this->boardVector[row][col] != nullptr) {
                         delete this->boardVector[row][col];
                         this->boardVector[row][col] = nullptr;
                         tilesDeleted++;
                     }
-                }   
+                }
             }
         }
     }
 }
 
-void Board::addTileAtPos(Tile* tile, char row, int col) {
+void Board::addTileAtPos(Tile *tile, char row, int col) {
 
     // Convert row to number equivalent.
     row = toupper(row) - 'A';
 
     // Check if given position exists on the board vector.
-    if ((row <= this->maxRow && row >= this->minRow) && 
+    if ((row <= this->maxRow && row >= this->minRow) &&
         (col <= this->maxCol && col >= this->minCol)) {
 
         // Add tile if there isn't one at given position.
@@ -100,19 +100,19 @@ void Board::addTileAtPos(Tile* tile, char row, int col) {
     this->numOfTiles++;
 }
 
-Tile* Board::getTileAtPos(char row, int col) const {
+Tile *Board::getTileAtPos(char row, int col) const {
 
     // Convert row to number equivalent.
-    row = toupper(row) - 'A'; 
+    row = toupper(row) - 'A';
 
     // If the given row and col is out of bounds.
-    if (row > this->maxRow || row < this->minRow || 
+    if (row > this->maxRow || row < this->minRow ||
         col > this->maxCol || col < this->minCol) {
         throw std::out_of_range("Board getTileAtPos() - Out of bounds");
 
-    // Get tile at the given row and col.
+        // Get tile at the given row and col.
     } else {
-        Tile* returnTile = this->boardVector[row][col];
+        Tile *returnTile = this->boardVector[row][col];
         return returnTile;
     }
 }
@@ -150,12 +150,12 @@ void Board::printBoard() const {
         ++rowHeaderText;
 
         // Print tiles in row.
-        for (int col = this->minCol; col <= this->maxCol; col++) {   
+        for (int col = this->minCol; col <= this->maxCol; col++) {
             if (this->boardVector[row][col] == nullptr) {
                 std::cout << "  ";
-            } else { 
+            } else {
                 std::cout << this->boardVector[row][col]->getAsStr();
-            } 
+            }
             std::cout << "|";
         }
         std::cout << std::endl;
@@ -174,7 +174,7 @@ int Board::getNumOfTiles() const {
     return this->numOfTiles;
 }
 
-std::vector<std::vector<Tile*> > Board::getBoardVector() const {
+std::vector<std::vector<Tile *> > Board::getBoardVector() const {
     return this->boardVector;
 }
 
@@ -189,6 +189,7 @@ int Board::getMaxCol() const {
 int Board::getMinRow() const {
     return this->minRow;
 }
+
 int Board::getMaxRow() const {
     return this->maxRow;
 }
@@ -201,15 +202,15 @@ char Board::getMaxRowChar() const {
     return this->maxRowChar;
 }
 
-void Board::addToArray(std::string tilesArray[], int* i) {
+void Board::addToArray(std::string tilesArray[], int *i) {
     int tilesAdded = 0;
 
     // Traverse board vector, add tile if there is one.
     while (tilesAdded != this->numOfTiles) {
         for (int row = this->minRow; row <= this->maxRow; row++) {
-            for (int col = this->minCol; col <= this->maxCol; col++) {        
+            for (int col = this->minCol; col <= this->maxCol; col++) {
                 if (this->boardVector[row][col] != nullptr) {
-                    Tile* current = this->boardVector[row][col];
+                    Tile *current = this->boardVector[row][col];
                     tilesArray[*i] = current->getAsStr();
                     current = nullptr;
                     (*i)++;
@@ -217,7 +218,7 @@ void Board::addToArray(std::string tilesArray[], int* i) {
                 }
             }
         }
-    }  
+    }
 }
 
 std::string Board::getAsStr() {
@@ -227,13 +228,13 @@ std::string Board::getAsStr() {
     // Traverse board vector, add tile if there is one.
     while (tilesAdded != this->numOfTiles) {
         for (int row = this->minRow; row <= this->maxRow; row++) {
-            for (int col = this->minCol; col <= this->maxCol; col++) {        
+            for (int col = this->minCol; col <= this->maxCol; col++) {
                 if (this->boardVector[row][col] != nullptr) {
                     if (tilesAdded != 0) {
                         boardStr += " ,";
                     }
                     boardStr += this->boardVector[row][col]->getAsStr() +
-                                "@" + (char)('A' + row) + std::to_string(col);
+                                "@" + (char) ('A' + row) + std::to_string(col);
                     tilesAdded++;
                 }
             }

@@ -4,11 +4,11 @@ TileBag::TileBag() {
     this->tileBagList = new LinkedList();
 }
 
-TileBag::TileBag(const TileBag& other) {
+TileBag::TileBag(const TileBag &other) {
     this->tileBagList = new LinkedList(*other.tileBagList);
 }
 
-TileBag::TileBag(TileBag&& other) {
+TileBag::TileBag(TileBag &&other) {
     this->tileBagList = other.tileBagList;
     other.tileBagList = nullptr;
 }
@@ -38,8 +38,8 @@ void TileBag::newGameTileBag(bool testFlag) {
 void TileBag::fillTileBag() {
 
     // Add shapes and colours to array for iteration.
-    Colour colours[] = { COLOURS };           
-    Shape shapes[] = { SHAPES };  
+    Colour colours[] = {COLOURS};
+    Shape shapes[] = {SHAPES};
 
     // Add 2 of each colour and shape combination to the tile bag.
     for (int i = 0; i < sizeof(colours) / sizeof(Colour); i++) {
@@ -54,7 +54,7 @@ void TileBag::shuffleTileBag(bool testFlag) {
 
     // Check if there are tiles in the tile bag.
     if (this->tileBagList->getLength() > 0) {
-        LinkedList* tempTileList= new LinkedList();
+        LinkedList *tempTileList = new LinkedList();
         int totalTiles = this->tileBagList->getLength();
 
         // Shuffle tiles and put in temporary tile bag.
@@ -77,7 +77,7 @@ void TileBag::shuffleTileBag(bool testFlag) {
 
             try {
                 // Get a tile from tile bag at random pos.
-                Tile* randomTile = this->tileBagList->getAtPos(randomVal);
+                Tile *randomTile = this->tileBagList->getAtPos(randomVal);
 
                 // Add tile to the temp tile bag.
                 tempTileList->addEnd(new Tile(*randomTile));
@@ -86,28 +86,28 @@ void TileBag::shuffleTileBag(bool testFlag) {
                 // Delete tile from original tile bag.
                 this->tileBagList->deleteAtPos(randomVal);
 
-            // If error happens while copying tiles.
-            } catch (std::out_of_range(& e)) {
+                // If error happens while copying tiles.
+            } catch (std::out_of_range(&e)) {
                 throw std::out_of_range("Program error, can't make tile bag!");
             }
         }
         // Clean up and point to new tile bag. 
         delete this->tileBagList;
         this->tileBagList = tempTileList;
-        tempTileList= nullptr;
+        tempTileList = nullptr;
     }
 }
 
-void TileBag::addTile(Tile* tile) {
+void TileBag::addTile(Tile *tile) {
     this->tileBagList->addEnd(tile);
 }
 
-void TileBag::fillHand(Hand* hand) {
+void TileBag::fillHand(Hand *hand) {
 
     while ((hand->getNumOfTiles() < hand->getMaxTilesInHand()) && !isEmpty()) {
 
         // Draw a tile from the front of the tile bag. 
-        Tile* tileDrawn = this->tileBagList->getFront();
+        Tile *tileDrawn = this->tileBagList->getFront();
 
         // Add it to the end of the player's hand. 
         hand->addTile(new Tile(*tileDrawn));
@@ -118,7 +118,7 @@ void TileBag::fillHand(Hand* hand) {
     }
 }
 
-void TileBag::addToArray(std::string tilesArray[], int* i) {
+void TileBag::addToArray(std::string tilesArray[], int *i) {
     this->tileBagList->addToArray(tilesArray, i);
 }
 
