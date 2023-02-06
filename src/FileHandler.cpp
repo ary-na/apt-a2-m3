@@ -5,12 +5,12 @@ FileHandler::FileHandler() {
     this->testFlag = false;
 }
 
-FileHandler::FileHandler(const FileHandler &other) {
+FileHandler::FileHandler(const FileHandler& other) {
     this->validator = new Validator(*other.validator);
     this->testFlag = other.testFlag;
 }
 
-FileHandler::FileHandler(FileHandler &&other) {
+FileHandler::FileHandler(FileHandler&& other) {
     this->validator = other.validator;
     this->testFlag = other.testFlag;
     other.testFlag = false;
@@ -26,7 +26,7 @@ void FileHandler::setTestFlag(const bool testFlag) {
     this->validator->setTestFlag(testFlag);
 }
 
-bool FileHandler::saveGame(const Game *game, const std::string fileName) {
+bool FileHandler::saveGame(const Game* game, const std::string fileName) {
 
     std::string path = this->testFlag ? "tests/" + fileName.substr(5, fileName.length()) + ".save" :
                        "savedGames/" + fileName.substr(5, fileName.length()) + ".save";
@@ -61,19 +61,19 @@ bool FileHandler::saveGame(const Game *game, const std::string fileName) {
     return true;
 }
 
-std::string FileHandler::playerHandToFile(Hand *playerHand) {
+std::string FileHandler::playerHandToFile(Hand* playerHand) {
     return playerHand->getAsStr();
 }
 
-std::string FileHandler::boardStateToFile(Board *board) {
+std::string FileHandler::boardStateToFile(Board* board) {
     return board->getAsStr();
 }
 
-std::string FileHandler::tileBagToFile(TileBag *tileBag) {
+std::string FileHandler::tileBagToFile(TileBag* tileBag) {
     return tileBag->getAsStr();
 }
 
-Game *FileHandler::loadGame(const std::string fileName) {
+Game* FileHandler::loadGame(const std::string fileName) {
 
     // Validates the file exist
     if (!this->validator->isSavedFileExist(fileName)) {
@@ -82,7 +82,7 @@ Game *FileHandler::loadGame(const std::string fileName) {
     return absorbLoadGameFile(fileName);
 }
 
-Game *FileHandler::absorbLoadGameFile(const std::string fileName) {
+Game* FileHandler::absorbLoadGameFile(const std::string fileName) {
 
     std::string path = this->testFlag ? "tests/" + fileName + ".save" :
                        "savedGames/" + fileName + ".save";
@@ -94,7 +94,7 @@ Game *FileHandler::absorbLoadGameFile(const std::string fileName) {
     std::vector<std::string> fileContent;
     if (inFile.is_open()) {
         std::string line;
-        while (getline(inFile, line)) {
+        while (getline(inFile,line)) {
             fileContent.push_back(line);
         }
     }
@@ -102,38 +102,42 @@ Game *FileHandler::absorbLoadGameFile(const std::string fileName) {
     inFile.close();
 
     // Load game with players, board and tile bag from file.
-    Player *player1 = nullptr;
-    Player *player2 = nullptr;
-    Player *currentPlayer = nullptr;
-    Board *board = nullptr;
-    TileBag *tileBag = nullptr;
-    Game *game = new Game();
+    Player* player1 = new Player(fileContent[0], std::stoi(fileContent[1]), playerHandFromFile(fileContent[2]));
+    Player* player2 = new Player(fileContent[3], std::stoi(fileContent[4]), playerHandFromFile(fileContent[5]));
+    Player* currentPlayer = currentPlayerFromName(player1, player2, fileContent[9]);
+    Board* board = initialiseBoardFromFile(fileContent[7]);
+    TileBag* tileBag = tileBagFromFile(fileContent[8]);
 
-    try {
-        player1 = new Player(fileContent[0], std::stoi(fileContent[1]), playerHandFromFile(fileContent[2]));
-        player2 = new Player(fileContent[3], std::stoi(fileContent[4]), playerHandFromFile(fileContent[5]));
-        currentPlayer = currentPlayerFromName(player1, player2, fileContent[9]);
-        board = initaliseBoardFromFile(fileContent[7]);
-        tileBag = tileBagFromFile(fileContent[8]);
-        game->loadGame(player1, player2, board, tileBag, currentPlayer);
+    Game* game = new Game();
+    bool loaded = game->loadGame(player1, player2, board, tileBag, currentPlayer);
 
-        // If game cannot be loaded from file.
-    } catch (std::invalid_argument(&e)) {
-        throw std::invalid_argument(e.what());
+    // If unsuccessful, cleanup and show error.
+    if (!loaded) {
+        delete player1;
+        player1 = nullptr;
+        delete player2;
+        player2 = nullptr;
+        delete board;
+        board = nullptr;
+        delete tileBag;
+        tileBag = nullptr;
+        delete game;
+        game = nullptr;
+        throw std::logic_error("File has incorrect tiles!");
+
+        // If successful, cleanup pointers and return game.
+    } else {
+        player1 = nullptr;
+        player2 = nullptr;
+        currentPlayer = nullptr;
+        board = nullptr;
+        tileBag = nullptr;
     }
-
-    // Clean up.
-    player1 = nullptr;
-    player2 = nullptr;
-    currentPlayer = nullptr;
-    board = nullptr;
-    tileBag = nullptr;
-
     return game;
 }
 
-Hand *FileHandler::playerHandFromFile(const std::string playerHandString) {
-    Hand *playerHand = new Hand();
+Hand* FileHandler::playerHandFromFile(const std::string playerHandString) {
+    Hand* playerHand = new Hand();
 
     if (playerHandString != "") {
         std::stringstream s_stream(playerHandString);
@@ -147,8 +151,8 @@ Hand *FileHandler::playerHandFromFile(const std::string playerHandString) {
     return playerHand;
 }
 
-Board *FileHandler::initaliseBoardFromFile(const std::string boardState) {
-    Board *board = new Board();
+Board* FileHandler:: initialiseBoardFromFile (const std::string boardState) {
+    Board* board = new Board ();
 
     if (boardState != "") {
         std::stringstream s_stream(boardState);
@@ -159,34 +163,34 @@ Board *FileHandler::initaliseBoardFromFile(const std::string boardState) {
 
             std::string num(1, substr[1]);
 
-            board->addTileAtPos(new Tile(substr[0], std::stoi(num)), substr[3],
+            board->addTileAtPos(new Tile(substr[0],std::stoi(num)), substr[3],
                                 stoi(substr.substr(substr.find('@') + 2, substr.length())));
         }
     }
     return board;
 }
 
-TileBag *FileHandler::tileBagFromFile(const std::string tileBagString) {
-    TileBag *tileBag = new TileBag();
+TileBag* FileHandler::tileBagFromFile(const std::string tileBagString) {
+    TileBag* tileBag = new TileBag();
 
     if (tileBagString != "") {
         std::stringstream s_stream(tileBagString);
         while (s_stream.good()) {
             std::string substr;
             getline(s_stream, substr, ',');
-            std::string num(1, substr[1]);
+            std::string num(1 , substr[1]);
             tileBag->addTile(new Tile(substr[0], std::stoi(num)));
         }
     }
     return tileBag;
 }
 
-Player *FileHandler::currentPlayerFromName(Player *player1, Player *player2,
+Player* FileHandler::currentPlayerFromName(Player* player1, Player* player2,
                                            std::string playerName) const {
-    return player1->getName().compare(playerName) == 0 ? player1 : player2;
+    return  player1->getName().compare(playerName) == 0 ? player1 : player2;
 }
 
-std::string FileHandler::trim(const std::string &source) {
+std::string FileHandler::trim(const std::string & source) {
     std::string s(source);
     s.erase(0, s.find_first_not_of(" \n\r\t"));
     s.erase(s.find_last_not_of(" \n\r\t") + 1);

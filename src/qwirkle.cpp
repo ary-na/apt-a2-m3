@@ -1,6 +1,6 @@
 // COSC2136: Advanced Programming Techniques 
 // Assignment 2: Implementing Qwirkle
-// Milestone 2: Basic Qwirkle Implementation (Group Component)
+// Milestone 3: Qwirkle Implementation (Individual Component)
 
 // Prepared by Group 2:
 // @author - Carelle Mulawa-Richards (s3749114)
@@ -17,15 +17,22 @@ int main(int argc, char *argv[]) {
     // to ensure consistent randomness of the tile bag.
     // Run with "./qwirkle T" to activate test mode. 
     bool testFlag = false;
+
+    // When AI flag is true, you can play against computer.
+    // Run with "./qwirkle --ai" to activate AI mode.
+    bool aiFlag = false;
+
     if (argv[1] != nullptr) {
         if (*argv[1] == 'T') {
             testFlag = true;
+        } else if (strcmp(argv[1], "--ai") == 0) {
+            aiFlag = true;
         }
     }
 
     // Run Qwirkle program.
     Controller *controller(new Controller);
-    controller->launchGame(testFlag);
+    controller->launchGame(testFlag, aiFlag);
 
     delete controller;
     controller = nullptr;

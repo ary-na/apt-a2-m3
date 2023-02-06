@@ -5,6 +5,7 @@ Controller::Controller() {
     this->validator = new Validator();
     this->fileHandler = new FileHandler();
     this->testFlag = false;
+    this->aiFlag = false;
     this->exitMode = false;
 }
 
@@ -17,6 +18,7 @@ Controller::Controller(const Controller &other) {
     this->validator = new Validator(*other.validator);
     this->fileHandler = new FileHandler(*other.fileHandler);
     this->testFlag = other.testFlag;
+    this->aiFlag = other.aiFlag;
     this->exitMode = other.exitMode;
 }
 
@@ -25,11 +27,13 @@ Controller::Controller(Controller &&other) {
     this->validator = other.validator;
     this->fileHandler = other.fileHandler;
     this->testFlag = other.testFlag;
+    this->aiFlag = other.aiFlag;
     this->exitMode = other.exitMode;
     other.game = nullptr;
     other.validator = nullptr;
     other.fileHandler = nullptr;
     other.testFlag = false;
+    other.aiFlag = false;
     other.exitMode = false;
 }
 
@@ -44,7 +48,7 @@ Controller::~Controller() {
     this->fileHandler = nullptr;
 }
 
-void Controller::launchGame(bool testFlag) {
+void Controller::launchGame(bool testFlag, bool aiFlag) {
 
     // If program was run in test mode, set test flag to true.
     if (testFlag) {
@@ -53,11 +57,18 @@ void Controller::launchGame(bool testFlag) {
         this->validator->setTestFlag(testFlag);
     }
 
+    // If program was run in AI mode, set AI flag to true.
+    if (aiFlag) {
+        this->aiFlag = aiFlag;
+        std::cout << "YOU HAVE UNLOCKED SINGLE PLAYER MODE." << std::endl;
+    }
+
     // Program shows a message and continues to the main menu. 
     std::cout << std::endl;
     std::cout << "Welcome to Qwirkle" << std::endl;
     std::cout << "------------------" << std::endl;
     std::cout << std::endl;
+
     mainMenu();
 }
 
@@ -104,21 +115,31 @@ void Controller::newGame() {
     std::string name1Input = "";
     playerNamePrompt(&name1Input);
 
-    // Ask for player 2 name.
-    std::cout << "Enter a name for player 2 "
-              << "(uppercase characters only)" << std::endl;
+    Player *player1;
+    Player *player2;
 
-    std::string name2Input = "";
-    playerNamePrompt(&name2Input, name1Input);
+    if (!aiFlag) {
+        // Ask for player 2 name.
+        std::cout << "Enter a name for player 2 "
+                  << "(uppercase characters only)" << std::endl;
 
-    // Create a new game of Qwirkle.
-    Player *player1 = new Player(name1Input);
-    Player *player2 = new Player(name2Input);
+        std::string name2Input = "";
+        playerNamePrompt(&name2Input, name1Input);
+
+        // Create a new game of Qwirkle.
+        player1 = new Player(name1Input);
+        player2 = new Player(name2Input);
+    } else {
+        // Create a new game of Qwirkle.
+        player1 = new Player(name1Input);
+        player2 = new Player(COMPUTER, true);
+    }
+
     this->game = new Game();
     bool gameCreated = false;
 
     try {
-        this->game->newGame(player1, player2, this->testFlag);
+        this->game->newGame(player1, player2, this->testFlag, this->aiFlag);
         gameCreated = true;
 
         // Return to main menu if new game unsuccessful.
@@ -261,7 +282,7 @@ void Controller::takeTurn() {
     std::cout << std::endl;
 
     // The user prompt.
-    if (!exitMode) {
+    if (!exitMode && !this->game->getCurrentPlayer()->isComputer()) {
         turnPrompt();
     }
 }
@@ -308,6 +329,7 @@ void Controller::turnPrompt() {
             skipTurn(&awaitingInput);
         }
     }
+
 }
 
 void Controller::placeTile(std::string commandInput, bool *inputStatus) {
@@ -432,5 +454,5 @@ bool Controller::isExitMode() const {
 }
 
 void Controller::setExitMode(bool exitMode) {
-    Controller::exitMode = exitMode;
+    this->exitMode = exitMode;
 }

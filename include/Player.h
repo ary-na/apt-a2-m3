@@ -9,33 +9,39 @@
 // @author - Carelle Mulawa-Richards
 
 class Player {
-    public:
-        // Constructor for adding a new player.
-        Player(std::string name);
+public:
+    // Constructor for adding a new player.
+    explicit Player(const std::string& name, bool computer = false);
 
-        // Constructor for loading a player.
-        Player(std::string name, int score, Hand* hand);
+    // Constructor for loading a player.
+    Player(const std::string& name, int score, Hand *hand, bool computer = false);
 
-        Player(const Player& other);
-        Player(Player&& other);
-        ~Player();
+    Player(const Player &other);
 
-        // Returns the player's name.
-        std::string getName() const;
+    Player(Player &&other);
 
-        // Returns the player's score.
-        int getScore() const;
+    ~Player();
 
-        // Returns the player's hand.
-        Hand* getHand() const;
+    // Returns the player's name.
+    std::string getName() const;
 
-        // Takes a number >= 0 and adds it to the score.
-        void addScore(int score);
+    // Returns the player's score.
+    int getScore() const;
 
-    private:
-        std::string name;
-        int score;
-        Hand* hand;
+    // Returns the player's hand.
+    Hand *getHand() const;
+
+    // Takes a number >= 0 and adds it to the score.
+    void addScore(int score);
+
+    // Computer AI getter
+    bool isComputer() const;
+
+private:
+    std::string name;
+    int score;
+    Hand *hand;
+    bool computer;
 };
 
 #endif // PLAYER_H
