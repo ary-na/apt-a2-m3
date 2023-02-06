@@ -12,7 +12,7 @@ Game::Game() {
     this->prevTurnSkipped = false;
 }
 
-Game::Game(const Game& other) {
+Game::Game(const Game &other) {
 
     // Copy tile bag, players, board and score calculator.
     this->testFlag = other.testFlag;
@@ -32,7 +32,7 @@ Game::Game(const Game& other) {
     }
 }
 
-Game::Game(Game&& other) {
+Game::Game(Game &&other) {
     this->testFlag = other.testFlag;
     other.testFlag = false;
     this->aiFlag = other.aiFlag;
@@ -67,7 +67,8 @@ Game::~Game() {
     this->tileBag = nullptr;
 }
 
-void Game::newGame(Player *player1, Player *player2, bool testFlag, bool aiFlag) {
+void
+Game::newGame(Player *player1, Player *player2, bool testFlag, bool aiFlag) {
 
     // Set the test flag.
     this->testFlag = testFlag;
@@ -91,8 +92,8 @@ void Game::newGame(Player *player1, Player *player2, bool testFlag, bool aiFlag)
     this->scoreCalculator = new ScoreCalculator();
 }
 
-bool Game::loadGame(Player* player1, Player* player2, Board* board,
-                    TileBag* tileBag, Player* currentPlayer) {
+bool Game::loadGame(Player *player1, Player *player2, Board *board,
+                    TileBag *tileBag, Player *currentPlayer) {
 
     // Check that given data contains a full set of tiles.
     bool correctTiles = checkTiles(player1->getHand(), player2->getHand(),
@@ -145,14 +146,19 @@ std::string Game::getHighestScorePlayer() const {
 }
 
 void Game::nextPlayerTurn() {
-    if (this->currentPlayer == player1) {
-        this->currentPlayer = player2;
-    } else if (this->currentPlayer == player2) {
+
+    if (aiFlag) {
         this->currentPlayer = player1;
+    } else {
+        if (this->currentPlayer == player1) {
+            this->currentPlayer = player2;
+        } else if (this->currentPlayer == player2) {
+            this->currentPlayer = player1;
+        }
     }
 }
 
-TileBag* Game:: getTileBag() const {
+TileBag *Game::getTileBag() const {
     return this->tileBag;
 }
 
@@ -225,7 +231,7 @@ bool Game::isPlaceLegal(Tile *tile, char row, int col) const {
         validCol = nullptr;
 
         // If exception occurs during checks.
-    } catch (std::out_of_range& e) {
+    } catch (std::out_of_range &e) {
         throw std::out_of_range("Program error, can't check tile placement!");
     }
     delete moves;
@@ -272,6 +278,10 @@ bool Game::replaceTile(Tile *tile) {
     return isLegal;
 }
 
+void computerMove(){
+
+}
+
 bool Game::placeTile(Tile *tile, char row, int col) {
 
     // Check if the placement is legal according to the rules.
@@ -296,8 +306,8 @@ bool Game::placeTile(Tile *tile, char row, int col) {
     return isLegal;
 }
 
-bool Game::checkTiles(Hand* player1Hand, Hand* player2Hand,
-                      Board* board, TileBag* tileBag) {
+bool Game::checkTiles(Hand *player1Hand, Hand *player2Hand,
+                      Board *board, TileBag *tileBag) {
 
     bool correctTiles = true;
 
@@ -334,15 +344,15 @@ bool Game::checkTiles(Hand* player1Hand, Hand* player2Hand,
 void Game::addToArray(std::string expectedTilesArray[]) {
 
     // Add shapes and colours to array for iteration.
-    Colour colours[] = { COLOURS };
-    Shape shapes[] = { SHAPES };
+    Colour colours[] = {COLOURS};
+    Shape shapes[] = {SHAPES};
 
     // Track array index.
     int i = 0;
 
     // Add 2 of each colour and shape combination to the array.
-    for (char colour : colours) {
-        for (int shape : shapes) {
+    for (char colour: colours) {
+        for (int shape: shapes) {
             expectedTilesArray[i] = colour + std::to_string(shape);
             i++;
             expectedTilesArray[i] = colour + std::to_string(shape);

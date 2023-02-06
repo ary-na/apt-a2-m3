@@ -61,6 +61,11 @@ public:
     // hand or if both players have skipped their turn consecutively.
     bool isComplete();
 
+    // @author - Arian Najafi Yamchelo
+    // Take a tile from computer hand and find the best place on the board.
+    // Call place tile to place the tile on the board.
+    void computerMove();
+
     // Takes a tile, row (A-Z) and col (0-25). Returns true if the
     // tile has been placed from the current player's hand, their
     // score has been updated and isPlaceLegal() is also true.

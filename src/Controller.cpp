@@ -282,7 +282,7 @@ void Controller::takeTurn() {
     std::cout << std::endl;
 
     // The user prompt.
-    if (!exitMode && !this->game->getCurrentPlayer()->isComputer()) {
+    if (!exitMode) {
         turnPrompt();
     }
 }
@@ -353,6 +353,9 @@ void Controller::placeTile(std::string commandInput, bool *inputStatus) {
     try {
         // Place the tile. 
         bool tilePlaced = this->game->placeTile(tileInput, rowInput, colInput);
+
+        // Place tile for computer.
+        this->game->computerMove();
 
         // If the tile placement is illegal. 
         if (!tilePlaced) {
