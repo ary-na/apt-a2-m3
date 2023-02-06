@@ -70,3 +70,5 @@ Stack Overflow. (n.d.). c++ - Checking whether a vector is empty. [online] Avail
 
 Stack Overflow. (n.d.). Regex for numbers 1-25. [online] Available at: https://stackoverflow.com/questions/39138073/regex-for-numbers-1-25 [Accessed 19 Jan. 2023].
 
+https://medium.com/@mostsignificant/3-ways-to-parse-command-line-arguments-in-c-quick-do-it-yourself-or-comprehensive-36913284460f
+
