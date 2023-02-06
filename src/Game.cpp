@@ -278,8 +278,40 @@ bool Game::replaceTile(Tile *tile) {
     return isLegal;
 }
 
-void computerMove(){
+void Game::computerMove() {
+    this->currentPlayer = player2;
+    Hand *computerHand = this->currentPlayer->getHand();
+    LinkedList *computerHandTiles = this->currentPlayer->getHand()->getHandList();
+    Colour selectedColour;
+    Shape selectedShape;
+    int score = 0;
+    char selectedRow;
+    int selectedCol;
+    char rows[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
+                   'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
+                   'W', 'X', 'Y', 'Z'};
 
+    // Traverse boardVector
+    for (int row = 0; row < this->board->getBoardVector().size(); row++) {
+        for (int col = 0; col < this->board->getBoardVector()[row].size(); col++) {
+            for (int i = 0; i < computerHand->getNumOfTiles(); i++) {
+                if (isPlaceLegal(computerHandTiles->getAtPos(i), rows[row], col)) {
+                    selectedColour = computerHandTiles->getAtPos(i)->colour;
+                    selectedShape = computerHandTiles->getAtPos(i)->shape;
+                    selectedRow = rows[row];
+                    selectedCol = col;
+                }
+            }
+
+
+        }
+    }
+
+    Tile *tile = new Tile(selectedColour, selectedShape);
+    std::cout << tile->colour << tile->shape << std::endl;
+    //placeTile(tile, selectedRow, selectedCol);
+    std::cout << "Computer move" << std::endl;
+    this->currentPlayer = player1;
 }
 
 bool Game::placeTile(Tile *tile, char row, int col) {
@@ -312,7 +344,8 @@ bool Game::checkTiles(Hand *player1Hand, Hand *player2Hand,
     bool correctTiles = true;
 
     int totalTiles = player1Hand->getNumOfTiles() + board->getNumOfTiles() +
-                     player2Hand->getNumOfTiles() + tileBag->getNumOfTiles();
+                     player2Hand->getNumOfTiles() +
+                     tileBag->getNumOfTiles();
 
     // Check if there are the right number of tiles.
     if (totalTiles != maxTilesInGame) {

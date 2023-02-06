@@ -55,5 +55,9 @@ void Hand::addTile(Tile *tile) {
 }
 
 int Hand::getMaxTilesInHand() const {
-    return this->maxTilesInHand;
+    return maxTilesInHand;
+}
+
+LinkedList *Hand::getHandList() const {
+    return handList;
 }

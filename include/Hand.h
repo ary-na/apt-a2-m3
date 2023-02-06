@@ -17,7 +17,7 @@ class Hand {
         // Returns the hand as a string.
         std::string getAsStr();
 
-        // Returns the total titles.
+        // Returns the total tiles.
         int getNumOfTiles() const;
 
         // Returns true if getNumOfTiles() is 0.
@@ -42,8 +42,12 @@ class Hand {
 
         // Returns the maximum tiles a player can have in their hand. 
         int getMaxTilesInHand() const;
-        
-    private:
+
+    LinkedList *getHandList() const;
+
+    void setHandList(LinkedList *handList);
+
+private:
         LinkedList* handList;
         const static int maxTilesInHand = 6;
 };
