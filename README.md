@@ -72,3 +72,7 @@ Stack Overflow. (n.d.). Regex for numbers 1-25. [online] Available at: https://s
 
 https://medium.com/@mostsignificant/3-ways-to-parse-command-line-arguments-in-c-quick-do-it-yourself-or-comprehensive-36913284460f
 
+https://stackoverflow.com/questions/45703227/how-to-do-a-vectorclass-objects-deep-copy
+
+https://www.daniweb.com/programming/software-development/threads/488453/how-to-delete-column-in-2d-vector-c
+
