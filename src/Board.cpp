@@ -3,8 +3,8 @@
 Board::Board() {
 
     // Make 2D vector.
-    int vectorCol = this->maxCol + 1;
-    int vectorRow = this->maxRow + 1;
+    int vectorCol = maxCol + 1;
+    int vectorRow = maxRow + 1;
     std::vector<Tile *> row(vectorCol, nullptr);
     this->boardVector = std::vector<std::vector<Tile *> >(vectorRow, row);
 
@@ -12,13 +12,13 @@ Board::Board() {
     this->numOfTiles = 0;
 }
 
-Board::Board(const Board &other) {
+Board::Board(const Board& other) {
 
     // Make 2D vector and copy number of tiles.
     int vectorCol = other.maxCol + 1;
     int vectorRow = other.maxRow + 1;
-    std::vector<Tile *> row(vectorCol, nullptr);
-    this->boardVector = std::vector<std::vector<Tile *> >(vectorRow, row);
+    std::vector<Tile*> row(vectorCol, nullptr);
+    this->boardVector = std::vector<std::vector<Tile*> >(vectorRow, row);
     this->numOfTiles = other.numOfTiles;
 
     // Traverse board vector and copy tiles.
@@ -26,9 +26,9 @@ Board::Board(const Board &other) {
         int tilesAdded = 0;
         while (tilesAdded != other.numOfTiles) {
             for (int row = this->minRow; row <= other.maxRow; row++) {
-                for (int col = this->minCol; col <= other.maxCol; col++) {
+                for (int col = this->minCol; col <= other.maxCol; col++)  {
                     if (other.boardVector[row][col] != nullptr) {
-                        Tile *temp = new Tile(*other.boardVector[row][col]);
+                        Tile* temp = new Tile(*other.boardVector[row][col]);
                         this->boardVector[row][col] = temp;
                         temp = nullptr;
                         tilesAdded++;
@@ -98,6 +98,22 @@ void Board::addTileAtPos(Tile *tile, char row, int col) {
         }
     }
     this->numOfTiles++;
+}
+
+void Board::eraseTileAtPos(char row, int col) {
+    // Convert row to number equivalent.
+    row = toupper(row) - 'A';
+
+    // Check if given position exists on the board vector.
+    if ((row <= maxRow && row >= minRow) &&
+        (col <= maxCol && col >= minCol)) {
+
+        // Erase tile if there is one at given position.
+        if (this->boardVector[row][col] != nullptr) {
+            this->boardVector[row][col] = nullptr;
+        }
+    }
+    this->numOfTiles--;
 }
 
 Tile *Board::getTileAtPos(char row, int col) const {
