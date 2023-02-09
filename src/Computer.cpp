@@ -96,3 +96,7 @@ Hand *Computer::getHand() const {
 LinkedList *Computer::getHandTiles() const {
     return handTiles;
 }
+
+int Computer::getTargetScore() const {
+    return targetScore;
+}

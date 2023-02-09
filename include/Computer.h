@@ -30,6 +30,8 @@ public:
 
     Shape getTileShape() const;
 
+    int getTargetScore() const;
+
     void setTargetRow(char targetRow);
 
     void setTargetCol(int targetCol);
@@ -44,6 +46,8 @@ public:
 
     LinkedList *getHandTiles() const;
 
+    const static char minTargetRow = 'A';
+
 private:
     Hand *hand;
     LinkedList *handTiles;
@@ -55,8 +59,6 @@ private:
     Shape tileShape;
 
     int targetScore;
-
-    const static char minTargetRow = 'A';
 };
 
 
