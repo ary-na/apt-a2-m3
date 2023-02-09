@@ -226,37 +226,72 @@ bool Game::replaceTile(Tile *tile) {
 }
 
 void Game::computerMove() {
+
+    // Set current player to computer.
     this->currentPlayer = player2;
     Computer *computer = new Computer(this->currentPlayer);
 
-    // Traverse boardVector
+    // Skip turn if computer hand is empty and return.
+    if (computer->getHandTiles()->getAtPos(0) == nullptr) {
+        delete computer;
+        computer = nullptr;
+        this->skipTurn();
+        return;
+    }
+
+    // Traverse boardVector and find legal tiles from computer hand.
     for (int row = 0; row < this->board->getBoardVector().size(); row++) {
         for (int col = 0; col < this->board->getBoardVector()[row].size(); col++) {
-            for (int i = 0; i < computer->getHand()->getNumOfTiles(); i++) {
-                bool placeLegal = this->isPlaceLegal(computer->getHandTiles()->getAtPos(i),
-                                                     Computer::minTargetRow + row, col);
-                if (placeLegal) {
-                    this->board->addTileAtPos(computer->getHandTiles()->getAtPos(i),
-                                              Computer::minTargetRow + row, col);
-                    int temp = scoreCalculator->calculateScore(this->board, Computer::minTargetRow + row, col);
-                    this->board->eraseTileAtPos(Computer::minTargetRow + row, col);
-                    if (temp >= computer->getTargetScore()) {
-                        computer->setTargetScore(temp);
-                        computer->setTileColour(computer->getHandTiles()->getAtPos(i)->colour);
-                        computer->setTileShape(computer->getHandTiles()->getAtPos(i)->shape);
-                        computer->setTargetRow(Computer::minTargetRow + row);
-                        computer->setTargetCol(col);
-                    }
-                }
-            }
+            this->findComputerLegalTiles(*computer, char(board->getMinRowChar() + row), col);
         }
     }
 
+    // Replace a random tile from computer hand, if all are illegal and return.
+    if (computer->getTileColour() == 0 && computer->getTileShape() == 0) {
+        this->replaceTile(computer->getHandTiles()->getAtPos(int(random() % 6 + 1)));
+        delete computer;
+        computer = nullptr;
+        this->computerMove();
+        return;
+    }
+
+    // Print computer move.
     computer->printMove();
+
+    // Create tile and place it on board.
     Tile *tile = new Tile(computer->getTileColour(), computer->getTileShape());
     placeTile(tile, computer->getTargetRow(), computer->getTargetCol());
     delete computer;
     computer = nullptr;
+}
+
+void Game::findComputerLegalTiles(Computer &computer, char row, int col) {
+    int tempScore = 0;
+
+    // Traverse computer hand and find legal tiles from computer hand.
+    for (int i = 0; i < computer.getHand()->getNumOfTiles(); i++) {
+        if (this->isPlaceLegal(computer.getHandTiles()->getAtPos(i), row, col)) {
+            // Store legal tiles score and check if it is greater than previous tiles.
+            tempScore = this->calculateComputerTileScore(computer.getHandTiles()->getAtPos(i), row, col);
+            // Set score, tile colour, tile shape, target row and target column.
+            if (tempScore >= computer.getTargetScore()) {
+                computer.setTargetScore(tempScore);
+                computer.setTileColour(computer.getHandTiles()->getAtPos(i)->colour);
+                computer.setTileShape(computer.getHandTiles()->getAtPos(i)->shape);
+                computer.setTargetRow(row);
+                computer.setTargetCol(col);
+            }
+        }
+    }
+}
+
+int Game::calculateComputerTileScore(Tile *tile, char row, int col) {
+    int tempScore = 0;
+    this->board->addTileAtPos(tile, row, col);
+    // Calculate tile score.
+    tempScore = scoreCalculator->calculateScore(this->board, row, col);
+    this->board->eraseTileAtPos(row, col);
+    return tempScore;
 }
 
 

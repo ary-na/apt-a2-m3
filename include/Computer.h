@@ -20,8 +20,10 @@ public:
 
     ~Computer();
 
+    // Print computer moves.
     void printMove();
 
+    // Computer getter and setters.
     char getTargetRow() const;
 
     int getTargetCol() const;
@@ -46,20 +48,15 @@ public:
 
     LinkedList *getHandTiles() const;
 
-    const static char minTargetRow = 'A';
-
 private:
     Hand *hand;
     LinkedList *handTiles;
     Player* player;
-
     char targetRow;
     int targetCol;
     Colour tileColour;
     Shape tileShape;
-
     int targetScore;
 };
-
 
 #endif //COMPUTER_H

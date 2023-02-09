@@ -48,9 +48,12 @@ Computer::~Computer() {
 }
 
 void Computer::printMove() {
-    std::cout << getTargetRow() << getTargetCol() << std::endl;
-    std::cout << getTileColour() << getTileShape() << std::endl;
+    std::cout << "PC hand is" << std::endl;
     this->hand->printHand();
+    std::cout << std::endl;
+    std::cout << "PC placed " << getTileColour() << getTileShape() << " at " << getTargetRow() << getTargetCol()
+              << std::endl;
+    std::cout << std::endl;
 }
 
 char Computer::getTargetRow() const {
@@ -67,6 +70,10 @@ Colour Computer::getTileColour() const {
 
 Shape Computer::getTileShape() const {
     return this->tileShape;
+}
+
+int Computer::getTargetScore() const {
+    return targetScore;
 }
 
 void Computer::setTargetRow(char targetRow) {
@@ -95,8 +102,4 @@ Hand *Computer::getHand() const {
 
 LinkedList *Computer::getHandTiles() const {
     return handTiles;
-}
-
-int Computer::getTargetScore() const {
-    return targetScore;
 }

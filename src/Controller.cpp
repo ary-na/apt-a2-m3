@@ -363,8 +363,9 @@ void Controller::placeTile(std::string commandInput, bool *inputStatus) {
         } else {
             *inputStatus = false;
 
-            // Place tile for computer.
-            this->game->computerMove();
+            if(this->aiFlag)
+                // Place tile for computer.
+                this->game->computerMove();
         }
 
         // If there is a program error and the tile can't be placed.
