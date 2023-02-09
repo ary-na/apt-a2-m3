@@ -226,54 +226,37 @@ bool Game::replaceTile(Tile *tile) {
 }
 
 void Game::computerMove() {
-//    this->currentPlayer = player2;
-//    Computer *computer = new Computer(this->getBoard(), this->getCurrentPlayer());
-//    computer->move();
-//    Tile *tile = new Tile(computer->getTileColour(), computer->getTileShape());
-//    //this->placeTile(tile, computer->getTargetRow(), computer->getTargetCol());
-//    computer->printMove();
-//    this->currentPlayer = player1;
-//
-//    delete computer;
-//    computer = nullptr;
     this->currentPlayer = player2;
-    Hand *computerHand = this->player2->getHand();
-    LinkedList *computerHandTiles = this->player2->getHand()->getHandList();
-    Colour selectedColour;
-    Shape selectedShape;
-    int score = 0;
-    char selectedRow;
-    int selectedCol;
-    char minTargetRow = 'A';
+    Computer *computer = new Computer(this->currentPlayer);
 
     // Traverse boardVector
     for (int row = 0; row < this->board->getBoardVector().size(); row++) {
         for (int col = 0; col < this->board->getBoardVector()[row].size(); col++) {
-            for (int i = 0; i < computerHand->getNumOfTiles(); i++) {
-                bool islegal = this->isPlaceLegal(computerHandTiles->getAtPos(i), minTargetRow + row, col);
-                if (islegal) {
-                    this->board->addTileAtPos(computerHandTiles->getAtPos(i), minTargetRow + row, col);
-                    int temp = scoreCalculator->calculateScore(this->board, minTargetRow + row, col);
-                    this->board->eraseTileAtPos(minTargetRow + row, col);
-                    if (temp >= score) {
-                        score = temp;
-                        selectedColour = computerHandTiles->getAtPos(i)->colour;
-                        selectedShape = computerHandTiles->getAtPos(i)->shape;
-                        selectedRow = minTargetRow + row;
-                        selectedCol = col;
+            for (int i = 0; i < computer->getHand()->getNumOfTiles(); i++) {
+                bool placeLegal = this->isPlaceLegal(computer->getHandTiles()->getAtPos(i),
+                                                     Computer::minTargetRow + row, col);
+                if (placeLegal) {
+                    this->board->addTileAtPos(computer->getHandTiles()->getAtPos(i),
+                                              Computer::minTargetRow + row, col);
+                    int temp = scoreCalculator->calculateScore(this->board, Computer::minTargetRow + row, col);
+                    this->board->eraseTileAtPos(Computer::minTargetRow + row, col);
+                    if (temp >= computer->getTargetScore()) {
+                        computer->setTargetScore(temp);
+                        computer->setTileColour(computer->getHandTiles()->getAtPos(i)->colour);
+                        computer->setTileShape(computer->getHandTiles()->getAtPos(i)->shape);
+                        computer->setTargetRow(Computer::minTargetRow + row);
+                        computer->setTargetCol(col);
                     }
                 }
             }
         }
     }
 
-
-    Tile *tile = new Tile(selectedColour, selectedShape);
-    std::cout << tile->colour << tile->shape << std::endl;
-    computerHand->printHand();
-    std::cout << score << " <-score " << std::endl;
-    placeTile(tile, selectedRow, selectedCol);
-    this->currentPlayer = player1;
+    computer->printMove();
+    Tile *tile = new Tile(computer->getTileColour(), computer->getTileShape());
+    placeTile(tile, computer->getTargetRow(), computer->getTargetCol());
+    delete computer;
+    computer = nullptr;
 }
 
 
