@@ -126,6 +126,7 @@ private:
     // (2) The tile bag must have tiles in it.
     bool isReplaceLegal(Tile* tile) const;
 
+
     // @author - Arian Najafi Yamchelo
     // Takes a tile, row (A-Z) and col (0-25) and returns true if
     // placement is legal according to the rules, otherwise false.
@@ -136,6 +137,7 @@ private:
     // (5) You cannot play two tiles that are exactly the same.
     // (6) The tile must be in the current player's hand.
     bool isPlaceLegal(Tile* tile, char row, int col) const;
+
 
     // Takes two player hands, a board and tile bag and
     // returns true if there is a correct set of tiles.

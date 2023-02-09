@@ -1,4 +1,5 @@
 #include "../include/Game.h"
+#include "../include/Computer.h"
 
 Game::Game() {
     this->testFlag = false;
@@ -67,8 +68,7 @@ Game::~Game() {
     this->tileBag = nullptr;
 }
 
-void
-Game::newGame(Player *player1, Player *player2, bool testFlag, bool aiFlag) {
+void Game::newGame(Player *player1, Player *player2, bool testFlag, bool aiFlag) {
 
     // Set the test flag.
     this->testFlag = testFlag;
@@ -186,6 +186,97 @@ bool Game::isReplaceLegal(Tile *tile) const {
     return isLegal;
 }
 
+void Game::skipTurn() {
+    if (isSkipAvailable()) {
+        nextPlayerTurn();
+        if (prevTurnSkipped) {
+            this->gameComplete = true;
+        } else {
+            this->prevTurnSkipped = true;
+        }
+    }
+}
+
+bool Game::isSkipAvailable() {
+    bool skipAvailable = false;
+    if (this->tileBag->isEmpty()) {
+        skipAvailable = true;
+    }
+    return skipAvailable;
+}
+
+bool Game::replaceTile(Tile *tile) {
+
+    // Check if replace is legal according to the rules.
+    bool isLegal = isReplaceLegal(tile);
+
+    if (isLegal) {
+        // Remove the given tile from hand and place it in the tile bag.
+        this->currentPlayer->getHand()->removeTile(tile);
+        this->tileBag->addTile(tile);
+
+        // Draw a new tile from the tile bag and add it to the hand.
+        this->tileBag->fillHand(this->currentPlayer->getHand());
+
+        // Continue with the other player’s turn.
+        nextPlayerTurn();
+        this->prevTurnSkipped = false;
+    }
+    return isLegal;
+}
+
+void Game::computerMove() {
+//    this->currentPlayer = player2;
+//    Computer *computer = new Computer(this->getBoard(), this->getCurrentPlayer());
+//    computer->move();
+//    Tile *tile = new Tile(computer->getTileColour(), computer->getTileShape());
+//    //this->placeTile(tile, computer->getTargetRow(), computer->getTargetCol());
+//    computer->printMove();
+//    this->currentPlayer = player1;
+//
+//    delete computer;
+//    computer = nullptr;
+    this->currentPlayer = player2;
+    Hand *computerHand = this->player2->getHand();
+    LinkedList *computerHandTiles = this->player2->getHand()->getHandList();
+    Colour selectedColour;
+    Shape selectedShape;
+    int score = 0;
+    char selectedRow;
+    int selectedCol;
+    char minTargetRow = 'A';
+
+    // Traverse boardVector
+    for (int row = 0; row < this->board->getBoardVector().size(); row++) {
+        for (int col = 0; col < this->board->getBoardVector()[row].size(); col++) {
+            for (int i = 0; i < computerHand->getNumOfTiles(); i++) {
+                bool islegal = this->isPlaceLegal(computerHandTiles->getAtPos(i), minTargetRow + row, col);
+                if (islegal) {
+                    this->board->addTileAtPos(computerHandTiles->getAtPos(i), minTargetRow + row, col);
+                    int temp = scoreCalculator->calculateScore(this->board, minTargetRow + row, col);
+                    this->board->eraseTileAtPos(minTargetRow + row, col);
+                    if (temp >= score) {
+                        score = temp;
+                        selectedColour = computerHandTiles->getAtPos(i)->colour;
+                        selectedShape = computerHandTiles->getAtPos(i)->shape;
+                        selectedRow = minTargetRow + row;
+                        selectedCol = col;
+                    }
+                }
+            }
+        }
+    }
+
+
+    Tile *tile = new Tile(selectedColour, selectedShape);
+    std::cout << tile->colour << tile->shape << std::endl;
+    computerHand->printHand();
+    std::cout << score << " <-score " << std::endl;
+    placeTile(tile, selectedRow, selectedCol);
+    this->currentPlayer = player1;
+}
+
+
 bool Game::isPlaceLegal(Tile *tile, char row, int col) const {
     bool isLegal = true;
     Moves *moves = new Moves(this->board);
@@ -239,85 +330,11 @@ bool Game::isPlaceLegal(Tile *tile, char row, int col) const {
     return isLegal;
 }
 
-void Game::skipTurn() {
-    if (isSkipAvailable()) {
-        nextPlayerTurn();
-        if (prevTurnSkipped) {
-            this->gameComplete = true;
-        } else {
-            this->prevTurnSkipped = true;
-        }
-    }
-}
-
-bool Game::isSkipAvailable() {
-    bool skipAvailable = false;
-    if (this->tileBag->isEmpty()) {
-        skipAvailable = true;
-    }
-    return skipAvailable;
-}
-
-bool Game::replaceTile(Tile *tile) {
-
-    // Check if replace is legal according to the rules.
-    bool isLegal = isReplaceLegal(tile);
-
-    if (isLegal) {
-        // Remove the given tile from hand and place it in the tile bag.
-        this->currentPlayer->getHand()->removeTile(tile);
-        this->tileBag->addTile(tile);
-
-        // Draw a new tile from the tile bag and add it to the hand.
-        this->tileBag->fillHand(this->currentPlayer->getHand());
-
-        // Continue with the other player’s turn.
-        nextPlayerTurn();
-        this->prevTurnSkipped = false;
-    }
-    return isLegal;
-}
-
-void Game::computerMove() {
-    this->currentPlayer = player2;
-    Hand *computerHand = this->currentPlayer->getHand();
-    LinkedList *computerHandTiles = this->currentPlayer->getHand()->getHandList();
-    Colour selectedColour;
-    Shape selectedShape;
-    int score = 0;
-    char selectedRow;
-    int selectedCol;
-    char rows[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
-                   'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
-                   'W', 'X', 'Y', 'Z'};
-
-    // Traverse boardVector
-    for (int row = 0; row < this->board->getBoardVector().size(); row++) {
-        for (int col = 0; col < this->board->getBoardVector()[row].size(); col++) {
-            for (int i = 0; i < computerHand->getNumOfTiles(); i++) {
-                if (isPlaceLegal(computerHandTiles->getAtPos(i), rows[row], col)) {
-                    selectedColour = computerHandTiles->getAtPos(i)->colour;
-                    selectedShape = computerHandTiles->getAtPos(i)->shape;
-                    selectedRow = rows[row];
-                    selectedCol = col;
-                }
-            }
-
-
-        }
-    }
-
-    Tile *tile = new Tile(selectedColour, selectedShape);
-    std::cout << tile->colour << tile->shape << std::endl;
-    //placeTile(tile, selectedRow, selectedCol);
-    std::cout << "Computer move" << std::endl;
-    this->currentPlayer = player1;
-}
 
 bool Game::placeTile(Tile *tile, char row, int col) {
 
     // Check if the placement is legal according to the rules.
-    bool isLegal = isPlaceLegal(tile, row, col);
+    bool isLegal = this->isPlaceLegal(tile, row, col);
 
     if (isLegal) {
         // Place the tile on the board.
@@ -338,13 +355,11 @@ bool Game::placeTile(Tile *tile, char row, int col) {
     return isLegal;
 }
 
-bool Game::checkTiles(Hand *player1Hand, Hand *player2Hand,
-                      Board *board, TileBag *tileBag) {
+bool Game::checkTiles(Hand *player1Hand, Hand *player2Hand, Board *board, TileBag *tileBag) {
 
     bool correctTiles = true;
 
-    int totalTiles = player1Hand->getNumOfTiles() + board->getNumOfTiles() +
-                     player2Hand->getNumOfTiles() +
+    int totalTiles = player1Hand->getNumOfTiles() + board->getNumOfTiles() + player2Hand->getNumOfTiles() +
                      tileBag->getNumOfTiles();
 
     // Check if there are the right number of tiles.

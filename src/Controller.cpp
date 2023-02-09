@@ -354,9 +354,6 @@ void Controller::placeTile(std::string commandInput, bool *inputStatus) {
         // Place the tile. 
         bool tilePlaced = this->game->placeTile(tileInput, rowInput, colInput);
 
-        // Place tile for computer.
-        this->game->computerMove();
-
         // If the tile placement is illegal. 
         if (!tilePlaced) {
             std::cout << "Illegal move!" << std::endl;
@@ -365,6 +362,9 @@ void Controller::placeTile(std::string commandInput, bool *inputStatus) {
             tileInput = nullptr;
         } else {
             *inputStatus = false;
+
+            // Place tile for computer.
+            this->game->computerMove();
         }
 
         // If there is a program error and the tile can't be placed.
