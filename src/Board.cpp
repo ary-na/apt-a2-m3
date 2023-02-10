@@ -170,7 +170,7 @@ void Board::printBoard() const {
             if (this->boardVector[row][col] == nullptr) {
                 std::cout << "  ";
             } else {
-                std::cout << this->boardVector[row][col]->getAsStr();
+                std::cout << this->boardVector[row][col]->getAsUnicodeAndColour();
             }
             std::cout << "|";
         }
