@@ -10,10 +10,12 @@ For more information visit [Academic Integrity at RMIT](https://www.rmit.edu.au/
 
 1. Help
 2. Better invalid input
+3. Colour
 
 ### Major
 
-1. AI (Single Player Mode)
+1. Place Multiple Tiles
+2. AI (Single Player Mode)
 
 ## How to run
 
