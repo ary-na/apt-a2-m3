@@ -23,6 +23,7 @@ public:
     ~FileHandler();
 
     void setTestFlag(const bool testFlag);
+    void setAiFlag(const bool aiFlag);
 
     // Updates the current state of play based on a saved game file.
     // Input:   Required a valid save file name. The path and
@@ -45,6 +46,11 @@ private:
     // game shuffles the tiles to ensure consistent randomness.
     // Run with "./qwirkle T" to activate test mode.
     bool testFlag;
+
+    // @author - Arian Najafi Yamchelo
+    // When AI flag is true, you can play against computer.
+    // Run with "./qwirkle --ai" to activate AI mode.
+    bool aiFlag;
 
     // For validating user input.
     Validator* validator;

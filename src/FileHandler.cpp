@@ -3,17 +3,21 @@
 FileHandler::FileHandler() {
     this->validator = new Validator();
     this->testFlag = false;
+    this->aiFlag = false;
 }
 
 FileHandler::FileHandler(const FileHandler& other) {
     this->validator = new Validator(*other.validator);
     this->testFlag = other.testFlag;
+    this->aiFlag = other.aiFlag;
 }
 
 FileHandler::FileHandler(FileHandler&& other) {
     this->validator = other.validator;
     this->testFlag = other.testFlag;
+    this->aiFlag = other.aiFlag;
     other.testFlag = false;
+    other.aiFlag = false;
 }
 
 FileHandler::~FileHandler() {
@@ -24,6 +28,10 @@ FileHandler::~FileHandler() {
 void FileHandler::setTestFlag(const bool testFlag) {
     this->testFlag = testFlag;
     this->validator->setTestFlag(testFlag);
+}
+
+void FileHandler::setAiFlag(const bool aiFlag) {
+    this->aiFlag = aiFlag;
 }
 
 bool FileHandler::saveGame(const Game* game, const std::string fileName) {
@@ -48,7 +56,8 @@ bool FileHandler::saveGame(const Game* game, const std::string fileName) {
                    std::to_string(game->getBoard()->getMaxCol() + 1) << std::endl;
         outFile << boardStateToFile(game->getBoard()) << std::endl;
         outFile << tileBagToFile(game->getTileBag()) << std::endl;
-        outFile << game->getCurrentPlayer()->getName();
+        outFile << game->getCurrentPlayer()->getName() << std::endl;
+        outFile << game->getPlayer2()->isComputer();
 
         outFile.close();
     }
@@ -103,7 +112,7 @@ Game* FileHandler::absorbLoadGameFile(const std::string fileName) {
 
     // Load game with players, board and tile bag from file.
     Player* player1 = new Player(fileContent[0], std::stoi(fileContent[1]), playerHandFromFile(fileContent[2]));
-    Player* player2 = new Player(fileContent[3], std::stoi(fileContent[4]), playerHandFromFile(fileContent[5]));
+    Player* player2 = new Player(fileContent[3], std::stoi(fileContent[4]), playerHandFromFile(fileContent[5]), std::stoi(fileContent[10]));
     Player* currentPlayer = currentPlayerFromName(player1, player2, fileContent[9]);
     Board* board = initialiseBoardFromFile(fileContent[7]);
     TileBag* tileBag = tileBagFromFile(fileContent[8]);
