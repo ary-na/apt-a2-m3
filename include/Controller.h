@@ -101,9 +101,16 @@ private:
     // (5) skip
     void turnPrompt();
 
-    // Takes the user command and tries to place a tile,
+    // @author - Arian Najafi Yamchelo
+    // Takes an input, extracts the tile data and passes
+    // it to placeTile function to process.
+    void extractTileFromInput(std::string commandInput, bool *inputStatus);
+
+    // @author - Arian Najafi Yamchelo
+    // Takes a tile input, row input, column input and input status,
+    // multiple status, and tries to place tile/tiles on board.
     // the input status is set to true if successful.
-    void placeTile(std::string commandInput, bool *inputStatus);
+    void placeTile(Tile* tileInput, char rowInput, int colInput, bool *inputStatus);
 
     // Takes the user command and tries to replace a tile,
     // the input status is set to true if successful.

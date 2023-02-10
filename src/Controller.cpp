@@ -60,6 +60,7 @@ void Controller::launchGame(bool testFlag, bool aiFlag) {
     // If program was run in AI mode, set AI flag to true.
     if (aiFlag) {
         this->aiFlag = aiFlag;
+        this->fileHandler->setAiFlag(aiFlag);
         std::cout << "YOU HAVE UNLOCKED SINGLE PLAYER MODE." << std::endl;
     }
 
@@ -309,7 +310,7 @@ void Controller::turnPrompt() {
 
             // If command is place <colour><shape> at <row><col>.
         } else if (command == 1) {
-            placeTile(commandInput, &awaitingInput);
+            extractTileFromInput(commandInput, &awaitingInput);
 
             // If command is replace <colour><shape>.
         } else if (command == 2) {
@@ -328,16 +329,16 @@ void Controller::turnPrompt() {
             // If command is skip.
         } else if (command == 5) {
             skipTurn(&awaitingInput);
-
-            // If command is help.
-        } else if (command == 6) {
+        }
+        // If command is help.
+        else if (command == 6) {
             help();
         }
     }
 
 }
 
-void Controller::placeTile(std::string commandInput, bool *inputStatus) {
+void Controller::extractTileFromInput(std::string commandInput, bool *inputStatus) {
 
     // Extract tile from input.
     Colour colourInput = commandInput[6];
@@ -355,11 +356,15 @@ void Controller::placeTile(std::string commandInput, bool *inputStatus) {
         colInput = commandInput[13] - '0';
     }
 
+    this->placeTile(tileInput, rowInput, colInput, inputStatus);
+}
+
+void Controller::placeTile(Tile* tileInput, char rowInput, int colInput, bool *inputStatus) {
     try {
-        // Place the tile. 
+        // Place the tile.
         bool tilePlaced = this->game->placeTile(tileInput, rowInput, colInput);
 
-        // If the tile placement is illegal. 
+        // If the tile placement is illegal.
         if (!tilePlaced) {
             std::cout << "Illegal move!" << std::endl;
             std::cout << std::endl;
