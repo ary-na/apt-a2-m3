@@ -41,8 +41,9 @@ Menu
 
 1. New game
 2. Load game
-3. Credits (show student information)
-4. Quit
+3. Help
+4. Credits (show student information)
+5. Quit
 > 
 ```
 
@@ -75,4 +76,8 @@ https://medium.com/@mostsignificant/3-ways-to-parse-command-line-arguments-in-c-
 https://stackoverflow.com/questions/45703227/how-to-do-a-vectorclass-objects-deep-copy
 
 https://www.daniweb.com/programming/software-development/threads/488453/how-to-delete-column-in-2d-vector-c
+
+https://www.programiz.com/cpp-programming/ternary-operator
+
+https://www.quora.com/How-do-you-generate-a-random-number-between-1-and-6-in-C?share=1
 
