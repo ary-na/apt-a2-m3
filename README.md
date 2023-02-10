@@ -11,11 +11,12 @@ For more information visit [Academic Integrity at RMIT](https://www.rmit.edu.au/
 1. Help
 2. Better invalid input
 3. Colour
+4. Unicode/emoji tile symbols
 
 ### Major
 
-1. Place Multiple Tiles
-2. AI (Single Player Mode)
+1. Place multiple tiles
+2. AI (Single player mode)
 
 ## How to run
 
