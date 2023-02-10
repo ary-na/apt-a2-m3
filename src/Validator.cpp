@@ -84,6 +84,10 @@ int Validator::isCommandValid(const std::string &command) {
     else if (std::regex_match(command, std::regex("skip"))) {
         isValid = 5;
     }
+    // Check if help
+    else if (std::regex_match(command, std::regex("help"))) {
+        isValid = 6;
+    }
 
     return isValid;
 }

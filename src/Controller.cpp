@@ -328,6 +328,10 @@ void Controller::turnPrompt() {
             // If command is skip.
         } else if (command == 5) {
             skipTurn(&awaitingInput);
+
+            // If command is help.
+        } else if (command == 6) {
+            help();
         }
     }
 
@@ -477,6 +481,9 @@ void Controller::help() {
     std::cout << std::endl;
     std::cout << "To skip a turn:" << std::endl;
     std::cout << "> skip" << std::endl;
+    std::cout << std::endl;
+    std::cout << "To get help during a game:" << std::endl;
+    std::cout << "> help" << std::endl;
     std::cout << std::endl;
     std::cout << "To exit the game:" << std::endl;
     std::cout << "> ^D" << std::endl;
