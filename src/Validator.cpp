@@ -19,26 +19,23 @@ void Validator::setTestFlag(const bool testFlag) {
     this->testFlag = testFlag;
 }
 
-bool Validator::isNameValid(const std::string &nameInput,
-                            const std::string &nameInput1) {
+bool Validator::isNameValid(const std::string &nameInput, const std::string &nameInput1) {
 
     // This function should be called with a string parameter.
     // It will return a boolean value depending on the string input.
     // This is a public function and can be called from the controller
     // to validate username input.
 
-    bool nameValid = false;
+    bool nameValid = true;
 
     // Check if name input matches the regex, and nameInput1 is empty
-    if (std::regex_match(nameInput, std::regex("[A-Z]+")) &&
-        nameInput1.empty()) {
-        nameValid = true;
+    if (std::regex_match(nameInput, std::regex("[A-Z]+")) && nameInput1.empty()) {
+        nameValid = false;
     }
-        // Check if name input matches the regex,
-        // and players don't have the same name
-    else if (std::regex_match(nameInput, std::regex("[A-Z]+")) &&
-             nameInput != nameInput1) {
-        nameValid = true;
+    // Check if name input matches the regex,
+    // and players don't have the same name
+    else if (std::regex_match(nameInput, std::regex("[A-Z]+")) && nameInput != nameInput1) {
+        nameValid = false;
     }
 
     return nameValid;

@@ -80,8 +80,9 @@ void Controller::mainMenu() {
         std::cout << std::endl;
         std::cout << "1. New game" << std::endl;
         std::cout << "2. Load game" << std::endl;
-        std::cout << "3. Credits (show student information)" << std::endl;
-        std::cout << "4. Quit" << std::endl;
+        std::cout << "3. Help" << std::endl;
+        std::cout << "4. Credits (show student information)" << std::endl;
+        std::cout << "5. Quit" << std::endl;
 
         // User selects an option by typing a number. 
         std::string menuInput = "";
@@ -92,8 +93,10 @@ void Controller::mainMenu() {
         } else if (menuInput == "2") {
             loadGame();
         } else if (menuInput == "3") {
+            help();
+        } else if (menuInput == "4") {
             credits();
-        } else if (menuInput == "4" || std::cin.eof()) {
+        } else if (menuInput == "5" || std::cin.eof()) {
             exitGame();
         } else {
             std::cout << "Select a valid menu option!" << std::endl;
@@ -159,8 +162,7 @@ void Controller::newGame() {
     }
 }
 
-void Controller::playerNamePrompt(std::string *nameInput,
-                                  const std::string &nameInput1) {
+void Controller::playerNamePrompt(std::string *nameInput, const std::string &nameInput1) {
 
     bool awaitingInput = true;
     while (awaitingInput) {
@@ -169,9 +171,10 @@ void Controller::playerNamePrompt(std::string *nameInput,
         inputPrompt(nameInput);
 
         // Players should only have letters, no numbers or symbols.
-        bool nameValid = validator->isNameValid(*nameInput, nameInput1);
+        bool invalidName = Validator::isNameValid(*nameInput, nameInput1);
 
-        if (!nameValid && !std::cin.eof()) {
+        if (invalidName && !std::cin.eof()) {
+            std::cout << "Player names must consist of uppercase letters and duplicate are not allowed." << std::endl;
             std::cout << "Invalid input!" << std::endl;
             std::cout << std::endl;
         } else if (std::cin.eof()) {
@@ -263,8 +266,7 @@ void Controller::baseGameplay() {
 void Controller::takeTurn() {
 
     // The name of the current player.
-    std::cout << this->game->getCurrentPlayer()->getName()
-              << ", it's your turn" << std::endl;
+    std::cout << this->game->getCurrentPlayer()->getName() << ", it's your turn" << std::endl;
     std::cout << std::endl;
 
     // The scores of both players.
@@ -288,8 +290,7 @@ void Controller::takeTurn() {
 }
 
 void Controller::playerScore(Player *player) {
-    std::cout << "Score for " << player->getName() << ": "
-              << player->getScore() << std::endl;
+    std::cout << "Score for " << player->getName() << ": " << player->getScore() << std::endl;
 }
 
 void Controller::turnPrompt() {
@@ -363,7 +364,7 @@ void Controller::placeTile(std::string commandInput, bool *inputStatus) {
         } else {
             *inputStatus = false;
 
-            if(this->aiFlag)
+            if (this->aiFlag)
                 // Place tile for computer.
                 this->game->computerMove();
         }
@@ -395,12 +396,11 @@ void Controller::replaceTile(std::string commandInput, bool *inputStatus) {
         delete tileInput;
         tileInput = nullptr;
 
-        // Check if skip vailable if tile can't be replaced.
+        // Check if skip is available if tile can't be replaced.
         bool skipAvailable = this->game->isSkipAvailable();
 
         if (skipAvailable) {
-            std::cout << "Tile bag empty - Replace not available, "
-                      << "enter 'skip' to go to next player" << std::endl;
+            std::cout << "Tile bag empty - Replace not available, " << "enter 'skip' to go to next player" << std::endl;
             std::cout << std::endl;
         }
     } else {
@@ -459,4 +459,26 @@ bool Controller::isExitMode() const {
 
 void Controller::setExitMode(bool exitMode) {
     this->exitMode = exitMode;
+}
+
+void Controller::help() {
+    std::cout << "Help" << std::endl;
+    std::cout << "-------" << std::endl;
+    std::cout << "List of valid commands:" << std::endl;
+    std::cout << std::endl;
+    std::cout << "To place a tile:" << std::endl;
+    std::cout << "> place <colour><shape> at <row><col>" << std::endl;
+    std::cout << std::endl;
+    std::cout << "To replace a tile:" << std::endl;
+    std::cout << "> replace <colour><shape>" << std::endl;
+    std::cout << std::endl;
+    std::cout << "To save a game:" << std::endl;
+    std::cout << "> save <filename>" << std::endl;
+    std::cout << std::endl;
+    std::cout << "To skip a turn:" << std::endl;
+    std::cout << "> skip" << std::endl;
+    std::cout << std::endl;
+    std::cout << "To exit the game:" << std::endl;
+    std::cout << "> ^D" << std::endl;
+    std::cout << std::endl;
 }

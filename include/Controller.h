@@ -116,7 +116,7 @@ private:
 
     // @author - Jacob Depares
     // Takes the user command and tries and tries to save the
-    // current game. If sucessfully saved, gameplay continues.
+    // current game. If successfully saved, gameplay continues.
     void saveGame(const std::string fileName);
 
     // Promts the user to enter an input and
@@ -130,6 +130,10 @@ private:
     // @author - Arian Najafi Yamchelo
     // Sets the exit mode to true or false.
     void setExitMode(bool exitMode);
+
+    // @author - Arian Najafi Yamchelo
+    // Display all valid commands of the game.
+    static void help();
 };
 
 #endif // CONTROLLER_H

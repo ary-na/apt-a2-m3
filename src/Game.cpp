@@ -306,15 +306,18 @@ bool Game::isPlaceLegal(Tile *tile, char row, int col) const {
 
         // The tile must be in the current player's hand.
         if (!this->currentPlayer->getHand()->containsTile(tile)) {
+            (this->currentPlayer->isComputer()) ? nullptr : std::cout << "The tile must be your in hand." << std::endl;
             isLegal = false;
 
             // Tile cannot be placed at a location of another tile on the board.
         } else if (moves->isTileExistAtLocation(row, col)) {
+            (this->currentPlayer->isComputer()) ? nullptr : std::cout << "Tile exist at the location." << std::endl;
             isLegal = false;
 
             // Tiles must be placed in the same line.
         } else if (!this->getBoard()->isEmpty() &&
                    validRow->getLength() == 0 && validCol->getLength() == 0) {
+            (this->currentPlayer->isComputer()) ? nullptr : std::cout << "Tile must be placed in a line." << std::endl;
             isLegal = false;
 
             // Tiles must share one colour or shape attribute.
@@ -322,17 +325,22 @@ bool Game::isPlaceLegal(Tile *tile, char row, int col) const {
         } else if (!(Moves::isTileColourMatch(validRow, tile) ||
                      Moves::isTileShapeMatch(validRow, tile)) &&
                    validRow->getLength() > 0) {
+            (this->currentPlayer->isComputer()) ? nullptr : std::cout
+                    << "Row tiles must share one colour or shape attribute." << std::endl;
             isLegal = false;
 
             // Tiles must share one colour or shape attribute.
             // A line can never be longer than 6 tiles.
-        } else if (!(Moves::isTileColourMatch(validCol, tile) ||
-                     Moves::isTileShapeMatch(validCol, tile)) &&
+        } else if (!(Moves::isTileColourMatch(validCol, tile) || Moves::isTileShapeMatch(validCol, tile)) &&
                    validCol->getLength() > 0) {
+            (this->currentPlayer->isComputer()) ? nullptr : std::cout
+                    << "Column tiles must share one colour or shape attribute." << std::endl;
             isLegal = false;
 
             // There cannot be duplicate tiles in a line.
         } else if (validRow->search(tile) || validCol->search(tile)) {
+            (this->currentPlayer->isComputer()) ? nullptr : std::cout << "There cannot be duplicate tiles in a line."
+                                                                      << std::endl;
             isLegal = false;
         }
 

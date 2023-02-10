@@ -22,13 +22,13 @@ class Validator {
 
         // Check if username is valid
         // (Players should only consist of letters (no numbers or symbols))
-        bool isNameValid(const std::string &input, const std::string &nameInput1);
+        static bool isNameValid(const std::string &input, const std::string &nameInput1);
 
         // Check if saved file exist
         bool isSavedFileExist(std::string fileName);
 
         // Check if command input is valid
-        int isCommandValid(const std::string &command);
+        static int isCommandValid(const std::string &command);
 
         void setTestFlag(const bool testFlag);
 
