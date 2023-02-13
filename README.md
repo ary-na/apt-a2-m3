@@ -95,3 +95,13 @@ https://www.programiz.com/cpp-programming/ternary-operator
 
 https://www.quora.com/How-do-you-generate-a-random-number-between-1-and-6-in-C?share=1
 
+https://wprock.fr/en/t/unicode/
+
+https://unicode-table.com/en/blocks/geometric-shapes-extended/
+
+https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797
+
+https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797
+
+https://notdefined.tech/blog/how-to-add-color-to-your-terminal-output/
+
