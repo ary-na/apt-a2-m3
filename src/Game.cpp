@@ -10,7 +10,9 @@ Game::Game() {
     this->board = nullptr;
     this->currentPlayer = nullptr;
     this->scoreCalculator = nullptr;
+    this->multipleMoves = nullptr;
     this->prevTurnSkipped = false;
+    this->multipleStatus = false;
 }
 
 Game::Game(const Game &other) {
@@ -23,7 +25,9 @@ Game::Game(const Game &other) {
     this->player2 = new Player(*other.player2);
     this->board = new Board(*other.board);
     this->scoreCalculator = new ScoreCalculator(*other.scoreCalculator);
+    this->multipleMoves = new MultipleMoves(*other.multipleMoves);
     this->prevTurnSkipped = other.prevTurnSkipped;
+    this->multipleStatus = other.multipleStatus;
 
     // Set the current player.
     if (other.currentPlayer == other.player2) {
@@ -46,12 +50,16 @@ Game::Game(Game &&other) {
     other.currentPlayer = nullptr;
     this->scoreCalculator = other.scoreCalculator;
     other.scoreCalculator = nullptr;
+    this->multipleMoves = other.multipleMoves;
+    other.multipleMoves = nullptr;
     this->board = other.board;
     other.board = nullptr;
     this->tileBag = other.tileBag;
     other.tileBag = nullptr;
     this->prevTurnSkipped = other.prevTurnSkipped;
     other.prevTurnSkipped = false;
+    this->multipleStatus = other.multipleStatus;
+    other.multipleStatus = false;
 }
 
 Game::~Game() {
@@ -62,6 +70,8 @@ Game::~Game() {
     this->currentPlayer = nullptr;
     delete this->scoreCalculator;
     this->scoreCalculator = nullptr;
+    delete this->multipleMoves;
+    this->multipleMoves = nullptr;
     delete this->board;
     this->board = nullptr;
     delete this->tileBag;
@@ -90,6 +100,7 @@ void Game::newGame(Player *player1, Player *player2, bool testFlag, bool aiFlag)
     this->board = new Board();
     this->currentPlayer = player1;
     this->scoreCalculator = new ScoreCalculator();
+    this->multipleMoves = new MultipleMoves();
 }
 
 bool Game::loadGame(Player *player1, Player *player2, Board *board,
@@ -229,7 +240,7 @@ void Game::computerMove() {
 
     // Set current player to computer.
     this->currentPlayer = player2;
-    Computer *computer = new Computer(this->currentPlayer);
+    auto *computer = new Computer(this->currentPlayer);
 
     // Skip turn if computer hand is empty and return.
     if (computer->getHandTiles()->getAtPos(0) == nullptr) {
@@ -295,9 +306,9 @@ int Game::calculateComputerTileScore(Tile *tile, char row, int col) {
 }
 
 
-bool Game::isPlaceLegal(Tile *tile, char row, int col) const {
+bool Game::isPlaceLegal(Tile *tile, char row, int col) {
     bool isLegal = true;
-    Moves *moves = new Moves(this->board);
+    auto *moves = new Moves(this->board);
 
     try {
         // Row and col to validate.
@@ -356,11 +367,37 @@ bool Game::isPlaceLegal(Tile *tile, char row, int col) const {
     return isLegal;
 }
 
+bool Game::isPlaceMultipleLegal(Tile *tile, char row, int col) {
 
-bool Game::placeTile(Tile *tile, char row, int col) {
+    bool isMultipleLegal = true;
+
+    this->multipleMoves->addRow(row);
+    this->multipleMoves->addCol(col);
+
+    if (isPlaceLegal(tile, row, col)) {
+        if (!this->multipleMoves->isRowMatch(row) && !this->multipleMoves->isColMatch(col)) {
+            std::cout << "All tiles played must share one attribute (color or shape) and must be placed in the same line, "
+                       "but they do not have to touch each other." << std::endl;
+            isMultipleLegal = false;
+        }
+    } else {
+        isMultipleLegal = false;
+    }
+    return isMultipleLegal;
+}
+
+
+bool Game::placeTile(Tile *tile, char row, int col, bool multipleStatus) {
 
     // Check if the placement is legal according to the rules.
-    bool isLegal = this->isPlaceLegal(tile, row, col);
+    bool isLegal;
+    this->setMultipleStatus(multipleStatus);
+
+    if (this->multipleStatus) {
+        isLegal = this->isPlaceMultipleLegal(tile, row, col);
+    } else {
+        isLegal = this->isPlaceLegal(tile, row, col);
+    }
 
     if (isLegal) {
         // Place the tile on the board.
@@ -370,12 +407,13 @@ bool Game::placeTile(Tile *tile, char row, int col) {
         // Update the player’s score.
         int score = scoreCalculator->calculateScore(this->board, row, col);
         this->currentPlayer->addScore(score);
+        if (!this->multipleStatus) {
+            // If the tile bag isn't empty, draw replacement and add to hand.
+            this->tileBag->fillHand(this->currentPlayer->getHand());
 
-        // If the tile bag isn't empty, draw replacement and add to hand.
-        this->tileBag->fillHand(this->currentPlayer->getHand());
-
-        // Continue with the other player’s turn.
-        nextPlayerTurn();
+            // Continue with the other player’s turn.
+            nextPlayerTurn();
+        }
         this->prevTurnSkipped = false;
     }
     return isLegal;
@@ -452,4 +490,22 @@ bool Game::arraysEqual(std::string array1[], std::string array2[]) {
         i++;
     }
     return isEqual;
+}
+
+void Game::setMultipleStatus(const bool multipleStatus) {
+    if (!multipleStatus) {
+        this->tileBag->fillHand(this->getCurrentPlayer()->getHand());
+        delete this->multipleMoves;
+        this->multipleMoves = nullptr;
+        this->setMultipleMoves(new MultipleMoves());
+    }
+    this->multipleStatus = multipleStatus;
+}
+
+void Game::setMultipleMoves(MultipleMoves *multipleMoves) {
+    this->multipleMoves = multipleMoves;
+}
+
+bool Game::isMultipleStatus() const {
+    return multipleStatus;
 }

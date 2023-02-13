@@ -15,6 +15,7 @@
 #include "ScoreCalculator.h"
 #include "TileBag.h"
 #include "Computer.h"
+#include "MultipleMoves.h"
 
 // @author - Carelle Mulawa-Richards (unless specified)
 
@@ -33,8 +34,7 @@ public:
     // To be used after Game() when loading a game from a file.
     // A game must have two players, a tile bag, board and
     // current player. Will return true if game has been loaded.
-    bool loadGame(Player *player1, Player *player2, Board *board,
-                  TileBag *tileBag, Player *currentPlayer);
+    bool loadGame(Player *player1, Player *player2, Board *board, TileBag *tileBag, Player *currentPlayer);
 
     // A new game must have two players. The test flag
     // will be passed from main() and set accordingly.
@@ -72,7 +72,7 @@ public:
     // Takes a tile, row (A-Z) and col (0-25). Returns true if the
     // tile has been placed from the current player's hand, their
     // score has been updated and isPlaceLegal() is also true.
-    bool placeTile(Tile *tile, char row, int col);
+    bool placeTile(Tile *tile, char row, int col, bool multipleStatus = false);
 
     // Takes a tile and returns true if the tile has been replaced from
     // the current player's hand and isReplaceLegal() is also true.
@@ -83,10 +83,18 @@ public:
     // The game will be set to complete if the previous player also skipped.
     void skipTurn();
 
+    // Used after a player completes their turn to toggle
+    // the current player between player 1 and player 2.
+    void nextPlayerTurn();
+
     // @author - Alex Barron
     // Returns true if both players have tiles in
     // their hands and the tile bag is empty.
     bool isSkipAvailable();
+
+    void setMultipleStatus(const bool multipleStatus);
+
+    bool isMultipleStatus() const;
 
 private:
     Board *board;
@@ -98,6 +106,9 @@ private:
     // @author - Alex Barron
     // Calculates the current player's score in placeTile().
     ScoreCalculator *scoreCalculator;
+
+    // @author - Arian Najafi Yamchelo
+    MultipleMoves *multipleMoves;
 
     // Defines the maximum number of tiles allowed in game.
     const static int maxTilesInGame = 72;
@@ -112,16 +123,17 @@ private:
     // Run with "./qwirkle --ai" to activate AI mode.
     bool aiFlag;
 
+    // @author - Arian Najafi Yamchelo
+    // When multiple status is true, the players can place,
+    // more than one tile on the board.
+    bool multipleStatus;
+
     // This is set to true if skipTurn() is successful.
     bool prevTurnSkipped;
 
     // This is set to true if the tile bag is empty and one player has no
     // tiles in their hand or both players skipped their turn consecutively.
     bool gameComplete;
-
-    // Used after a player completes their turn to toggle
-    // the current player between player 1 and player 2.
-    void nextPlayerTurn();
 
     // Take a tile and returns true if replace is
     // legal according to the rules, otherwise false.
@@ -139,17 +151,23 @@ private:
     // (4) There cannot be duplicate tiles in a line.
     // (5) You cannot play two tiles that are exactly the same.
     // (6) The tile must be in the current player's hand.
-    bool isPlaceLegal(Tile *tile, char row, int col) const;
+    bool isPlaceLegal(Tile *tile, char row, int col);
+
+    // @author - Arian Najafi Yamchelo
+    // All tiles played must share one attribute (color or shape),
+    // and must be placed in the same line.
+    // Tiles played must be added to the same line, but they do not have to touch each other.
+    bool isPlaceMultipleLegal(Tile *tile, char row, int col);
 
     // @author - Arian Najafi Yamchelo
     // Takes a reference to computer object and a location,
     // to find and set the most appropriate tile to place on the board.
-    void findComputerLegalTiles(Computer& computer, char row, int col);
+    void findComputerLegalTiles(Computer &computer, char row, int col);
 
     // @author - Arian Najafi Yamchelo
     // Takes a tile and a location on board, to calculate
     // and return the total score for the tile placed on the board.
-    int calculateComputerTileScore(Tile* tile, char row, int col);
+    int calculateComputerTileScore(Tile *tile, char row, int col);
 
     // Takes two player hands, a board and tile bag and
     // returns true if there is a correct set of tiles.
@@ -162,6 +180,8 @@ private:
     // Takes a string array and adds every tile
     // a game should have. Used in checkTiles().
     static void addToArray(std::string expectedTilesArray[]);
+
+    void setMultipleMoves(MultipleMoves *multipleMoves);
 };
 
 #endif  // GAME_H

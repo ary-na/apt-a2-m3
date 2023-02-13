@@ -61,8 +61,7 @@ private:
 
 
     // Used in newGame(). Assigns name input to given string pointer.
-    void playerNamePrompt(std::string *nameInput,
-                          const std::string &nameInput1 = "");
+    void playerNamePrompt(std::string *nameInput, const std::string &nameInput1 = "");
 
     // @author - Jacob Depares
     // Asks the user for a relative path to a saved game file.
@@ -104,13 +103,19 @@ private:
     // @author - Arian Najafi Yamchelo
     // Takes an input, extracts the tile data and passes
     // it to placeTile function to process.
-    void extractTileFromInput(std::string commandInput, bool *inputStatus);
+    void extractTileFromInput(std::string commandInput, bool *inputStatus, bool multipleStatus = false);
 
     // @author - Arian Najafi Yamchelo
     // Takes a tile input, row input, column input and input status,
-    // multiple status, and tries to place tile/tiles on board.
+    // and tries to place tile on board.
     // the input status is set to true if successful.
     void placeTile(Tile* tileInput, char rowInput, int colInput, bool *inputStatus);
+
+    // @author - Arian Najafi Yamchelo
+    // Takes tiles input, row input, column input and input status,
+    // and tries to place tiles on board.
+    // the input status is set to true if successful.
+    void placeMultipleTiles(Tile* tilesInput, char rowInput, int colInput, bool multipleStatus);
 
     // Takes the user command and tries to replace a tile,
     // the input status is set to true if successful.

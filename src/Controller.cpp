@@ -61,6 +61,7 @@ void Controller::launchGame(bool testFlag, bool aiFlag) {
     if (aiFlag) {
         this->aiFlag = aiFlag;
         this->fileHandler->setAiFlag(aiFlag);
+        this->validator->setAiFlag(aiFlag);
         std::cout << "YOU HAVE UNLOCKED SINGLE PLAYER MODE." << std::endl;
     }
 
@@ -307,59 +308,89 @@ void Controller::turnPrompt() {
         if (command == -1) {
             std::cout << "Invalid input!" << std::endl;
             std::cout << std::endl;
-
+        }
             // If command is place <colour><shape> at <row><col>.
-        } else if (command == 1) {
+        else if (command == 1) {
             extractTileFromInput(commandInput, &awaitingInput);
-
+        }
             // If command is replace <colour><shape>.
-        } else if (command == 2) {
+        else if (command == 2) {
             replaceTile(commandInput, &awaitingInput);
-
+        }
             // If command is save <filename>.
-        } else if (command == 3) {
+        else if (command == 3) {
             saveGame(commandInput);
-
+        }
             // If command is EOF character ^D.
-        } else if (command == 4) {
+        else if (command == 4) {
             awaitingInput = false;
             std::cout << std::endl;
             exitGame();
-
+        }
             // If command is skip.
-        } else if (command == 5) {
+        else if (command == 5) {
             skipTurn(&awaitingInput);
         }
-        // If command is help.
+            // If command is help.
         else if (command == 6) {
             help();
         }
+            // if command is place multiple
+        else if (command == 7) {
+            this->validator->setMultipleStatus(true);
+            extractTileFromInput(commandInput, &awaitingInput, true);
+        }
+            // if command is stop place multiple
+        else if (command == 8) {
+            awaitingInput = false;
+            this->game->setMultipleStatus(false);
+            this->validator->setMultipleStatus(false);
+            this->game->nextPlayerTurn();
+        }
     }
 
 }
 
-void Controller::extractTileFromInput(std::string commandInput, bool *inputStatus) {
+void Controller::extractTileFromInput(std::string commandInput, bool *inputStatus, bool multipleStatus) {
+
+    int colourInputIndex = 6;
+    int shapeInputIndex = 7;
+    int rowInputIndex = 12;
+    int colInputIndexSingleDigit = 13;
+    int colInputIndexDoubleDigit = 14;
+
+    if (multipleStatus) {
+        colourInputIndex = 15;
+        shapeInputIndex = 16;
+        rowInputIndex = 21;
+        colInputIndexSingleDigit = 22;
+        colInputIndexDoubleDigit = 23;
+    }
 
     // Extract tile from input.
-    Colour colourInput = commandInput[6];
-    Shape shapeInput = commandInput[7] - '0';
+    Colour colourInput = commandInput[colourInputIndex];
+    Shape shapeInput = commandInput[shapeInputIndex] - '0';
     Tile *tileInput = new Tile(colourInput, shapeInput);
 
     // Extract position from input.
-    char rowInput = commandInput[12];
+    char rowInput = commandInput[rowInputIndex];
     int colInput;
 
     if (commandInput.length() > 14) {
-        colInput = std::stoi(std::to_string(commandInput[13] - '0') +
-                             std::to_string(commandInput[14] - '0'));
+        colInput = std::stoi(std::to_string(commandInput[colInputIndexSingleDigit] - '0') +
+                             std::to_string(commandInput[colInputIndexDoubleDigit] - '0'));
     } else {
-        colInput = commandInput[13] - '0';
+        colInput = commandInput[colInputIndexSingleDigit] - '0';
     }
 
-    this->placeTile(tileInput, rowInput, colInput, inputStatus);
+    if (multipleStatus) {
+        this->placeMultipleTiles(tileInput, rowInput, colInput, inputStatus);
+    } else {
+        this->placeTile(tileInput, rowInput, colInput, inputStatus);
+    }
 }
 
-void Controller::placeTile(Tile* tileInput, char rowInput, int colInput, bool *inputStatus) {
+void Controller::placeTile(Tile *tileInput, char rowInput, int colInput, bool *inputStatus) {
     try {
         // Place the tile.
         bool tilePlaced = this->game->placeTile(tileInput, rowInput, colInput);
@@ -386,6 +417,31 @@ void Controller::placeTile(Tile* tileInput, char rowInput, int colInput, bool *i
         tileInput = nullptr;
         exitGame();
     }
+}
+
+void Controller::placeMultipleTiles(Tile *tileInput, char rowInput, int colInput, bool multipleStatus) {
+
+    try {
+        // Place the tile.
+        bool tilePlaced = this->game->placeTile(tileInput, rowInput, colInput, multipleStatus);
+
+        // If the tile placement is illegal.
+        if (!tilePlaced) {
+            std::cout << "Illegal move!" << std::endl;
+            std::cout << std::endl;
+            delete tileInput;
+            tileInput = nullptr;
+        }
+
+        // If there is a program error and the tile can't be placed.
+    } catch (std::out_of_range &e) {
+        std::cout << e.what() << std::endl;
+        std::cout << std::endl;
+        delete tileInput;
+        tileInput = nullptr;
+        exitGame();
+    }
+
 }
 
 void Controller::replaceTile(std::string commandInput, bool *inputStatus) {
@@ -475,21 +531,31 @@ void Controller::help() {
     std::cout << "-------" << std::endl;
     std::cout << "List of valid commands:" << std::endl;
     std::cout << std::endl;
+
     std::cout << "To place a tile:" << std::endl;
     std::cout << "> place <colour><shape> at <row><col>" << std::endl;
     std::cout << std::endl;
+
     std::cout << "To replace a tile:" << std::endl;
     std::cout << "> replace <colour><shape>" << std::endl;
     std::cout << std::endl;
+
     std::cout << "To save a game:" << std::endl;
     std::cout << "> save <filename>" << std::endl;
     std::cout << std::endl;
+
     std::cout << "To skip a turn:" << std::endl;
     std::cout << "> skip" << std::endl;
     std::cout << std::endl;
+
     std::cout << "To get help during a game:" << std::endl;
     std::cout << "> help" << std::endl;
     std::cout << std::endl;
+
+    std::cout << "To place multiple tiles on board:" << std::endl;
+    std::cout << "> place multiple" << std::endl;
+    std::cout << std::endl;
+
     std::cout << "To exit the game:" << std::endl;
     std::cout << "> ^D" << std::endl;
     std::cout << std::endl;
