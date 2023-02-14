@@ -243,7 +243,7 @@ void Game::computerMove() {
     auto *computer = new Computer(this->currentPlayer);
 
     // Skip turn if computer hand is empty and return.
-    if (computer->getHandTiles()->getAtPos(0) == nullptr) {
+    if (!computer->getHandTiles()->getAtPos(0)) {
         delete computer;
         computer = nullptr;
         this->skipTurn();
@@ -331,8 +331,12 @@ bool Game::isPlaceLegal(Tile *tile, char row, int col) {
             (this->currentPlayer->isComputer()) ? nullptr : std::cout << "Tile must be placed in a line." << std::endl;
             isLegal = false;
 
-            // Tiles must share one colour or shape attribute.
             // A line can never be longer than 6 tiles.
+        } else if (validRow->getLength() >= maxTilesInLine ||
+                   validCol->getLength() >= maxTilesInLine) {
+            isLegal = false;
+
+            // Tiles must share one colour or shape attribute.
         } else if (!(Moves::isTileColourMatch(validRow, tile) ||
                      Moves::isTileShapeMatch(validRow, tile)) &&
                    validRow->getLength() > 0) {
@@ -341,7 +345,6 @@ bool Game::isPlaceLegal(Tile *tile, char row, int col) {
             isLegal = false;
 
             // Tiles must share one colour or shape attribute.
-            // A line can never be longer than 6 tiles.
         } else if (!(Moves::isTileColourMatch(validCol, tile) || Moves::isTileShapeMatch(validCol, tile)) &&
                    validCol->getLength() > 0) {
             (this->currentPlayer->isComputer()) ? nullptr : std::cout

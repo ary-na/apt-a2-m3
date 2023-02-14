@@ -112,6 +112,7 @@ private:
 
     // Defines the maximum number of tiles allowed in game.
     const static int maxTilesInGame = 72;
+    const static int maxTilesInLine = 6;
 
     // @author - Alex Barron
     // When test flag is true, a random seed is set in shuffleTileBag()
