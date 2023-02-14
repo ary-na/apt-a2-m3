@@ -404,7 +404,7 @@ void Controller::placeTile(Tile *tileInput, char rowInput, int colInput, bool *i
         } else {
             *inputStatus = false;
 
-            if (this->aiFlag)
+            if (this->aiFlag && this->game->getPlayer2()->getHand()->getHandList()->getLength() > 1)
                 // Place tile for computer.
                 this->game->computerMove();
         }
