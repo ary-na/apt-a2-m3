@@ -8,48 +8,51 @@
 // @author - Carelle Mulawa-Richards
 
 class Hand {
-    public:
-        Hand();
-        Hand(const Hand& other);
-        Hand(Hand&& other);
-        ~Hand();
+public:
+    Hand();
 
-        // Returns the hand as a string.
-        std::string getAsStr();
+    Hand(const Hand &other);
 
-        // Returns the total tiles.
-        int getNumOfTiles() const;
+    Hand(Hand &&other);
 
-        // Returns true if getNumOfTiles() is 0.
-        bool isEmpty();
+    ~Hand();
 
-        // Returns true if the given tile is in the hand.
-        bool containsTile(Tile* tile);
+    // Returns the hand as a string.
+    std::string getAsStr();
 
-        // Removes the first tile matching the given tile. 
-        void removeTile(Tile* tile);
+    // Returns the total tiles.
+    int getNumOfTiles() const;
 
-        // Takes a string array and adds the tiles from the hand
-        // to it. The tiles will be added to the array starting at 
-        // the given index. Used for checkTiles() in game. 
-        void addToArray(std::string tilesArray[], int* i);
+    // Returns true if getNumOfTiles() is 0.
+    bool isEmpty();
 
-        // Prints all tiles in hand. 
-        void printHand();
+    // Returns true if the given tile is in the hand.
+    bool containsTile(Tile *tile);
 
-        // Adds the given tile to the end of the hand. 
-        void addTile(Tile* tile);
+    // Removes the first tile matching the given tile.
+    void removeTile(Tile *tile);
 
-        // Returns the maximum tiles a player can have in their hand. 
-        int getMaxTilesInHand() const;
+    // Takes a string array and adds the tiles from the hand
+    // to it. The tiles will be added to the array starting at
+    // the given index. Used for checkTiles() in game.
+    void addToArray(std::string tilesArray[], int *i);
+
+    // Prints all tiles in hand.
+    void printHand();
+
+    // Adds the given tile to the end of the hand.
+    void addTile(Tile *tile);
+
+    // Returns the maximum tiles a player can have in their hand.
+    int getMaxTilesInHand() const;
 
     LinkedList *getHandList() const;
 
     void setHandList(LinkedList *handList);
 
 private:
-        LinkedList* handList;
-        const static int maxTilesInHand = 6;
+    LinkedList *handList;
+    const static int maxTilesInHand = 6;
 };
 
 #endif // HAND_H

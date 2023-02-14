@@ -61,3 +61,7 @@ int Hand::getMaxTilesInHand() const {
 LinkedList *Hand::getHandList() const {
     return handList;
 }
+
+void Hand::setHandList(LinkedList *handList) {
+    this->handList = handList;
+}

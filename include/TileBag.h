@@ -5,63 +5,65 @@
 #include "LinkedList.h"
 #include <utility>
 #include <string>
-#include <iostream> 
+#include <iostream>
 #include <memory>
 #include <random>
 
 // @author - Carelle Mulawa-Richards
 
 class TileBag {
-    public:
-        // Constructor for creating an empty tile bag. 
-        // If the tile bag is for a new game, you must follow 
-        // with newGameTileBag(). If the tile bag is for a  
-        // loaded  game, you must add all tiles with addTile().
-        TileBag();
+public:
+    // Constructor for creating an empty tile bag.
+    // If the tile bag is for a new game, you must follow
+    // with newGameTileBag(). If the tile bag is for a
+    // loaded  game, you must add all tiles with addTile().
+    TileBag();
 
-        TileBag(const TileBag& other);
-        TileBag(TileBag&& other);
-        ~TileBag();
+    TileBag(const TileBag &other);
 
-        // Returns the total titles.
-        int getNumOfTiles() const;
+    TileBag(TileBag &&other);
 
-        // Returns true if getNumOfTiles() is 0.
-        bool isEmpty();
+    ~TileBag();
 
-        // Fills the tile bag with 72 tiles, in 
-        // 6 colors and 6 shapes and 2 of each type.
-        void fillTileBag();
+    // Returns the total titles.
+    int getNumOfTiles() const;
 
-        // Shuffles the tiles in the tile bag to make a random inital 
-        // order for a new game. If test flag is true, a random seed 
-        // is set to ensure consistent randomness of the tile bag.
-        void shuffleTileBag(bool testFlag);
+    // Returns true if getNumOfTiles() is 0.
+    bool isEmpty();
 
-        // Takes a tile and adds it to the end.
-        void addTile(Tile* tile);
+    // Fills the tile bag with 72 tiles, in
+    // 6 colors and 6 shapes and 2 of each type.
+    void fillTileBag();
 
-        // Takes a player's hands and fills it with up to 6 tiles
-        // from the tile bag. By taking the hand, the contents
-        // of the tile bag is never displayed to the users.
-        void fillHand(Hand* hand);
+    // Shuffles the tiles in the tile bag to make a random inital
+    // order for a new game. If test flag is true, a random seed
+    // is set to ensure consistent randomness of the tile bag.
+    void shuffleTileBag(bool testFlag);
 
-        // Takes a string array and adds the tiles from the tile bag 
-        // to it. The tiles will be added to the array starting 
-        // the given index. Used for checkTiles() in game. 
-        void addToArray(std::string tilesArray[], int* i);
+    // Takes a tile and adds it to the end.
+    void addTile(Tile *tile);
 
-        // Returns the tile bag as a string.
-        std::string getAsStr();
+    // Takes a player's hands and fills it with up to 6 tiles
+    // from the tile bag. By taking the hand, the contents
+    // of the tile bag is never displayed to the users.
+    void fillHand(Hand *hand);
 
-        // To be used after the constructor when the tile bag is for a new  
-        // game. Uses fillTileBag() and shuffleTileBag() to generate the 
-        // tiles and order of the tile bag. If test flag is true, a random  
-        // seed is set to ensure consistent randomness of the tile bag.
-        void newGameTileBag(bool testFlag);
+    // Takes a string array and adds the tiles from the tile bag
+    // to it. The tiles will be added to the array starting
+    // the given index. Used for checkTiles() in game.
+    void addToArray(std::string tilesArray[], int *i);
 
-    private:
-        LinkedList* tileBagList;
+    // Returns the tile bag as a string.
+    std::string getAsStr();
+
+    // To be used after the constructor when the tile bag is for a new
+    // game. Uses fillTileBag() and shuffleTileBag() to generate the
+    // tiles and order of the tile bag. If test flag is true, a random
+    // seed is set to ensure consistent randomness of the tile bag.
+    void newGameTileBag(bool testFlag);
+
+private:
+    LinkedList *tileBagList;
 };
 
 #endif // TILEBAG_H

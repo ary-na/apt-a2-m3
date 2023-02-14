@@ -9,59 +9,62 @@
 // @author - Carelle Mulawa-Richards
 
 class LinkedList {
-    public:
-        LinkedList();
-        LinkedList(const LinkedList& other);
-        LinkedList(LinkedList&& other);
-        ~LinkedList();
-        
-        // Delete every tile.
-        void clear(); 
+public:
+    LinkedList();
 
-        // Print every tile.
-        void printList(); 
+    LinkedList(const LinkedList &other);
 
-        // Returns the head.
-        Tile* getFront() const;
-        
-        // Takes a pos > 0 and < length and returns tile at the pos.
-        Tile* getAtPos(int pos) const; 
+    LinkedList(LinkedList &&other);
 
-        // Returns total number of tiles.
-        int getLength() const; 
+    ~LinkedList();
 
-        // Takes a tile and returns true if exists in the list.
-        bool search(Tile* tile) const; 
+    // Delete every tile.
+    void clear();
 
-        // Takes a tile and adds it to the end.
-        void addEnd(Tile* tile); 
+    // Print every tile.
+    void printList();
 
-        // Takes tile and adds it to the front.
-        void addFront(Tile* tile); 
+    // Returns the head.
+    Tile *getFront() const;
 
-        // Takes a pos > 0 and < length and deletes the tile at that pos.
-        void deleteAtPos(int pos); 
+    // Takes a pos > 0 and < length and returns tile at the pos.
+    Tile *getAtPos(int pos) const;
 
-        // Deletes the tile at the front.
-        void deleteFront(); 
+    // Returns total number of tiles.
+    int getLength() const;
 
-        // Deletes the tile at the end.
-        void deleteEnd();
+    // Takes a tile and returns true if exists in the list.
+    bool search(Tile *tile) const;
 
-        // Takes a tile and removes the first match tile in list.
-        void deleteByNode(Tile* tile); 
+    // Takes a tile and adds it to the end.
+    void addEnd(Tile *tile);
 
-        // Returns the list as a string.
-        std::string getAsStr();
+    // Takes tile and adds it to the front.
+    void addFront(Tile *tile);
 
-        // Takes a string array and adds the tiles from the list to it. 
-        // Tiles will be added to the array starting the given index.
-        void addToArray(std::string array[], int* i);
+    // Takes a pos > 0 and < length and deletes the tile at that pos.
+    void deleteAtPos(int pos);
 
-    private:
-        Node* head;
-        Node* tail;
-        int length;
+    // Deletes the tile at the front.
+    void deleteFront();
+
+    // Deletes the tile at the end.
+    void deleteEnd();
+
+    // Takes a tile and removes the first match tile in list.
+    void deleteByNode(Tile *tile);
+
+    // Returns the list as a string.
+    std::string getAsStr();
+
+    // Takes a string array and adds the tiles from the list to it.
+    // Tiles will be added to the array starting the given index.
+    void addToArray(std::string array[], int *i);
+
+private:
+    Node *head;
+    Node *tail;
+    int length;
 };
 
 #endif // LINKEDLIST_H
