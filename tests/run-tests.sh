@@ -34,7 +34,7 @@ echo $TEST_NAME
 print_result $TEST
 
 
-# Multiple Tile placement tests
+# Multiple Tile Placement Tests
 TEST_NAME="Testing: Multiple tile placement - placeMultiple1.input"
 ./qwirkle T < tests/m3/placeMultiple1.input > tests/m3/placeMultiple1.gameout
 TEST=$(diff -w -B tests/m3/placeMultiple1.output tests/m3/placeMultiple1.gameout)
@@ -47,6 +47,18 @@ TEST=$(diff -w -B tests/m3/placeMultiple2.output tests/m3/placeMultiple2.gameout
 echo $TEST_NAME
 print_result $TEST
 
+# Single Player Tests
+TEST_NAME="Testing: Single player game (AI) - ai1.input"
+./qwirkle --aiTest < tests/m3/ai1.input > tests/m3/ai1.gameout
+TEST=$(diff -w -B tests/m3/ai1.output tests/m3/ai1.gameout)
+echo $TEST_NAME
+print_result $TEST
+
+TEST_NAME="Testing: Single player full game (AI) - aiFullGame.input"
+./qwirkle --aiTest < tests/m3/aiFullGame.input > tests/m3/aiFullGame.gameout
+TEST=$(diff -w -B tests/m3/aiFullGame.output tests/m3/aiFullGame.gameout)
+echo $TEST_NAME
+print_result $TEST
 
 # Milestone 2 Tests
 
