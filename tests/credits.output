@@ -7,10 +7,10 @@ Menu
 
 1. New game
 2. Load game
-3. Credits (show student information)
-4. Quit
-> 
-
+3. Help
+4. Credits (show student information)
+5. Quit
+>
 Credits
 -------
 
@@ -35,9 +35,8 @@ Menu
 
 1. New game
 2. Load game
-3. Credits (show student information)
-4. Quit
-> 
-
+3. Help
+4. Credits (show student information)
+5. Quit
+>
 Goodbye
-

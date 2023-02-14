@@ -7,36 +7,45 @@ Menu
 
 1. New game
 2. Load game
-3. Credits (show student information)
-4. Quit
+3. Help
+4. Credits (show student information)
+5. Quit
 > 
 Starting a new game
 
 Enter a name for player 1 (uppercase characters only)
 > 
+Player names must consist of uppercase letters and duplicate are not allowed.
 Invalid input!
 
 > 
+Player names must consist of uppercase letters and duplicate are not allowed.
 Invalid input!
 
 > 
+Player names must consist of uppercase letters and duplicate are not allowed.
 Invalid input!
 
 > 
+Player names must consist of uppercase letters and duplicate are not allowed.
 Invalid input!
 
 > 
+Player names must consist of uppercase letters and duplicate are not allowed.
 Invalid input!
 
 > 
+Player names must consist of uppercase letters and duplicate are not allowed.
 Invalid input!
 
 > 
+Player names must consist of uppercase letters and duplicate are not allowed.
 Invalid input!
 
 > 
 Enter a name for player 2 (uppercase characters only)
 > 
+Player names must consist of uppercase letters and duplicate are not allowed.
 Invalid input!
 
 > 

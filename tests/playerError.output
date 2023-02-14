@@ -7,39 +7,48 @@ Menu
 
 1. New game
 2. Load game
-3. Credits (show student information)
-4. Quit
-> 
+3. Help
+4. Credits (show student information)
+5. Quit
+>
 Starting a new game
 
 Enter a name for player 1 (uppercase characters only)
-> 
+>
+Player names must consist of uppercase letters and duplicate are not allowed.
 Invalid input!
 
-> 
+>
+Player names must consist of uppercase letters and duplicate are not allowed.
 Invalid input!
 
-> 
+>
+Player names must consist of uppercase letters and duplicate are not allowed.
 Invalid input!
 
-> 
+>
+Player names must consist of uppercase letters and duplicate are not allowed.
 Invalid input!
 
-> 
+>
+Player names must consist of uppercase letters and duplicate are not allowed.
 Invalid input!
 
-> 
+>
+Player names must consist of uppercase letters and duplicate are not allowed.
 Invalid input!
 
-> 
+>
+Player names must consist of uppercase letters and duplicate are not allowed.
 Invalid input!
 
-> 
+>
 Enter a name for player 2 (uppercase characters only)
-> 
+>
+Player names must consist of uppercase letters and duplicate are not allowed.
 Invalid input!
 
-> 
+>
 Let's play!
 
 ALEX, it's your turn
@@ -47,7 +56,7 @@ ALEX, it's your turn
 Score for ALEX: 0
 Score for ARIAN: 0
 
-   0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 
+   0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
 ---------------------------------------------------------------------------------
 A |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 B |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
@@ -79,7 +88,7 @@ Z |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  
 Your hand is
 Y3,Y4,Y4,Y5,Y5,Y6
 
-> 
+>
 
 Goodbye
 
