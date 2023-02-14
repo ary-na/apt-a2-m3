@@ -16,21 +16,27 @@ MultipleMoves::~MultipleMoves() = default;
 
 bool MultipleMoves::isRowMatch(char row) {
     bool rowMatch = true;
+    if (this->rows.size() >= 1) {
         for (auto &vectorRow: this->rows) {
             if (vectorRow != row) {
                 rowMatch = false;
+                this->cols.pop_back();
             }
         }
+    }
     return rowMatch;
 }
 
 bool MultipleMoves::isColMatch(int col) {
     bool colMatch = true;
+    if (this->rows.size() >= 1) {
         for (auto &vectorCol: this->cols) {
             if (vectorCol != col) {
                 colMatch = false;
+                this->cols.pop_back();
             }
         }
+    }
     return colMatch;
 }
 

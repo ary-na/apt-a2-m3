@@ -431,6 +431,14 @@ void Controller::placeMultipleTiles(Tile *tileInput, char rowInput, int colInput
             std::cout << std::endl;
             delete tileInput;
             tileInput = nullptr;
+        } else {
+            this->game->getBoard()->printBoard();
+            std::cout << std::endl;
+            std::cout << "Your hand is" << std::endl;
+            this->game->getCurrentPlayer()->getHand()->printHand();
+            std::cout << std::endl;
+            std::cout << "Add more tiles to the board" << std::endl;
+            std::cout << std::endl;
         }
 
         // If there is a program error and the tile can't be placed.
@@ -553,7 +561,11 @@ void Controller::help() {
     std::cout << std::endl;
 
     std::cout << "To place multiple tiles on board:" << std::endl;
-    std::cout << "> place multiple" << std::endl;
+    std::cout << "> place multiple <colour><shape> at <row><col>" << std::endl;
+    std::cout << std::endl;
+
+    std::cout << "To stop placing multiple tiles:" << std::endl;
+    std::cout << "> stop place multiple" << std::endl;
     std::cout << std::endl;
 
     std::cout << "To exit the game:" << std::endl;

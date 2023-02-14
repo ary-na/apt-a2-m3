@@ -98,7 +98,6 @@ int Validator::isCommandValid(const std::string &command) const {
     }
     // Check if place multiple <colour><shape> at <row><col>
     else if (std::regex_match(command, std::regex("place multiple [R|O|Y|G|B|P][1-6] at [A-Z](0?[0-9]|1[0-9]|2[0-5])\\b")) && !this->aiFlag) {
-        std::cout << "Add more tiles to the board" << std::endl;
         isValid = 7;
     }
     // Check if place multiple stop
