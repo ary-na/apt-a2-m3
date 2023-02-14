@@ -16,6 +16,38 @@ print_result() {
 make
 
 # Execute tests with compiled program
+
+# Milestone 3 Tests
+echo "M3 Program Testing"
+
+# Help Menu tests
+TEST_NAME="Testing: Help menu - help1.input"
+./qwirkle T < tests/m3/help1.input > tests/m3/help1.gameout
+TEST=$(diff -w -B tests/m3/help1.output tests/m3/help1.gameout)
+echo $TEST_NAME
+print_result $TEST
+
+TEST_NAME="Testing: Help menu - help2.input"
+./qwirkle T < tests/m3/help2.input > tests/m3/help2.gameout
+TEST=$(diff -w -B tests/m3/help2.output tests/m3/help2.gameout)
+echo $TEST_NAME
+print_result $TEST
+
+
+# Multiple Tile placement tests
+TEST_NAME="Testing: Multiple tile placement - placeMultiple1.input"
+./qwirkle T < tests/m3/placeMultiple1.input > tests/m3/placeMultiple1.gameout
+TEST=$(diff -w -B tests/m3/placeMultiple1.output tests/m3/placeMultiple1.gameout)
+echo $TEST_NAME
+print_result $TEST
+
+TEST_NAME="Testing: Multiple tile placement - placeMultiple2.input"
+./qwirkle T < tests/m3/placeMultiple2.input > tests/m3/placeMultiple2.gameout
+TEST=$(diff -w -B tests/m3/placeMultiple2.output tests/m3/placeMultiple2.gameout)
+echo $TEST_NAME
+print_result $TEST
+
+
 # Milestone 2 Tests
 
 echo "Program Testing"
