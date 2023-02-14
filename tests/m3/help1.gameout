@@ -1,0 +1,52 @@
+
+Welcome to Qwirkle
+------------------
+
+Menu
+----
+
+1. New game
+2. Load game
+3. Help
+4. Credits (show student information)
+5. Quit
+> 
+Help
+-------
+List of valid commands:
+
+To place a tile:
+> place <colour><shape> at <row><col>
+
+To replace a tile:
+> replace <colour><shape>
+
+To save a game:
+> save <filename>
+
+To skip a turn:
+> skip
+
+To get help during a game:
+> help
+
+To place multiple tiles on board:
+> place multiple <colour><shape> at <row><col>
+
+To stop placing multiple tiles:
+> stop place multiple
+
+To exit the game:
+> ^D
+
+Menu
+----
+
+1. New game
+2. Load game
+3. Help
+4. Credits (show student information)
+5. Quit
+> 
+Goodbye
+
