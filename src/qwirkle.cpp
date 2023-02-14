@@ -27,6 +27,9 @@ int main(int argc, char *argv[]) {
             testFlag = true;
         } else if (strcmp(argv[1], "--ai") == 0) {
             aiFlag = true;
+        } else if (strcmp(argv[1], "--aiTest") == 0) {
+            testFlag = true;
+            aiFlag = true;
         }
     }
 
