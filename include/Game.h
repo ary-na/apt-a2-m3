@@ -96,6 +96,9 @@ public:
 
     bool isMultipleStatus() const;
 
+    Computer *getComputer() const;
+
+
 private:
     Board *board;
     Player *player1;
@@ -106,6 +109,8 @@ private:
     // @author - Alex Barron
     // Calculates the current player's score in placeTile().
     ScoreCalculator *scoreCalculator;
+
+    Computer *computer;
 
     // @author - Arian Najafi Yamchelo
     MultipleMoves *multipleMoves;

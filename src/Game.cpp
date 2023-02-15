@@ -10,6 +10,7 @@ Game::Game() {
     this->board = nullptr;
     this->currentPlayer = nullptr;
     this->scoreCalculator = nullptr;
+    this->computer = nullptr;
     this->multipleMoves = nullptr;
     this->prevTurnSkipped = false;
     this->multipleStatus = false;
@@ -28,6 +29,7 @@ Game::Game(const Game &other) {
     this->multipleMoves = new MultipleMoves(*other.multipleMoves);
     this->prevTurnSkipped = other.prevTurnSkipped;
     this->multipleStatus = other.multipleStatus;
+    this->computer = new Computer(*other.computer);
 
     // Set the current player.
     if (other.currentPlayer == other.player2) {
@@ -60,6 +62,8 @@ Game::Game(Game &&other) {
     other.prevTurnSkipped = false;
     this->multipleStatus = other.multipleStatus;
     other.multipleStatus = false;
+    this->computer = other.computer;
+    other.computer = nullptr;
 }
 
 Game::~Game() {
@@ -76,6 +80,8 @@ Game::~Game() {
     this->board = nullptr;
     delete this->tileBag;
     this->tileBag = nullptr;
+    delete this->computer;
+    this->computer = nullptr;
 }
 
 void Game::newGame(Player *player1, Player *player2, bool testFlag, bool aiFlag) {
@@ -240,12 +246,12 @@ void Game::computerMove() {
 
     // Set current player to computer.
     this->currentPlayer = player2;
-    auto *computer = new Computer(this->currentPlayer);
+    this->computer = new Computer(this->currentPlayer);
 
     // Skip turn if computer hand is empty and return.
-    if (!computer->getHandTiles()->getAtPos(0)) {
-        delete computer;
-        computer = nullptr;
+    if (this->computer->getHandTiles()->getAtPos(0) == nullptr) {
+        delete this->computer;
+        this->computer = nullptr;
         this->skipTurn();
         return;
     }
@@ -253,27 +259,27 @@ void Game::computerMove() {
     // Traverse boardVector and find legal tiles from computer hand.
     for (int row = 0; row < this->board->getBoardVector().size(); row++) {
         for (int col = 0; col < this->board->getBoardVector()[row].size(); col++) {
-            this->findComputerLegalTiles(*computer, char(board->getMinRowChar() + row), col);
+            this->findComputerLegalTiles(*this->computer, char(board->getMinRowChar() + row), col);
         }
     }
 
     // Replace a random tile from computer hand, if all are illegal and return.
-    if (computer->getTileColour() == 0 && computer->getTileShape() == 0) {
-        this->replaceTile(computer->getHandTiles()->getAtPos(int(random() % 6 + 1)));
-        delete computer;
-        computer = nullptr;
+    if (this->computer->getTileColour() == 0 && this->computer->getTileShape() == 0) {
+        this->replaceTile(this->computer->getHandTiles()->getAtPos(int(random() % 6 + 1)));
+        delete this->computer;
+        this->computer = nullptr;
         this->computerMove();
         return;
     }
 
     // Print computer move.
-    computer->printMove();
+    this->computer->printMove();
 
     // Create tile and place it on board.
-    Tile *tile = new Tile(computer->getTileColour(), computer->getTileShape());
-    placeTile(tile, computer->getTargetRow(), computer->getTargetCol());
-    delete computer;
-    computer = nullptr;
+    Tile *tile = new Tile(this->computer->getTileColour(), this->computer->getTileShape());
+    placeTile(tile, this->computer->getTargetRow(), this->computer->getTargetCol());
+    delete this->computer;
+    this->computer = nullptr;
 }
 
 void Game::findComputerLegalTiles(Computer &computer, char row, int col) {
@@ -511,4 +517,8 @@ void Game::setMultipleMoves(MultipleMoves *multipleMoves) {
 
 bool Game::isMultipleStatus() const {
     return multipleStatus;
+}
+
+Computer *Game::getComputer() const {
+    return this->computer;
 }
