@@ -15,8 +15,10 @@ public:
 
     ~MultipleMoves();
 
+    // Returns bool if rows match
     bool isRowMatch(char row);
 
+    // Return bool if cols match
     bool isColMatch(int col);
 
     void addRow(char row);

@@ -16,6 +16,7 @@ MultipleMoves::~MultipleMoves() = default;
 
 bool MultipleMoves::isRowMatch(char row) {
     bool rowMatch = true;
+    // Traverse vector if the size is greater than one
     if (this->rows.size() >= 1) {
         for (auto &vectorRow: this->rows) {
             if (vectorRow != row) {
@@ -29,6 +30,7 @@ bool MultipleMoves::isRowMatch(char row) {
 
 bool MultipleMoves::isColMatch(int col) {
     bool colMatch = true;
+    // Traverse vector if the size is greater than one
     if (this->rows.size() >= 1) {
         for (auto &vectorCol: this->cols) {
             if (vectorCol != col) {
