@@ -60,6 +60,18 @@ TEST=$(diff -w -B tests/m3/aiFullGame.output tests/m3/aiFullGame.gameout)
 echo $TEST_NAME
 print_result $TEST
 
+TEST_NAME="Testing: Single player save game (AI) - aiSaveGameNew.input"
+./qwirkle --aiTest < tests/m3/aiSaveGameNew.input > tests/m3/aiSaveGameNew.gameout
+TEST=$(diff -w -B tests/m3/aiSaveGameNew.output tests/m3/aiSaveGameNew.gameout)
+echo $TEST_NAME
+print_result $TEST
+
+TEST_NAME="Testing: Single player load game (AI) - aiLoadGame.input"
+./qwirkle --aiTest < tests/m3/aiLoadGame.input > tests/m3/aiLoadGame.gameout
+TEST=$(diff -w -B tests/m3/aiLoadGame.output tests/m3/aiLoadGame.gameout)
+echo $TEST_NAME
+print_result $TEST
+
 # Milestone 2 Tests
 
 echo "Program Testing"
