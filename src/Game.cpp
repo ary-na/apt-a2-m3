@@ -246,12 +246,12 @@ void Game::computerMove() {
 
     // Set current player to computer.
     this->currentPlayer = player2;
-    this->computer = new Computer(this->currentPlayer);
+    auto *computer = new Computer(this->currentPlayer);
 
     // Skip turn if computer hand is empty and return.
-    if (this->computer->getHandTiles()->getAtPos(0) == nullptr) {
-        delete this->computer;
-        this->computer = nullptr;
+    if (computer->getHandTiles()->getAtPos(0) == nullptr) {
+        delete computer;
+        computer = nullptr;
         this->skipTurn();
         return;
     }
@@ -259,27 +259,27 @@ void Game::computerMove() {
     // Traverse boardVector and find legal tiles from computer hand.
     for (int row = 0; row < this->board->getBoardVector().size(); row++) {
         for (int col = 0; col < this->board->getBoardVector()[row].size(); col++) {
-            this->findComputerLegalTiles(*this->computer, char(board->getMinRowChar() + row), col);
+            this->findComputerLegalTiles(*computer, char(board->getMinRowChar() + row), col);
         }
     }
 
     // Replace a random tile from computer hand, if all are illegal and return.
-    if (this->computer->getTileColour() == 0 && this->computer->getTileShape() == 0) {
-        this->replaceTile(this->computer->getHandTiles()->getAtPos(int(random() % 6 + 1)));
-        delete this->computer;
-        this->computer = nullptr;
+    if (computer->getTileColour() == 0 && computer->getTileShape() == 0) {
+        this->replaceTile(computer->getHandTiles()->getAtPos(int(random() % 6 + 1)));
+        delete computer;
+        computer = nullptr;
         this->computerMove();
         return;
     }
 
     // Print computer move.
-    this->computer->printMove();
+    computer->printMove();
 
     // Create tile and place it on board.
-    Tile *tile = new Tile(this->computer->getTileColour(), this->computer->getTileShape());
-    placeTile(tile, this->computer->getTargetRow(), this->computer->getTargetCol());
-    delete this->computer;
-    this->computer = nullptr;
+    Tile *tile = new Tile(computer->getTileColour(), computer->getTileShape());
+    placeTile(tile, computer->getTargetRow(), computer->getTargetCol());
+    delete computer;
+    computer = nullptr;
 }
 
 void Game::findComputerLegalTiles(Computer &computer, char row, int col) {
@@ -385,7 +385,8 @@ bool Game::isPlaceMultipleLegal(Tile *tile, char row, int col) {
 
     if (isPlaceLegal(tile, row, col)) {
         if (!this->multipleMoves->isRowMatch(row) && !this->multipleMoves->isColMatch(col)) {
-            std::cout << "All tiles played must share one attribute (color or shape) and must be placed in the same line, "
+            std::cout
+                    << "All tiles played must share one attribute (color or shape) and must be placed in the same line, "
                        "but they do not have to touch each other." << std::endl;
             isMultipleLegal = false;
         }
